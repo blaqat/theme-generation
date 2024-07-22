@@ -1,0 +1,191 @@
+{
+  "name":"yue-newmoon",
+  "colors":{
+    "list.focusForeground":"#dfdfdf",
+    "statusBar.foreground":"#dfdfdf",
+    "titleBar.activeForeground":"#dfdfdf",
+    "editor.foreground":"#dfdfdf",
+    "editorLineNumber.activeForeground":"#7a7a7a",
+    "activityBarBadge.background":"#000000",
+    "sideBar.background":"#000000",
+    "statusBar.noFolderForeground":"#dfdfdf",
+    "quickInputList.focusForeground":"#dfdfdf",
+    "list.hoverBackground":"#000000",
+    "editorHoverWidget.border":"#f9bef04C",
+    "editor.wordHighlightBackground":"#f9bef04C",
+    "quickInputList.focusBackground":"#f9bef04C",
+    "panel.border":"#f9bef033",
+    "editor.lineHighlightBackground":"#f9bef033",
+    "list.activeSelectionForeground":"#bcbcbc",
+    "editor.background":"#000000",
+    "editor.selectionBackground":"#f9bef04C",
+    "editorHoverWidget.foreground":"#dfdfdf",
+    "editorHoverWidget.background":"#000000",
+    "editor.hoverHighlightForeground":"#000000",
+    "titleBar.inactiveForeground":"#bcbcbc",
+    "list.inactiveSelectionBackground":"#f9bef033",
+    "list.focusBackground":"#f9bef04C",
+    "list.background":"#000000",
+    "list.highlightForeground":"#000000",
+    "quickInput.background":"#000000",
+    "titleBar.inactiveBackground":"#000000",
+    "titleBar.activeBackground":"#000000",
+    "statusBar.background":"#000000",
+    "terminal.background":"#000000",
+    "sideBarTitle.foreground":"#bcbcbc",
+    "editorLineNumber.foreground":"#7a7a7a",
+    "sideBar.foreground":"#bcbcbc",
+    "list.hoverForeground":"#bcbcbc",
+    "editorCursor.foreground":"#dfdfdf",
+    "panel.background":"#000000",
+    "list.inactiveSelectionForeground":"#bcbcbc",
+    "statusBar.noFolderBackground":"#000000",
+    "list.activeSelectionBackground":"#000000"
+  },
+  "tokenColors":[{
+      "name":"Comment",
+      "scope":["comment","punctuation.definition.comment"],
+      "settings":{
+        "foreground":"#7a7a7a"
+      }
+    },{
+      "name":"Keyword, Storage",
+      "scope":["keyword","storage.type","storage.modifier","keyword.other.fn","keyword.control"],
+      "settings":{
+        "foreground":"#f9bef0"
+      }
+    },{
+      "name":"Operator, Misc",
+      "scope":["constant.other.color","punctuation","meta.tag","punctuation.definition.tag","punctuation.separator.inheritance.php","punctuation.definition.tag.html","punctuation.definition.tag.begin.html","punctuation.definition.tag.end.html","punctuation.section.embedded","keyword.other.template","keyword.other.substitution"],
+      "settings":{
+        "foreground":"#ffb7e0"
+      }
+    },{
+      "name":"Operator, Specific",
+      "scope":["keyword.operator"],
+      "settings":{
+        "foreground":"#ffb7e0"
+      }
+    },{
+      "name":"Operator, Rust Specific",
+      "scope":["source.rust keyword.operator.borrow.and.rust"],
+      "settings":{
+        "foreground":"#fff5c2"
+      }
+    },{
+      "name":"Tag",
+      "scope":["entity.name.tag","meta.tag.sgml","markup.deleted.git_gutter"],
+      "settings":{
+        "foreground":"#d5ffff"
+      }
+    },{
+      "name":"Function, Builtin",
+      "scope":["support.function -support.function.any-method","storage.type.built-in","entity.name.function.support.builtin","entity.name.function.macro","variable.language.this","entity.name.function.member"],
+      "settings":{
+        "foreground":"#ffd8c7"
+      }
+    },{
+      "name":"Function, Special Method",
+      "scope":["entity.name.function","meta.function-call","variable.function","keyword.other.special-method"],
+      "settings":{
+        "foreground":"#e2ffcc"
+      }
+    },{
+      "name":"Built-in Function, Class",
+      "scope":["support.function.builtin","support.class.builtin"],
+      "settings":{
+        "foreground":"#ffd8c7"
+      }
+    },{
+      "name":"Variables",
+      "scope":["variable","string constant.other.placeholder"],
+      "settings":{
+        "foreground":"#dfdfdf"
+      }
+    },{
+      "name":"Global Variables",
+      "scope":["variable.global","variable.language"],
+      "settings":{
+        "foreground":"#d5ffff"
+      }
+    },{
+      "name":"Constant, Boolean",
+      "scope":["constant","constant.numeric","constant.language","support.constant","constant.character","constant.escape","variable.parameter","keyword.other.unit","keyword.other","constant.other.color","keyword.constant.bool","boolean"],
+      "settings":{
+        "foreground":"#ceffff"
+      }
+    },{
+      "name":"String",
+      "scope":["string"],
+      "settings":{
+        "foreground":"#fff5c2"
+      }
+    },{
+      "name":"Number",
+      "scope":["constant.numeric"],
+      "settings":{
+        "foreground":"#ddccff"
+      }
+    },{
+      "name":"Type",
+      "scope":["entity.name.type","support.type","support.class","support.other.namespace.use.php","meta.use.php","support.other.namespace.php","markup.changed.git_gutter","support.type.sys-types","keyword.type","source.go storage.type"],
+      "settings":{
+        "foreground":"#d5ffff"
+      }
+    },{
+      "name":"Identifier",
+      "scope":["identifier"],
+      "settings":{
+        "foreground":"#ffd8c7"
+      }
+    },{
+      "name":"Line Number",
+      "scope":["line.number"],
+      "settings":{
+        "foreground":"#7a7a7a"
+      }
+    },{
+      "name":"Status Line",
+      "scope":["statusBar.background","statusBar.foreground"],
+      "settings":{
+        "foreground":"#dfdfdf",
+        "background":"#000000"
+      }
+    },{
+      "name":"Todo",
+      "scope":["todo"],
+      "settings":{
+        "foreground":"#7a7a7a"
+      }
+    },{
+      "name":"Error",
+      "scope":["invalid","invalid.illegal"],
+      "settings":{
+        "foreground":"#ff91a6"
+      }
+    },{
+      "name":"Special Character",
+      "scope":["constant.character.escape","variable.language.self"],
+      "settings":{
+        "foreground":"#ffd8c7"
+      }
+    },{
+      "name":"Function, Other",
+      "scope":["source.ts storage.type.function","source.rust keyword.other.fn","source.lua keyword.control","source.go keyword.function","keyword.operator.ternary"],
+      "settings":{
+        "foreground":"#f9bef0"
+      }
+    },{
+      "name":"Preprocessor",
+      "scope":["entity.name.function.preprocessor"],
+      "settings":{
+        "foreground":"#d5ffff"
+      }
+    },{
+      "name":"Comparison",
+      "scope":["keyword.operator.comparison","keyword.operator.relational"],
+      "settings":{
+        "foreground":"#ffd8c7"
+      }
+    }]
+}
