@@ -1,0 +1,7 @@
+id = "polar-theme"
+name = "Polar Theme"
+version = "0.5.0"
+schema_version = 1
+authors = ["blaqat <blaqat.ag@gmail.com>"]
+description = "A port of polar, a pure white light theme based from nord colors."
+repository = "https://github.com/biaqat/polar-theme-zed"
