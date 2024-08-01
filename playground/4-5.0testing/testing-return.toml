@@ -1,0 +1,214 @@
+name = "testing-return2"
+theme = "dark"
+text = "$colors.color8"
+override = "$colors.color8"
+
+[colors]
+color1 = "#ff0000"
+color2 = "#D4D4D4"
+color3 = "#569CD6"
+color4 = "#2D2D2D"
+color5 = "#4EC9B0"
+color6 = "#3E3E3E"
+color7 = "#FF6B6B"
+color8 = "#FF0000"
+color9 = "#808080"
+color10 = "#9CDCFE"
+color11 = "#CE9178"
+color12 = "#6A9955"
+color13 = "#8BC34A"
+color14 = "#D7BA7D"
+color15 = "#FFC107"
+color16 = "#64B5F6"
+color17 = "#2A2A2A"
+color18 = "#252526"
+color19 = "#4A4A4A"
+color20 = "#1E1E1E"
+color21 = "#F44747"
+color22 = "#DCDCAA"
+
+[border]
+primary = "$colors.color6"
+secondary = "$colors.color17"
+
+[background]
+secondary = "$colors.color18"
+bottombar = "$colors.color4"
+topbar = "$colors.color4"
+toolbar = "$colors.color4"
+tabbar = "$colors.color4"
+panel = "$colors.color18"
+primary = "$colors.color20"
+terminal = "000"
+
+[button]
+primary = "$colors.color3"
+active = "#505050"
+selected = "$colors.color19"
+disabled = "#3C3C3C"
+
+[cursor]
+hover = "$colors.color6"
+search = "#515C6A"
+line = "$colors.color4"
+spaces = "#303030"
+match = "$colors.color19"
+primary = "#FFFFFF"
+background = "#4e4e4e40"
+
+[element]
+hover = "$colors.color17"
+active = "$colors.color6"
+selected = "#37373D"
+disabled = "$colors.color4"
+
+[foreground]
+primary = "$colors.color1"
+secondary = "$colors.color2"
+placeholder = "$colors.color9"
+inactive = "#A0A0A0"
+line = "#5A5A5A"
+hint = "$colors.color9"
+ignored = "$colors.color9"
+
+[scheme]
+primary = "$colors.color3"
+black = "$colors.color1"
+black2 = "$colors.color1"
+red = "$colors.color21"
+red2 = "$colors.color7"
+green = "$colors.color12"
+green2 = "$colors.color13"
+yellow = "$colors.color14"
+yellow2 = "$colors.color15"
+blue = "$colors.color1"
+blue2 = "$colors.color16"
+purple = "$colors.color1"
+purple2 = "$colors.color1"
+cyan = "$colors.color1"
+cyan2 = "$colors.color1"
+white = "$colors.color1"
+white2 = "$colors.color1"
+
+[tabs]
+inactive = "$colors.color4"
+active = "$colors.color20"
+
+[scrollbar]
+primary = "#424242"
+secondary = "$colors.color6"
+
+[syntax.attribute]
+color = "$colors.color10"
+style = "normal"
+
+[syntax.boolean]
+color = "$colors.color3"
+style = "normal"
+
+[syntax.comment]
+color = "$colors.color12"
+style = "italic"
+
+[syntax.constant]
+color = "$colors.color5"
+style = "normal"
+
+[syntax.builtin]
+color = "$colors.color5"
+style = "italic"
+
+[syntax.constructor]
+color = "$colors.color5"
+style = "normal"
+
+[syntax.special]
+color = "$colors.color14"
+style = "normal"
+
+[syntax.function]
+color = "$colors.color22"
+style = "normal"
+
+[syntax.method]
+color = "$colors.color22"
+style = "normal"
+
+[syntax.definition]
+color = "$colors.color22"
+style = "normal"
+
+[syntax.keyword]
+color = "#C586C0"
+style = "normal"
+
+[syntax.number]
+color = "#B5CEA8"
+style = "normal"
+
+[syntax.operator]
+color = "$colors.color2"
+style = "normal"
+
+[syntax.property]
+color = "$colors.color10"
+style = "normal"
+
+[syntax.punctuation.primary]
+color = "$colors.color2"
+style = "normal"
+
+[syntax.punctuation.bracket]
+color = "$colors.color2"
+style = "normal"
+
+[syntax.punctuation.delimiter]
+color = "$colors.color2"
+style = "normal"
+
+[syntax.punctuation.list]
+color = "$colors.color2"
+style = "normal"
+
+[syntax.punctuation.special]
+color = "$colors.color2"
+style = "normal"
+
+[syntax.string]
+color = "$colors.color11"
+style = "normal"
+
+[syntax.tag]
+color = "$colors.color3"
+style = "normal"
+
+[syntax.type]
+color = "$colors.color5"
+style = "normal"
+
+[syntax.var]
+color = "$colors.color10"
+style = "normal"
+
+[syntax.member]
+color = "$colors.color10"
+style = "normal"
+
+[syntax.parameter]
+color = "$colors.color10"
+style = "normal"
+
+[overrides]
+"editor.foreground" = "$colors.color2"
+"terminal.ansi.red" = "$colors.color1"
+"terminal.ansi.bright_red" = "$colors.color1"
+"terminal.ansi.dim_red" = "$colors.color1"
+"terminal.ansi.green" = "$colors.color1"
+"terminal.ansi.bright_green" = "$colors.color1"
+"terminal.ansi.dim_green" = "$colors.color1"
+"terminal.ansi.yellow" = "$colors.color1"
+"terminal.ansi.bright_yellow" = "$colors.color1"
+"terminal.ansi.dim_yellow" = "$colors.color1"
+"info" = "$colors.color3"
+"terminal.ansi.bright_blue" = "$colors.color1"
+"terminal.ansi.dim_blue" = "$colors.color1"

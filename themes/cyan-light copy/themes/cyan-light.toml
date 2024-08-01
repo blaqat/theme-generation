@@ -1,0 +1,179 @@
+name = "Cyan Light"
+theme = "light"
+primary = "#2aaacb"
+cyan = "#e4faff"
+cyan2 = "#3eb2c1"
+
+[foreground]
+primary = "#262626"
+secondary = "#4E4E4Ff0"
+ignored = "#6c707e"
+hint = "#7A7A7A"
+inactive = "#b6b6b6"
+placeholder = "#808080"
+line = "#b3b3b3"
+
+[background]
+ui = "#f2f3f7"
+primary = "#f2f3f700"
+secondary = "#e4e6ea"
+topbar = "#ffffff"
+bottombar = "$background.secondary"
+tabbar = "$background.secondary"
+toolbar = "$background.secondary"
+panel = "$background.secondary"
+terminal = "#f3f3f3"
+
+[border]
+primary = "#bec5cd"
+secondary = "#bec5cd"
+
+[tabs]
+inactive = "$background.secondary"
+active = "#f2f4f5"
+
+[cursor]
+primary = "#000000"
+background = "#b8dde0"
+search = "#b8e6c7"
+line = "#e4eaed"
+spaces = "#94B0B350"
+match = "#e4e4ff"
+hover = "#d6d6ff"
+
+[scrollbar]
+primary = "#a2a3a6e0"
+secondary = "#3E3E3E00"
+
+[button]
+primary = "$background.secondary"
+active = "$cyan2..20"
+selected = "#4A4A4A"
+disabled = "#3C3C3C"
+
+[element]
+primary = false
+hover = "#d0d5db"
+active = "$cyan2"
+selected = "$cyan2"
+disabled = "#d0d5db"
+
+[scheme]
+primary = "$primary"
+black = "#000000"
+black2 = "#000000"
+red = "#CE0505"
+red2 = "#FCA4A7"
+green = "#067D17"
+green2 = "#B5E7BE"
+yellow = "#B28C00"
+yellow2 = "#F7E79F"
+blue = "#063FDB"
+blue2 = "#C4DBFA"
+purple = "#B309B3"
+purple2 = "#FBACFB"
+cyan = "#028E8E"
+cyan2 = "#BFEEEE"
+white = "#656565"
+white2 = "#929292"
+
+[syntax.attribute]
+color = "#0073E6"
+style = "normal"
+
+[syntax.boolean]
+color = "#0073E6"
+style = "normal"
+
+[syntax.comment]
+color = "#808080"
+style = "italic"
+
+[syntax.constant]
+color = "#458383"
+style = "normal"
+
+[syntax.constructor]
+color = "#4EC9B0"
+style = "normal"
+
+[syntax.definition]
+color = "#DCDCAA"
+style = "normal"
+
+[syntax.special]
+color = "#000080"
+style = "normal"
+
+[syntax.function]
+color = false
+style = "normal"
+
+[syntax.keyword]
+color = "#000080"
+style = "normal"
+
+[syntax.method]
+color = "#914C07"
+style = "normal"
+
+[syntax.number]
+color = "#0073E6"
+style = "normal"
+
+[syntax.operator]
+color = "$syntax.punctuation.primary.color"
+style = "normal"
+
+[syntax.property]
+color = "#660E7A"
+style = "normal"
+
+[syntax.punctuation.primary]
+color = false
+style = "normal"
+
+[syntax.punctuation.bracket]
+color = "$syntax.punctuation.primary.color"
+style = "normal"
+
+[syntax.punctuation.delimiter]
+color = "$syntax.punctuation.primary.color"
+style = "normal"
+
+[syntax.punctuation.list]
+color = "$syntax.punctuation.primary.color"
+style = "normal"
+
+[syntax.punctuation.special]
+color = "$syntax.punctuation.primary.color"
+style = "normal"
+
+[syntax.string]
+color = "#00733B"
+style = "normal"
+
+[syntax.tag]
+color = "#000080"
+style = "normal"
+
+[syntax.type]
+color = "#660e7a"
+style = "italic"
+
+[syntax.var]
+color = "#458383"
+style = "normal"
+
+[syntax.member]
+color = false
+style = "normal"
+
+[syntax.parameter]
+color = false
+style = "normal"
+
+[syntax.builtin]
+color = false
+style = "italic"
+name = "cyan-light"

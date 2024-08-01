@@ -1,0 +1,172 @@
+name = "Yue Newmoon TESTING AUTO"
+theme = "dark"
+
+[colors]
+color1 = "#F9BEF0"
+color2 = "#FFF5C2"
+color3 = "#E6AEDC"
+color4 = "#1A1218"
+color5 = "#FF91A6"
+color6 = "#080507"
+color7 = "#B6C6FF"
+color8 = "#000000"
+color9 = "#DFDFDF"
+color10 = "#CEFFFF"
+color11 = "#FFB7E0"
+color12 = "#120C10"
+color13 = "#D5FFFF"
+
+[background]
+secondary = "$colors.color4..f9"
+primary = "$colors.color6"
+bottombar = "$colors.color12"
+topbar = "$colors.color12"
+toolbar = "$colors.color6"
+tabbar = "$colors.color12"
+panel = "$colors.color4"
+terminal = "$colors.color6"
+
+[border]
+primary = "$colors.color12"
+secondary = "$colors.color3..30"
+
+[button]
+primary = "$colors.color1..33"
+active = "$colors.color1..13"
+selected = "$colors.color8"
+
+[cursor]
+hover = "$colors.color1..13"
+search = "$colors.color2..40"
+line = "$colors.color3..19"
+primary = "$colors.color2"
+background = "$colors.color8..00"
+
+[element]
+hover = "$colors.color1..23"
+active = "#4A3747"
+selected = "$colors.color1..13"
+
+[foreground]
+primary = "#F0E4EE"
+secondary = "#998A97"
+placeholder = "#998A97"
+inactive = "$colors.color3..40"
+line = "#fff5c1"
+hint = "#969696ff"
+ignored = "#4F3D4D"
+
+[scheme]
+primary = "$colors.color2"
+black = "$colors.color8"
+black2 = "$colors.color9..50"
+red = "$colors.color5"
+red2 = "$colors.color5"
+green = "#e2ffcc"
+yellow = "$colors.color2"
+yellow2 = "$colors.color2"
+blue = "$colors.color7"
+purple = "$colors.color1"
+cyan = "$colors.color10"
+white = "$colors.color9"
+blue2 = "$colors.color4..f9"
+
+[scrollbar]
+primary = "$colors.color3..20"
+secondary = "#3a2c37"
+
+[syntax.boolean]
+color = "$colors.color10"
+
+[syntax.comment]
+color = "#7a7a7a"
+
+[syntax.constant]
+color = "$colors.color10"
+
+[syntax.constructor]
+color = "$colors.color13"
+
+[syntax.function]
+color = "#e2ffcc"
+
+[syntax.keyword]
+color = "$colors.color1"
+
+[syntax.number]
+color = "#ddccff"
+
+[syntax.operator]
+color = "#ffd8c7"
+
+[syntax.punctuation.bracket]
+color = "$colors.color11"
+
+[syntax.punctuation.delimiter]
+color = "$colors.color11"
+
+[syntax.punctuation.list]
+color = "$colors.color11"
+
+[syntax.punctuation.primary]
+color = "$colors.color11"
+
+[syntax.punctuation.special]
+color = "$colors.color11"
+
+[syntax.special]
+color = "$colors.color13"
+
+[syntax.string]
+color = "$colors.color2"
+
+[syntax.tag]
+color = "$colors.color13"
+
+[syntax.type]
+color = "$colors.color13"
+
+[syntax.var]
+color = "$colors.color9"
+
+[tabs]
+inactive = "$colors.color4"
+active = "$colors.color6"
+
+[overrides]
+"style.[border.focused]" = false
+"style.[text.disabled]" = false
+"style.[editor.highlighted_line.background]" = false
+"style.[terminal.bright_foreground]" = false
+"style.[terminal.dim_foreground]" = false
+"style.[terminal.ansi.dim_black]" = false
+"style.[terminal.ansi.dim_red]" = false
+"style.[terminal.ansi.bright_yellow]" = false
+"style.[terminal.ansi.bright_blue]" = false
+"style.[terminal.ansi.dim_blue]" = false
+"style.[link_text.hover]" = false
+"style.conflict" = false
+"style.[conflict.background]" = false
+"style.[conflict.border]" = false
+"style.hidden" = false
+"style.[modified.background]" = false
+"style.[modified.border]" = false
+"style.success" = false
+"style.[border.selected]" = "$colors.color3..40"
+"style.[border.transparent]" = "$colors.color3..40"
+"style.[border.disabled]" = "$colors.color3..40"
+"style.[surface.background]" = "$colors.color4..f9"
+"style.[drop_target.background]" = "$colors.color1..23"
+"style.[editor.wrap_guide]" = "$colors.color1..33"
+"style.[editor.active_wrap_guide]" = "$colors.color1..33"
+"style.syntax.[text.literal].color" = "$colors.color2"
+"style.players.0.selection" = "$colors.color1..33"
+"style.syntax.[string.escape].color" = "$colors.color10"
+"style.[editor.subheader.background]" = "$colors.color1..33"
+"style.[terminal.foreground]" = "$colors.color9"
+"style.[scrollbar.track.background]" = "$colors.color8..00"
+"style.[scrollbar.track.border]" = "$colors.color3..40"
+"style.[error.background]" = "$colors.color4..f9"
+"style.[warning.background]" = "$colors.color4..f9"
+"style.[hint.border]" = "$colors.color7"
+"style.[info.border]" = "$colors.color7"

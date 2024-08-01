@@ -1,0 +1,173 @@
+name = "Aquarium"
+theme = "dark"
+primary = "#e9c1c1"
+hint = "#2c2d3e20"
+
+[foreground]
+primary = "#a7b7d6"
+editor = "$scheme.purple"
+secondary = "#63718b"
+ignored = "#a7b7d650"
+hint = "#424467"
+inactive = "#3d4059"
+placeholder = "#63718b"
+line = "#a8a9f3"
+
+[background]
+primary = "#20202a"
+secondary = "#1a1a24"
+topbar = "#1E1F2E"
+bottombar = "#1a1a24"
+toolbar = "#00000000"
+panel = "#1a1a24"
+terminal = "#20202a"
+
+[border]
+primary = "#303347"
+secondary = "#303347"
+
+[button]
+primary = "#30304700"
+hover = "#20202a"
+active = "#303047"
+selected = "#303047"
+disabled = "#fC3C3C"
+
+[element]
+primary = "#292c3e00"
+hover = "#30334790"
+active = "#303247"
+selected = "#303247"
+disabled = "#fD2D2D"
+
+[tabs]
+background = "#292c3e"
+inactive = "#292c3e"
+active = "#20202a"
+
+[cursor]
+primary = "$primary..e0"
+background = "#333551"
+search = "$scheme.yellow..50"
+line = "#1110173c"
+spaces = "#fbfff829"
+match = "#2c2d3e"
+
+[scrollbar]
+primary = "#21212c"
+secondary = "#1a1a2450"
+
+[scheme]
+primary = "$primary"
+black = "#2c2e3e"
+black2 = "#2c2e3e"
+red = "#ebb9b9"
+red2 = "#1a1a24"
+green = "#b1dba4"
+green2 = "#1a1a24"
+yellow = "#e6dfb8"
+yellow2 = "#1a1a24"
+blue = "#cddbf9"
+blue2 = "#1a1a24"
+purple = "#f6bbe7"
+purple2 = "#1a1a24"
+cyan = "#b8deeb"
+cyan2 = "#1a1a24"
+white = "#e5e5e5"
+white2 = "#a7b8d6"
+
+[syntax.attribute]
+color = "#b8dceb"
+style = "normal"
+
+[syntax.boolean]
+color = "$scheme.blue"
+style = "normal"
+
+[syntax.comment]
+color = "#3d4059"
+style = "italic"
+
+[syntax.constant]
+color = "$scheme.yellow"
+style = "normal"
+
+[syntax.constructor]
+color = "$scheme.white2"
+style = "normal"
+
+[syntax.special]
+color = "$scheme.yellow"
+style = "normal"
+
+[syntax.function]
+color = "$scheme.cyan"
+style = "italic"
+
+[syntax.keyword]
+color = "$scheme.red"
+style = "italic"
+
+[syntax.number]
+color = "$scheme.blue"
+style = "normal"
+
+[syntax.operator]
+color = "#63718b"
+style = "normal"
+
+[syntax.property]
+color = "$scheme.purple"
+style = "normal"
+
+[syntax.punctuation.primary]
+color = "#63718b"
+style = "normal"
+
+[syntax.punctuation.bracket]
+color = "$syntax.punctuation.primary.color"
+style = "normal"
+
+[syntax.punctuation.delimiter]
+color = "$syntax.punctuation.primary.color"
+style = "normal"
+
+[syntax.punctuation.list]
+color = "$syntax.punctuation.primary.color"
+style = "normal"
+
+[syntax.punctuation.special]
+color = "#ebb9b9"
+style = "normal"
+
+[syntax.string]
+color = "$scheme.red"
+style = "normal"
+
+[syntax.tag]
+color = "$scheme.purple"
+style = "normal"
+
+[syntax.method]
+color = "#e8cca7"
+style = "normal"
+
+[syntax.type]
+color = "$scheme.yellow"
+style = "italic"
+
+[syntax.var]
+color = "$scheme.purple"
+style = "normal"
+
+[syntax.member]
+color = "#9CDCFE"
+style = "normal"
+
+[syntax.parameter]
+color = "#9CDCFE"
+style = "normal"
+
+[syntax.builtin]
+color = "$scheme.yellow"
+style = "italic"

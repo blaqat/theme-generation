@@ -1,0 +1,165 @@
+name = "Yue Moon TESTING AUTO"
+theme = "dark"
+
+[colors]
+color1 = "#3C3C3C"
+color2 = "#F1BF8E"
+color3 = "#252525"
+color4 = "#2B2B2B"
+color5 = "#B3EFE5"
+color6 = "#E6CFB8"
+color7 = "#F277A1"
+color8 = "#FF5370"
+color9 = "#8EAAF9"
+color10 = "#99CBCA"
+color11 = "#1F1F1F"
+color12 = "#FFFFFF"
+
+[background]
+secondary = "$colors.color3"
+primary = "$colors.color4"
+bottombar = "$colors.color11"
+topbar = "$colors.color11"
+toolbar = "$colors.color4"
+tabbar = "$colors.color11"
+panel = "$colors.color3"
+terminal = "$colors.color4"
+
+[border]
+primary = "$colors.color11"
+secondary = "$colors.color6..20"
+
+[button]
+primary = "$colors.color3"
+active = "$colors.color1..7F"
+selected = "$colors.color3"
+
+[cursor]
+hover = "$colors.color3"
+search = "$colors.color7..c0"
+line = "$colors.color1..7F"
+primary = "$colors.color5"
+background = "#00000000"
+
+[element]
+hover = "$colors.color6..20"
+selected = "$colors.color6..10"
+
+[foreground]
+primary = "#FFEDD9"
+secondary = "#A89D8F"
+inactive = "$colors.color6..75"
+line = "#B7F5EB"
+hint = "#969696ff"
+
+[scheme]
+primary = "$colors.color5"
+black = "#141414"
+black2 = "#929292"
+red = "$colors.color8"
+green = "#B0D89C"
+yellow = "$colors.color2"
+blue = "$colors.color9"
+purple = "$colors.color7"
+cyan = "$colors.color10"
+white = "$colors.color12"
+red2 = "$colors.color8"
+blue2 = "$colors.color9"
+yellow2 = "$colors.color2"
+
+[scrollbar]
+primary = "$colors.color6..25"
+secondary = "#45433f"
+
+[syntax.boolean]
+color = "$colors.color5"
+
+[syntax.comment]
+color = "#929292"
+
+[syntax.constant]
+color = "$colors.color5"
+
+[syntax.constructor]
+color = "$colors.color10"
+
+[syntax.function]
+color = "#B0D89C"
+
+[syntax.keyword]
+color = "#BB84B4"
+
+[syntax.number]
+color = "#9D8FF2"
+
+[syntax.operator]
+color = "#F69385"
+
+[syntax.punctuation.bracket]
+color = "$colors.color7"
+
+[syntax.punctuation.delimiter]
+color = "$colors.color7"
+
+[syntax.punctuation.list]
+color = "$colors.color7"
+
+[syntax.punctuation.primary]
+color = "$colors.color7"
+
+[syntax.punctuation.special]
+color = "$colors.color7"
+
+[syntax.special]
+color = "$colors.color10"
+
+[syntax.string]
+color = "$colors.color2"
+
+[syntax.tag]
+color = "$colors.color10"
+
+[syntax.type]
+color = "$colors.color10"
+
+[syntax.var]
+color = "$colors.color12"
+
+[tabs]
+inactive = "$colors.color3"
+active = "$colors.color4"
+
+[overrides]
+"style.[border.focused]" = false
+"style.[editor.subheader.background]" = false
+"style.[editor.highlighted_line.background]" = false
+"style.[terminal.bright_foreground]" = false
+"style.[terminal.dim_foreground]" = false
+"style.[terminal.ansi.dim_black]" = false
+"style.[terminal.ansi.bright_red]" = false
+"style.[terminal.ansi.dim_red]" = false
+"style.[terminal.ansi.bright_yellow]" = false
+"style.[terminal.ansi.dim_yellow]" = false
+"style.[terminal.ansi.bright_blue]" = false
+"style.[terminal.ansi.dim_blue]" = false
+"style.[link_text.hover]" = false
+"style.conflict" = false
+"style.[conflict.background]" = false
+"style.[conflict.border]" = false
+"style.hidden" = false
+"style.[modified.background]" = false
+"style.[modified.border]" = false
+"style.success" = false
+"style.[border.selected]" = "$colors.color1..7F"
+"style.[border.transparent]" = "$colors.color1..7F"
+"style.[border.disabled]" = "$colors.color1..7F"
+"style.[surface.background]" = "$colors.color3"
+"style.[editor.wrap_guide]" = "$colors.color1..7F"
+"style.[editor.active_wrap_guide]" = "$colors.color1..7F"
+"style.syntax.[text.literal].color" = "$colors.color2"
+"style.players.0.selection" = "$colors.color5..2F"
+"style.syntax.[string.escape].color" = "$colors.color5"
+"style.[terminal.foreground]" = "$colors.color12"
+"style.[editor.line_number]" = "#A89D8F"
+"style.[scrollbar.track.background]" = "$colors.color4"
+"style.[scrollbar.track.border]" = "$colors.color6..20"

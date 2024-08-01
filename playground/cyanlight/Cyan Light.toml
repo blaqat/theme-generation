@@ -1,0 +1,327 @@
+name = "Cyan Light"
+theme = "light"
+primary = "#3599A6"
+
+[colors]
+color1 = "#FCA4A7"
+color2 = "#E4E6EA"
+color3 = "#B5E7BE"
+color4 = "#F7E79F"
+color5 = "#C4DBFA"
+color6 = "#262626"
+color7 = "#00733B"
+color8 = "#000000"
+color9 = "#CE0505"
+color10 = "#2AAACB"
+color11 = "#000080"
+color12 = "#660E7A"
+color13 = "#BEC5CD"
+color14 = "#F2F3F7"
+color15 = "#808080"
+color16 = "#3E3E3E"
+color17 = "#067D17"
+color18 = "#B28C00"
+color19 = "#7A7A7A"
+color20 = "#0073E6"
+
+[background]
+secondary = "$colors.color2"
+primary = "$colors.color14"
+gutter = "$colors.color14..00"
+
+[background.bars]
+bottombar = "$colors.color2"
+toolbar = "#f2f4f5"
+
+[background.bars.topbar]
+active = "#ffffff"
+
+[border]
+primary = "$colors.color13"
+secondary = "$colors.color13"
+selected = "$colors.color13"
+
+[button]
+primary = "$colors.color2"
+active = "#3eb2c120"
+selected = "#4A4A4A"
+disabled = "#3C3C3C"
+
+[code.error]
+foreground = "$colors.color9"
+background = "$colors.color1"
+border = "$colors.color1"
+
+[code.hidden]
+foreground = "$colors.color19"
+
+[code.hint]
+foreground = "$colors.color19"
+background = "$colors.color5"
+border = "$colors.color5"
+
+[code.info]
+foreground = "#063FDB"
+background = "$colors.color5"
+border = "$colors.color5"
+
+[code.success]
+foreground = "$colors.color17"
+background = "$colors.color3"
+border = "$colors.color3"
+
+[code.warning]
+foreground = "$colors.color18"
+background = "$colors.color4"
+border = "$colors.color4"
+
+[cursor]
+search = "#b8e6c7"
+line = "#e4eaed"
+highlighted = "#e4eaed"
+spaces = "#94B0B350"
+
+[element]
+hover = "#B1C9CC40"
+active = "#3EA2C140"
+selected = "#D0D8DC"
+disabled = "#207D99"
+
+[foreground]
+hover = "#B1C6CC"
+primary = "$colors.color6"
+secondary = "#4E4E4Ff0"
+placeholder = "$colors.color15"
+inactive = "#b6b6b6"
+read = "#e4e4ff"
+write = "#e4e4ff"
+link = "$colors.color10"
+
+[foreground.linenumber]
+inactive = "#b6b6b6"
+active = "#b3b3b3"
+
+[git.conflict]
+foreground = "$colors.color9"
+background = "$colors.color1"
+border = "$colors.color1"
+
+[git.created]
+foreground = "$colors.color17"
+background = "$colors.color3"
+border = "$colors.color3"
+
+[git.deleted]
+foreground = "$colors.color9"
+background = "$colors.color1"
+border = "$colors.color1"
+
+[git.ignored]
+foreground = "#6c707e"
+
+[git.modified]
+foreground = "$colors.color18"
+background = "$colors.color4"
+border = "$colors.color4"
+
+[panel]
+background = "$colors.color2"
+
+[players.1]
+cursor = "$colors.color8"
+background = "#b8dde0"
+selection = "#b8dde090"
+
+[players.2]
+cursor = "#197F8C"
+background = "#A1DAE6"
+selection = "#A1DAE670"
+
+[scrollbar]
+primary = "#a2a3a6e0"
+secondary = "$colors.color16..00"
+track = "$colors.color16..00"
+
+[syntax.attribute]
+color = "$colors.color20"
+style = "normal"
+
+[syntax.boolean]
+color = "$colors.color20"
+style = "normal"
+
+[syntax.comment]
+color = "$colors.color15"
+style = "italic"
+
+[syntax.constant]
+color = "#458383"
+style = "normal"
+
+[syntax.constant.builtin]
+style = "italic"
+
+[syntax.constructor]
+color = "#4EC9B0"
+style = "normal"
+
+[syntax.definition]
+style = "normal"
+
+[syntax.doc]
+color = "$colors.color15"
+style = "italic"
+
+[syntax.enum]
+color = "$colors.color11"
+style = "normal"
+
+[syntax.function]
+style = "normal"
+
+[syntax.hint]
+color = "$colors.color19"
+style = "italic"
+
+[syntax.keyword]
+color = "$colors.color11"
+style = "normal"
+
+[syntax.link]
+color = "$colors.color10"
+
+[syntax.method]
+color = "#914C07"
+style = "normal"
+
+[syntax.number]
+color = "$colors.color20"
+style = "normal"
+
+[syntax.operator]
+style = "normal"
+
+[syntax.primary]
+color = "$colors.color10"
+
+[syntax.property]
+color = "$colors.color12"
+style = "normal"
+
+[syntax.punctuation]
+style = "normal"
+
+[syntax.punctuation.bracket]
+style = "normal"
+
+[syntax.punctuation.delimiter]
+style = "normal"
+
+[syntax.punctuation.list]
+style = "normal"
+
+[syntax.punctuation.special]
+style = "normal"
+
+[syntax.punctuation.symbol]
+style = "normal"
+
+[syntax.string]
+color = "$colors.color7"
+style = "normal"
+
+[syntax.string.escape]
+color = "$colors.color7"
+style = "normal"
+
+[syntax.string.regex]
+color = "$colors.color7"
+style = "normal"
+
+[syntax.string.special]
+color = "$colors.color7"
+style = "normal"
+
+[syntax.string.symbol]
+color = "$colors.color7"
+style = "normal"
+
+[syntax.tag]
+color = "$colors.color11"
+style = "normal"
+
+[syntax.type]
+color = "$colors.color12"
+style = "italic"
+
+[syntax.type.builtin]
+style = "italic"
+
+[syntax.type.interface]
+color = "$colors.color12"
+style = "italic"
+
+[syntax.type.super]
+color = "$colors.color12"
+style = "italic"
+
+[syntax.variable]
+color = "#458383"
+style = "normal"
+
+[syntax.variable.member]
+style = "normal"
+
+[syntax.variable.parameter]
+style = "normal"
+
+[syntax.variable.special]
+color = "$colors.color11"
+style = "normal"
+
+[tabs]
+background = "$colors.color2"
+inactive = "$colors.color2"
+active = "#f2f4f5"
+
+[terminal]
+background = "#f3f3f3"
+foreground = "$colors.color6"
+bright_foreground = "$colors.color6"
+dim_foreground = "$colors.color6"
+black = "$colors.color8"
+bright_black = "$colors.color8"
+dim_black = "$colors.color8"
+red = "$colors.color9"
+bright_red = "$colors.color1"
+dim_red = "$colors.color1"
+green = "$colors.color17"
+bright_green = "$colors.color3"
+dim_green = "$colors.color3"
+yellow = "$colors.color18"
+bright_yellow = "$colors.color4"
+dim_yellow = "$colors.color4"
+blue = "#063FDB"
+bright_blue = "$colors.color5"
+dim_blue = "$colors.color5"
+magenta = "#B309B3"
+bright_magenta = "#FBACFB"
+dim_magenta = "#FBACFB"
+cyan = "#028E8E"
+bright_cyan = "#BFEEEE"
+dim_cyan = "#BFEEEE"
+white = "#656565"
+bright_white = "#929292"
+dim_white = "#929292"
+
+[overrides]
+"style.[border.selected]" = false
+"style.[scrollbar.thumb.hover_background]" = false
+"style.syntax.[constant.builtin].color" = false
+"style.syntax.[type.builtin].color" = false
+"style.syntax.[variable.member].color" = false
+"style.syntax.[variable.parameter].color" = false
+"style.[panel.focused_border]" = false
+"style.[pane.focused_border]" = false
+"style.[surface.background]" = false
+"style.[icon.accent]" = false

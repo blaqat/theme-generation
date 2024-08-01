@@ -1,0 +1,392 @@
+name = "Catppuccin Frappé Full Test"
+theme = "dark"
+primary = "$colors.color5"
+
+[colors]
+color1 = "#626880"
+color2 = "#292C3C"
+color3 = "#E78284"
+color4 = "#C6D0F5"
+color5 = "#CA9EE6"
+color6 = "#81C8BE"
+color7 = "#737994"
+color8 = "#A6D189"
+color9 = "#E5C890"
+color10 = "#8CAAEE"
+color11 = "#303446"
+color12 = "#F4B8E4"
+color13 = "#EF9F76"
+color14 = "#232634"
+color15 = "#838BA7"
+color16 = "#D3B1C8"
+color17 = "#A5ADCE"
+color18 = "#ACCAEB"
+color19 = "#ABCDDF"
+color20 = "#D7BDC2"
+color21 = "#D3CDCD"
+color22 = "#AFC1F2"
+color23 = "#B9D1CA"
+
+[backgroud]
+secondary = "$colors.color2"
+
+[background]
+surface = "$colors.color11"
+primary = "$colors.color11"
+filedrop = "$colors.color5..66"
+bottombar = "$colors.color14"
+toolbar = "$colors.color11"
+panel = "$colors.color2"
+gutter = "$colors.color11"
+secondary = "$colors.color2"
+
+[background.topbar]
+active = "$colors.color14"
+inactive = "$colors.color14..d9"
+
+[border]
+primary = "#414559"
+secondary = "#af8cca"
+selected = "#babbf1"
+transparent = "$colors.color8"
+disabled = "$colors.color1"
+
+[button]
+primary = "$colors.color14"
+active = "$colors.color5..33"
+selected = "#41455999"
+disabled = "$colors.color7"
+
+[code.error]
+foreground = "$colors.color3"
+border = "$colors.color3"
+background = "$colors.color2"
+
+[code.hidden]
+foreground = "$colors.color7"
+border = "$colors.color7"
+background = "$colors.color2"
+
+[code.hint]
+foreground = "$colors.color1"
+border = "$colors.color1"
+background = "$colors.color2"
+
+[code.info]
+foreground = "$colors.color6"
+border = "$colors.color6"
+background = "$colors.color5..66"
+
+[code.predictive]
+foreground = "$colors.color1"
+border = "$colors.color1"
+background = "$colors.color2"
+
+[code.renamed]
+foreground = "#85c1dc"
+border = "#85c1dc"
+background = "$colors.color2"
+
+[code.success]
+foreground = "$colors.color8"
+border = "$colors.color8"
+background = "$colors.color2"
+
+[code.unreachable]
+foreground = "$colors.color3"
+border = "$colors.color3"
+background = "$colors.color2"
+
+[code.warning]
+foreground = "$colors.color13"
+border = "$colors.color13"
+background = "$colors.color2"
+
+[cursor]
+search = "$colors.color6..33"
+line = "$colors.color4..0d"
+spaces = "#949cbb66"
+match = "$colors.color17..29"
+
+[element]
+hover = "$colors.color1..4d"
+active = "$colors.color1..80"
+selected = "$colors.color7..59"
+disabled = "$colors.color7"
+
+[foregorund]
+ignored = "$colors.color7"
+
+[foreground]
+hover = "$colors.color7..4d"
+primary = "$colors.color4"
+secondary = "#b5bfe2"
+placeholder = "$colors.color1"
+inactive = "$colors.color7"
+link = "#99d1db"
+
+[foreground.linenumber]
+inactive = "$colors.color15"
+active = "$colors.color5"
+
+[git.conflict]
+foreground = "$colors.color5"
+border = "$colors.color5"
+background = "$colors.color2"
+
+[git.created]
+foreground = "$colors.color8"
+border = "$colors.color8"
+background = "$colors.color2"
+
+[git.deleted]
+foreground = "$colors.color3"
+border = "$colors.color3"
+background = "$colors.color2"
+
+[git.ignored]
+border = "$colors.color7"
+background = "$colors.color2"
+
+[git.modified]
+foreground = "$colors.color9"
+border = "$colors.color9"
+background = "$colors.color2"
+
+[guide]
+inactive = "$colors.color1"
+active = "$colors.color1"
+
+[icon]
+primary = "$colors.color4"
+secondary = "$colors.color15"
+inactive = "$colors.color7"
+
+[pane]
+focused = "$colors.color4"
+
+[panel]
+focused = "$colors.color4"
+
+[players.1]
+cursor = "#f2d5cf"
+selection = "$colors.color1..80"
+background = "#f2d5cf"
+
+[players.2]
+cursor = "$colors.color18"
+selection = "$colors.color18..33"
+background = "$colors.color18"
+
+[players.3]
+cursor = "$colors.color16"
+selection = "$colors.color16..33"
+background = "$colors.color16"
+
+[players.4]
+cursor = "$colors.color19"
+selection = "$colors.color19..33"
+background = "$colors.color19"
+
+[players.5]
+cursor = "$colors.color20"
+selection = "$colors.color20..33"
+background = "$colors.color20"
+
+[players.6]
+cursor = "$colors.color21"
+selection = "$colors.color21..33"
+background = "$colors.color21"
+
+[players.7]
+cursor = "$colors.color22"
+selection = "$colors.color22..33"
+background = "$colors.color22"
+
+[players.8]
+cursor = "$colors.color23"
+selection = "$colors.color23..33"
+background = "$colors.color23"
+
+[scrollbar]
+primary = "$colors.color5..33"
+secondary = "$colors.color7"
+track = "$colors.color11"
+
+[syntax.attribute]
+color = "$colors.color9"
+
+[syntax.boolean]
+color = "$colors.color13"
+
+[syntax.comment]
+color = "$colors.color15"
+style = "italic"
+
+[syntax.constant]
+color = "$colors.color13"
+
+[syntax.constructor]
+color = "$colors.color10"
+
+[syntax.doc]
+color = "$colors.color15"
+style = "italic"
+
+[syntax.embedded]
+color = "#ea999c"
+
+[syntax.emphasis]
+color = "$colors.color3"
+style = "italic"
+
+[syntax.enum]
+color = "$colors.color6"
+
+[syntax.function]
+color = "$colors.color10"
+style = "italic"
+
+[syntax.hint]
+color = "$colors.color6"
+style = "italic"
+
+[syntax.keyword]
+color = "$colors.color5"
+
+[syntax.link]
+color = "$colors.color10"
+
+[syntax.number]
+color = "$colors.color13"
+
+[syntax.operator]
+color = "#99d1db"
+
+[syntax.predictive]
+color = "$colors.color1"
+
+[syntax.primary]
+color = "#ea999c"
+
+[syntax.property]
+color = "$colors.color10"
+
+[syntax.punctuation]
+color = "$colors.color6"
+
+[syntax.punctuation.bracket]
+color = "$colors.color6"
+
+[syntax.punctuation.delimiter]
+color = "#949cbb"
+
+[syntax.punctuation.list]
+color = "$colors.color6"
+
+[syntax.punctuation.special]
+color = "$colors.color6"
+
+[syntax.punctuation.symbol]
+color = "$colors.color3"
+
+[syntax.string]
+color = "$colors.color8"
+
+[syntax.string.escape]
+color = "$colors.color12"
+
+[syntax.string.regex]
+color = "$colors.color12"
+
+[syntax.string.special]
+color = "$colors.color12"
+
+[syntax.string.symbol]
+color = "#eebebe"
+
+[syntax.strong]
+color = "$colors.color3"
+
+[syntax.tag]
+color = "$colors.color10"
+
+[syntax.text.literal]
+color = "$colors.color8"
+
+[syntax.title]
+color = "$colors.color4"
+
+[syntax.type]
+color = "$colors.color9"
+
+[syntax.type.interface]
+color = "$colors.color9"
+
+[syntax.type.super]
+color = "$colors.color9"
+
+[syntax.variable]
+color = "$colors.color4"
+
+[syntax.variable.member]
+color = "$colors.color4"
+
+[syntax.variable.parameter]
+color = "$colors.color13"
+style = "italic"
+
+[syntax.variable.special]
+color = "$colors.color16"
+style = "italic"
+
+[syntax.variant]
+color = "$colors.color3"
+
+[tabs]
+background = "$colors.color14"
+inactive = "$colors.color2"
+active = "$colors.color11"
+
+[terminal]
+background = "$colors.color11"
+foreground = "$colors.color4"
+dim_foreground = "$colors.color15"
+bright_foreground = "$colors.color4"
+black = "#51576d"
+red = "$colors.color3"
+green = "$colors.color8"
+yellow = "$colors.color9"
+blue = "$colors.color10"
+magenta = "$colors.color12"
+cyan = "$colors.color6"
+white = "$colors.color4"
+bright_black = "$colors.color1"
+bright_red = "$colors.color3"
+bright_green = "$colors.color8"
+bright_yellow = "$colors.color9"
+bright_blue = "$colors.color10"
+bright_magenta = "$colors.color12"
+bright_cyan = "$colors.color6"
+bright_white = "$colors.color17"
+dim_black = "#51576d"
+dim_red = "$colors.color3"
+dim_green = "$colors.color8"
+dim_yellow = "$colors.color9"
+dim_blue = "$colors.color10"
+dim_magenta = "$colors.color12"
+dim_cyan = "$colors.color6"
+dim_white = "#b5bfe2"
+
+[overrides]
+"style.syntax.predoc.color" = "$colors.color3"
+"style.syntax.[emphasis.strong].font_weight" = 700
+"style.syntax.enum.font_weight" = 700
+"style.syntax.title.font_weight" = 800
+"style.syntax.[emphasis.strong].font_style" = false
+"style.syntax.title.font_style" = false
+"style.[border.selected]" = "$colors.color5"
+"style.[icon.placeholder]" = "$colors.color1"
+"style.[scrollbar.thumb.border]" = "$colors.color1..80"
+"style.[scrollbar.track.border]" = "$colors.color4..12"
+"style.[editor.highlighted_line.background]" = false

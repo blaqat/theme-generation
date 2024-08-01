@@ -1,0 +1,221 @@
+name = "Yue Fullmoon"
+theme = "dark"
+override = "$colors.color4"
+text = "$colors.color5"
+
+[colors]
+color1 = "#181C26"
+color2 = "#A1B1E6"
+color3 = "#1d212e"
+color4 = "#282d3b"
+color5 = "#D9E1FF"
+color6 = "#717B99"
+color7 = "#ff89b2"
+color8 = "#afa0ff"
+color9 = "#414963"
+color10 = "#dfe0f2"
+color11 = "#c7efb2"
+color12 = "#ffd5a3"
+color13 = "#cc94c5"
+color14 = "#aee1e0"
+color15 = "#ff657f"
+color16 = "#6D7694"
+color17 = "#ccffff"
+color18 = "#7a7b91"
+
+[background]
+secondary = "$colors.color3"
+bottombar = "$colors.color1"
+topbar = "$colors.color1"
+toolbar = "$colors.color4"
+tabbar = "$colors.color1"
+panel = "$colors.color3"
+primary = "$colors.color4"
+terminal = "$colors.color4"
+
+[border]
+primary = "$colors.color1"
+secondary = "$colors.color2..25"
+
+[button]
+primary = "$colors.color3"
+selected = "$colors.color3"
+
+[cursor]
+hover = "$colors.color3"
+search = "$colors.color8..90"
+line = "$colors.color9..7F"
+match = "$colors.color9"
+
+[element]
+hover = "#414860"
+active = "$colors.color2..15"
+selected = "$colors.color2..25"
+
+[foreground]
+primary = "$colors.color5"
+secondary = "#8F95A8"
+placeholder = "$colors.color6"
+inactive = "$colors.color6"
+line = "$colors.color7"
+hint = "$colors.color16..ff"
+ignored = "$colors.color16"
+
+[scheme]
+primary = "$colors.color7..df"
+black = "$colors.color9"
+black2 = "$colors.color10..90"
+red = "$colors.color7"
+green = "$colors.color11"
+yellow = "$colors.color12"
+blue = "$colors.color8"
+purple = "$colors.color13"
+cyan = "$colors.color14"
+white = "$colors.color10"
+red2 = "$colors.color15"
+blue2 = "$colors.color8..a0"
+yellow2 = "#ffd39cb0"
+
+[scrollbar]
+primary = "$colors.color2..25"
+secondary = "$colors.color4"
+
+[syntax.attribute]
+color = false
+style = false
+weight = false
+
+[syntax.boolean]
+color = "$colors.color17"
+
+[syntax.builtin]
+color = false
+style = false
+weight = false
+
+[syntax.comment]
+color = "$colors.color18"
+
+[syntax.constant]
+color = "$colors.color17"
+
+[syntax.constructor]
+color = "$colors.color14"
+
+[syntax.definition]
+color = false
+style = false
+weight = false
+
+[syntax.function]
+color = "$colors.color11"
+
+[syntax.keyword]
+color = "$colors.color13"
+
+[syntax.member]
+color = false
+style = false
+weight = false
+
+[syntax.method]
+color = false
+style = false
+weight = false
+
+[syntax.number]
+color = "$colors.color8"
+
+[syntax.operator]
+color = "#ffa697"
+
+[syntax.parameter]
+color = false
+style = false
+weight = false
+
+[syntax.property]
+color = false
+style = false
+weight = false
+
+[syntax.punctuation.bracket]
+color = "$colors.color7"
+
+[syntax.punctuation.delimiter]
+color = "$colors.color7"
+
+[syntax.punctuation.list]
+color = "$colors.color7"
+
+[syntax.punctuation.primary]
+color = "$colors.color7"
+
+[syntax.punctuation.special]
+color = "$colors.color7"
+style = false
+weight = false
+
+[syntax.special]
+color = false
+style = false
+weight = false
+
+[syntax.string]
+color = "$colors.color12"
+
+[syntax.tag]
+color = "$colors.color14"
+
+[syntax.type]
+color = "$colors.color14"
+style = false
+weight = false
+
+[syntax.var]
+color = "$colors.color10"
+
+[tabs]
+inactive = "$colors.color3"
+active = "$colors.color4"
+
+[overrides]
+"border.focused" = false
+"border.selected" = "$colors.color9..7F"
+"border.transparent" = "$colors.color9..7F"
+"border.disabled" = "$colors.color9..7F"
+"surface.background" = "$colors.color3"
+"text" = "$colors.color5"
+"scrollbar.thumb.hover_background" = "#3a4054"
+"scrollbar.track.border" = "$colors.color2..25"
+"editor.highlighted_line.background" = "$colors.color9"
+"editor.line_number" = "$colors.color18"
+"editor.wrap_guide" = "$colors.color9..7F"
+"editor.active_wrap_guide" = "$colors.color9..7F"
+"editor.document_highlight.write_background" = false
+"terminal.foreground" = "$colors.color10"
+"terminal.bright_foreground" = false
+"terminal.dim_foreground" = false
+"terminal.ansi.dim_black" = false
+"link_text.hover" = false
+"conflict" = "$colors.color17"
+"deleted" = "$colors.color15"
+"error" = "$colors.color15"
+"error.background" = "#FF5370a0"
+"hint.border" = "$colors.color8"
+"info.border" = "$colors.color8"
+"success" = false
+"warning.border" = "#CFA879"
+"syntax.hint.color" = false
+"syntax.hint.font_style" = false
+"syntax.link_text.color" = false
+"syntax.link_uri.color" = false
+"syntax.primary.color" = false
+"syntax.punctuation.special.symbol.color" = false
+"syntax.string.escape.color" = "$colors.color17"
+"syntax.text.literal.color" = "$colors.color12"
+"syntax.type.interface.color" = false
+"syntax.type.super.color" = false
+"syntax.variable.special.color" = "$colors.color14"
+"syntax.variable.special.font_style" = false
+"syntax.variable.special.font_weight" = false

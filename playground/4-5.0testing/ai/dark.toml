@@ -1,0 +1,215 @@
+name = "Midnight Coder"
+theme = "dark"
+primary = "#C678DD"
+
+[colors]
+jeans_blue = "#61AFEF"
+cadet_blue = "#ABB2BF"
+fountain_blue = "#56B6C2"
+blueberry = "#528BFF"
+pistachio = "#98C379"
+chalky = "#E5C07B"
+brown_yellow = "#D19A66"
+bright_gray = "#3E4451"
+dark_gunmetal = "#21252B"
+froly = "#E06C75"
+sunset = "#BE5046"
+
+[border]
+primary = "$colors.bright_gray"
+secondary = "$primary..a0"
+selected = "$border.primary"
+scrollbar = "$border.secondary"
+wrap = "$colors.bright_gray"
+
+[background]
+primary = "#282C34"
+secondary = "$colors.dark_gunmetal"
+gutter = "$background.primary"
+surface = "$background.secondary"
+drop_target = "$colors.bright_gray..80"
+panel = "#2C313A"
+
+[background.bars]
+bottombar = "$colors.dark_gunmetal"
+topbar = "$colors.dark_gunmetal"
+toolbar = "$background.primary"
+tabbar = "$colors.dark_gunmetal"
+scrollbar = "#4B526300"
+scrollbar_thumb = "#4B526390"
+
+[tabs]
+background = "$background.bars.tabbar"
+active = "$background.primary"
+inactive = "$background.bars.tabbar"
+
+[button]
+primary = "$colors.jeans_blue"
+active = "$colors.fountain_blue"
+selected = "$colors.pistachio"
+disabled = "#5C6370"
+
+[element]
+primary = "$colors.cadet_blue..00"
+hover = "$primary..90"
+active = "$colors.fountain_blue..80"
+selected = "$colors.pistachio..50"
+disabled = "#5C6370"
+
+[foreground]
+primary = "$colors.cadet_blue"
+secondary = "$colors.cadet_blue..90"
+hover = "$colors.jeans_blue..80"
+placeholder = "#fC6370"
+inactive = "#4B5263"
+line = "$primary"
+link = "$primary"
+
+[cursor]
+primary = "$primary"
+background = "$primary..40"
+selection = "$cursor.background"
+search = "$colors.chalky..a0"
+line = "#2C313A"
+highlighted = "$cursor.selection"
+spaces = "#3B4048"
+match = "$colors.blueberry..50"
+
+[scheme]
+comment = "#5C6370"
+black = "#282C34"
+black2 = "$colors.bright_gray"
+red = "$colors.froly"
+red2 = "$colors.sunset"
+green = "$colors.pistachio"
+green2 = "#7A9F60"
+yellow = "$colors.chalky"
+yellow2 = "$colors.brown_yellow"
+blue = "$colors.jeans_blue"
+blue2 = "$colors.blueberry"
+pink = "$primary"
+pink2 = "#B57EDC"
+cyan = "$colors.fountain_blue"
+cyan2 = "#3C909B"
+white = "$colors.cadet_blue"
+white2 = "#5C6370"
+
+[syntax.attribute]
+color = "$colors.chalky"
+style = false
+weight = false
+
+[syntax.boolean]
+color = "$colors.brown_yellow"
+style = false
+weight = false
+
+[syntax.constant]
+color = "$colors.brown_yellow"
+style = false
+weight = false
+
+[syntax.builtin]
+color = "$colors.chalky"
+style = false
+weight = false
+
+[syntax.function]
+color = "$colors.jeans_blue"
+style = false
+weight = 800
+
+[syntax.method]
+color = "$syntax.function.color"
+style = "$syntax.function.style"
+weight = "$syntax.function.weight"
+
+[syntax.special]
+color = "$colors.fountain_blue"
+style = false
+weight = false
+
+[syntax.keyword]
+color = "$primary"
+style = "italic"
+weight = 500
+
+[syntax.number]
+color = "$colors.brown_yellow"
+style = false
+weight = false
+
+[syntax.operator]
+color = "$colors.fountain_blue"
+style = false
+weight = false
+
+[syntax.parameter]
+color = "$colors.cadet_blue"
+style = false
+weight = false
+
+[syntax.property]
+color = "$colors.froly"
+style = false
+weight = false
+
+[syntax.punctuation]
+color = "$colors.cadet_blue"
+style = false
+weight = false
+
+[syntax.punctuation.bracket]
+color = "$syntax.punctuation.color"
+style = "$syntax.punctuation.style"
+weight = "$syntax.punctuation.weight"
+
+[syntax.punctuation.delimiter]
+color = "$syntax.punctuation.color"
+style = "$syntax.punctuation.style"
+weight = "$syntax.punctuation.weight"
+
+[syntax.punctuation.list]
+color = "$syntax.punctuation.color"
+style = "$syntax.punctuation.style"
+weight = "$syntax.punctuation.weight"
+
+[syntax.punctuation.special]
+color = "$syntax.punctuation.color"
+style = "$syntax.punctuation.style"
+weight = "$syntax.punctuation.weight"
+
+[syntax.punctuation.symbol]
+color = "$syntax.punctuation.color"
+style = "$syntax.punctuation.style"
+weight = "$syntax.punctuation.weight"
+
+[syntax.string]
+color = "$colors.pistachio"
+style = false
+weight = false
+
+[syntax.string.escape]
+color = "$syntax.string.color"
+style = "$syntax.string.style"
+weight = "$syntax.string.weight"
+
+[syntax.type]
+color = "$colors.chalky"
+style = false
+weight = 800
+
+[syntax.type.builtin]
+color = "$syntax.builtin.color"
+style = "$syntax.builtin.style"
+weight = "$syntax.builtin.weight"
+
+[syntax.type.super]
+color = "$syntax.special.color"
+style = "$syntax.special.style"
+weight = "$syntax.special.weight"
+
+[syntax.variable]
+color = "$colors.froly"
+style = false
+weight = false

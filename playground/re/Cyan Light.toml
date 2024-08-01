@@ -1,0 +1,281 @@
+name = "Cyan Light"
+theme = "light"
+primary = "#3599A6"
+
+[colors]
+color1 = "#FCA4A7"
+color2 = "#E4E6EA"
+color3 = "#B5E7BE"
+color4 = "#F7E79F"
+color5 = "#C4DBFA"
+color6 = "#262626"
+color7 = "#00733B"
+color8 = "#000000"
+color9 = "#CE0505"
+color10 = "#2AAACB"
+color11 = "#000080"
+color12 = "#660E7A"
+color13 = "#BEC5CD"
+color14 = "#F2F3F7"
+color15 = "#808080"
+color16 = "#3E3E3E"
+color17 = "#067D17"
+color18 = "#B28C00"
+color19 = "#7A7A7A"
+color20 = "#0073E6"
+color21 = "#B6B6B6"
+color22 = "#F2F4F5"
+color23 = "#E4EAED"
+color24 = "#E4E4FF"
+color25 = "#063FDB"
+color26 = "#FBACFB"
+color27 = "#BFEEEE"
+color28 = "#929292"
+color29 = "#B8DDE0"
+color30 = "#A1DAE6"
+color31 = "#458383"
+
+[background]
+secondary = "$colors.color2"
+primary = "$colors.color14"
+panel = "$colors.color2"
+gutter = "$colors.color14..00"
+terminal = "#f3f3f3"
+code = "$colors.color19"
+
+[background.bars]
+bottombar = "$colors.color2"
+topbar = "#ffffff"
+toolbar = "$colors.color22"
+scrollbar_thumb = "#a2a3a6e0"
+scrollbar = "$colors.color16..00"
+
+[background.bars.tabbar]
+background = "$colors.color2"
+inactive = "$colors.color2"
+active = "$colors.color22"
+
+[border]
+primary = "$colors.color13"
+secondary = "$colors.color13"
+selected = "$colors.color13"
+scrollbar = "$colors.color16..00"
+
+[button]
+primary = "$colors.color2"
+active = "#3eb2c120"
+selected = "#4A4A4A"
+disabled = "#3C3C3C"
+
+[code.error]
+foreground = "$colors.color9"
+background = "$colors.color1"
+border = "$colors.color1"
+
+[code.info]
+foreground = "$colors.color19"
+background = "$colors.color5"
+border = "$colors.color5"
+
+[code.warning]
+foreground = "$colors.color18"
+background = "$colors.color4"
+border = "$colors.color4"
+
+[cursor]
+search = "#b8e6c7"
+line = "$colors.color23"
+highlighted = "$colors.color23"
+spaces = "#94B0B350"
+match = "$colors.color24"
+primary = "$colors.color8"
+background = "$colors.color29"
+selection = "$colors.color29..90"
+
+[element]
+hover = "#B1C9CC40"
+active = "#3EA2C140"
+selected = "#D0D8DC"
+disabled = "#207D99"
+
+[foreground]
+hover = "#B1C6CC"
+primary = "$colors.color6"
+secondary = "#4E4E4Ff0"
+placeholder = "$colors.color15"
+inactive = "$colors.color21"
+link = "$colors.color10"
+
+[foreground.linenumber]
+inactive = "$colors.color21"
+active = "#b3b3b3"
+
+[git.created]
+foreground = "$colors.color17"
+background = "$colors.color3"
+border = "$colors.color3"
+
+[git.ignored]
+foreground = "#6c707e"
+
+[git.modified]
+foreground = "$colors.color18"
+
+[players.2]
+cursor = "#197F8C"
+background = "$colors.color30"
+selection = "$colors.color30..70"
+
+[scheme]
+black = "$colors.color8"
+black2 = "$colors.color8"
+black3 = "$colors.color8"
+red = "$colors.color9"
+red2 = "$colors.color1"
+red3 = "$colors.color1"
+green = "$colors.color17"
+green2 = "$colors.color3"
+green3 = "$colors.color3"
+yellow = "$colors.color18"
+yellow2 = "$colors.color4"
+yellow3 = "$colors.color4"
+blue = "$colors.color25"
+blue2 = "$colors.color5"
+blue3 = "$colors.color5"
+magenta = "#B309B3"
+magenta2 = "$colors.color26"
+magenta3 = "$colors.color26"
+cyan = "#028E8E"
+cyan2 = "$colors.color27"
+cyan3 = "$colors.color27"
+white = "#656565"
+white2 = "$colors.color28"
+white3 = "$colors.color28"
+
+[syntax.attribute]
+color = "$colors.color20"
+style = "normal"
+
+[syntax.boolean]
+color = "$colors.color20"
+style = "normal"
+
+[syntax.builtin]
+style = "italic"
+
+[syntax.comment]
+color = "$colors.color15"
+style = "italic"
+
+[syntax.constant]
+color = "$colors.color31"
+style = "normal"
+
+[syntax.constructor]
+color = "#4EC9B0"
+style = "normal"
+
+[syntax.enum]
+color = "$colors.color11"
+style = "normal"
+
+[syntax.escape]
+color = "$colors.color7"
+style = "normal"
+
+[syntax.function]
+style = "normal"
+
+[syntax.hint]
+color = "$colors.color19"
+style = "italic"
+
+[syntax.keyword]
+color = "$colors.color11"
+style = "normal"
+
+[syntax.method]
+color = "#914C07"
+style = "normal"
+
+[syntax.number]
+color = "$colors.color20"
+style = "normal"
+
+[syntax.operator]
+style = "normal"
+
+[syntax.primary]
+color = "$colors.color10"
+
+[syntax.property]
+color = "$colors.color12"
+style = "normal"
+
+[syntax.punctuation]
+style = "normal"
+
+[syntax.punctuation.bracket]
+style = "normal"
+
+[syntax.punctuation.delimiter]
+style = "normal"
+
+[syntax.punctuation.list]
+style = "normal"
+
+[syntax.punctuation.special]
+style = "normal"
+
+[syntax.punctuation.symbol]
+style = "normal"
+
+[syntax.special]
+color = "$colors.color12"
+style = "italic"
+
+[syntax.string]
+color = "$colors.color7"
+style = "normal"
+
+[syntax.string.regex]
+color = "$colors.color7"
+style = "normal"
+
+[syntax.string.special]
+color = "$colors.color7"
+style = "normal"
+
+[syntax.tag]
+color = "$colors.color11"
+style = "normal"
+
+[syntax.type]
+color = "$colors.color12"
+style = "italic"
+
+[syntax.variable]
+color = "$colors.color31"
+style = "normal"
+
+[syntax.variable.parameter]
+style = "normal"
+
+[syntax.variable.special]
+color = "$colors.color11"
+style = "normal"
+
+[overrides]
+"style.[border.selected]" = false
+"style.[panel.focused_border]" = false
+"style.[pane.focused_border]" = false
+"style.[scrollbar.thumb.hover_background]" = false
+"style.[editor.wrap_guide]" = false
+"style.[hidden.border]" = false
+"style.predictive" = false
+"style.unreachable" = false
+"style.syntax.[variable.member].color" = false
+"style.syntax.[constant.builtin].color" = false
+"style.syntax.[type.builtin].color" = false
+"style.syntax.[variable.parameter].color" = false
+"style.[surface.background]" = false

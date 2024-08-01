@@ -1,0 +1,234 @@
+name = "Yue Fullmoon TEST"
+theme = "dark"
+primary = "$colors.color1..df"
+
+[colors]
+color1 = "#FF89B2"
+color2 = "#414963"
+color3 = "#1D212E"
+color4 = "#AFA0FF"
+color5 = "#FFD5A3"
+color6 = "#282D3B"
+color7 = "#AEE1E0"
+color8 = "#FF657F"
+color9 = "#A1B1E6"
+color10 = "#181C26"
+color11 = "#DFE0F2"
+color12 = "#CCFFFF"
+color13 = "#7A7B91"
+color14 = "#C7EFB2"
+
+[backgroud]
+secondary = "$colors.color3"
+
+[background]
+surface = "$colors.color3"
+bottombar = "$colors.color10"
+toolbar = "$colors.color6"
+panel = "$colors.color3"
+gutter = "$colors.color6"
+
+[background.topbar]
+active = "$colors.color10"
+
+[border]
+secondary = "$colors.color9..25"
+selected = "$colors.color2..7F"
+transparent = "$colors.color2..7F"
+disabled = "$colors.color2..7F"
+
+[button]
+primary = "$colors.color3"
+selected = "$colors.color3"
+
+[code.error]
+foreground = "$colors.color8"
+background = "#FF5370a0"
+border = "$colors.color8"
+
+[code.hint]
+foreground = "#6D7694ff"
+background = "$colors.color4..a0"
+border = "$colors.color4"
+
+[code.info]
+foreground = "$colors.color4"
+background = "$colors.color4..a0"
+border = "$colors.color4"
+
+[code.warning]
+foreground = "$colors.color5"
+background = "#ffd39cb0"
+border = "#CFA879"
+
+[cursor]
+search = "$colors.color4..90"
+highlighted = "$colors.color2"
+match = "$colors.color2"
+
+[element]
+hover = "#414860"
+active = "$colors.color9..15"
+selected = "$colors.color9..25"
+
+[foregorund]
+ignored = "#6D7694"
+
+[foreground]
+hover = "$colors.color3"
+secondary = "#8F95A8"
+placeholder = "#717B99"
+
+[foreground.linenumber]
+inactive = "$colors.color13"
+active = "$colors.color1"
+
+[git.conflict]
+foreground = "$colors.color12"
+
+[git.created]
+foreground = "$colors.color14"
+
+[git.deleted]
+foreground = "$colors.color8"
+background = "$colors.color8"
+border = "$colors.color8"
+
+[git.modified]
+foreground = "$colors.color5"
+
+[guide]
+inactive = "$colors.color2..7F"
+active = "$colors.color2..7F"
+
+[players.1]
+cursor = "$colors.color1..df"
+background = "#00000000"
+selection = "$colors.color1..3f"
+
+[scrollbar]
+track = "$colors.color6"
+
+[syntax.boolean]
+color = "$colors.color12"
+
+[syntax.constant]
+color = "$colors.color12"
+
+[syntax.constructor]
+color = "$colors.color7"
+
+[syntax.doc]
+color = "$colors.color13"
+
+[syntax.function]
+color = "$colors.color14"
+
+[syntax.keyword]
+color = "#cc94c5"
+
+[syntax.number]
+color = "$colors.color4"
+
+[syntax.operator]
+color = "#ffa697"
+
+[syntax.punctuation.bracket]
+color = "$colors.color1"
+
+[syntax.punctuation.delimiter]
+color = "$colors.color1"
+
+[syntax.punctuation.list]
+color = "$colors.color1"
+
+[syntax.punctuation.special]
+color = "$colors.color1"
+
+[syntax.string.escape]
+color = "$colors.color12"
+
+[syntax.string.regex]
+color = "$colors.color5"
+
+[syntax.string.symbol]
+color = "$colors.color5"
+
+[syntax.tag]
+color = "$colors.color7"
+
+[syntax.text.literal]
+color = "$colors.color5"
+
+[syntax.type]
+color = "$colors.color7"
+
+[syntax.variable.special]
+color = "$colors.color7"
+
+[tabs]
+background = "$colors.color10"
+inactive = "$colors.color3"
+active = "$colors.color6"
+
+[terminal]
+background = "$colors.color6"
+foreground = "$colors.color11"
+black = "$colors.color2"
+bright_black = "$colors.color11..90"
+red = "$colors.color1"
+green = "$colors.color14"
+yellow = "$colors.color5"
+blue = "$colors.color4"
+magenta = "#cc94c5"
+cyan = "$colors.color7"
+white = "$colors.color11"
+
+[overrides]
+"style.[border.focused]" = false
+"style.[panel.focused_border]" = false
+"style.[pane.focused_border]" = false
+"style.[scrollbar.thumb.border]" = false
+"style.[terminal.bright_foreground]" = false
+"style.[terminal.dim_foreground]" = false
+"style.[terminal.ansi.dim_black]" = false
+"style.[terminal.ansi.bright_red]" = false
+"style.[terminal.ansi.dim_red]" = false
+"style.[terminal.ansi.bright_yellow]" = false
+"style.[terminal.ansi.dim_yellow]" = false
+"style.[terminal.ansi.bright_blue]" = false
+"style.[terminal.ansi.dim_blue]" = false
+"style.[link_text.hover]" = false
+"style.[conflict.background]" = false
+"style.[conflict.border]" = false
+"style.hidden" = false
+"style.[hidden.background]" = false
+"style.[hidden.border]" = false
+"style.[ignored.background]" = false
+"style.[ignored.border]" = false
+"style.[modified.background]" = false
+"style.[modified.border]" = false
+"style.[predictive.background]" = false
+"style.[predictive.border]" = false
+"style.[renamed.background]" = false
+"style.[renamed.border]" = false
+"style.success" = false
+"style.[unreachable.background]" = false
+"style.[unreachable.border]" = false
+"style.[scrollbar.track.border]" = "$colors.color9..25"
+"style.[editor.subheader.background]" = "$colors.color3"
+"style.syntax.comment.color" = "$colors.color13"
+"style.syntax.punctuation.color" = "$colors.color1"
+"style.syntax.string.color" = "$colors.color5"
+"style.syntax.[string.special].color" = "$colors.color5"
+"style.syntax.variable.color" = "$colors.color11"
+"style.border" = "$colors.color10"
+"style.background" = "$colors.color6"
+"style.[editor.background]" = "$colors.color6"
+"style.text" = "#D9E1FF"
+"style.[editor.foreground]" = "#D9E1FF"
+"style.[text.disabled]" = "#717B99"
+"style.[icon.accent]" = false
+"style.[scrollbar.thumb.hover_background]" = "#3A4054"
+"style.[editor.active_line.background]" = "$colors.color2..7F"
+"style.[editor.document_highlight.write_background]" = false
