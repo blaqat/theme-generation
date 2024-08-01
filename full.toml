@@ -1,0 +1,517 @@
+name = "Theme Name"
+theme = "dark"
+primary = "#ff0000"
+
+[border]
+primary = "#ff0000"
+secondary = "#00ff00"
+selected = "$border.primary"
+scrollbar = "#ff0000"
+wrap = "#ff0000"
+# transparent = "#00000000"
+# disabled = "#888888"
+# code = "#ff0000"
+# git = "#ff0000"
+
+[background]
+primary = "#ff0000"
+secondary = "#00ff00"
+gutter = "$background.primary"
+surface = "$background.secondary"
+drop_target = "#00000000"
+panel = "#ff0000"
+# code = "#ff0000"
+# git = "#ff0000"
+# terminal = "#ff0000"
+
+[background.bars]
+bottombar = "#ff0000"
+topbar = "#ff0000"
+toolbar = "#ff0000"
+tabbar = "#ff00ff"
+scrollbar = "#ff0000"
+
+# [background.topbar]
+# active = "#ff0000"
+# inactive = "#00ff00"
+
+# [background.tabbar]
+# active = "#ff0000"
+# inactive = "#00ff00"
+# background = "#ff0000"
+
+[button]
+primary = "#ff0000"
+# hover = "$foreground.hover"
+active = "#00ff00"
+selected = "#00ff00"
+disabled = "#888888"
+
+[element]
+primary = "#ff0000"
+hover = "#00ff00"
+active = "#00ff00"
+selected = "#00ff00"
+disabled = "#888888"
+
+[foreground]
+primary = "#ff0000"
+hover = "#00ff00"
+placeholder = "#888888"
+inactive = "#888888"
+line = "#ff0000"
+link = "$primary"
+# read = "$cursor.match"
+# write = "$cursor.match"
+# accent = "$primary"
+
+# [foreground.linenumber]
+# inactive = "$foreground.inactive"
+# active = "$foreground.line"
+
+
+# [icon]
+# primary = "#ff0000"
+# secondary = "#00ff00"
+# inactive = "#888888"
+# accent = "$primary"
+
+# [tabs]
+# background = "$background.tabbar.background"
+# inactive = "$background.tabbar.inactive"
+# active = "$background.tabbar.active"
+
+[cursor]
+primary = "#ff0000"
+background = "#00ff00"
+selection = "$cursor.background"
+search = "#ff0000"
+line = "#ff0000"
+highlighted = "$cursor.line"
+spaces = "#ff0000"
+match = "#ff0000"
+
+# [panel]
+# background = "$background.panel"
+# focused = "$border.selected"
+
+# [pane]
+# focused = "$border.selected"
+
+# [scrollbar]
+# border = "$border.scrollbar"
+# primary = "$background.scrollbar"
+# secondary = "$scrollbar.border"
+# track = "$scrollbar.primary"
+# hover = "$scrollbar.secondary"
+
+# [guide]
+# inactive = "$border.transparent"
+# active = "$border.wrap"
+
+# [terminal]
+# background = "$background.terminal"
+# foreground = "$foreground.primary"
+# bright_foreground = "$terminal.foreground"
+# dim_foreground = "$terminal.foreground"
+# black = "$scheme.black"
+# bright_black = "$scheme.black2"
+# dim_black = "$scheme.black3"
+# red = "$scheme.red"
+# bright_red = "$scheme.red2"
+# dim_red = "$scheme.red3"
+# green = "$scheme.green"
+# bright_green = "$scheme.green2"
+# dim_green = "$scheme.green3"
+# yellow = "$scheme.yellow"
+# bright_yellow = "$scheme.yellow2"
+# dim_yellow = "$scheme.yellow3"
+# blue = "$scheme.blue"
+# bright_blue = "$scheme.blue2"
+# dim_blue = "$scheme.blue3"
+# magenta = "$scheme.pink"
+# bright_magenta = "$scheme.pink2"
+# dim_magenta = "$scheme.pink3"
+# cyan = "$scheme.cyan"
+# bright_cyan = "$scheme.cyan2"
+# dim_cyan = "$scheme.cyan3"
+# white = "$scheme.white"
+# bright_white = "$scheme.white2"
+# dim_white = "$scheme.white3"
+
+[scheme]
+comment = "#ff0000"
+black = "#ff0000"
+black2 = "#00ff00"
+# black3 = "$scheme.black2"
+red = "#ff0000"
+red2 = "#00ff00"
+# red3 = "$scheme.red2"
+green = "#ff0000"
+green2 = "#00ff00"
+# green3 = "$scheme.green2"
+yellow = "#ff0000"
+yellow2 = "#00ff00"
+# yellow3 = "$scheme.yellow2"
+blue = "#ff0000"
+blue2 = "#00ff00"
+# blue3 = "$scheme.blue2"
+pink = "#ff0000"
+pink2 = "#00ff00"
+# pink3 = "$scheme.pink2"
+cyan = "#ff0000"
+cyan2 = "#00ff00"
+# cyan3 = "$scheme.cyan2"
+white = "#ff0000"
+white2 = "#00ff00"
+# white3 = "$scheme.white2"
+
+# [git.conflict]
+# foreground = "$scheme.red"
+# background = "$scheme.red2"
+# border = "$scheme.red3"
+
+# [git.created]
+# foreground = "$scheme.green"
+# background = "$scheme.green2"
+# border = "$scheme.green3"
+
+# [git.deleted]
+# foreground = "$scheme.red"
+# background = "$scheme.red2"
+# border = "$scheme.red3"
+
+# [git.modified]
+# foreground = "$scheme.yellow"
+# background = "$scheme.yellow2"
+# border = "$scheme.yellow3"
+
+# [git.ignored]
+# foreground = "$foreground.ignored"
+# # background = "$background.git"
+# # border = "$border.git"
+
+# [git.renamed]
+# foreground = "$scheme.pink"
+# background = "$scheme.pink2"
+# border = "$scheme.pink3"
+
+# [code.error]
+# foreground = "$scheme.red"
+# background = "$scheme.red2"
+# border = "$scheme.red3"
+
+# [code.warning]
+# foreground = "$scheme.yellow"
+# background = "$scheme.yellow2"
+# border = "$scheme.yellow3"
+
+# [code.success]
+# foreground = "$scheme.green"
+# background = "$scheme.green2"
+# border = "$scheme.green3"
+
+# [code.info]
+# foreground = "$scheme.blue"
+# background = "$scheme.blue2"
+# border = "$scheme.blue3"
+
+# [code.hint]
+# foreground = "$scheme.blue"
+# background = "$scheme.blue2"
+# border = "$scheme.blue3"
+
+# [code.hidden]
+# foreground = "$foreground.inactive"
+# background = "$background.code"
+# border = "$border.code"
+
+# [code.predictive]
+# foreground = "$foreground.predictive"
+# background = "$background.code"
+# border = "$border.code"
+
+# [code.unreachable]
+# foreground = "$foreground.inactive"
+# background = "$background.code"
+# border = "$border.code"
+
+# [players.0]
+# cursor = "$cursor.primary"
+# background = "$cursor.background"
+# selection = "$cursor.selection"
+
+[syntax.attribute]
+color = "#ff0000"
+style = false
+weight = false
+
+[syntax.boolean]
+color = "#ff0000"
+style = false
+weight = false
+
+# [syntax.comment]
+# color = "$scheme.comment"
+# style = "italic"
+# weight = false
+
+# [syntax.doc]
+# color = "$syntax.comment.color"
+# style = "$syntax.comment.style"
+# weight = "$syntax.comment.weight"
+
+[syntax.constant]
+color = "#ff0000"
+style = false
+weight = false
+
+# [syntax.constant.builtin]
+# color = "$syntax.builtin.color"
+# style = "$syntax.builtin.style"
+# weight = "$syntax.builtin.weight"
+
+# [syntax.constant.character]
+# color = "$syntax.constant.color"
+# style = "$syntax.constant.style"
+# weight = "$syntax.constant.weight"
+
+[syntax.builtin]
+color = "#ff0000"
+style = false
+weight = false
+
+# [syntax.constructor]
+# color = "#ff0000"
+# style = false
+# weight = false
+
+# [syntax.embedded]
+# color = "#ff0000"
+# style = false
+# weight = false
+
+# [syntax.emphasis]
+# color = "#ff0000"
+# style = false
+# weight = false
+
+# [syntax.emphasis.strong]
+# color = "$syntax.emphasis.color"
+# style = "$syntax.emphasis.style"
+# weight = "$syntax.emphasis.weight"
+
+# [symtax.enum]
+# color = "$syntax.special.color"
+# style = "$syntax.special.style"
+# weight = "$syntax.special.weight"
+
+# [syntax.escape]
+# color = "#ff0000"
+# style = false
+# weight = false
+
+[syntax.function]
+color = "#ff0000"
+style = false
+weight = 800
+
+[syntax.method]
+color = "$syntax.function.color"
+style = "$syntax.function.style"
+weight = "$syntax.function.weight"
+
+# [syntax.definition]
+# color = "$syntax.function.color"
+# style = "$syntax.function.style"
+# weight = "$syntax.function.weight"
+
+[syntax.special]
+color = "#ff0000"
+style = false
+weight = false
+
+# [syntax.hint]
+# color = "$foreground.hint"
+# style = false
+# weight = false
+
+[syntax.keyword]
+color = "#ff0000"
+style = false
+weight = 800
+
+# [syntax.label]
+# color = "#ff0000"
+# style = false
+# weight = false
+
+# [syntax.lifetime]
+# color = "$syntax.special.color"
+# style = "$syntax.special.style"
+# weight = "$syntax.special.weight"
+
+# [syntax.link]
+# color = "$foreground.link"
+# style = false
+# weight = false
+
+# [syntax.macro]
+# color = "$syntax.special.color"
+# style = "$syntax.special.style"
+# weight = "$syntax.special.weight"
+
+[syntax.number]
+color = "#ff0000"
+style = false
+weight = false
+
+[syntax.operator]
+color = "#ff0000"
+style = false
+weight = false
+
+[syntax.parameter]
+color = "#ff0000"
+style = false
+weight = false
+
+# [syntax.predictive]
+# color = "$foreground.predictive"
+# style = false
+# weight = false
+
+# [syntax.preproc]
+# color = "$syntax.macro.color"
+# style = "$syntax.macro.style"
+# weight = "$syntax.macro.weight"
+
+# [syntax.primary]
+# color = "$primary"
+# style = false
+# weight = false
+
+[syntax.property]
+color = "#ff0000"
+style = false
+weight = false
+
+# [syntax.json_key]
+# color = "$syntax.property.color"
+# style = "$syntax.property.style"
+# weight = "$syntax.property.weight"
+
+[syntax.punctuation]
+color = "#ff0000"
+style = false
+weight = false
+
+[syntax.punctuation.bracket]
+color = "$syntax.punctuation.color"
+style = "$syntax.punctuation.style"
+weight = "$syntax.punctuation.weight"
+
+[syntax.punctuation.delimiter]
+color = "$syntax.punctuation.color"
+style = "$syntax.punctuation.style"
+weight = "$syntax.punctuation.weight"
+
+[syntax.punctuation.list]
+color = "$syntax.punctuation.color"
+style = "$syntax.punctuation.style"
+weight = "$syntax.punctuation.weight"
+
+[syntax.punctuation.special]
+color = "$syntax.punctuation.color"
+style = "$syntax.punctuation.style"
+weight = "$syntax.punctuation.weight"
+
+[syntax.punctuation.symbol]
+color = "$syntax.punctuation.color"
+style = "$syntax.punctuation.style"
+weight = "$syntax.punctuation.weight"
+
+[syntax.string]
+color = "#ff0000"
+style = false
+weight = false
+
+# [syntax.string.doc]
+# color = "$syntax.doc.color"
+# style = "$syntax.doc.style"
+# weight = "$syntax.doc.weight"
+
+[syntax.string.escape]
+color = "$syntax.string.color"
+style = "$syntax.string.style"
+weight = "$syntax.string.weight"
+
+# [syntax.string.regex]
+# color = "$syntax.string.color"
+# style = "$syntax.string.style"
+# weight = "$syntax.string.weight"
+
+# [syntax.string.special]
+# color = "$syntax.string.color"
+# style = "$syntax.string.style"
+# weight = "$syntax.string.weight"
+
+# [syntax.tag]
+# color = "#ff0000"
+# style = false
+# weight = false
+
+# [syntax.text]
+# color = "$syntax.variable.color"
+# style = "$syntax.variable.style"
+# weight = "$syntax.variable.weight"
+
+# [syntax.text.literal]
+# color = "$syntax.text.color"
+# style = "$syntax.text.style"
+# weight = "$syntax.text.weight"
+
+[syntax.type]
+color = "#ff0000"
+style = false
+weight = 800
+
+[syntax.type.builtin]
+color = "$syntax.builtin.color"
+style = "$syntax.builtin.style"
+weight = "$syntax.builtin.weight"
+
+[syntax.type.super]
+color = "$syntax.special.color"
+style = "$syntax.special.style"
+weight = "$syntax.special.weight"
+
+# [syntax.type.interface]
+# color = "$syntax.type.color"
+# style = "$syntax.type.style"
+# weight = "$syntax.type.weight"
+
+[syntax.variable]
+color = "#ff0000"
+style = false
+weight = false
+
+# [syntax.variable.member]
+# color = "$syntax.variable.color"
+# style = "$syntax.variable.style"
+# weight = "$syntax.variable.weight"
+
+# [syntax.variable.parameter]
+# color = "$syntax.parameter.color"
+# style = "$syntax.parameter.style"
+# weight = "$syntax.parameter.weight"
+
+# [syntax.variable.special]
+# color = "$syntax.special.color"
+# style = "$syntax.special.style"
+# weight = "$syntax.special.weight"
+
+# [syntax.variant]
+# color = "$syntax.variable.color"
+# style = "$syntax.variable.style"
+# weight = "$syntax.variable.weight"

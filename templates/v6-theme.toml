@@ -1,0 +1,215 @@
+name = "Midnight Coder"
+theme = "dark"
+primary = "#C678DD"
+
+[colors]
+color1 = "#61AFEF"
+color2 = "#ABB2BF"
+color3 = "#56B6C2"
+color4 = "#528BFF"
+color5 = "#98C379"
+color6 = "#E5C07B"
+color7 = "#D19A66"
+color8 = "#3E4451"
+color9 = "#21252B"
+color10 = "#E06C75"
+color11 = "#BE5046"
+
+[border]
+primary = "$colors.color8"
+secondary = "$primary..a0"
+selected = "$border.primary"
+scrollbar = "$border.secondary"
+wrap = "$colors.color8"
+
+[background]
+primary = "#282C34"
+secondary = "$colors.color9"
+gutter = "$background.primary"
+surface = "$background.secondary"
+drop_target = "$colors.color8..80"
+panel = "#2C313A"
+
+[background.bars]
+bottombar = "$colors.color9"
+topbar = "$colors.color9"
+toolbar = "$background.primary"
+tabbar = "$colors.color9"
+scrollbar = "#4B526300"
+scrollbar_thumb = "#4B526390"
+
+[tabs]
+background = "$background.bars.tabbar"
+active = "$background.primary"
+inactive = "$background.bars.tabbar"
+
+[button]
+primary = "$colors.color1"
+active = "$colors.color3"
+selected = "$colors.color5"
+disabled = "#5C6370"
+
+[element]
+primary = "$colors.color2..00"
+hover = "$primary..90"
+active = "$colors.color3..80"
+selected = "$colors.color5..80"
+disabled = "#5C6370"
+
+[foreground]
+primary = "$colors.color2"
+secondary = "$colors.color2..90"
+hover = "$colors.color1..80"
+placeholder = "#5C6370"
+inactive = "#4B5263"
+line = "$primary"
+link = "$primary"
+
+[cursor]
+primary = "$primary"
+background = "$primary..40"
+selection = "$cursor.background"
+search = "$colors.color6..a0"
+line = "#2C313A"
+highlighted = "$cursor.selection"
+spaces = "#3B4048"
+match = "$colors.color4..50"
+
+[scheme]
+comment = "#5C6370"
+black = "#282C34"
+black2 = "$colors.color8"
+red = "$colors.color10"
+red2 = "$colors.color11"
+green = "$colors.color5"
+green2 = "#7A9F60"
+yellow = "$colors.color6"
+yellow2 = "$colors.color7"
+blue = "$colors.color1"
+blue2 = "$colors.color4"
+pink = "$primary"
+pink2 = "#B57EDC"
+cyan = "$colors.color3"
+cyan2 = "#3C909B"
+white = "$colors.color2"
+white2 = "#5C6370"
+
+[syntax.attribute]
+color = "$colors.color6"
+style = false
+weight = false
+
+[syntax.boolean]
+color = "$colors.color7"
+style = false
+weight = false
+
+[syntax.constant]
+color = "$colors.color7"
+style = false
+weight = false
+
+[syntax.builtin]
+color = "$colors.color6"
+style = false
+weight = false
+
+[syntax.function]
+color = "$colors.color1"
+style = false
+weight = 800
+
+[syntax.method]
+color = "$syntax.function.color"
+style = "$syntax.function.style"
+weight = "$syntax.function.weight"
+
+[syntax.special]
+color = "$colors.color3"
+style = false
+weight = false
+
+[syntax.keyword]
+color = "$primary"
+style = "italic"
+weight = 500
+
+[syntax.number]
+color = "$colors.color7"
+style = false
+weight = false
+
+[syntax.operator]
+color = "$colors.color3"
+style = false
+weight = false
+
+[syntax.parameter]
+color = "$colors.color2"
+style = false
+weight = false
+
+[syntax.property]
+color = "$colors.color10"
+style = false
+weight = false
+
+[syntax.punctuation]
+color = "$colors.color2"
+style = false
+weight = false
+
+[syntax.punctuation.bracket]
+color = "$syntax.punctuation.color"
+style = "$syntax.punctuation.style"
+weight = "$syntax.punctuation.weight"
+
+[syntax.punctuation.delimiter]
+color = "$syntax.punctuation.color"
+style = "$syntax.punctuation.style"
+weight = "$syntax.punctuation.weight"
+
+[syntax.punctuation.list]
+color = "$syntax.punctuation.color"
+style = "$syntax.punctuation.style"
+weight = "$syntax.punctuation.weight"
+
+[syntax.punctuation.special]
+color = "$syntax.punctuation.color"
+style = "$syntax.punctuation.style"
+weight = "$syntax.punctuation.weight"
+
+[syntax.punctuation.symbol]
+color = "$syntax.punctuation.color"
+style = "$syntax.punctuation.style"
+weight = "$syntax.punctuation.weight"
+
+[syntax.string]
+color = "$colors.color5"
+style = false
+weight = false
+
+[syntax.string.escape]
+color = "$syntax.string.color"
+style = "$syntax.string.style"
+weight = "$syntax.string.weight"
+
+[syntax.type]
+color = "$colors.color6"
+style = false
+weight = 800
+
+[syntax.type.builtin]
+color = "$syntax.builtin.color"
+style = "$syntax.builtin.style"
+weight = "$syntax.builtin.weight"
+
+[syntax.type.super]
+color = "$syntax.special.color"
+style = "$syntax.special.style"
+weight = "$syntax.special.weight"
+
+[syntax.variable]
+color = "$colors.color10"
+style = false
+weight = false
