@@ -11,7 +11,6 @@
       {
         "border": "$border.primary",
         "border.variant": "$border.secondary",
-        "border.focused": "$border.selected, $border.primary",
         "border.selected": "$border.selected, $border.primary",
         "border.transparent": "$border.transparent",
         "border.disabled": "$border.disabled",
@@ -33,7 +32,7 @@
         "text.muted": "$foreground.secondary",
         "text.placeholder": "$foreground.placeholder",
         "text.disabled": "$foreground.inactive",
-        "text.accent": "$primary, $foreground.accent",
+        "text.accent": "$foreground.accent, $primary, $foreground.accent",
         "icon": "$icon.primary",
         "icon.muted": "$icon.secondary",
         "icon.disabled": "$icon.inactive",

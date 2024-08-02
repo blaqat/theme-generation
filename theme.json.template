@@ -217,9 +217,9 @@
 						"font_weight": "$syntax.constant.character.weight, $syntax.special.weight, $syntax.constant.weight"
 					},
 					"constructor": {
-						"color": "$syntax.constructor.color",
-						"font_style": "$syntax.constructor.style",
-						"font_weight": "$syntax.constructor.weight"
+						"color": "$syntax.constructor.color, $syntax.punctuation.bracket.color, $syntax.punctuation.color",
+						"font_style": "$syntax.constructor.style, $syntax.punctuation.bracket.style, $syntax.punctuation.style",
+						"font_weight": "$syntax.constructor.weight, $syntax.punctuation.bracket.weight, $syntax.punctuation.weight"
 					},
 					"embedded": {
 						"color": "$syntax.embedded.color",

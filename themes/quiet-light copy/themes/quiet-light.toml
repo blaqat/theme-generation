@@ -1,6 +1,7 @@
 name = "Quiet Light"
 theme = "light"
-primary = "#4B69C6"
+primary = "#7A3E9D"
+secondary = "#8DBF60"
 
 [colors]
 white = "#F5F5F5"
@@ -26,7 +27,7 @@ code = "$background.primary"
 drop_target = "#C9D0D988"
 
 [background.bars]
-bottombar = "#a690ce"
+bottombar = "#957EBF"
 topbar = "#c4b7d7"
 toolbar = "$background.bars.tabbar.active"
 scrollbar_thumb = "#bbbbbbc0"
@@ -45,9 +46,8 @@ selected = "$border.primary"
 scrollbar = "$border.primary"
 
 [button]
-primary = "$primary..20"
-hover = "#ff0000"
-active = "$primary..40"
+primary = "$secondary..20"
+active = "$secondary..50"
 selected = "#4A4A4A"
 disabled = "#3C3C3C"
 
@@ -79,6 +79,7 @@ secondary = "#737373"
 placeholder = "$foreground.secondary..90"
 inactive = "$foreground.secondary..70"
 link = "$primary"
+accent = "$secondary"
 
 [foreground.linenumber]
 inactive = "#6D705B"
