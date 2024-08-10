@@ -1,9 +1,8 @@
 {
   "$schema": "https://zed.dev/schema/themes/v0.1.0.json",
-  "name": "quiet-light",
+  "name": "Theme Name",
   "author": "blaqat",
-  "themes":
-  [
+  "themes": [
     {
       "name": "$name",
       "appearance": "$theme",
@@ -11,6 +10,7 @@
       {
         "border": "$border.primary",
         "border.variant": "$border.secondary",
+        "border.focused": "$border.selected, $border.primary",
         "border.selected": "$border.selected, $border.primary",
         "border.transparent": "$border.transparent",
         "border.disabled": "$border.disabled",
@@ -32,7 +32,7 @@
         "text.muted": "$foreground.secondary",
         "text.placeholder": "$foreground.placeholder",
         "text.disabled": "$foreground.inactive",
-        "text.accent": "$foreground.accent, $primary, $foreground.accent",
+        "text.accent": "$foreground.accent, $primary",
         "icon": "$icon.primary",
         "icon.muted": "$icon.secondary",
         "icon.disabled": "$icon.inactive",
@@ -56,7 +56,7 @@
         "scrollbar.track.background": "$scrollbar.track, $scrollbar.secondary, $background.bars.scrollbar",
         "scrollbar.track.border": "$scrollbar.secondary, $scrollbar.border, $border.scrollbar",
         "editor.foreground": "$foreground.primary",
-        "editor.background": "$background.primary",
+        "editor.background": "$background.editor, $background.primary",
         "editor.gutter.background": "$background.gutter, $background.primary",
         "editor.subheader.background": "$background.secondary",
         "editor.active_line.background": "$cursor.line",
@@ -64,7 +64,7 @@
         "editor.line_number": "$foreground.linenumber.inactive, $foreground.inactive",
         "editor.active_line_number": "$foreground.linenumber.active, $foreground.line",
         "editor.invisible": "$cursor.spaces",
-        "editor.wrap_guide": "$guide.inactive, $border.",
+        "editor.wrap_guide": "$guide.inactive, $border.wrap",
         "editor.active_wrap_guide": "$guide.active",
         "editor.document_highlight.read_background": "$foreground.read, $cursor.match",
         "editor.document_highlight.write_background": "$foreground.write, $cursor.match",
@@ -228,9 +228,9 @@
           },
           "constructor":
           {
-            "color": "$syntax.constructor.color",
-            "font_style": "$syntax.constructor.style",
-            "font_weight": "$syntax.constructor.weight"
+            "color": "$syntax.constructor.color, $syntax.punctuation.bracket.color, $syntax.punctuation.color",
+            "font_style": "$syntax.constructor.style, $syntax.punctuation.bracket.style, $syntax.punctuation.style",
+            "font_weight": "$syntax.constructor.weight, $syntax.punctuation.bracket.weight, $syntax.punctuation.weight"
           },
           "embedded":
           {

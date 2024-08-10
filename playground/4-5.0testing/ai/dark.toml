@@ -36,7 +36,7 @@ topbar = "$colors.dark_gunmetal"
 toolbar = "$background.primary"
 tabbar = "$colors.dark_gunmetal"
 scrollbar = "#4B526300"
-scrollbar_thumb = "#4B526390"
+scrollbar_thumb = "#B526390"
 
 [tabs]
 background = "$background.bars.tabbar"

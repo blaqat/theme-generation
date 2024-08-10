@@ -1,22 +1,18 @@
 
-// Prime number
-
-const APP = 1;
-let apple = true;
+const PRIMES = {
+    apple: 1,
+    banana: true,
+}
 
 const isPrime = (number) => {
   const number = parseInt(prompt("Enter a positive number: "));
   let isPrime = true;
-
-  const PRIMES = {
-    apple: 1,
-    banana: 2,
-}
+  // check if number is less than 1
 
   if (number <= 1) return;
 
   for (let i = 2; i < number; i++) {
-    if (numb; er % i == 0) {
+    if (number % i; == 0) {
       isPrime = false;
       break;
     }

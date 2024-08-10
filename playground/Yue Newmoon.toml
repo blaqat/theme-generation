@@ -1,0 +1,191 @@
+name = "(TEST) Yue Newmoon"
+theme = "dark"
+primary = "#FFF1A6"
+
+[colors]
+
+[background]
+secondary = "#080508fe"
+surface = "#080508"
+primary = "#080508"
+drop_target = "#F9A2EC23"
+panel = "#080508"
+gutter = "#080508"
+terminal = "#080508"
+
+[background.bars]
+bottombar = "#080508"
+topbar = "#080508"
+toolbar = "#080508"
+scrollbar_thumb = "#3d2b3a90"
+scrollbar = "#080508"
+
+[background.bars.tabbar]
+background = "#08050800"
+inactive = "#08050800"
+active = "#080508"
+
+[border]
+primary = "#3D2B3A"
+secondary = "#3D2B3A"
+selected = "#F9A2EC33"
+transparent = "#F9A2EC33"
+disabled = "#F9A2EC33"
+scrollbar = "#F9A2EC20"
+
+[button]
+primary = "#F9A2EC33"
+active = "#F9A2EC13"
+selected = "#080508"
+
+[code.error]
+foreground = "#ff91a6"
+background = "#080508fe"
+border = "#ff91a6"
+
+[code.info]
+foreground = "#969696ff"
+background = "#080508fe"
+border = "#B6C6FF"
+
+[code.warning]
+foreground = "#FFF1A6"
+background = "#080508fe"
+border = "#FFF1A6"
+
+[cursor]
+search = "#FFF1A63a"
+line = "#F9A2EC33"
+primary = "#dfdfdf"
+background = "#08050800"
+selection = "#F9A2EC33"
+
+[element]
+hover = "#F9A2EC23"
+selected = "#F9A2EC33"
+
+[foreground]
+hover = "#F9A2EC13"
+primary = "#E6DAE4"
+secondary = "#B5ACB4"
+
+[foreground.linenumber]
+inactive = "#7A5674"
+active = "#dfdfdf"
+
+[git.created]
+foreground = "#D4FFB3"
+
+[git.ignored]
+foreground = "#4F3D4D"
+
+[git.modified]
+foreground = "#FFF1A6"
+
+[guide]
+active = "#F9A2EC33"
+
+[scheme]
+black = "#080508"
+black2 = "#3d2b3a"
+red = "#ff91a6"
+red2 = "#ff91a6"
+green = "#D4FFB3"
+yellow = "#FFF1A6"
+yellow3 = "#FFF1A6"
+blue = "#B6C6FF"
+magenta = "#F9A2EC"
+cyan = "#BFFFFF"
+white = "#B38FAB"
+red3 = "#ff91a6"
+blue2 = "#080508fe"
+blue3 = "#B6C6FF"
+
+[syntax.boolean]
+color = "#BFFFFF"
+
+[syntax.comment]
+color = "#7A5674"
+
+[syntax.constant]
+color = "#BFFFFF"
+
+[syntax.constructor]
+color = "#BFFFFF"
+
+[syntax.escape]
+color = "#BFFFFF"
+
+[syntax.function]
+color = "#D4FFB3"
+
+[syntax.keyword]
+color = "#F9A2EC"
+
+[syntax.number]
+color = "#CCB3FF"
+
+[syntax.operator]
+color = "#FFCAB3"
+
+[syntax.punctuation]
+color = "#FFB3DE"
+
+[syntax.punctuation.bracket]
+color = "#FFB3DE"
+
+[syntax.punctuation.delimiter]
+color = "#FFB3DE"
+
+[syntax.punctuation.list]
+color = "#FFB3DE"
+
+[syntax.punctuation.special]
+color = "#FFB3DE"
+
+[syntax.string]
+color = "#FFF1A6"
+
+[syntax.string.regex]
+color = "#FFF1A6"
+
+[syntax.string.special]
+color = "#FFF1A6"
+
+[syntax.tag]
+color = "#BFFFFF"
+
+[syntax.text]
+color = "#FFF1A6"
+
+[syntax.type]
+color = "#BFFFFF"
+
+[syntax.variable]
+color = "#F0D8EB"
+
+[syntax.variable.special]
+color = "#BFFFFF"
+
+[overrides]
+"style.[border.focused]" = false
+"style.[panel.focused_border]" = false
+"style.[pane.focused_border]" = false
+"style.[scrollbar.thumb.hover_background]" = false
+"style.[scrollbar.thumb.border]" = false
+"style.[terminal.bright_foreground]" = false
+"style.[terminal.dim_foreground]" = false
+"style.[terminal.ansi.dim_red]" = false
+"style.[terminal.ansi.bright_blue]" = false
+"style.[terminal.ansi.dim_blue]" = false
+"style.conflict" = false
+"style.[conflict.background]" = false
+"style.[conflict.border]" = false
+"style.[modified.border]" = false
+"style.success" = false
+"style.[editor.wrap_guide]" = "#F9A2EC33"
+"style.[editor.subheader.background]" = "#F9A2EC33"
+"style.[editor.foreground]" = "#DFDFDF"
+"style.[link_text.hover]" = false
+"style.[editor.highlighted_line.background]" = false
+"style.[terminal.ansi.dim_black]" = false

@@ -1,0 +1,258 @@
+name = "Polar Frozen"
+theme = "light"
+primary = "$colors.color8"
+
+[colors]
+color1 = "#4D7299"
+color2 = "#FFFFFF"
+color3 = "#78995C"
+color4 = "#283140"
+color5 = "#D9B46D"
+color6 = "#CC7078"
+color7 = "#ECEFF4"
+color8 = "#7CADBF"
+color9 = "#ADB9CC"
+color10 = "#6BB3B1"
+color11 = "#B3505A"
+color12 = "#A66C9B"
+color13 = "#69ADBF"
+
+[background]
+secondary = "$colors.color2"
+primary = "$colors.color2"
+panel = "$colors.color7..20"
+gutter = "$colors.color2"
+terminal = "$colors.color2"
+code = "$colors.color1..90"
+
+[background.bars]
+bottombar = "$colors.color7"
+topbar = "$colors.color7"
+toolbar = "$colors.color2"
+scrollbar_thumb = "$colors.color7..99"
+scrollbar = "$colors.color2"
+
+[background.bars.tabbar]
+background = "$colors.color7"
+inactive = "#F7F7FA"
+active = "$colors.color2"
+
+[border]
+primary = "$colors.color7"
+secondary = "$colors.color7"
+selected = "$colors.color7"
+scrollbar = "$colors.color2..50"
+
+[button]
+primary = "$colors.color7"
+active = "$colors.color9..90"
+selected = "#4A4A4A"
+disabled = "#3C3C3C"
+
+[code.error]
+foreground = "$colors.color11"
+background = "$colors.color6..10"
+border = "$colors.color6"
+
+[code.info]
+foreground = "$colors.color1..90"
+background = "$colors.color1..10"
+border = "$colors.color1"
+
+[code.warning]
+foreground = "$colors.color5"
+background = "$colors.color5..10"
+border = "$colors.color5"
+
+[cursor]
+search = "$colors.color13..66"
+line = "#EDEDF3c0"
+highlighted = "#edeff3a0"
+spaces = "#dfe2eb"
+match = "#CFE6F3a0"
+primary = "$colors.color4"
+background = "#eaecf1"
+selection = "#EDEDF3"
+
+[element]
+hover = "$colors.color8..40"
+active = "$colors.color8"
+selected = "#e6e9ef"
+
+[foreground]
+hover = "$colors.color7"
+primary = "$colors.color4"
+secondary = "$colors.color4..b0"
+placeholder = "$colors.color9..b3"
+inactive = "$colors.color9"
+link = "$colors.color8"
+
+[foreground.linenumber]
+inactive = "$colors.color9"
+active = "$colors.color4"
+
+[git.created]
+foreground = "$colors.color3"
+background = "$colors.color3"
+border = "$colors.color3"
+
+[git.ignored]
+foreground = "$colors.color4..43"
+
+[git.modified]
+foreground = "$colors.color5"
+
+[scheme]
+black = "$colors.color7"
+black2 = "$colors.color9"
+black3 = "$colors.color9"
+red = "$colors.color11"
+red2 = "$colors.color6"
+red3 = "$colors.color6"
+green = "$colors.color3"
+green2 = "$colors.color3"
+green3 = "$colors.color3"
+yellow = "$colors.color5"
+yellow2 = "$colors.color5"
+yellow3 = "$colors.color5"
+blue = "$colors.color1"
+blue2 = "$colors.color1"
+blue3 = "$colors.color1"
+pink = "$colors.color12"
+pink2 = "$colors.color12"
+pink3 = "$colors.color12"
+cyan = "$colors.color13"
+cyan2 = "$colors.color10"
+cyan3 = "$colors.color10"
+white = "#6C717D"
+white2 = "#2e3440"
+white3 = "#2e3440"
+
+[syntax.attribute]
+color = "$colors.color10"
+style = "normal"
+
+[syntax.boolean]
+color = "$colors.color1"
+style = "normal"
+
+[syntax.comment]
+color = "#aeb9ce"
+style = "normal"
+
+[syntax.constant]
+style = "normal"
+
+[syntax.constructor]
+color = "$colors.color1"
+style = "normal"
+
+[syntax.enum]
+color = "$colors.color5"
+style = "normal"
+
+[syntax.escape]
+color = "$colors.color3"
+style = "normal"
+
+[syntax.function]
+color = "$colors.color13"
+style = "normal"
+
+[syntax.hint]
+color = "$colors.color1..90"
+style = "italic"
+
+[syntax.keyword]
+color = "$colors.color1"
+style = "normal"
+
+[syntax.number]
+color = "$colors.color12"
+style = "normal"
+
+[syntax.operator]
+color = "$colors.color1"
+style = "normal"
+
+[syntax.primary]
+color = "$colors.color8"
+
+[syntax.property]
+color = "$colors.color4"
+style = "normal"
+
+[syntax.punctuation]
+color = "$colors.color4"
+style = "normal"
+
+[syntax.punctuation.bracket]
+color = "$colors.color4"
+style = "normal"
+
+[syntax.punctuation.delimiter]
+color = "$colors.color1"
+style = "normal"
+
+[syntax.punctuation.list]
+color = "#D4D4D4"
+style = "normal"
+
+[syntax.punctuation.special]
+color = "$colors.color1"
+style = "normal"
+
+[syntax.punctuation.symbol]
+color = "$colors.color1"
+style = "normal"
+
+[syntax.special]
+color = "$colors.color10"
+style = "normal"
+
+[syntax.string]
+color = "$colors.color3"
+style = "normal"
+
+[syntax.string.regex]
+color = "$colors.color3"
+style = "normal"
+
+[syntax.string.special]
+color = "$colors.color3"
+style = "normal"
+
+[syntax.tag]
+color = "$colors.color1"
+style = "normal"
+
+[syntax.type]
+color = "$colors.color10"
+style = "normal"
+
+[syntax.variable]
+style = "normal"
+
+[syntax.variable.parameter]
+style = "normal"
+
+[syntax.variable.special]
+color = "$colors.color5"
+style = "normal"
+
+[overrides]
+"style.[border.selected]" = false
+"style.[panel.focused_border]" = false
+"style.[pane.focused_border]" = false
+"style.[scrollbar.thumb.hover_background]" = false
+"style.[editor.wrap_guide]" = false
+"style.[hidden.border]" = false
+"style.predictive" = false
+"style.renamed" = false
+"style.[renamed.background]" = false
+"style.[renamed.border]" = false
+"style.unreachable" = false
+"style.syntax.[constant.builtin].font_style" = false
+"style.syntax.[type.builtin].color" = false
+"style.syntax.[type.builtin].font_style" = false
+"style.[surface.background]" = false
