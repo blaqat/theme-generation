@@ -1,0 +1,247 @@
+name = "VS Aylin"
+theme = "dark"
+
+[colors]
+color1 = "#191F2B"
+color2 = "#BAE67E"
+color3 = "#373E4C"
+color4 = "#707A8C"
+color5 = "#FD98B9"
+color6 = "#1D2431"
+color7 = "#C792EA"
+color8 = "#FFD580"
+color9 = "#CBCCC6"
+color10 = "#191E2A"
+color11 = "#F28779"
+color12 = "#7FDBCA"
+color13 = "#151B25"
+color14 = "#FFEB95"
+color15 = "#F27983"
+color16 = "#A6CC70"
+color17 = "#95E6CB"
+color18 = "#FFFFFF"
+color19 = "#5C6773"
+
+[background]
+secondary = "#232834"
+surface = "$colors.color1"
+primary = "$colors.color1"
+panel = "$colors.color1"
+gutter = "$colors.color1"
+terminal = "$colors.color1"
+code = "$colors.color4"
+
+[background.bars]
+bottombar = "$colors.color13"
+topbar = "$colors.color13"
+toolbar = "$colors.color1"
+scrollbar_thumb = "$colors.color4..66"
+scrollbar = "$colors.color4..99"
+
+[background.bars.tabbar]
+background = "$colors.color1"
+inactive = "$colors.color6"
+active = "$colors.color1"
+
+[border]
+primary = "$colors.color3"
+secondary = "$colors.color3"
+selected = "#505867"
+transparent = "$colors.color3"
+disabled = "$colors.color3"
+scrollbar = "$colors.color4..66"
+
+[button]
+primary = "$colors.color5"
+selected = "$colors.color6"
+
+[code.error]
+foreground = "#ff3333"
+
+[code.info]
+foreground = "#969696ff"
+
+[code.warning]
+foreground = "$colors.color5"
+
+[cursor]
+line = "$colors.color4..4d"
+
+[element]
+hover = "$colors.color6"
+selected = "$colors.color6"
+
+[foreground]
+hover = "$colors.color6"
+primary = "$colors.color4"
+secondary = "$colors.color4"
+link = "$colors.color5"
+
+[foreground.linenumber]
+inactive = "$colors.color4..66"
+active = "$colors.color9"
+
+[git.created]
+foreground = "$colors.color16..99"
+
+[git.ignored]
+foreground = "#484f5e"
+
+[git.modified]
+foreground = "#77a8d999"
+
+[guide]
+active = "$colors.color3"
+
+[scheme]
+black = "$colors.color10"
+black2 = "#686868"
+red = "#ed8274"
+red2 = "$colors.color11"
+green = "$colors.color16"
+green2 = "$colors.color2"
+yellow = "#fad07b"
+yellow2 = "$colors.color8"
+blue = "#6dcbfa"
+blue2 = "#73d0ff"
+pink = "#cfbafa"
+pink2 = "#d4bfff"
+cyan = "#90e1c6"
+cyan2 = "$colors.color17"
+white = "#c7c7c7"
+white2 = "$colors.color18"
+
+[syntax.attribute]
+color = "#addb67"
+style = "italic"
+
+[syntax.boolean]
+color = "$colors.color8"
+
+[syntax.comment]
+color = "$colors.color19"
+style = "italic"
+
+[syntax.constant]
+color = "$colors.color8"
+
+[syntax.constructor]
+color = "$colors.color12"
+
+[syntax.emphasis]
+color = "$colors.color7"
+style = "italic"
+weight = 700
+
+[syntax.escape]
+color = "$colors.color17"
+
+[syntax.function]
+color = "$colors.color12"
+
+[syntax.keyword]
+color = "$colors.color5"
+
+[syntax.label]
+color = "$colors.color2"
+
+[syntax.number]
+color = "$colors.color5"
+
+[syntax.property]
+color = "$colors.color11"
+
+[syntax.punctuation]
+color = "$colors.color7"
+
+[syntax.punctuation.bracket]
+color = "$colors.color7"
+
+[syntax.punctuation.delimiter]
+color = "$colors.color7"
+
+[syntax.punctuation.list]
+color = "$colors.color8"
+
+[syntax.punctuation.special]
+color = "$colors.color7"
+
+[syntax.string]
+color = "$colors.color2"
+
+[syntax.string.regex]
+color = "$colors.color2"
+
+[syntax.string.special]
+color = "$colors.color2"
+
+[syntax.tag]
+color = "$colors.color12"
+
+[syntax.text]
+color = "$colors.color2"
+
+[syntax.title]
+color = "#ffd096"
+
+[syntax.type]
+color = "$colors.color5"
+
+[syntax.variable]
+color = "$colors.color18"
+
+[syntax.variable.special]
+color = "$colors.color11"
+
+[overrides]
+"style.[panel.focused_border]" = false
+"style.[pane.focused_border]" = false
+"style.[editor.subheader.background]" = false
+"style.[terminal.foreground]" = false
+"style.[terminal.bright_foreground]" = false
+"style.[terminal.dim_foreground]" = false
+"style.[conflict.background]" = false
+"style.[deleted.background]" = false
+"style.[hint.background]" = false
+"style.info" = false
+"style.[modified.background]" = false
+"style.predictive" = false
+"style.renamed" = false
+"style.[renamed.background]" = false
+"style.success" = false
+"style.[success.background]" = false
+"style.unreachable" = false
+"style.syntax.emphasis.font_weight" = false
+"style.syntax.[emphasis.strong].font_style" = false
+"style.syntax.[emphasis.strong].color" = "$colors.color2"
+"style.syntax.title.font_style" = false
+"style.syntax.title.font_weight" = false
+"style.[border.selected]" = "$colors.color3"
+"style.[editor.foreground]" = "$colors.color9"
+"style.[scrollbar.track.background]" = "$colors.color1"
+"style.[scrollbar.track.border]" = "$colors.color10"
+"style.[editor.highlighted_line.background]" = false
+"style.[terminal.ansi.dim_black]" = false
+"style.conflict" = "$colors.color14..cc"
+"style.deleted" = "$colors.color15..99"
+"style.[terminal.ansi.dim_red]" = false
+"style.[conflict.border]" = false
+"style.[deleted.border]" = false
+"style.[error.border]" = false
+"style.[terminal.ansi.dim_green]" = false
+"style.[created.background]" = false
+"style.[created.border]" = false
+"style.[success.border]" = false
+"style.[terminal.ansi.dim_yellow]" = false
+"style.[modified.border]" = false
+"style.[warning.border]" = false
+"style.[terminal.ansi.dim_blue]" = false
+"style.[hint.border]" = false
+"style.[info.border]" = false
+"style.[terminal.ansi.dim_magenta]" = false
+"style.[renamed.border]" = false
+"style.[terminal.ansi.dim_cyan]" = false
+"style.[terminal.ansi.dim_white]" = false
+"style.[error.background]" = false
+"style.[info.background]" = false
+"style.[warning.background]" = false

@@ -1,24 +1,24 @@
-name = "Aylin Selene"
+name = "Aylin"
 theme = "dark"
 primary = "$colors.aubergine"
 z = "#00000000"
 
 [colors]
 white = '#ffffff'
-l_white = '#ebefff'
+l_white = '#d9dde5'
 d_white = '#c8c8db'
-yt = "#e0e2eb"
+yt = "#d9dde5"
 gray_light = '#74778c'
 gray = '#606375'
 midgray = "#363C4A"
 gray_dark = '#535560'
 semigray = "#42444b"
-lighterblack = "#303F54"
+lighterblack = "#384150"
 lightblack = '#202938'
 semiblack = '#262f3e'
-black = '#1f2430'
-midblack = '#1B202B'
-blacker = '#171B25'
+black = '#192230'
+midblack = '#161E2B'
+blacker = '#111721'
 aubergine = '#FD98B9'
 marzipan = '#ecc48d'
 orange = '#EB8378'
@@ -31,7 +31,7 @@ pink = '#f45c7f'
 green = '#addb67'
 
 [border]
-primary = "#363C4A"
+primary = "#2A3240"
 secondary = "$border.primary"
 selected = "$border.primary"
 scrollbar = "$colors.black"
@@ -100,8 +100,8 @@ match = "$colors.gray_light..50"
 comment = "#6f738a"
 black = "$colors.blacker"
 black2 = "$colors.semiblack"
-red = "$colors.orange"
-red2 = "#b86c66"
+red = "$colors.pink"
+red2 = "#a24562"
 green = "$colors.green"
 green2 = "#82a256"
 yellow = "$colors.marzipan"
@@ -119,22 +119,22 @@ white2 = "#9fa3b2"
 style = "italic"
 
 [syntax.attribute]
-color = "$colors.d_white"
-style = false
+color = "$colors.green"
+style = "italic"
 weight = false
 
 [syntax.boolean]
-color = "$colors.aubergine"
+color = "$colors.marzipan"
 style = false
 weight = false
 
 [syntax.constant]
-color = "$colors.marzipan"
+color = "$colors.white"
 style = false
-weight = 700
+weight = false
 
 [syntax.builtin]
-color = "$colors.aubergine"
+color = "$colors.sap"
 style = false
 weight = 500
 
@@ -154,8 +154,8 @@ style = false
 weight = false
 
 [syntax.keyword]
-color = "$colors.sky"
-style = false
+color = "$colors.aubergine"
+style = "italic"
 weight = false
 
 [syntax.number]
@@ -174,12 +174,12 @@ style = false
 weight = false
 
 [syntax.property]
-color = false
-style = false
+color = "#C7CCCA"
+style = "italic"
 weight = false
 
 [syntax.punctuation]
-color = "$colors.yt"
+color = "$colors.purple"
 style = false
 weight = false
 
@@ -199,7 +199,7 @@ style = "$syntax.punctuation.style"
 weight = "$syntax.punctuation.weight"
 
 [syntax.punctuation.special]
-color = "$colors.aubergine"
+color = "$colors.green"
 style = "$syntax.punctuation.style"
 weight = "$syntax.punctuation.weight"
 
@@ -209,12 +209,12 @@ style = "$syntax.punctuation.style"
 weight = "$syntax.punctuation.weight"
 
 [syntax.string]
-color = "$colors.marzipan"
+color = "#FFDD87"
 style = false
 weight = false
 
 [syntax.string.escape]
-color = "$colors.aubergine"
+color = "$colors.green"
 style = "$syntax.string.style"
 weight = "$syntax.string.weight"
 
@@ -224,12 +224,12 @@ style = false
 weight = false
 
 [syntax.type]
-color = "$colors.d_white"
+color = "$colors.marzipan"
 style = false
 weight = false
 
 [syntax.type.builtin]
-color = "$syntax.builtin.color"
+color = "$syntax.type.color"
 style = "$syntax.builtin.style"
 weight = "$syntax.builtin.weight"
 

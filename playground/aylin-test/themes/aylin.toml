@@ -1,0 +1,196 @@
+name = "VS Aylin 2"
+theme = "dark"
+
+[colors]
+white = '#ffffff'
+l_white = '#ebefff'
+d_white = '#c8c8db'
+gray_light = '#74778c'
+gray = '#606375'
+gray_dark = '#535560'
+semigray = "#42444b"
+lightblack = '#202938'
+semiblack = '#262f3e'
+black = '#1f2430'
+blacker = '#161b25'
+aubergine = '#FD98B9'
+marzipan = '#ecc48d'
+orange = '#EB968D'
+turquoise = '#7fdbca'
+sky_2 = '#9fd4ff'
+sky = '#6cbeff'
+sap = '#ebff00'
+purple = '#c792ea'
+pink = '#f45c7f'
+green = '#addb67'
+
+[background]
+secondary = "#232834"
+surface = "$colors.black"
+primary = "$colors.black"
+panel = "$colors.black"
+gutter = "$colors.black"
+terminal = "$colors.black"
+code = "$colors.gray_light"
+
+[background.bars]
+bottombar = "$colors.blacker"
+topbar = "$colors.blacker"
+toolbar = "$colors.black"
+scrollbar_thumb = "$colors.gray_light..66"
+scrollbar = "$colors.gray_light..99"
+
+[background.bars.tabbar]
+background = "$colors.blacker"
+inactive = "$colors.blacker"
+active = "$colors.black"
+
+[border]
+primary = "$colors.lightblack"
+secondary = "$colors.lightblack"
+selected = "#505867"
+transparent = "$colors.lightblack"
+disabled = "$colors.lightblack"
+scrollbar = "$colors.gray_light..66"
+
+[button]
+primary = "$colors.aubergine"
+selected = "$colors.semiblack"
+
+[code.error]
+foreground = "$colors.pink"
+
+[code.info]
+foreground = "#969696ff"
+
+[code.warning]
+foreground = "$colors.aubergine"
+
+[cursor]
+line = "$colors.gray_light..4d"
+
+[element]
+hover = "$colors.semiblack"
+selected = "$colors.semiblack"
+
+[foreground]
+hover = "$colors.semiblack"
+primary = "$colors.l_white"
+secondary = "$colors.gray_light"
+link = "$colors.aubergine"
+
+[foreground.linenumber]
+inactive = "$colors.gray_light..66"
+active = "$colors.d_white"
+
+[git.created]
+foreground = "$colors.green..99"
+
+[git.ignored]
+foreground = "#484f5e"
+
+[git.modified]
+foreground = "#77a8d999"
+
+[guide]
+active = "$colors.lightblack"
+
+[scheme]
+black = "$colors.blacker"
+black2 = "#686868"
+red = "$colors.pink"
+red2 = "#EB8DA2"
+green = "#a6cc70"
+green2 = "$colors.green"
+yellow = "#fad07b"
+yellow2 = "$colors.marzipan"
+blue = "#6dcbfa"
+blue2 = "#73d0ff"
+pink2 = "#cfbafa"
+pink = "$colors.purple"
+cyan = "#90e1c6"
+cyan2 = "#95e6cb"
+white = "#c7c7c7"
+white2 = "#ffffff"
+
+[syntax.attribute]
+color = "$colors.green"
+style = "italic"
+
+[syntax.boolean]
+color = "$colors.marzipan"
+
+[syntax.comment]
+color = "#5c6773"
+style = "italic"
+
+[syntax.constant]
+color = "$colors.marzipan"
+
+[syntax.constructor]
+color = "$colors.turquoise"
+
+[syntax.emphasis]
+color = "$colors.purple"
+style = "italic"
+weight = 700
+
+[syntax.escape]
+color = "#95e6cb"
+
+[syntax.function]
+color = "$colors.turquoise"
+
+[syntax.keyword]
+color = "$colors.aubergine"
+
+[syntax.label]
+color = "$colors.green"
+
+[syntax.number]
+color = "$colors.aubergine"
+
+[syntax.property]
+color = "$colors.orange"
+
+[syntax.punctuation]
+color = "$colors.purple"
+
+[syntax.punctuation.bracket]
+color = "$colors.purple"
+
+[syntax.punctuation.delimiter]
+color = "$colors.purple"
+
+[syntax.punctuation.list]
+color = "$colors.marzipan"
+
+[syntax.punctuation.special]
+color = "$colors.purple"
+
+[syntax.string]
+color = "$colors.green"
+
+[syntax.string.regex]
+color = "$colors.green"
+
+[syntax.string.special]
+color = "$colors.green"
+
+[syntax.tag]
+color = "$colors.turquoise"
+
+[syntax.text]
+color = "$colors.green"
+
+[syntax.title]
+color = "#ffd096"
+
+[syntax.type]
+color = "$colors.aubergine"
+
+[syntax.variable]
+color = "#ffffff"
+
+[syntax.variable.special]
+color = "$colors.orange"
