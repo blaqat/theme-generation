@@ -43,7 +43,7 @@ def resolve_variable(var_name, toml_data, had_alpha=False):
 
     return current
 
-def substitute_variables(text, toml_data, recursive=False):
+def substitute_variables(text, toml_data, recursive=False, quotes=True):
     def replacer(match):
         var_names = [name.strip() for name in match.group(1).split(',')]
 
@@ -60,10 +60,14 @@ def substitute_variables(text, toml_data, recursive=False):
             if value is None or isinstance(value, bool):
                 continue  # Try next variable in the list
 
-
             # If value isn't a number or string, skip to next variable
-            if not isinstance(value, (str, int, float)):
+            if not isinstance(value, (str, int, float, list)):
                 continue
+
+            # Recursive substitution for list values
+            if isinstance(value, list):
+                value = [substitute_variables(item, toml_data, recursive=True, quotes=False) for item in value if isinstance(item, str) and '$' in item]
+                return json.dumps(value)
 
             # Recursive substitution if value is a string and contains a variable
             if isinstance(value, str) and '$' in value:
@@ -74,9 +78,7 @@ def substitute_variables(text, toml_data, recursive=False):
                 return json.dumps(value)
 
             # For strings, return with quotes
-            val = json.dumps(value)
-
-            return val
+            return json.dumps(value) if quotes else value
 
         return 'null'  # If no valid value found in the list
 
@@ -320,6 +322,8 @@ def extract_variables(template, final_theme, Data=None, prefix=""):
                 else:
                     variables[template_var_name][value] = 1
             else:
+                if isinstance(value, list):
+                    value = "^SUBLIST" + str(value).replace(" ", "").replace("'", "")
                 variables[template_var_name] = {value: 1}
         elif template_var_name in final_theme:
             if key in overrides:
@@ -356,6 +360,8 @@ def extract_variables(template, final_theme, Data=None, prefix=""):
                     else:
                         full_name_map[full_key_list] = (item, None)
                         not_done[full_key_list] = (item, None)
+            elif isinstance(value, list) and isinstance(templ_partial.get(key), str):
+                handle_variable(full_key, templ_partial.get(key), value)
             else:
                 full_name_map[full_key] = (value, templ_partial.get(key, None))
                 vars = parse_variable(templ_partial.get(key, None))
@@ -447,8 +453,8 @@ def is_hex_color(color):
 
 
 def get_base_color(hex):
-    assert hex.startswith("#"), "Hex color must start with #"
-    assert len(hex) in (4, 7, 9), "Hex color must be 4, 7, or 9 characters long"
+    assert hex.startswith("#"), f"Hex color {hex}, must start with #"
+    assert len(hex) in (4, 7, 9), f"Hex color {hex}, must be 4, 7, or 9 characters long"
     hex = hex.upper()
     if len(hex) == 4:
         hex = f"#{hex[1]*2}{hex[2]*2}{hex[3]*2}"
@@ -565,6 +571,8 @@ def generate_toml(variables, overrides, color_map, var_map, output_path):
             y = 'false'
         elif isinstance(y, str):
             y = f'"{y}"'
+        elif isinstance(y, list):
+            y = f'[{", ".join([f"\n\t'{v}'" for v in y])}\n]'
         return f"{x} = {f'{y}'}\n"
 
     def get_original_color(var_name, value):
@@ -582,6 +590,11 @@ def generate_toml(variables, overrides, color_map, var_map, output_path):
         var_name = var_name[1:]
         if not match:
             value = get_original_color(var_name, value)
+            if value.startswith("^SUBLIST"):
+                for color, color_var_name in color_map.items():
+                    value = value.replace(color, color_var_name)
+                value = value[9:-1].split(",")
+
             toml_content += v(var_name, value)
         else:
             sub_section, sub_key = match.groups()

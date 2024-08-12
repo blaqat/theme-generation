@@ -7,6 +7,7 @@
 			"name": "$name",
 			"appearance": "$theme",
 			"style": {
+      	"accent": "$indents",
 				"border": "$border.primary",
 				"border.variant": "$border.secondary",
 				"border.focused": "$border.selected, $border.primary",
