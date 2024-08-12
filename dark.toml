@@ -1,19 +1,13 @@
 name = "Midnight Coder"
 theme = "dark"
 primary = "#C678DD"
-
 indents = [
-	"$colors.jeans_blue",
-	"$colors.fountain_blue",
-	"$colors.pistachio",
-	"$colors.chalky",
-	"$colors.brown_yellow",
-	"$colors.blueberry",
-	"$colors.sunset",
-	"$colors.froly",
-	"$colors.cadet_blue",
-	"$colors.bright_gray",
-	"$colors.dark_gunmetal",
+	"$terminal.red",
+	"$terminal.green",
+	"$terminal.blue",
+	"$terminal.yellow",
+	"$terminal.magenta",
+	"$terminal.cyan",
 ]
 
 [colors]

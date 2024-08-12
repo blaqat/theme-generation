@@ -18,6 +18,17 @@ def load_toml(file_path):
     with open(file_path, 'r') as file:
         return toml.load(file)
 
+def listify(value: list) -> str:
+    return "^SUBLIST" + str(value).replace(" ", "").replace("'", "")
+
+def is_listified(value: str) -> bool:
+    if not isinstance(value, str):
+        return False
+    return value.startswith("^SUBLIST")
+
+def delistify(value: str) -> list:
+    return value[9:-1].split(",")
+
 def resolve_variable(var_name, toml_data, had_alpha=False):
     if not had_alpha:
         a = re.search(ALPHA_PATTERN, var_name)
@@ -66,12 +77,12 @@ def substitute_variables(text, toml_data, recursive=False, quotes=True):
 
             # Recursive substitution for list values
             if isinstance(value, list):
-                value = [substitute_variables(item, toml_data, recursive=True, quotes=False) for item in value if isinstance(item, str) and '$' in item]
+                value = [substitute_variables(item, toml_data, recursive=True, quotes=False) for item in value ]
                 return json.dumps(value)
 
             # Recursive substitution if value is a string and contains a variable
             if isinstance(value, str) and '$' in value:
-                return substitute_variables(value, toml_data, recursive=True)
+                return substitute_variables(value, toml_data, recursive=True, quotes=quotes)
 
             # Return the value as-is (without quotes) if it's not a string
             if not isinstance(value, str):
@@ -214,8 +225,16 @@ def apply_direct_overrides(theme, toml_data, overrides):
             if override_value is False:
                 override_value = None
             current[part] = override_value
+        elif isinstance(current, list) and isinstance(part, int):
+            if override_value is False:
+                override_value = None
+            if part > len(current):
+                current.append(override_value)
+            else:
+                current[part] = override_value
         else:
             print("Could not find key", override_key, part, current)
+            print(type(part), type(current))
             print("\n\n")
 
     return theme
@@ -323,7 +342,7 @@ def extract_variables(template, final_theme, Data=None, prefix=""):
                     variables[template_var_name][value] = 1
             else:
                 if isinstance(value, list):
-                    value = "^SUBLIST" + str(value).replace(" ", "").replace("'", "")
+                    value = listify(value)
                 variables[template_var_name] = {value: 1}
         elif template_var_name in final_theme:
             if key in overrides:
@@ -531,6 +550,12 @@ def cleanup_variables(var_map, variables, overrides):
     for var_name, map in var_map.items():
         base_color_groups = {}
         for key, value in map.items():
+            if isinstance(value, list):
+                listified = listify(value)
+                if listified == variables[var_name]:
+                    value = listified
+                else:
+                    raise ValueError(f"Listified value {listified} does not match variable value {variables[var_name]}")
             color = get_base_color(value) if is_hex_color(value) else value
             templ_color = variables.get(var_name, None)
             templ_color = get_base_color(templ_color) if is_hex_color(templ_color) else templ_color
@@ -572,7 +597,7 @@ def generate_toml(variables, overrides, color_map, var_map, output_path):
         elif isinstance(y, str):
             y = f'"{y}"'
         elif isinstance(y, list):
-            y = f'[{", ".join([f"\n\t'{v}'" for v in y])}\n]'
+            y = f'[{", ".join([f"\n\t\"{v}\"" for v in y])}\n]'
         return f"{x} = {f'{y}'}\n"
 
     def get_original_color(var_name, value):
@@ -590,10 +615,9 @@ def generate_toml(variables, overrides, color_map, var_map, output_path):
         var_name = var_name[1:]
         if not match:
             value = get_original_color(var_name, value)
-            if value.startswith("^SUBLIST"):
-                for color, color_var_name in color_map.items():
-                    value = value.replace(color, color_var_name)
-                value = value[9:-1].split(",")
+            if is_listified(value):
+                value = delistify(value)
+                value = [color_map.get(get_base_color(color), color) if is_hex_color(color) else color for color in value]
 
             toml_content += v(var_name, value)
         else:
