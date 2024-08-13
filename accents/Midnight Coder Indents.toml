@@ -1,0 +1,343 @@
+name = "Midnight Coder Indents"
+theme = "dark"
+indents = [
+	"$terminal.red",
+	"$terminal.green",
+	"$terminal.blue",
+	"$terminal.yellow",
+	"$terminal.magenta",
+	"$terminal.cyan",
+]
+
+[colors]
+color1 = "#C678DD"
+color2 = "#ABB2BF"
+color3 = "#56B6C2"
+color4 = "#98C379"
+color5 = "#E5C07B"
+color6 = "#3E4451"
+color7 = "#D19A66"
+color8 = "#21252B"
+color9 = "#61AFEF"
+color10 = "#528BFF"
+color11 = "#E06C75"
+color12 = "#BE5046"
+color13 = "#282C34"
+color14 = "#5C6370"
+color15 = "#4B5263"
+color16 = "#7A9F60"
+color17 = "#B57EDC"
+
+[background]
+secondary = "$colors.color8"
+surface = "$colors.color8"
+primary = "$colors.color13"
+drop_target = "$colors.color6..80"
+editor = "$colors.color13"
+gutter = "$colors.color13"
+
+[background.bars]
+bottombar = "$colors.color8"
+toolbar = "$colors.color13"
+
+[background.bars.topbar]
+active = "$colors.color8"
+inactive = "$colors.color8"
+
+[border]
+primary = "$colors.color6"
+secondary = "$colors.color1..a0"
+selected = "$colors.color6"
+
+[button]
+primary = "$colors.color9"
+active = "$colors.color3"
+selected = "$colors.color4"
+disabled = "$colors.color14"
+
+[code.error]
+foreground = "$colors.color11"
+background = "$colors.color12"
+border = "$colors.color12"
+
+[code.hint]
+background = "$colors.color10"
+border = "$colors.color10"
+
+[code.info]
+foreground = "$colors.color9"
+background = "$colors.color10"
+border = "$colors.color10"
+
+[code.success]
+foreground = "$colors.color1"
+background = "$colors.color16"
+border = "$colors.color16"
+
+[code.warning]
+foreground = "$colors.color5"
+background = "$colors.color7"
+border = "$colors.color7"
+
+[cursor]
+search = "$colors.color5..a0"
+line = "#2C313A"
+highlighted = "$colors.color1..40"
+spaces = "#3B4048"
+
+[element]
+primary = "$colors.color2..00"
+hover = "$colors.color1..90"
+active = "$colors.color3..80"
+selected = "$colors.color4..50"
+disabled = "$colors.color14"
+
+[foreground]
+hover = "$colors.color9..80"
+primary = "$colors.color2"
+secondary = "$colors.color2..90"
+placeholder = "#fC6370"
+inactive = "$colors.color15"
+accent = "$colors.color1"
+read = "$colors.color10..50"
+write = "$colors.color10..50"
+link = "$colors.color1"
+
+[foreground.linenumber]
+inactive = "$colors.color15"
+active = "$colors.color1"
+
+[git.conflict]
+foreground = "$colors.color11"
+background = "$colors.color12"
+border = "$colors.color12"
+
+[git.created]
+foreground = "$colors.color4"
+background = "$colors.color16"
+border = "$colors.color16"
+
+[git.deleted]
+foreground = "$colors.color11"
+background = "$colors.color12"
+border = "$colors.color12"
+
+[git.ignored]
+foreground = "$colors.color15"
+
+[git.modified]
+foreground = "$colors.color5"
+background = "$colors.color7"
+border = "$colors.color7"
+
+[git.renamed]
+foreground = "$colors.color1"
+background = "$colors.color17"
+border = "$colors.color17"
+
+[guide]
+inactive = "$colors.color6"
+
+[icon]
+accent = "$colors.color1"
+
+[pane]
+focused = "$colors.color6"
+
+[panel]
+background = "#2C313A"
+focused = "$colors.color6"
+
+[players.1]
+cursor = "$colors.color1"
+background = "$colors.color1..40"
+selection = "$colors.color1..40"
+
+[scrollbar]
+primary = "#B5263905"
+secondary = "$colors.color1..a0"
+track = "$colors.color15..00"
+
+[syntax.attribute]
+color = "$colors.color5"
+
+[syntax.boolean]
+color = "$colors.color7"
+
+[syntax.builtin]
+color = "$colors.color5"
+weight = 800
+
+[syntax.comment]
+color = "$colors.color14"
+
+[syntax.constant]
+color = "$colors.color7"
+
+[syntax.constant.builtin]
+color = "$colors.color5"
+weight = 800
+
+[syntax.constant.character]
+color = "$colors.color3"
+weight = 800
+
+[syntax.constructor]
+color = "$colors.color2"
+
+[syntax.definition]
+color = "$colors.color9"
+weight = 800
+
+[syntax.doc]
+color = "$colors.color14"
+
+[syntax.enum]
+color = "$colors.color3"
+weight = 800
+
+[syntax.function]
+color = "$colors.color9"
+weight = 800
+
+[syntax.json_key]
+color = "$colors.color11"
+
+[syntax.keyword]
+color = "$colors.color1"
+style = "italic"
+weight = 500
+
+[syntax.lifetime]
+color = "$colors.color3"
+
+[syntax.link]
+color = "$colors.color1"
+
+[syntax.method]
+color = "$colors.color9"
+weight = 800
+
+[syntax.number]
+color = "$colors.color7"
+
+[syntax.operator]
+color = "$colors.color3"
+
+[syntax.primary]
+color = "$colors.color1"
+
+[syntax.property]
+color = "$colors.color11"
+
+[syntax.punctuation]
+color = "$colors.color2"
+
+[syntax.punctuation.bracket]
+color = "$colors.color2"
+
+[syntax.punctuation.delimiter]
+color = "$colors.color2"
+
+[syntax.punctuation.list]
+color = "$colors.color2"
+
+[syntax.punctuation.special]
+color = "$colors.color2"
+
+[syntax.punctuation.symbol]
+color = "$colors.color2"
+
+[syntax.special]
+color = "$colors.color3"
+weight = 800
+
+[syntax.string]
+color = "$colors.color4"
+
+[syntax.string.doc]
+color = "$colors.color4"
+
+[syntax.string.escape]
+color = "$colors.color4"
+
+[syntax.string.regex]
+color = "$colors.color4"
+
+[syntax.string.special]
+color = "$colors.color4"
+
+[syntax.string.symbol]
+color = "$colors.color4"
+
+[syntax.tag]
+color = "$colors.color9"
+
+[syntax.type]
+color = "$colors.color5"
+weight = 800
+
+[syntax.type.builtin]
+color = "$colors.color5"
+
+[syntax.type.interface]
+color = "$colors.color5"
+weight = 800
+
+[syntax.type.super]
+color = "$colors.color3"
+
+[syntax.variable]
+color = "$colors.color11"
+
+[syntax.variable.member]
+color = "$colors.color11"
+
+[syntax.variable.parameter]
+color = "$colors.color2"
+
+[syntax.variable.special]
+color = "$colors.color3"
+
+[tabs]
+background = "$colors.color8"
+inactive = "$colors.color8"
+active = "$colors.color13"
+
+[terminal]
+background = "$colors.color13"
+foreground = "$colors.color2"
+bright_foreground = "$colors.color2"
+dim_foreground = "$colors.color2"
+black = "$colors.color13"
+bright_black = "$colors.color6"
+dim_black = "$colors.color6"
+red = "$colors.color11"
+bright_red = "$colors.color12"
+dim_red = "$colors.color12"
+green = "$colors.color4"
+bright_green = "$colors.color16"
+dim_green = "$colors.color16"
+yellow = "$colors.color5"
+bright_yellow = "$colors.color7"
+dim_yellow = "$colors.color7"
+blue = "$colors.color9"
+bright_blue = "$colors.color10"
+dim_blue = "$colors.color10"
+magenta = "$colors.color1"
+bright_magenta = "$colors.color17"
+dim_magenta = "$colors.color17"
+cyan = "$colors.color3"
+bright_cyan = "#3C909B"
+dim_cyan = "#3C909B"
+white = "$colors.color2"
+bright_white = "$colors.color14"
+dim_white = "$colors.color14"
+
+[overrides]
+"style.syntax.[function.special.definition].color" = "$colors.color3"
+"style.syntax.lifetime.font_weight" = false
+"style.syntax.[type.super].font_weight" = false
+"style.syntax.[variable.special].font_weight" = false
+"style.syntax.[type.builtin].font_weight" = false
+"style.[scrollbar.thumb.hover_background]" = "$colors.color15..00"

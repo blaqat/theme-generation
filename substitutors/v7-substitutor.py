@@ -119,6 +119,7 @@ def process_json_template(template_path, toml_files):
                 val = theme
                 for key in keys[:-1]:
                     val = val[key]
+                print(f"Deleting {keys[-1]} from {keys[:-1]}")
                 if keys[-1] in val:
                     del val[keys[-1]]
 
