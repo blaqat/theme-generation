@@ -1,6 +1,6 @@
 {
   "$schema": "https://zed.dev/schema/themes/v0.1.0.json",
-	"name": "Theme Name",
+	"name": "theme-reverse",
 	"author": "blaqat",
 	"themes": [
 		{
@@ -59,6 +59,8 @@
 				"editor.background": "$background.primary",
 				"editor.gutter.background": "$background.gutter, $background.primary",
 				"editor.subheader.background": "$background.secondary",
+				"editor.indent_guide": "$indent.inactive, $indent..50",
+				"editor.indent_guide_active": "$indent.active, $indent",
 				"editor.active_line.background": "$cursor.line",
 				"editor.highlighted_line.background": "$cursor.highlighted, $cursor.line",
 				"editor.line_number": "$foreground.linenumber.inactive, $foreground.inactive",
@@ -325,9 +327,9 @@
 						"font_weight": "$syntax.punctuation.delimiter.weight, $syntax.punctuation.weight"
 					},
 					"punctuation.list_marker": {
-						"color": "$syntax.punctuation.list.color, $syntax.punctuation.color",
-						"font_style": "$syntax.punctuation.list.style, $syntax.punctuation.style",
-						"font_weight": "$syntax.punctuation.list.weight, $syntax.punctuation.weight"
+						"color": "$syntax.number.color, $syntax.punctuation.color",
+						"font_style": "$syntax.number.style, $syntax.punctuation.style",
+						"font_weight": "$syntax.number.weight, $syntax.punctuation.weight"
 					},
 					"punctuation.special": {
 						"color": "$syntax.punctuation.special.color, $syntax.punctuation.color",
@@ -380,9 +382,9 @@
 						"font_weight": "$syntax.text.weight"
 					},
 					"title":  {
-						"color": "$syntax.title.color, $syntax.emphasis.color",
-						"font_style": "$syntax.title.style, $syntax.emphasis.style",
-						"font_weight": "$syntax.title.weight, $syntax.emphasis.weight"
+						"color": "$syntax.keyword.color",
+						"font_style": "$syntax.keyword.style",
+						"font_weight": "$syntax.keyword.weight"
 					},
 					"type": {
 						"color": "$syntax.type.color",

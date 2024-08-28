@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import argparse
 from collections import Counter
+from copy import deepcopy
 
 PRINT = False
 
@@ -39,7 +40,7 @@ def resolve_variable(var_name, toml_data, had_alpha=False):
         if alpha:
             var_name = var_name.replace(f"..{alpha}", '')
             value = resolve_variable(var_name, toml_data, had_alpha=True)
-            if isinstance(value, str) and value.startswith('$'):
+            while isinstance(value, str) and value.startswith('$'):
                 value = resolve_variable(value[1:], toml_data, had_alpha=True)
             if not value: return None
             if re.search(ALPHA_PATTERN, value): return value
@@ -65,7 +66,7 @@ def substitute_variables(text, toml_data, recursive=False, quotes=True):
                 var_name = var_name[1:]  # Remove the leading $
             value = resolve_variable(var_name, toml_data)
 
-            if value is None:
+            if value is None and var_name == var_names[-1]:
                 # Try to resolve parent if child not found
                 parent = var_name.split('.')[0]
                 value = resolve_variable(parent, toml_data)
@@ -79,7 +80,10 @@ def substitute_variables(text, toml_data, recursive=False, quotes=True):
 
             # Recursive substitution for list values
             if isinstance(value, list):
-                value = [substitute_variables(item, toml_data, recursive=True, quotes=False) for item in value ]
+                value = [
+                    substitute_variables(item, toml_data, recursive=True, quotes=False)
+                    for item in value
+                ]
                 return json.dumps(value)
 
             # Recursive substitution if value is a string and contains a variable
@@ -110,7 +114,7 @@ def process_json_template(template_path, toml_files):
 
     for toml_path in toml_files:
         toml_data = load_toml(toml_path)
-        theme = template['themes'][0]
+        theme = deepcopy(template['themes'][0])
 
         # Apply deletions
         if 'deletions' in toml_data and 'keys' in toml_data['deletions'] and toml_data['deletions']['keys']:
@@ -118,6 +122,8 @@ def process_json_template(template_path, toml_files):
                 keys = parse_full_key(full_key)
                 val = theme
                 for key in keys[:-1]:
+                    if key not in val:
+                        continue # TODO: FIX THIS
                     val = val[key]
                 if keys[-1] in val:
                     del val[keys[-1]]
@@ -241,22 +247,21 @@ def apply_direct_overrides(theme, toml_data, overrides):
                         print(part, parts[i])
                         current.append({})
                     elif part == len(current):
-                        current.append(override_value)
-                    else:
                         current.append({})
+                    else:
+                        current.append(override_value)
             next = current[part]
             if isinstance(next, list) or isinstance(next, dict):
                 current = next
             else:
                 break
 
+        if override_value is False:
+            override_value = None
+
         if part and part in current:
-            if override_value is False:
-                override_value = None
             current[part] = override_value
         elif isinstance(current, list) and isinstance(part, int):
-            if override_value is False:
-                override_value = None
             if part > len(current):
                 current.append(override_value)
             else:

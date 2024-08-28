@@ -1,6 +1,6 @@
 {
   "$schema": "https://zed.dev/schema/themes/v0.1.0.json",
-  "name": "Theme Name",
+  "name": "theme",
   "author": "blaqat",
   "themes": [
     {
@@ -9,6 +9,8 @@
       "style":
       {
       	"accents": "$indents",
+				"editor.indent_guide": "$indent.inactive, $indent..50",
+				"editor.indent_guide_active": "$indent.active, $indent",
         "border": "$border.primary",
         "border.variant": "$border.secondary",
         "border.focused": "$border.selected, $border.primary",
@@ -395,12 +397,11 @@
             "font_style": "$syntax.punctuation.delimiter.style, $syntax.punctuation.style",
             "font_weight": "$syntax.punctuation.delimiter.weight, $syntax.punctuation.weight"
           },
-          "punctuation.list_marker":
-          {
-            "color": "$syntax.punctuation.list.color, $syntax.punctuation.color",
-            "font_style": "$syntax.punctuation.list.style, $syntax.punctuation.style",
-            "font_weight": "$syntax.punctuation.list.weight, $syntax.punctuation.weight"
-          },
+					"punctuation.list_marker": {
+						"color": "$syntax.punctuation.delimiter.color, $syntax.punctuation.color",
+						"font_style": "$syntax.punctuation.delimiter.style, $syntax.punctuation.style",
+						"font_weight": "$syntax.punctuation.delimiter.weight, $syntax.punctuation.weight"
+					},
           "punctuation.special":
           {
             "color": "$syntax.punctuation.special.color, $syntax.punctuation.color",
@@ -463,9 +464,9 @@
           },
           "title":
           {
-            "color": "$syntax.title.color, $syntax.emphasis.color",
-            "font_style": "$syntax.title.style, $syntax.emphasis.style",
-            "font_weight": "$syntax.title.weight, $syntax.emphasis.weight"
+            "color": "$syntax.title.color, $syntax.emphasis.color, $syntax.keyword.color",
+            "font_style": "$syntax.title.style, $syntax.emphasis.style, $syntax.keyword.style",
+            "font_weight": "$syntax.title.weight, $syntax.emphasis.weight, $syntax.keyword.weight"
           },
           "type":
           {
