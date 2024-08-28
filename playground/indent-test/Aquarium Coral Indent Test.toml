@@ -1,0 +1,303 @@
+name = "Aquarium Coral Indent Test"
+theme = "dark"
+primary = "$colors.color7"
+
+
+# indent = "#FF0000"
+[indent]
+primary = "$scheme.green"
+secondary = "$indent.primary..50"
+
+
+[colors]
+color1 = "#1A1A24"
+color2 = "#E6DFB8"
+color3 = "#EBB9B9"
+color4 = "#B1DBA4"
+color5 = "#1C1C26"
+color6 = "#20202A"
+color7 = "#E9C1C1"
+color8 = "#CDDBF9"
+color9 = "#E8CCA7"
+color10 = "#A7B7D6"
+color11 = "#3D4059"
+color12 = "#B8DEEB"
+color13 = "#303047"
+color14 = "#F6BBE7"
+color15 = "#A7B8D6"
+color16 = "#9CDCFE"
+
+[background]
+secondary = "$colors.color5"
+primary = "$colors.color6"
+panel = "$colors.color5"
+gutter = "$colors.color6"
+terminal = "$colors.color6"
+code = "#424467"
+
+[background.bars]
+bottombar = "$colors.color5"
+topbar = "$colors.color5"
+toolbar = "#00000000"
+scrollbar_thumb = "#2A2A38f0"
+scrollbar = "$colors.color1..50"
+
+[background.bars.tabbar]
+background = "#25252f"
+inactive = "#25252f"
+active = "$colors.color6"
+
+[border]
+primary = "$colors.color5"
+secondary = "$colors.color5"
+selected = "#303347"
+scrollbar = "$colors.color1..50"
+
+[button]
+primary = "$colors.color13..00"
+active = "$colors.color13"
+selected = "$colors.color13"
+disabled = "#fC3C3C"
+
+[code.error]
+foreground = "$colors.color3"
+background = "$colors.color1"
+border = "$colors.color3"
+
+[code.info]
+foreground = "#484A67"
+background = "$colors.color1"
+border = "$colors.color8"
+
+[code.warning]
+foreground = "$colors.color2"
+background = "$colors.color1"
+border = "$colors.color2"
+
+[cursor]
+search = "$colors.color2..50"
+line = "#1110173c"
+highlighted = "#1110173c"
+spaces = "#fbfff829"
+match = "#2c2d3e"
+primary = "$colors.color7..e0"
+background = "#333551"
+selection = "#333551"
+
+[element]
+primary = "#292c3e00"
+hover = "#30334790"
+active = "#303247"
+selected = "#303247"
+disabled = "#fD2D2D"
+
+[foreground]
+hover = "$colors.color6"
+primary = "$colors.color10"
+secondary = "#998C8C"
+placeholder = "#63718b"
+inactive = "$colors.color11"
+link = "$colors.color7"
+
+[foreground.linenumber]
+inactive = "$colors.color11"
+active = "#afb6c3"
+
+[git.created]
+foreground = "$colors.color4"
+background = "$colors.color1"
+border = "$colors.color4"
+
+[git.ignored]
+foreground = "$colors.color10..50"
+
+[git.modified]
+foreground = "$colors.color2"
+
+[scheme]
+black = "#2c2e3e"
+black2 = "#565673"
+black3 = "#2c2e3e"
+red = "$colors.color3"
+red2 = "$colors.color1"
+red3 = "$colors.color3"
+green = "$colors.color4"
+green2 = "$colors.color4"
+green3 = "$colors.color1"
+yellow = "$colors.color2"
+yellow2 = "$colors.color2"
+yellow3 = "$colors.color1"
+blue = "$colors.color8"
+blue2 = "$colors.color8"
+blue3 = "$colors.color1"
+pink = "$colors.color14"
+pink2 = "$colors.color14"
+pink3 = "$colors.color1"
+cyan = "$colors.color12"
+cyan2 = "$colors.color12"
+cyan3 = "$colors.color1"
+white = "#EBD4D4"
+white2 = "$colors.color15"
+white3 = "$colors.color15"
+
+[syntax.attribute]
+color = "#b8dceb"
+style = "normal"
+
+[syntax.boolean]
+color = "$colors.color9"
+style = "normal"
+
+[syntax.builtin]
+color = "$colors.color9"
+style = "italic"
+
+[syntax.comment]
+color = "$colors.color11"
+style = "italic"
+
+[syntax.constant]
+color = "$colors.color9"
+style = "normal"
+
+[syntax.constructor]
+color = "$colors.color15"
+style = "normal"
+
+[syntax.enum]
+color = "$colors.color2"
+style = "normal"
+
+[syntax.escape]
+color = "$colors.color4"
+style = "normal"
+
+[syntax.function]
+color = "#93A7D2"
+style = "italic"
+
+[syntax.hint]
+color = "#424467"
+style = "italic"
+
+[syntax.keyword]
+color = "#E6B3D9"
+style = "italic"
+
+[syntax.method]
+color = "$colors.color9"
+style = "normal"
+
+[syntax.number]
+color = "$colors.color9"
+style = "normal"
+
+[syntax.operator]
+color = "#99B8C4"
+style = "normal"
+
+[syntax.primary]
+color = "$colors.color7"
+
+[syntax.property]
+color = "$colors.color3"
+style = "normal"
+
+[syntax.punctuation]
+color = "$colors.color3"
+style = "normal"
+
+[syntax.punctuation.special]
+color = "$colors.color3"
+style = "normal"
+
+[syntax.punctuation.symbol]
+color = "$colors.color3"
+style = "normal"
+
+[syntax.special]
+color = "$colors.color2"
+style = "italic"
+
+[syntax.string]
+color = "$colors.color4"
+style = "normal"
+
+[syntax.string.regex]
+color = "$colors.color4"
+style = "normal"
+
+[syntax.string.special]
+color = "$colors.color4"
+style = "normal"
+
+[syntax.tag]
+color = "$colors.color14"
+style = "normal"
+
+[syntax.type]
+color = "$colors.color2"
+style = "italic"
+
+[syntax.variable]
+color = "#aeb7c4"
+style = "normal"
+
+[syntax.variable.parameter]
+color = "$colors.color16"
+style = "normal"
+
+[syntax.variable.special]
+color = "$colors.color2"
+style = "normal"
+
+[overrides]
+"style.[border.selected]" = false
+"style.[panel.focused_border]" = false
+"style.[pane.focused_border]" = false
+"style.[scrollbar.thumb.hover_background]" = false
+"style.[editor.wrap_guide]" = false
+"style.[hidden.border]" = false
+"style.predictive" = false
+"style.renamed" = false
+"style.[renamed.background]" = false
+"style.[renamed.border]" = false
+"style.unreachable" = false
+"style.players.1.cursor" = "$players.2.cursor"
+"style.players.1.background" = "$players.2.background"
+"style.players.1.selection" = "$players.2.selection"
+"style.syntax.[type.builtin].color" = "$colors.color2"
+"style.syntax.[function.definition].color" = "$colors.color12"
+"style.syntax.[variable.member].color" = "$colors.color16"
+"style.[surface.background]" = false
+"style.[editor.subheader.background]" = "$colors.color1"
+"style.text" = "#BCAEC4"
+"style.[editor.foreground]" = "#BAC5CF"
+"style.[terminal.ansi.bright_red]" = "$colors.color3"
+"style.[terminal.ansi.dim_red]" = "$colors.color1"
+"style.[success.background]" = "$colors.color1"
+"style.[success.border]" = "$colors.color4"
+"style.[modified.background]" = "$colors.color1"
+"style.[modified.border]" = "$colors.color2"
+"style.[hint.background]" = "$colors.color1"
+"style.[hint.border]" = "$colors.color8"
+
+[deletions]
+keys = [
+	"style.accents",
+	"style.[title_bar.inactive_background]",
+	"style.[scrollbar.thumb.background]",
+	"style.syntax.[constant.character]",
+	"style.syntax.escape",
+	"style.syntax.[function.special]",
+	"style.syntax.[function.special.definition]",
+	"style.syntax.[function.builtin]",
+	"style.syntax.label",
+	"style.syntax.lifetime",
+	"style.syntax.preproc",
+	"style.syntax.[property.json_key]",
+	"style.syntax.[punctuation.bracket]",
+	"style.syntax.[punctuation.delimiter]",
+	"style.syntax.[punctuation.list_marker]",
+	"style.syntax.[string.doc]",
+]

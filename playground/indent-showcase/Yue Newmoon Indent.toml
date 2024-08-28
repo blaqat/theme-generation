@@ -1,0 +1,235 @@
+name = "Yue Indent Test"
+theme = "dark"
+primary = "#FFF5C2"
+
+# indent = "#FF00FF"
+# indent = "$scheme.red..50"
+
+[indent]
+primary = "$scheme.yellow..70"
+secondary = "$scheme.yellow..20"
+
+
+[colors]
+color0 = "#00000000"
+colorz = "#00000003"
+color1 = "#000000ed"
+color2 = "#f9BEF0"
+color3 = "#FFF5C2"
+color4 = "#CEFFFF"
+color5 = "#FF91A6"
+color6 = "#FFB7E0"
+color7 = "#999999"
+color8 = "#DFDFDF"
+color9 = "#B6C6FF"
+color10 = "#7B7B7B"
+color11 = "#E2FFCC"
+
+[background]
+secondary = "#000000F0"
+surface = "$colors.color1"
+primary = "$colors.color1"
+drop_target = "$colors.color2..23"
+panel = "$colors.color0"
+gutter = "$colors.colorz"
+terminal = "$colors.colorz"
+
+[background.bars]
+bottombar = "#000000F1"
+topbar = "$colors.color1"
+toolbar = "$colors.colorz"
+scrollbar_thumb = "#FFFFFF41"
+scrollbar = "$colors.color0"
+
+[background.bars.tabbar]
+background = "$colors.color0"
+inactive = "$colors.color0"
+active = "$colors.color7..20"
+
+[border]
+primary = "$colors.color0"
+secondary = "$colors.color7"
+selected = "$colors.color2..33"
+transparent = "$colors.color2..33"
+disabled = "$colors.color2..33"
+scrollbar = "$colors.color7..70"
+
+[button]
+primary = "$colors.color2..33"
+active = "$colors.color2..13"
+selected = "$colors.color1"
+
+[code.error]
+foreground = "$colors.color5"
+background = "$colors.color1"
+border = "$colors.color5"
+
+[code.info]
+foreground = "#969696ff"
+background = "$colors.color1"
+border = "$colors.color9"
+
+[code.warning]
+foreground = "$colors.color3"
+background = "$colors.color1"
+border = "$colors.color3"
+
+[cursor]
+search = "$colors.color3..3a"
+line = "#FFFFFF10"
+primary = "$colors.color8"
+background = "$colors.color1"
+selection = "#FFFFFF20"
+match = "$primary..20"
+
+[element]
+hover = "$colors.color8..23"
+selected = "$primary..20"
+
+[foreground]
+hover = "$colors.color2..13"
+primary = "#F0F0F0"
+secondary = "#9A9A9A"
+
+[foreground.linenumber]
+inactive = "$colors.color10"
+active = "$colors.color8"
+
+[git.created]
+foreground = "$colors.color11"
+
+[git.ignored]
+foreground = "#4F4F4F"
+
+[git.modified]
+foreground = "$colors.color3"
+
+[guide]
+active = "$colors.color2..33"
+
+[scheme]
+black = "$colors.color1"
+black2 = "$colors.color7"
+red = "$colors.color5"
+red2 = "$colors.color5"
+green = "$colors.color11"
+yellow = "$colors.color3"
+yellow3 = "$colors.color3"
+blue = "$colors.color9"
+magenta = "$colors.color2"
+cyan = "$colors.color4"
+white = "#DFDFDF"
+red3 = "$colors.color5"
+blue2 = "$colors.color1"
+blue3 = "$colors.color9"
+
+[syntax.boolean]
+color = "$colors.color4"
+
+[syntax.comment]
+color = "$colors.color10"
+
+[syntax.constant]
+color = "$colors.color4"
+
+[syntax.constructor]
+color = "$colors.color4"
+
+[syntax.escape]
+color = "$colors.color4"
+
+[syntax.function]
+color = "$colors.color11"
+
+[syntax.keyword]
+color = "$colors.color2"
+
+[syntax.number]
+color = "#CCB3FF"
+
+[syntax.operator]
+color = "#FFCAB3"
+
+[syntax.punctuation]
+color = "$colors.color6"
+
+[syntax.punctuation.bracket]
+color = "$colors.color6"
+
+[syntax.punctuation.delimiter]
+color = "$colors.color6"
+
+[syntax.punctuation.list]
+color = "$colors.color6"
+
+[syntax.punctuation.special]
+color = "$colors.color6"
+
+[syntax.string]
+color = "$colors.color3"
+
+[syntax.string.regex]
+color = "$colors.color3"
+
+[syntax.string.special]
+color = "$colors.color3"
+
+[syntax.tag]
+color = "$colors.color4"
+
+[syntax.text]
+color = "$colors.color3"
+
+[syntax.type]
+color = "$colors.color4"
+
+[syntax.variable]
+color = "#DFDFDF"
+
+[syntax.variable.special]
+color = "$colors.color4"
+
+[overrides]
+"style.[background.appearance]" = "blurred"
+"style.[editor.background]" = "$colors.colorz"
+"style.[border.focused]" = false
+"style.[panel.focused_border]" = false
+"style.[pane.focused_border]" = false
+"style.[scrollbar.thumb.hover_background]" = false
+"style.[scrollbar.thumb.border]" = false
+"style.[terminal.bright_foreground]" = false
+"style.[terminal.dim_foreground]" = false
+"style.[terminal.ansi.dim_red]" = false
+"style.[terminal.ansi.bright_blue]" = false
+"style.[terminal.ansi.dim_blue]" = false
+"style.conflict" = false
+"style.[conflict.background]" = false
+"style.[conflict.border]" = false
+"style.[modified.border]" = false
+"style.success" = false
+"style.[editor.wrap_guide]" = "$colors.color2..33"
+"style.[editor.subheader.background]" = "$colors.color2..33"
+"style.[editor.foreground]" = "$colors.color8"
+"style.[link_text.hover]" = false
+"style.[editor.highlighted_line.background]" = false
+"style.[terminal.ansi.dim_black]" = false
+
+[deletions]
+keys = [
+	"style.accents",
+	"style.[title_bar.inactive_background]",
+	"style.[scrollbar.thumb.background]",
+	"style.syntax.[constant.character]",
+	"style.syntax.escape",
+	"style.syntax.[function.special]",
+	"style.syntax.[function.special.definition]",
+	"style.syntax.[function.builtin]",
+	"style.syntax.label",
+	"style.syntax.lifetime",
+	"style.syntax.preproc",
+	"style.syntax.[property.json_key]",
+	"style.syntax.[punctuation.bracket]",
+	"style.syntax.[punctuation.delimiter]",
+	"style.syntax.[punctuation.list_marker]",
+	"style.syntax.[string.doc]",
+]
