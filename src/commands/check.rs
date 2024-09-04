@@ -65,6 +65,14 @@ fn json_deep_diff(data1: &Value, data2: &Value, prefix: String, start_keys: usiz
     }
 }
 
+// Check:
+//     Description:
+//         - This checks line by line if the original file and the new file are the same.
+//         - Displays similarity metrics.
+//         - Will help in debugging issues in generation/reverse process.
+//             - Template + Variables = GeneratedTheme == OriginalTheme
+//     Usage:
+//         substitutor check originalFile newFile
 pub fn check(file1: ValidatedFile, file2: ValidatedFile) -> Result<(), Error> {
     if file1.format != file2.format {
         return Err(Error::InvalidIOFormat(file2.format.clone()));

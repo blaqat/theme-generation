@@ -12,10 +12,18 @@ const DEFAULT_ERROR_MESSAGE: &'static str =
     "Usage: substitutor [check|gen|rev] or substitutor help to get more information.";
 
 #[derive(Debug)]
+enum FileType {
+    Theme,
+    Template,
+    Variable,
+}
+
+#[derive(Debug)]
 struct ValidatedFile {
     format: String,
     file: File,
     name: String,
+    file_type: FileType,
 }
 
 impl ValidatedFile {
@@ -26,12 +34,24 @@ impl ValidatedFile {
             .ok_or(Error::InvalidFile(String::from(file_path)))?
             .to_owned();
 
+        let file_type = match format.as_str() {
+            "json" => FileType::Theme,
+            "yaml" => FileType::Variable,
+            "template" => FileType::Template,
+            _ => return Err(Error::InvalidIOFormat(format)),
+        };
+
         let file =
             File::open(&file_path).map_err(|_| Error::InvalidFile(String::from(file_path)))?;
 
         let name = file_path.to_owned();
 
-        Ok(Self { format, file, name })
+        Ok(Self {
+            format,
+            file,
+            name,
+            file_type,
+        })
     }
 }
 
@@ -49,9 +69,12 @@ enum Error {
     InvalidCommand,
     NotEnoughArguments(ValidCommands),
     InvalidFile(String),
+    InvalidFileType,
+    InvalidFlag(String, String),
     InvalidIOFormat(String),
-    InvalidFlag,
     HelpInvalidCommand,
+
+    ProcessingError(String),
 }
 
 impl ValidCommands {
@@ -87,7 +110,7 @@ Generate:
         - This takes the Template as the source of truth. Things in the variable file that arent in the template will be ignored.
         - The generated file will be saved in the current directory.
     Usage:
-        substitutor gen templateFile variableFile [optional flags]
+        substitutor gen template_file variableFile [optional flags]
     Flags:
         -v	Toggles verbose logging for debug purposes
         -c originalTheme	Run substitutor check on originalTheme and generatedTheme
@@ -100,7 +123,7 @@ Reverse:
         - This takes the OriginalTheme as the source of truth. Things in the template that arent in the OriginalTheme will be ignored.
         - The generated file will be saved in the current directory.
     Usage:
-        substitutor rev templateFile originalTheme [optional flags]
+        substitutor rev template_file originalTheme [optional flags]
     Flags:
         -v	Toggles verbose logging for debug purposes
         -c	Runs substitutor check on originalTheme and a generatedTheme of the generated variableFile
@@ -115,11 +138,14 @@ fn run(args: Vec<String>) -> Result<(), Error> {
 
     let call_dir = std::env::current_dir().unwrap();
 
-    let flags: Vec<_> = args
+    let mut flags: Vec<_> = args
         .iter()
         .filter(|&x| x.starts_with("-"))
         .map(|x| x.to_string())
         .collect();
+
+    flags.sort();
+    flags.dedup();
 
     let command = ValidCommands::from_str(&args[1])?;
 
@@ -142,8 +168,21 @@ fn run(args: Vec<String>) -> Result<(), Error> {
             let file2 = ValidatedFile::from_str(&command_args[1])?;
             commands::check(file1, file2)
         }
+        ValidCommands::Reverse => {
+            let template_file = ValidatedFile::from_str(&command_args[0])?;
+            let theme_file = ValidatedFile::from_str(&command_args[1])?;
+
+            match (&template_file.file_type, &theme_file.file_type) {
+                (FileType::Template, FileType::Theme) => {
+                    commands::reverse(template_file, theme_file, flags)
+                }
+                (FileType::Theme, FileType::Template) => {
+                    commands::reverse(theme_file, template_file, flags)
+                }
+                _ => return Err(Error::InvalidFileType),
+            }
+        }
         ValidCommands::Generate => todo!(),
-        ValidCommands::Reverse => todo!(),
     }
 }
 
@@ -160,9 +199,14 @@ fn main() {
             )
         }
         Err(Error::InvalidFile(file_name)) => {
-            error!(r#"Invalid file "{file_name}". Please check the file path and try again."#)
+            error!(r#""{file_name}" is not a file. Please check the file path and try again."#)
         }
-        Err(Error::InvalidFlag) => error!("Invalid flag. Please check the flag and try again."),
+        Err(Error::InvalidFileType) => {
+            error!(r#"Invalid types for files provided. Please check the usage."#)
+        }
+        Err(Error::InvalidFlag(command, flag)) => {
+            error!(r#"Invalid flag "{flag}" for the "{command}" command. Please check the usage."#)
+        }
         Err(Error::HelpInvalidCommand) => {
             error!(
                 "Invalid command argument for help. Please use one of the following: {:?}",
@@ -180,6 +224,9 @@ fn main() {
             error!(
                 r#"Unhandeled file format "{format}". Please make an issue to start future support"#
             )
+        }
+        Err(Error::ProcessingError(message)) => {
+            error!(r#"An error occured while processing: "{}""#, message)
         }
     }
 }

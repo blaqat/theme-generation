@@ -1,0 +1,20 @@
+{
+	"angels": {
+		"gabriel": true
+	},
+	"apple": "#FF0000",
+	"darker_apple": "#FF000050",
+	"lighter_apple": "#FF8080",
+	"banana": "#FFB31A",
+	"pear_or_grape": "#FF008850",
+	"make_apple_transparent": "#FF000000",
+	"not_a_real_variable": null,
+	"fruits": {
+		"grapes": [
+			"#8000FF",
+			{
+				"a": "#FF0088"
+			}
+		]
+	}
+}
