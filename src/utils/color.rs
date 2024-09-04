@@ -37,104 +37,85 @@ enum ColorError {
 }
 
 #[derive(Debug)]
-enum ColorChanges {
-    AddHue(i16),
-    AddSaturation(i16),
-    AddValue(i16),
-    AddRed(i16),
-    AddGreen(i16),
-    AddBlue(i16),
-    AddAlpha(i16),
-
-    MultHue(i16),
-    MultSaturation(i16),
-    MultValue(i16),
-    MultRed(i16),
-    MultGreen(i16),
-    MultBlue(i16),
-    MultAlpha(i16),
-
-    DivHue(i16),
-    DivSaturation(i16),
-    DivValue(i16),
-    DivRed(i16),
-    DivGreen(i16),
-    DivBlue(i16),
-    DivAlpha(i16),
+enum ColorChanges<'a> {
+    Add(&'a ColorSettings),
+    Sub(&'a ColorSettings),
+    Mult(&'a ColorSettings),
+    Div(&'a ColorSettings),
+    Set(&'a ColorSettings),
 }
 
-impl ColorChanges {
-    fn from_setting(op: &str, b_val: &ColorSettings) -> Self {
+impl<'a> ColorChanges<'a> {
+    fn from_setting(op: &str, b_val: &'a ColorSettings) -> Self {
         match op {
-            "+" => match b_val {
-                ColorSettings::SetHue(val) => Self::AddHue(*val),
-                ColorSettings::SetSaturation(val) => Self::AddSaturation(*val),
-                ColorSettings::SetValue(val) => Self::AddValue(*val),
-                ColorSettings::SetRed(val) => Self::AddRed(*val),
-                ColorSettings::SetGreen(val) => Self::AddGreen(*val),
-                ColorSettings::SetBlue(val) => Self::AddBlue(*val),
-                ColorSettings::SetAlpha(val) => Self::AddAlpha(*val),
-            },
-
-            "-" => match b_val {
-                ColorSettings::SetHue(val) => Self::AddHue(-*val),
-                ColorSettings::SetSaturation(val) => Self::AddSaturation(-*val),
-                ColorSettings::SetValue(val) => Self::AddValue(-*val),
-                ColorSettings::SetRed(val) => Self::AddRed(-*val),
-                ColorSettings::SetGreen(val) => Self::AddGreen(-*val),
-                ColorSettings::SetBlue(val) => Self::AddBlue(-*val),
-                ColorSettings::SetAlpha(val) => Self::AddAlpha(-*val),
-            },
-
-            "*" => match b_val {
-                ColorSettings::SetHue(val) => Self::MultHue(*val),
-                ColorSettings::SetSaturation(val) => Self::MultSaturation(*val),
-                ColorSettings::SetValue(val) => Self::MultValue(*val),
-                ColorSettings::SetRed(val) => Self::MultRed(*val),
-                ColorSettings::SetGreen(val) => Self::MultGreen(*val),
-                ColorSettings::SetBlue(val) => Self::MultBlue(*val),
-                ColorSettings::SetAlpha(val) => Self::MultAlpha(*val),
-            },
-
-            "/" => match b_val {
-                ColorSettings::SetHue(val) => Self::DivHue(*val),
-                ColorSettings::SetSaturation(val) => Self::DivSaturation(*val),
-                ColorSettings::SetValue(val) => Self::DivValue(*val),
-                ColorSettings::SetRed(val) => Self::DivRed(*val),
-                ColorSettings::SetGreen(val) => Self::DivGreen(*val),
-                ColorSettings::SetBlue(val) => Self::DivBlue(*val),
-                ColorSettings::SetAlpha(val) => Self::DivAlpha(*val),
-            },
-
+            "+" => ColorChanges::Add(b_val),
+            "-" => ColorChanges::Sub(b_val),
+            "*" => ColorChanges::Mult(b_val),
+            "/" => ColorChanges::Div(b_val),
+            "=" => ColorChanges::Set(b_val),
             _ => panic!("Invalid operator"),
         }
     }
 
     fn apply_change(self, color: &Color) -> ColorSettings {
         match self {
-            Self::AddHue(val) => ColorSettings::SetHue(color.hue + val),
-            Self::AddSaturation(val) => ColorSettings::SetSaturation(color.saturation + val),
-            Self::AddValue(val) => ColorSettings::SetValue(color.value + val),
-            Self::AddRed(val) => ColorSettings::SetRed(color.red + val),
-            Self::AddGreen(val) => ColorSettings::SetGreen(color.green + val),
-            Self::AddBlue(val) => ColorSettings::SetBlue(color.blue + val),
-            Self::AddAlpha(val) => ColorSettings::SetAlpha(color.alpha + val),
+            ColorChanges::Add(b_val) => match b_val {
+                ColorSettings::SetHue(val) => ColorSettings::SetHue(color.hue + val),
+                ColorSettings::SetSaturation(val) => {
+                    ColorSettings::SetSaturation(color.saturation + val)
+                }
+                ColorSettings::SetValue(val) => ColorSettings::SetValue(color.value + val),
+                ColorSettings::SetRed(val) => ColorSettings::SetRed(color.red + val),
+                ColorSettings::SetGreen(val) => ColorSettings::SetGreen(color.green + val),
+                ColorSettings::SetBlue(val) => ColorSettings::SetBlue(color.blue + val),
+                ColorSettings::SetAlpha(val) => ColorSettings::SetAlpha(color.alpha + val),
+            },
 
-            Self::MultHue(val) => ColorSettings::SetHue(color.hue * val),
-            Self::MultSaturation(val) => ColorSettings::SetSaturation(color.saturation * val),
-            Self::MultValue(val) => ColorSettings::SetValue(color.value * val),
-            Self::MultRed(val) => ColorSettings::SetRed(color.red * val),
-            Self::MultGreen(val) => ColorSettings::SetGreen(color.green * val),
-            Self::MultBlue(val) => ColorSettings::SetBlue(color.blue * val),
-            Self::MultAlpha(val) => ColorSettings::SetAlpha(color.alpha * val),
+            ColorChanges::Sub(b_val) => match b_val {
+                ColorSettings::SetHue(val) => ColorSettings::SetHue(color.hue - val),
+                ColorSettings::SetSaturation(val) => {
+                    ColorSettings::SetSaturation(color.saturation - val)
+                }
+                ColorSettings::SetValue(val) => ColorSettings::SetValue(color.value - val),
+                ColorSettings::SetRed(val) => ColorSettings::SetRed(color.red - val),
+                ColorSettings::SetGreen(val) => ColorSettings::SetGreen(color.green - val),
+                ColorSettings::SetBlue(val) => ColorSettings::SetBlue(color.blue - val),
+                ColorSettings::SetAlpha(val) => ColorSettings::SetAlpha(color.alpha - val),
+            },
 
-            Self::DivHue(val) => ColorSettings::SetHue(color.hue / val),
-            Self::DivSaturation(val) => ColorSettings::SetSaturation(color.saturation / val),
-            Self::DivValue(val) => ColorSettings::SetValue(color.value / val),
-            Self::DivRed(val) => ColorSettings::SetRed(color.red / val),
-            Self::DivGreen(val) => ColorSettings::SetGreen(color.green / val),
-            Self::DivBlue(val) => ColorSettings::SetBlue(color.blue / val),
-            Self::DivAlpha(val) => ColorSettings::SetAlpha(color.alpha / val),
+            ColorChanges::Mult(b_val) => match b_val {
+                ColorSettings::SetHue(val) => ColorSettings::SetHue(color.hue * val),
+                ColorSettings::SetSaturation(val) => {
+                    ColorSettings::SetSaturation(color.saturation * val)
+                }
+                ColorSettings::SetValue(val) => ColorSettings::SetValue(color.value * val),
+                ColorSettings::SetRed(val) => ColorSettings::SetRed(color.red * val),
+                ColorSettings::SetGreen(val) => ColorSettings::SetGreen(color.green * val),
+                ColorSettings::SetBlue(val) => ColorSettings::SetBlue(color.blue * val),
+                ColorSettings::SetAlpha(val) => ColorSettings::SetAlpha(color.alpha * val),
+            },
+
+            ColorChanges::Div(b_val) => match b_val {
+                ColorSettings::SetHue(val) => ColorSettings::SetHue(color.hue / val),
+                ColorSettings::SetSaturation(val) => {
+                    ColorSettings::SetSaturation(color.saturation / val)
+                }
+                ColorSettings::SetValue(val) => ColorSettings::SetValue(color.value / val),
+                ColorSettings::SetRed(val) => ColorSettings::SetRed(color.red / val),
+                ColorSettings::SetGreen(val) => ColorSettings::SetGreen(color.green / val),
+                ColorSettings::SetBlue(val) => ColorSettings::SetBlue(color.blue / val),
+                ColorSettings::SetAlpha(val) => ColorSettings::SetAlpha(color.alpha / val),
+            },
+
+            ColorChanges::Set(b_val) => match b_val {
+                ColorSettings::SetHue(val) => ColorSettings::SetHue(*val),
+                ColorSettings::SetSaturation(val) => ColorSettings::SetSaturation(*val),
+                ColorSettings::SetValue(val) => ColorSettings::SetValue(*val),
+                ColorSettings::SetRed(val) => ColorSettings::SetRed(*val),
+                ColorSettings::SetGreen(val) => ColorSettings::SetGreen(*val),
+                ColorSettings::SetBlue(val) => ColorSettings::SetBlue(*val),
+                ColorSettings::SetAlpha(val) => ColorSettings::SetAlpha(*val),
+            },
         }
     }
 
