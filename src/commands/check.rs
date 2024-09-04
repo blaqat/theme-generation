@@ -1,9 +1,5 @@
-use crate::error;
 use crate::prelude::*;
-use crate::Error;
-use crate::ValidatedFile;
 use json_patch;
-
 use serde_json::{json, Map, Value};
 
 const DNE: &'static str = "DNE";
@@ -27,8 +23,8 @@ impl DiffInfo {
 }
 
 fn json_two_diff(data1: &Value, data2: &Value) -> DiffInfo {
-    let diff1 = json_deep_diff(data1, data2, String::from(""), 0);
-    let diff2 = json_deep_diff(data2, data1, String::from(""), 0);
+    let diff1 = json_deep_diff(data1, data2, String::from("."), 0);
+    let diff2 = json_deep_diff(data2, data1, String::from("."), 0);
     diff1.merge(diff2)
 }
 
@@ -80,18 +76,24 @@ pub fn check(file1: ValidatedFile, file2: ValidatedFile) -> Result<(), Error> {
         .map_err(|_| Error::InvalidIOFormat(file2.format.clone()))?;
 
     if data1 == data2 {
-        println!("{} and {} are 100% the same.", &file1.name, &file2.name);
+        println!(
+            "Results for {} and {}: \n---------------------\nSimilarity Percenatage: 100%",
+            &file1.name, &file2.name
+        );
         return Ok(());
     } else if !data1.is_object() || !data2.is_object() {
-        println!("{} and {} are different types.", &file1.name, &file2.name);
+        println!(
+            "Results for {} and {}: \n---------------------\nSimilarity Percenatage: 0%",
+            &file1.name, &file2.name
+        );
         return Ok(());
     }
 
     let diff = json_two_diff(&data1, &data2);
-    let percentage = (diff.diffs.len() as f32 / diff.total_keys as f32) * 100.0;
+    let percentage = 100.0 - ((diff.diffs.len() as f32 / diff.total_keys as f32) * 100.0);
 
     println!(
-        "{} and {} are {:.1}% different.\nDifferent Keys ({}):\n{:?}",
+        "Results for {} and {}: \n---------------------\nSimilarity Percenatage: {:.1}%\nDifferent Keys ({}):\n{:?}",
         &file1.name,
         &file2.name,
         percentage,

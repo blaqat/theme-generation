@@ -10,6 +10,7 @@
 				"border": "#bec5cd",
 				"border.variant": "#bec5cd",
 				"border.focused": "#bec5cd",
+				"border.selected": null,
 				"border.transparent": null,
 				"border.disabled": null,
 				"elevated_surface.background": "#e4e6ea",

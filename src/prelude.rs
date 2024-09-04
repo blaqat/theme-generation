@@ -1,5 +1,5 @@
 //! Crate preulde
-pub struct W<T>(pub T);
+pub use crate::*;
 pub use anyhow;
 pub use std::{
     collections::HashMap,
