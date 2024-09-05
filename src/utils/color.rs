@@ -1,4 +1,6 @@
 use palette::{Hsv, IntoColor, Srgb};
+use std::ops::{Add, Div, Mul, Sub};
+use std::str::FromStr;
 
 /*
 Colors are hex strings that have easy access to their hue, saturation, value, and lightness.
@@ -9,12 +11,118 @@ Valid Color Strings Include:
 - #RGBA
 
 When color is modified, all properties are updated.
-e.g if hsv/l is modified rgb are updated
+e.g if hsv is modified rgb are updated
 if rgb is modified hsvl are updated
-if v/l is modified the other is updated
 */
 
-#[derive(Debug, Default)]
+const MAX_RGB: i16 = 255;
+const MAX_SVA: i16 = 100;
+const MAX_HUE: i16 = 360;
+
+fn is_xx(s: &str) -> bool {
+    s.len() == 2 && s.chars().next() == s.chars().nth(1)
+}
+
+#[derive(Debug)]
+enum ColorError {
+    InvalidHex(String),
+    InvalidColorting,
+    InvalidColorChange,
+}
+
+#[derive(Debug, PartialEq)]
+enum ColorComponent {
+    Hue(i16),
+    Saturation(i16),
+    Value(i16),
+    Red(i16),
+    Green(i16),
+    Blue(i16),
+    Alpha(i16),
+}
+
+macro_rules! impl_color_components_op {
+    ($trait: ident, $func_name: ident, $op: tt) => {
+        impl $trait<ColorComponent> for &Color {
+            type Output = ColorComponent;
+
+            fn $func_name(self, rhs: ColorComponent) -> Self::Output {
+                match rhs {
+                    ColorComponent::Hue(val) => ColorComponent::Hue(self.hue $op val),
+                    ColorComponent::Saturation(val) => {
+                        ColorComponent::Saturation(self.saturation $op val)
+                    }
+                    ColorComponent::Value(val) => ColorComponent::Value(self.value $op val),
+                    ColorComponent::Red(val) => ColorComponent::Red(self.red $op val),
+                    ColorComponent::Green(val) => ColorComponent::Green(self.green $op val),
+                    ColorComponent::Blue(val) => ColorComponent::Blue(self.blue $op val),
+                    ColorComponent::Alpha(val) => ColorComponent::Alpha(self.alpha $op val),
+                }
+            }
+        }
+    };
+}
+
+impl_color_components_op!(Add, add, +);
+impl_color_components_op!(Div, div, /);
+impl_color_components_op!(Mul, mul, *);
+impl_color_components_op!(Sub, sub, -);
+
+impl ColorComponent {
+    fn validate_change(&mut self) {
+        match self {
+            Self::Hue(hue) => {
+                if !(0..MAX_HUE).contains(hue) {
+                    *hue = hue.rem_euclid(MAX_HUE);
+                }
+            }
+
+            Self::Saturation(val) | Self::Value(val) | Self::Alpha(val) => {
+                *val = (*val).clamp(0, MAX_SVA);
+            }
+
+            Self::Red(val) | Self::Green(val) | Self::Blue(val) => {
+                *val = (*val).clamp(0, MAX_RGB);
+            }
+        }
+    }
+}
+
+#[derive(Debug, PartialEq)]
+struct ColorChange<'a>(ColorComponent, &'a str);
+
+impl<'a> ColorChange<'a> {
+    fn apply(self, color: &'a Color) -> Result<ColorComponent, ColorError> {
+        let new_change = match self.1 {
+            "+" => color + self.0,
+            "-" => color - self.0,
+            "=" => self.0,
+            "/" => color / self.0,
+            _ => return Err(ColorError::InvalidColorChange),
+        };
+
+        Ok(new_change)
+    }
+}
+
+// let applied_changes = vec![ColorChange(ColorComponent::Alpha(3), "/")];
+// let applied_changes = vec![color_change!(Alpha "/", 3)];
+macro_rules! color_change {
+    ($setting: ident=$val: expr) => {
+        ColorChange(ColorComponent::$setting($val), "=")
+    };
+    ($setting: ident $op: expr; $val: expr) => {
+        ColorChange(ColorComponent::$setting($val), $op)
+    };
+    ($($setting: ident: $op: expr, $val: expr);+) => {
+        vec![$(color_change!($setting $op; $val)),+]
+    };
+    ($($setting: ident $val: expr),+) => {
+        vec![$(color_change!($setting=$val)),+]
+    };
+}
+
+#[derive(Debug)]
 struct Color {
     alpha: i16,
     red: i16,
@@ -26,229 +134,35 @@ struct Color {
     hex: String,
 }
 
-const MAX_RGB: i16 = 256;
-const MAX_SVA: i16 = 100;
-const MAX_HUE: i16 = 360;
-
-#[derive(Debug)]
-enum ColorError {
-    InvalidHex(String),
-    InvalidColorSettings,
-}
-
-#[derive(Debug)]
-enum ColorChanges<'a> {
-    Add(&'a ColorSettings),
-    Sub(&'a ColorSettings),
-    Mult(&'a ColorSettings),
-    Div(&'a ColorSettings),
-    Set(&'a ColorSettings),
-}
-
-impl<'a> ColorChanges<'a> {
-    fn from_setting(op: &str, b_val: &'a ColorSettings) -> Self {
-        match op {
-            "+" => ColorChanges::Add(b_val),
-            "-" => ColorChanges::Sub(b_val),
-            "*" => ColorChanges::Mult(b_val),
-            "/" => ColorChanges::Div(b_val),
-            "=" => ColorChanges::Set(b_val),
-            _ => panic!("Invalid operator"),
+impl Default for Color {
+    fn default() -> Self {
+        Self {
+            alpha: 100,
+            red: 0,
+            green: 0,
+            blue: 0,
+            hue: 0,
+            saturation: 0,
+            value: 0,
+            hex: "#000000".to_string(),
         }
     }
-
-    fn apply_change(self, color: &Color) -> ColorSettings {
-        match self {
-            ColorChanges::Add(b_val) => match b_val {
-                ColorSettings::SetHue(val) => ColorSettings::SetHue(color.hue + val),
-                ColorSettings::SetSaturation(val) => {
-                    ColorSettings::SetSaturation(color.saturation + val)
-                }
-                ColorSettings::SetValue(val) => ColorSettings::SetValue(color.value + val),
-                ColorSettings::SetRed(val) => ColorSettings::SetRed(color.red + val),
-                ColorSettings::SetGreen(val) => ColorSettings::SetGreen(color.green + val),
-                ColorSettings::SetBlue(val) => ColorSettings::SetBlue(color.blue + val),
-                ColorSettings::SetAlpha(val) => ColorSettings::SetAlpha(color.alpha + val),
-            },
-
-            ColorChanges::Sub(b_val) => match b_val {
-                ColorSettings::SetHue(val) => ColorSettings::SetHue(color.hue - val),
-                ColorSettings::SetSaturation(val) => {
-                    ColorSettings::SetSaturation(color.saturation - val)
-                }
-                ColorSettings::SetValue(val) => ColorSettings::SetValue(color.value - val),
-                ColorSettings::SetRed(val) => ColorSettings::SetRed(color.red - val),
-                ColorSettings::SetGreen(val) => ColorSettings::SetGreen(color.green - val),
-                ColorSettings::SetBlue(val) => ColorSettings::SetBlue(color.blue - val),
-                ColorSettings::SetAlpha(val) => ColorSettings::SetAlpha(color.alpha - val),
-            },
-
-            ColorChanges::Mult(b_val) => match b_val {
-                ColorSettings::SetHue(val) => ColorSettings::SetHue(color.hue * val),
-                ColorSettings::SetSaturation(val) => {
-                    ColorSettings::SetSaturation(color.saturation * val)
-                }
-                ColorSettings::SetValue(val) => ColorSettings::SetValue(color.value * val),
-                ColorSettings::SetRed(val) => ColorSettings::SetRed(color.red * val),
-                ColorSettings::SetGreen(val) => ColorSettings::SetGreen(color.green * val),
-                ColorSettings::SetBlue(val) => ColorSettings::SetBlue(color.blue * val),
-                ColorSettings::SetAlpha(val) => ColorSettings::SetAlpha(color.alpha * val),
-            },
-
-            ColorChanges::Div(b_val) => match b_val {
-                ColorSettings::SetHue(val) => ColorSettings::SetHue(color.hue / val),
-                ColorSettings::SetSaturation(val) => {
-                    ColorSettings::SetSaturation(color.saturation / val)
-                }
-                ColorSettings::SetValue(val) => ColorSettings::SetValue(color.value / val),
-                ColorSettings::SetRed(val) => ColorSettings::SetRed(color.red / val),
-                ColorSettings::SetGreen(val) => ColorSettings::SetGreen(color.green / val),
-                ColorSettings::SetBlue(val) => ColorSettings::SetBlue(color.blue / val),
-                ColorSettings::SetAlpha(val) => ColorSettings::SetAlpha(color.alpha / val),
-            },
-
-            ColorChanges::Set(b_val) => match b_val {
-                ColorSettings::SetHue(val) => ColorSettings::SetHue(*val),
-                ColorSettings::SetSaturation(val) => ColorSettings::SetSaturation(*val),
-                ColorSettings::SetValue(val) => ColorSettings::SetValue(*val),
-                ColorSettings::SetRed(val) => ColorSettings::SetRed(*val),
-                ColorSettings::SetGreen(val) => ColorSettings::SetGreen(*val),
-                ColorSettings::SetBlue(val) => ColorSettings::SetBlue(*val),
-                ColorSettings::SetAlpha(val) => ColorSettings::SetAlpha(*val),
-            },
-        }
-    }
-
-    fn apply_to_setting(op: &str, color: &Color, setting: &ColorSettings) -> ColorSettings {
-        match op {
-            "+" => match setting {
-                ColorSettings::SetHue(val) => ColorSettings::SetHue(color.hue + val),
-                ColorSettings::SetSaturation(val) => {
-                    ColorSettings::SetSaturation(color.saturation + val)
-                }
-                ColorSettings::SetValue(val) => ColorSettings::SetValue(color.value + val),
-                ColorSettings::SetRed(val) => ColorSettings::SetRed(color.red + val),
-                ColorSettings::SetGreen(val) => ColorSettings::SetGreen(color.green + val),
-                ColorSettings::SetBlue(val) => ColorSettings::SetBlue(color.blue + val),
-                ColorSettings::SetAlpha(val) => ColorSettings::SetAlpha(color.alpha + val),
-            },
-
-            "-" => match setting {
-                ColorSettings::SetHue(val) => ColorSettings::SetHue(color.hue - val),
-                ColorSettings::SetSaturation(val) => {
-                    ColorSettings::SetSaturation(color.saturation - val)
-                }
-                ColorSettings::SetValue(val) => ColorSettings::SetValue(color.value - val),
-                ColorSettings::SetRed(val) => ColorSettings::SetRed(color.red - val),
-                ColorSettings::SetGreen(val) => ColorSettings::SetGreen(color.green - val),
-                ColorSettings::SetBlue(val) => ColorSettings::SetBlue(color.blue - val),
-                ColorSettings::SetAlpha(val) => ColorSettings::SetAlpha(color.alpha - val),
-            },
-
-            "*" => match setting {
-                ColorSettings::SetHue(val) => ColorSettings::SetHue(color.hue * val),
-                ColorSettings::SetSaturation(val) => {
-                    ColorSettings::SetSaturation(color.saturation * val)
-                }
-                ColorSettings::SetValue(val) => ColorSettings::SetValue(color.value * val),
-                ColorSettings::SetRed(val) => ColorSettings::SetRed(color.red * val),
-                ColorSettings::SetGreen(val) => ColorSettings::SetGreen(color.green * val),
-                ColorSettings::SetBlue(val) => ColorSettings::SetBlue(color.blue * val),
-                ColorSettings::SetAlpha(val) => ColorSettings::SetAlpha(color.alpha * val),
-            },
-
-            "/" => match setting {
-                ColorSettings::SetHue(val) => ColorSettings::SetHue(color.hue / val),
-                ColorSettings::SetSaturation(val) => {
-                    ColorSettings::SetSaturation(color.saturation / val)
-                }
-                ColorSettings::SetValue(val) => ColorSettings::SetValue(color.value / val),
-                ColorSettings::SetRed(val) => ColorSettings::SetRed(color.red / val),
-                ColorSettings::SetGreen(val) => ColorSettings::SetGreen(color.green / val),
-                ColorSettings::SetBlue(val) => ColorSettings::SetBlue(color.blue / val),
-                ColorSettings::SetAlpha(val) => ColorSettings::SetAlpha(color.alpha / val),
-            },
-
-            _ => panic!("Invalid operator"),
-        }
-    }
-}
-
-#[derive(Debug, PartialEq)]
-enum ColorSettings {
-    SetHue(i16),
-    SetSaturation(i16),
-    SetValue(i16),
-    SetRed(i16),
-    SetGreen(i16),
-    SetBlue(i16),
-    SetAlpha(i16),
-}
-
-impl ColorSettings {
-    fn validate_change(&mut self) {
-        match self {
-            Self::SetHue(hue) => {
-                if !(0..MAX_HUE).contains(hue) {
-                    *hue = hue.rem_euclid(MAX_HUE);
-                }
-            }
-
-            Self::SetSaturation(val) | Self::SetValue(val) | Self::SetAlpha(val) => {
-                if *val < 0 {
-                    *val = 0;
-                } else if *val > MAX_SVA {
-                    *val = MAX_SVA;
-                }
-            }
-
-            Self::SetRed(val) | Self::SetGreen(val) | Self::SetBlue(val) => {
-                if *val < 0 {
-                    *val = 0;
-                } else if *val > MAX_RGB {
-                    *val = MAX_RGB;
-                }
-            }
-        }
-    }
-
-    fn is_hsv(&self) -> bool {
-        matches!(
-            self,
-            Self::SetHue(_) | Self::SetSaturation(_) | Self::SetValue(_)
-        )
-    }
-
-    fn is_rgb(&self) -> bool {
-        matches!(self, Self::SetRed(_) | Self::SetGreen(_) | Self::SetBlue(_))
-    }
-}
-fn is_xx(s: &str) -> bool {
-    s.len() == 2 && s.chars().nth(0) == s.chars().nth(1)
 }
 
 impl Color {
     fn is_valid_hex(hex: &str) -> bool {
         let hex = hex.to_uppercase();
-        let mut chars = hex.chars();
-        if chars.next() != Some('#') {
-            return false;
-        }
-        for c in chars {
-            if !c.is_digit(16) {
-                return false;
-            }
-        }
-        hex.len() == 4 || hex.len() == 5 || hex.len() == 7 || hex.len() == 9
+        hex.starts_with("#")
+            && hex.chars().skip(1).all(|c| c.is_ascii_hexdigit())
+            && matches!(hex.len(), 4 | 5 | 7 | 9)
     }
 
     fn to_full_hex(hex: &str) -> String {
         let hex = hex.to_uppercase();
         if hex.len() == 4 || hex.len() == 5 {
-            let mut chars = hex.chars().skip(1);
             let mut new_hex = String::with_capacity(9);
             new_hex.push('#');
-            for c in chars {
+            for c in hex.chars().skip(1) {
                 new_hex.push(c);
                 new_hex.push(c);
             }
@@ -268,6 +182,7 @@ impl Color {
         let red = i16::from_str_radix(&hex[1..3], 16).unwrap();
         let green = i16::from_str_radix(&hex[3..5], 16).unwrap();
         let blue = i16::from_str_radix(&hex[5..7], 16).unwrap();
+
         let alpha = if hex.len() == 9 {
             let a255 = i16::from_str_radix(&hex[7..9], 16).unwrap();
             let a100 = a255 as f32 / 255.0 * 100.0;
@@ -288,14 +203,6 @@ impl Color {
         color.update_hex();
 
         Ok(color)
-    }
-
-    fn from_rgb(red: i16, green: i16, blue: i16) -> Self {
-        todo!()
-    }
-
-    fn from_hsv(hue: f32, saturation: f32, value: f32) -> Self {
-        todo!()
     }
 
     fn update_hsv(&mut self) {
@@ -329,15 +236,15 @@ impl Color {
         let r = format!("{:02X}", self.red);
         let g = format!("{:02X}", self.green);
         let b = format!("{:02X}", self.blue);
-        let rgb_xx = is_xx(&r) && is_xx(&g) && is_xx(&b);
+        let rgb_xx = [&r, &g, &b].iter().all(|c| is_xx(c));
 
         if self.alpha == 100 {
             if rgb_xx {
                 self.hex = format!(
                     "#{}{}{}",
-                    r.chars().nth(0).unwrap(),
-                    g.chars().nth(0).unwrap(),
-                    b.chars().nth(0).unwrap()
+                    r.chars().next().unwrap(),
+                    g.chars().next().unwrap(),
+                    b.chars().next().unwrap()
                 );
             } else {
                 self.hex = format!("#{}{}{}", r, g, b);
@@ -349,10 +256,10 @@ impl Color {
             if rgb_xx && is_xx(&a) {
                 self.hex = format!(
                     "#{}{}{}{}",
-                    r.chars().nth(0).unwrap(),
-                    g.chars().nth(0).unwrap(),
-                    b.chars().nth(0).unwrap(),
-                    a.chars().nth(0).unwrap()
+                    r.chars().next().unwrap(),
+                    g.chars().next().unwrap(),
+                    b.chars().next().unwrap(),
+                    a.chars().next().unwrap()
                 );
             } else {
                 self.hex = format!("#{}{}{}{}", r, g, b, a);
@@ -360,33 +267,33 @@ impl Color {
         }
     }
 
-    fn update(&mut self, settings: Vec<ColorSettings>) -> &Self {
-        for mut setting in settings {
+    fn update(&mut self, changes: Vec<ColorChange>) -> Result<&Self, ColorError> {
+        for change in changes {
+            let mut setting = change.apply(self)?;
+
             setting.validate_change();
 
             match setting {
-                ColorSettings::SetHue(h) => self.hue = h,
-                ColorSettings::SetSaturation(s) => self.saturation = s,
-                ColorSettings::SetValue(v) => self.value = v,
+                ColorComponent::Hue(h) => self.hue = h,
+                ColorComponent::Saturation(s) => self.saturation = s,
+                ColorComponent::Value(v) => self.value = v,
 
-                ColorSettings::SetRed(r) => self.red = r,
-                ColorSettings::SetGreen(g) => self.green = g,
-                ColorSettings::SetBlue(b) => self.blue = b,
+                ColorComponent::Red(r) => self.red = r,
+                ColorComponent::Green(g) => self.green = g,
+                ColorComponent::Blue(b) => self.blue = b,
 
-                ColorSettings::SetAlpha(a) => self.alpha = a,
+                ColorComponent::Alpha(a) => self.alpha = a,
             }
 
             match setting {
-                ColorSettings::SetHue(_)
-                | ColorSettings::SetSaturation(_)
-                | ColorSettings::SetValue(_)
-                | ColorSettings::SetSaturation(_) => {
+                ColorComponent::Hue(_)
+                | ColorComponent::Saturation(_)
+                | ColorComponent::Value(_)
+                | ColorComponent::Saturation(_) => {
                     self.update_rgb();
                 }
 
-                ColorSettings::SetRed(_)
-                | ColorSettings::SetGreen(_)
-                | ColorSettings::SetBlue(_) => {
+                ColorComponent::Red(_) | ColorComponent::Green(_) | ColorComponent::Blue(_) => {
                     self.update_hsv();
                 }
 
@@ -396,7 +303,7 @@ impl Color {
             self.update_hex();
         }
 
-        self
+        Ok(self)
     }
 }
 
@@ -441,7 +348,9 @@ mod tests {
 
         println!("{:?}", &color);
 
-        let changes = vec![ColorSettings::SetHue(120)];
+        // let changes = vec![color_change!(Hue 120)];
+        let changes = color_change![ Hue 120 ];
+
         color.update(changes);
 
         println!("{:?}", &color);
@@ -456,10 +365,9 @@ mod tests {
 
         println!("{:?}", &color);
 
-        let changes = vec![
-            ColorSettings::SetHue(-50),
-            ColorSettings::SetSaturation(120),
-        ];
+        // let changes = vec![ColorChange(ColorComponent::Hue(-50), "="), ColorChange(ColorComponent::Saturation(120), "=")];
+        // let changes = vec![color_change!(Hue=-50), color_change!(Saturation=120)];
+        let changes = color_change![ Hue -50, Saturation 120 ];
 
         color.update(changes);
 
@@ -473,40 +381,13 @@ mod tests {
         let hex = "#F00";
         let mut color = Color::from_hex(hex).unwrap();
 
-        let changes = vec![("/", ColorSettings::SetAlpha(2))];
-        let applied_changes = changes
-            .iter()
-            // Change the operation and setting into a ColorChanges
-            .map(|(op, setting)| ColorChanges::from_setting(op, setting))
-            // Create new ColorSettings from the ColorChanges
-            .map(|modification| modification.apply_change(&color))
-            .collect::<Vec<ColorSettings>>();
-
-        // println!("{:?}\n{:?}", changes, applied_changes);
-
-        assert_eq!(applied_changes, vec![ColorSettings::SetAlpha(50)]);
+        let applied_changes = color_change! {
+            Alpha: "/", 3;
+            Saturation: "-", 10
+        };
 
         color.update(applied_changes);
 
-        // println!("{:?}", &color);
-
-        assert_eq!(color.hex, String::from("#FF000080"));
-
-        let hex = "#F00";
-
-        let mut color = Color::from_hex("#F00").unwrap();
-
-        let changes = vec![("/", ColorSettings::SetAlpha(3))];
-
-        let applied_changes = changes
-            .iter()
-            .map(|(op, setting)| ColorChanges::apply_to_setting(op, &color, setting))
-            .collect::<Vec<ColorSettings>>();
-
-        assert_eq!(applied_changes, vec![ColorSettings::SetAlpha(33)]);
-
-        color.update(applied_changes);
-
-        assert_eq!(color.hex, String::from("#F005"));
+        assert_eq!(color.hex, String::from("#FF191955"));
     }
 }
