@@ -8,7 +8,7 @@ mod commands;
 mod prelude;
 mod utils;
 
-const DEFAULT_ERROR_MESSAGE: &'static str =
+const DEFAULT_ERROR_MESSAGE: &str =
     "Usage: substitutor [check|gen|rev] or substitutor help to get more information.";
 
 #[derive(Debug)]
@@ -42,7 +42,7 @@ impl ValidatedFile {
         };
 
         let file =
-            File::open(&file_path).map_err(|_| Error::InvalidFile(String::from(file_path)))?;
+            File::open(file_path).map_err(|_| Error::InvalidFile(String::from(file_path)))?;
 
         let name = file_path.to_owned();
 
@@ -73,8 +73,7 @@ enum Error {
     InvalidFlag(String, String),
     InvalidIOFormat(String),
     HelpInvalidCommand,
-
-    ProcessingError(String),
+    Processing(String),
 }
 
 impl ValidCommands {
@@ -156,11 +155,12 @@ fn run(args: Vec<String>) -> Result<(), Error> {
         .collect();
 
     match command {
-        ValidCommands::Help if command_args.len() < 1 => Err(Error::NoCommand),
+        ValidCommands::Help if command_args.is_empty() => Err(Error::NoCommand),
         ValidCommands::Help => {
             let help_command =
                 ValidCommands::from_str(&command_args[0]).map_err(|_| Error::HelpInvalidCommand)?;
-            Ok(commands::help(help_command))
+            commands::help(help_command);
+            Ok(())
         }
         (command) if command_args.len() < 2 => Err(Error::NotEnoughArguments(command)),
         ValidCommands::Check => {
@@ -179,7 +179,7 @@ fn run(args: Vec<String>) -> Result<(), Error> {
                 (FileType::Theme, FileType::Template) => {
                     commands::reverse(theme_file, template_file, flags)
                 }
-                _ => return Err(Error::InvalidFileType),
+                _ => Err(Error::InvalidFileType),
             }
         }
         ValidCommands::Generate => todo!(),
@@ -225,7 +225,7 @@ fn main() {
                 r#"Unhandeled file format "{format}". Please make an issue to start future support"#
             )
         }
-        Err(Error::ProcessingError(message)) => {
+        Err(Error::Processing(message)) => {
             error!(r#"An error occured while processing: "{}""#, message)
         }
     }

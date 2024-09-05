@@ -1,8 +1,8 @@
 use crate::prelude::*;
-use json_patch;
+// use json_patch;
 use serde_json::{json, Map, Value};
 
-const DNE: &'static str = "DNE";
+const DNE: &str = "DNE";
 
 #[derive(Debug)]
 struct DiffInfo {

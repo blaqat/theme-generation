@@ -25,9 +25,9 @@ fn is_xx(s: &str) -> bool {
 
 #[derive(Debug)]
 enum ColorError {
-    InvalidHex(String),
-    InvalidColorting,
-    InvalidColorChange,
+    Hex(String),
+    ColorComponent,
+    ColorChange,
 }
 
 #[derive(Debug, PartialEq)]
@@ -98,7 +98,7 @@ impl<'a> ColorChange<'a> {
             "-" => color - self.0,
             "=" => self.0,
             "/" => color / self.0,
-            _ => return Err(ColorError::InvalidColorChange),
+            _ => return Err(ColorError::ColorChange),
         };
 
         Ok(new_change)
@@ -174,17 +174,21 @@ impl Color {
 
     fn from_hex(hex: &str) -> Result<Self, ColorError> {
         if !Self::is_valid_hex(hex) {
-            return Err(ColorError::InvalidHex(hex.to_owned()));
+            return Err(ColorError::Hex(hex.to_owned()));
         }
 
         let hex = Self::to_full_hex(hex);
 
-        let red = i16::from_str_radix(&hex[1..3], 16).unwrap();
-        let green = i16::from_str_radix(&hex[3..5], 16).unwrap();
-        let blue = i16::from_str_radix(&hex[5..7], 16).unwrap();
+        let red =
+            i16::from_str_radix(&hex[1..3], 16).map_err(|_| ColorError::Hex(hex.to_owned()))?;
+        let green =
+            i16::from_str_radix(&hex[3..5], 16).map_err(|_| ColorError::Hex(hex.to_owned()))?;
+        let blue =
+            i16::from_str_radix(&hex[5..7], 16).map_err(|_| ColorError::Hex(hex.to_owned()))?;
 
         let alpha = if hex.len() == 9 {
-            let a255 = i16::from_str_radix(&hex[7..9], 16).unwrap();
+            let a255 =
+                i16::from_str_radix(&hex[7..9], 16).map_err(|_| ColorError::Hex(hex.to_owned()))?;
             let a100 = a255 as f32 / 255.0 * 100.0;
             a100.floor() as i16
         } else {

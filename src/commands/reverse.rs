@@ -53,13 +53,6 @@ impl ReverseFlags {
     }
 }
 
-fn parse_flags(flags: Vec<String>) -> Result<Vec<ReverseFlags>, Error> {
-    flags
-        .iter()
-        .map(|flag| ReverseFlags::from_str(&flag))
-        .collect()
-}
-
 // enum ValueType {
 //     Null,
 //     Color(String),
@@ -97,7 +90,7 @@ pub fn reverse(
         "Template:\n{:?}\n\nTheme:\n{:?}\n\nFlags:\n{:?}",
         template,
         theme,
-        parse_flags(flags)?
+        ReverseFlags::parse(flags)?
     );
     todo!()
     // Step 1: Deserialize the template and theme files into Objects.
