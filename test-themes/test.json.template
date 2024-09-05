@@ -3,12 +3,19 @@
 		"evil.dooer": "$mwahaha",
 		"gabriel": true
 	},
-	"apple": "$apple",
+	"apple": "@apple",
 	"darker_apple": "$apple..50",
 	"lighter_apple": "$light_apple",
 	"banana": "$apple..(h=40, s-10)",
-	"pear_or_grape": "$pear|$grape",
+	"pear_or_grape": "$pear|@grape",
 	"make_apple_transparent": "$transparent..-50",
 	"not_a_real_variable": "$yippieee",
 	"a_real_evil_dooer_mwahahha": true,
+	"list": [
+		"$apple",
+		"$banana",
+		{
+			"nested": "$apple"
+		}
+	]
 }

@@ -9,6 +9,7 @@
 	"pear_or_grape": "#FF008850",
 	"make_apple_transparent": "#FF000000",
 	"not_a_real_variable": null,
+	"number": 4,
 	"fruits": {
 		"grapes": [
 			"#8000FF",
@@ -16,5 +17,8 @@
 				"a": "#FF0088"
 			}
 		]
-	}
+	},
+	"list": [
+		1, 2, 3
+	]
 }

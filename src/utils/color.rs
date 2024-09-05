@@ -1,5 +1,7 @@
 use palette::{Hsv, IntoColor, Srgb};
+use std::fmt;
 use std::ops::{Add, Div, Mul, Sub};
+use std::path::Display;
 use std::str::FromStr;
 
 /*
@@ -24,14 +26,14 @@ fn is_xx(s: &str) -> bool {
 }
 
 #[derive(Debug)]
-enum ColorError {
+pub enum ColorError {
     Hex(String),
     ColorComponent,
     ColorChange,
 }
 
 #[derive(Debug, PartialEq)]
-enum ColorComponent {
+pub enum ColorComponent {
     Hue(i16),
     Saturation(i16),
     Value(i16),
@@ -89,7 +91,7 @@ impl ColorComponent {
 }
 
 #[derive(Debug, PartialEq)]
-struct ColorChange<'a>(ColorComponent, &'a str);
+pub struct ColorChange<'a>(ColorComponent, &'a str);
 
 impl<'a> ColorChange<'a> {
     fn apply(self, color: &'a Color) -> Result<ColorComponent, ColorError> {
@@ -122,8 +124,8 @@ macro_rules! color_change {
     };
 }
 
-#[derive(Debug)]
-struct Color {
+#[derive(Debug, PartialEq)]
+pub struct Color {
     alpha: i16,
     red: i16,
     green: i16,
@@ -132,6 +134,11 @@ struct Color {
     saturation: i16,
     value: i16,
     hex: String,
+}
+impl fmt::Display for Color {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.hex)
+    }
 }
 
 impl Default for Color {
@@ -146,6 +153,14 @@ impl Default for Color {
             value: 0,
             hex: "#000000".to_string(),
         }
+    }
+}
+
+impl FromStr for Color {
+    type Err = ColorError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Self::from_hex(s)
     }
 }
 

@@ -5,12 +5,20 @@ use serde_json::{json, Map, Value};
 const DNE: &str = "DNE";
 
 #[derive(Debug)]
-struct DiffInfo {
+pub struct DiffInfo {
     diffs: Vec<String>,
     total_keys: usize,
 }
 
 impl DiffInfo {
+    /// Creates a new [`DiffInfo`].
+    pub fn new(diffs: Vec<String>) -> Self {
+        DiffInfo {
+            diffs,
+            total_keys: 0,
+        }
+    }
+
     fn merge(mut self, other: DiffInfo) -> Self {
         self.diffs.extend(other.diffs);
         self.diffs.sort();
@@ -28,7 +36,7 @@ fn json_two_diff(data1: &Value, data2: &Value) -> DiffInfo {
     diff1.merge(diff2)
 }
 
-fn json_deep_diff(data1: &Value, data2: &Value, prefix: String, start_keys: usize) -> DiffInfo {
+pub fn json_deep_diff(data1: &Value, data2: &Value, prefix: String, start_keys: usize) -> DiffInfo {
     let local_dne = json!(DNE);
     let mut keys = Vec::new();
     let mut total = start_keys;

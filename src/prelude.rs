@@ -7,6 +7,7 @@ pub use std::{
     fs::{read_dir, File},
     println as p,
 };
+pub use utils::*;
 
 // Red error macro
 #[macro_export]
