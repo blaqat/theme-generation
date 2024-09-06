@@ -30,6 +30,14 @@ enum ReverseFlags {
 }
 
 impl ReverseFlags {
+    fn parse(flags: Vec<String>) -> Result<Vec<Self>, Error> {
+        flags.iter().map(|flag| Self::from_str(flag)).collect()
+    }
+}
+
+impl FromStr for ReverseFlags {
+    type Err = Error;
+
     fn from_str(flag: &str) -> Result<Self, Error> {
         match flag {
             "-v" => Ok(Self::Verbose),
@@ -52,11 +60,9 @@ impl ReverseFlags {
             _ => Err(Error::InvalidFlag("reverse".to_owned(), flag.to_owned())),
         }
     }
-
-    fn parse(flags: Vec<String>) -> Result<Vec<Self>, Error> {
-        flags.iter().map(|flag| Self::from_str(flag)).collect()
-    }
 }
+
+type ParsedValue = Either<ParsedString, Value>;
 
 #[derive(PartialEq, Debug)]
 enum ParsedString {
@@ -75,22 +81,18 @@ impl fmt::Display for ParsedString {
     }
 }
 
-impl std::str::FromStr for ParsedString {
+impl FromStr for ParsedString {
     type Err = Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         if s.starts_with("$") || s.starts_with("@") {
+            s.chars().nth(0);
             let vars = s
                 .split("|")
-                .map(str::trim)
-                .filter_map(|var| {
-                    if var.starts_with("$") {
-                        Some(var.chars().skip(1).collect())
-                    } else if var.starts_with("@") {
-                        var.get(1..).map(|s| format!("color.{}", s))
-                    } else {
-                        None
-                    }
+                .filter_map(|var| match var.trim().chars().next() {
+                    Some('$') => Some(var[1..].to_string()),
+                    Some('@') => Some(format!("color.{}", &var[1..])),
+                    _ => None,
                 })
                 .collect();
             Ok(Self::Variable(vars))
@@ -189,7 +191,11 @@ pub fn reverse(
     let deletion_diff = key_diff(&template, &theme, String::from(""));
     let override_diff = key_diff(&theme, &template, String::from(""));
 
-    p!("Deletions:\n{:?} \n\nOverrides:\n{:?}", deletion_diff, override_diff);
+    p!(
+        "Deletions:\n{:?} \n\nOverrides:\n{:?}",
+        deletion_diff,
+        override_diff
+    );
 
     todo!()
 }
