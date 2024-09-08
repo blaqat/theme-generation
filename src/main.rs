@@ -1,4 +1,6 @@
 #![allow(unused)]
+#![feature(let_chains)]
+#![feature(if_let_guard)]
 
 use std::path::Path;
 
@@ -63,7 +65,7 @@ enum ValidCommands {
     Help,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Eq)]
 enum Error {
     NoCommand,
     InvalidCommand,

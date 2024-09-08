@@ -25,14 +25,17 @@ fn is_xx(s: &str) -> bool {
     s.len() == 2 && s.chars().next() == s.chars().nth(1)
 }
 
+pub type ColorOperations<'a> = Vec<ColorChange<'a>>;
+
 #[derive(Debug)]
 pub enum ColorError {
     Hex(String),
     ColorComponent,
     ColorChange,
+    ColorOperator,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum ColorComponent {
     Hue(i16),
     Saturation(i16),
@@ -90,22 +93,8 @@ impl ColorComponent {
     }
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct ColorChange<'a>(ColorComponent, &'a str);
-
-impl<'a> ColorChange<'a> {
-    fn apply(self, color: &'a Color) -> Result<ColorComponent, ColorError> {
-        let new_change = match self.1 {
-            "+" => color + self.0,
-            "-" => color - self.0,
-            "=" => self.0,
-            "/" => color / self.0,
-            _ => return Err(ColorError::ColorChange),
-        };
-
-        Ok(new_change)
-    }
-}
 
 // let applied_changes = vec![ColorChange(ColorComponent::Alpha(3), "/")];
 // let applied_changes = vec![color_change!(Alpha "/", 3)];
@@ -124,7 +113,101 @@ macro_rules! color_change {
     };
 }
 
-#[derive(Debug, PartialEq)]
+impl<'a> ColorChange<'a> {
+    fn apply(self, color: &'a Color) -> Result<ColorComponent, ColorError> {
+        let new_change = match self.1 {
+            "+" => color + self.0,
+            "-" => color - self.0,
+            "=" => self.0,
+            "/" => color / self.0,
+            _ => return Err(ColorError::ColorChange),
+        };
+
+        Ok(new_change)
+    }
+
+    pub fn inverse(changes: &'a ColorOperations) -> ColorOperations<'a> {
+        changes
+            .iter()
+            .cloned()
+            .map(|c| match (&c.0, c.1) {
+                (_, "+") => ColorChange(c.0, "-"),
+                (_, "-") => ColorChange(c.0, "+"),
+                (_, "/") => ColorChange(c.0, "*"),
+                (_, "*") => ColorChange(c.0, "/"),
+                (ColorComponent::Alpha(_), "=") => color_change!(Alpha = 100),
+                _ => c,
+            })
+            .rev()
+            .collect()
+    }
+
+    pub fn inverse_ops(changes: Vec<&'a ColorOperations>) -> Vec<ColorOperations<'a>> {
+        changes.iter().map(|c| ColorChange::inverse(c)).collect()
+    }
+}
+
+fn get_operator(op: Option<char>) -> Result<&'static str, ColorError> {
+    match op {
+        Some(c) => match c {
+            '+' => Ok("+"),
+            '-' => Ok("-"),
+            '=' => Ok("="),
+            '*' => Ok("*"),
+            '/' => Ok("/"),
+            '.' => Ok("."),
+            _ => Err(ColorError::ColorOperator),
+        },
+        None => Err(ColorError::ColorOperator),
+    }
+}
+
+/*
+Color Changes are represented mainly by
+Component Operator Value
+Examples
+hue+10 saturation/2 red=2
+
+Components can be represented by the first letter of their name
+Examples
+h+10 s/50 r=2
+*/
+impl<'a> FromStr for ColorChange<'a> {
+    type Err = ColorError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let s = s.trim();
+        let mut chars = s.chars();
+        let component_char = chars.next();
+
+        let mut chars = chars.skip_while(|c| c.is_alphabetic());
+        let op = get_operator(chars.next())?;
+
+        // Special Alpha Append Operator
+        if op == "." {
+            let val: i16 = i16::from_str_radix(&chars.collect::<String>(), 16)
+                .map_err(|_| ColorError::ColorOperator)?;
+            return Ok(color_change!(Alpha = val));
+        }
+
+        let val: i16 = chars.collect::<String>().parse().unwrap();
+
+        let component = match component_char {
+            Some('h') => ColorComponent::Hue(val),
+            Some('s') => ColorComponent::Saturation(val),
+            Some('v') => ColorComponent::Value(val),
+            Some('r') => ColorComponent::Red(val),
+            Some('g') => ColorComponent::Green(val),
+            Some('b') => ColorComponent::Blue(val),
+            Some('a') => ColorComponent::Alpha(val),
+            _ => return Err(ColorError::ColorComponent),
+        };
+
+        Ok(Self(component, op))
+    }
+}
+
+#[derive(Debug, PartialEq, Clone)]
 pub struct Color {
     alpha: i16,
     red: i16,
@@ -133,7 +216,7 @@ pub struct Color {
     hue: i16,
     saturation: i16,
     value: i16,
-    hex: String,
+    pub hex: String,
 }
 impl fmt::Display for Color {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -286,7 +369,7 @@ impl Color {
         }
     }
 
-    fn update(&mut self, changes: Vec<ColorChange>) -> Result<&Self, ColorError> {
+    pub fn update(&mut self, changes: ColorOperations) -> Result<&Self, ColorError> {
         for change in changes {
             let mut setting = change.apply(self)?;
 
