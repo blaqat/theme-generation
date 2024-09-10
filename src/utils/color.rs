@@ -35,7 +35,7 @@ pub enum ColorError {
     ColorOperator,
 }
 
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Clone, Hash, Eq)]
 pub enum ColorComponent {
     Hue(i16),
     Saturation(i16),
@@ -93,7 +93,7 @@ impl ColorComponent {
     }
 }
 
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Clone, Hash, Eq)]
 pub struct ColorChange<'a>(ColorComponent, &'a str);
 
 // let applied_changes = vec![ColorChange(ColorComponent::Alpha(3), "/")];
@@ -126,6 +126,13 @@ impl<'a> ColorChange<'a> {
         Ok(new_change)
     }
 
+    pub fn identity(c: ColorChange) -> ColorChange {
+        match (&c.0, c.1) {
+            (ColorComponent::Alpha(_), "=") => color_change!(Alpha = 100),
+            _ => c,
+        }
+    }
+
     pub fn inverse(changes: &'a ColorOperations) -> ColorOperations<'a> {
         changes
             .iter()
@@ -144,6 +151,13 @@ impl<'a> ColorChange<'a> {
 
     pub fn inverse_ops(changes: Vec<&'a ColorOperations>) -> Vec<ColorOperations<'a>> {
         changes.iter().map(|c| ColorChange::inverse(c)).collect()
+    }
+
+    pub fn identitiy_ops(changes: Vec<&'a ColorOperations>) -> Vec<ColorOperations<'a>> {
+        changes
+            .iter()
+            .map(|c| c.iter().map(|c| ColorChange::identity(c.clone())).collect())
+            .collect()
     }
 }
 
@@ -207,7 +221,7 @@ impl<'a> FromStr for ColorChange<'a> {
     }
 }
 
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Clone, Hash, Eq)]
 pub struct Color {
     alpha: i16,
     red: i16,
@@ -369,7 +383,15 @@ impl Color {
         }
     }
 
-    pub fn update(&mut self, changes: ColorOperations) -> Result<&Self, ColorError> {
+    pub fn update_ops(&mut self, changes: &[ColorOperations]) -> Result<(), ColorError> {
+        changes
+            .iter()
+            .try_for_each(|change| self.update(change.clone()))?;
+
+        Ok(())
+    }
+
+    pub fn update(&mut self, changes: ColorOperations) -> Result<(), ColorError> {
         for change in changes {
             let mut setting = change.apply(self)?;
 
@@ -405,7 +427,7 @@ impl Color {
             self.update_hex();
         }
 
-        Ok(self)
+        Ok(())
     }
 }
 

@@ -1,11 +1,12 @@
 {
 	"angels": {
-		"gabriel": true
+		"gabriel": false,
+		"named": "named"
 	},
 	"apple": "#FF0000",
 	"darker_apple": "#FF000050",
 	"lighter_apple": "#FF8080",
-	"banana": "#FFB31A",
+	"banana": "#FFB219",
 	"pear_or_grape": "#FF008850",
 	"make_apple_transparent": "#FF000000",
 	"not_a_real_variable": null,
@@ -19,6 +20,6 @@
 		]
 	},
 	"list": [
-		1, 2, 3
+		"#F00", 2, 3
 	]
 }

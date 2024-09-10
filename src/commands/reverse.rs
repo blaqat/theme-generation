@@ -2,6 +2,7 @@ use crate::prelude::*;
 use commands::check::{json_deep_diff, DiffInfo};
 use core::fmt::{self, Display};
 use std::{borrow::BorrowMut, iter::once, path::PathBuf, ptr};
+use Either::Right;
 // use json_patch;
 use serde_json::{json, Map, Value};
 
@@ -23,10 +24,10 @@ use serde_json::{json, Map, Value};
 // JsonPath are strings that represent a path to a value in a JSON object.
 // For example /a/b/c would be the path to the value 3 in the object {"a": {"b": {"c": 3}}}
 // /a/1 would be the path to the value 2 in the object {"a": [1, 2, 3]}
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq, Clone, Eq, Hash)]
 struct JsonPath(Vec<JsonKey>);
 
-#[derive(Debug, PartialEq, Clone, Hash, PartialOrd)]
+#[derive(Debug, PartialEq, Clone, PartialOrd, Eq, Hash)]
 enum JsonKey {
     Key(String),
     Index(usize),
@@ -86,8 +87,16 @@ impl FromStr for JsonPath {
 }
 
 impl JsonPath {
+    fn new() -> Self {
+        JsonPath(vec![])
+    }
+
     fn from_vec(v: Vec<JsonKey>) -> Self {
         JsonPath(v)
+    }
+
+    fn is_empty(&self) -> bool {
+        self.0.is_empty()
     }
 
     fn traverse<'a>(&self, json: &'a Value) -> Result<&'a Value, Error> {
@@ -107,8 +116,6 @@ impl JsonPath {
         }
     }
 
-    // Pave is similar to set except it creates the things that do not exists
-    // For instance with a path "a/b/3/2/c" = 3 if none of those exist it will make
     fn pave(&self, json: &mut Value, val: Value) -> Result<(), Error> {
         let mut current_value = json;
         let len = self.0.len();
@@ -365,7 +372,7 @@ impl FromStr for ReverseFlags {
 
 type VarNames = Vec<String>;
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Hash, Eq)]
 enum ParsedValue<'a> {
     Color(Color),
     Variables(VarNames),
@@ -377,11 +384,11 @@ enum ParsedValue<'a> {
 impl Display for ParsedValue<'_> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Color(color) => write!(f, "C({})", color),
+            Self::Color(color) => write!(f, "{}", color),
             Self::Variables(vars) => write!(f, "V{:?}", vars),
             Self::Value(value) => write!(f, "{}", value),
             Self::String(str) => write!(f, "'{}'", str),
-            Self::Null => write!(f, "(N/A)"),
+            Self::Null => write!(f, "NULL"),
         }
     }
 }
@@ -419,10 +426,19 @@ impl<'a> ParsedValue<'a> {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Hash, Eq)]
 struct ParsedVariable<'a> {
     name: String,
     operations: ColorOperations<'a>,
+}
+
+impl ParsedVariable<'_> {
+    fn new() -> Self {
+        Self {
+            name: String::new(),
+            operations: Vec::new(),
+        }
+    }
 }
 
 impl Display for ParsedVariable<'_> {
@@ -477,16 +493,16 @@ impl FromStr for ParsedVariable<'_> {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Eq, Hash, PartialEq)]
 struct SourcedVariable<'a> {
     path: String,
     value: ParsedValue<'a>,
     variables: Vec<Either<String, ParsedVariable<'a>>>,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 struct ResolvedVariable<'a> {
-    path: String,
+    path: JsonPath,
     value: ParsedValue<'a>,
     variable: ParsedVariable<'a>,
 }
@@ -494,10 +510,28 @@ struct ResolvedVariable<'a> {
 impl<'a> ResolvedVariable<'a> {
     fn new(path: String, value: ParsedValue<'a>, variable: ParsedVariable<'a>) -> Self {
         Self {
-            path,
+            path: path.parse::<JsonPath>().unwrap(),
             value,
             variable,
         }
+    }
+
+    fn new_pathless(value: ParsedValue<'a>, variable: &'a SourcedVariable) -> Self {
+        let resolved = {
+            match variable.variables.first() {
+                Some(Either::Right(var)) => var,
+                _ => unreachable!(),
+            }
+        };
+        Self {
+            path: JsonPath::new(),
+            value,
+            variable: resolved.to_owned(),
+        }
+    }
+
+    fn is_pathless(&self) -> bool {
+        self.path.is_empty()
     }
 
     fn from_src(src: &'a SourcedVariable) -> Self {
@@ -509,9 +543,26 @@ impl<'a> ResolvedVariable<'a> {
         };
 
         Self {
-            path: src.path.to_owned(),
+            path: src.path.parse().unwrap(),
             value: src.value.to_owned(),
             variable: resolved.to_owned(),
+        }
+    }
+
+    fn from_path(path: &str, json: &'a Value) -> Self {
+        let path: JsonPath = path.parse().unwrap();
+
+        let value = {
+            match path.traverse(json) {
+                Ok(val) => ParsedValue::from_value(val).unwrap(),
+                _ => ParsedValue::Null,
+            }
+        };
+
+        Self {
+            path,
+            value,
+            variable: ParsedVariable::new(),
         }
     }
 }
@@ -573,6 +624,26 @@ impl<'a> SourcedVariable<'a> {
                 })
         } else {
             vec![]
+        }
+    }
+
+    fn filter_used(&self, used: &HashMap<String, bool>) -> Self {
+        let variables = self
+            .variables
+            .iter()
+            .filter_map(|v| match v {
+                Either::Left(var) if used.contains_key(var) => Some(Either::Left(var.to_string())),
+                Either::Right(var) if used.contains_key(&var.name) => {
+                    Some(Either::Right(var.to_owned()))
+                }
+                _ => None,
+            })
+            .collect();
+
+        Self {
+            path: self.path.to_string(),
+            value: self.value.to_owned(),
+            variables,
         }
     }
 }
@@ -646,11 +717,24 @@ fn key_diff<'a>(
             for (key, val) in vec1.iter().enumerate() {
                 match vec2.get(key) {
                     Some(val2) => {
-                        let next_diff = key_diff(val, val2, format!("{prefix}[{key}]"), log_vars);
+                        let next_diff = key_diff(val, val2, format!("{prefix}/{key}"), log_vars);
                         info.extend(next_diff);
                     }
-                    _ => info.missing.push(format!("{prefix}[{key}]")),
+                    _ => info.missing.push(format!("{prefix}/{key}")),
                 }
+            }
+        }
+
+        (val1, val2) if !log_vars && has_keys(val1) != has_keys(val2) => {
+            info.collisions.push(prefix);
+        }
+
+        (val1, val2) if !log_vars && same_type(val1, val2) && val1 != val2 => {
+            if !potential_set(val1, val2) {
+                info.collisions.push(prefix);
+            } else if log_vars && let (Value::String(str), val) = (val1, val2) {
+                info.parsed_vars
+                    .push(SourcedVariable::new(prefix, str, val))
             }
         }
 
@@ -661,39 +745,39 @@ fn key_diff<'a>(
             }
         }
 
-        (val1, val2) if !log_vars && has_keys(val1) != has_keys(val2) => {
-            info.collisions.push(prefix);
-        }
-
-        (val1, val2) if !log_vars && same_type(val1, val2) && val1 != val2 => {
-            info.collisions.push(prefix);
-        }
-
         _ => (),
     }
 
     info
 }
 
-use std::rc::Rc;
-fn resolve_variables(var_diff: KeyDiffInfo<'_>) -> Vec<ResolvedVariable> {
+fn resolve_variables<'a>(
+    var_diff: &'a KeyDiffInfo,
+    mut overrides: Set<ResolvedVariable<'a>>,
+) -> (Set<ResolvedVariable<'a>>, Set<ResolvedVariable<'a>>) {
     // HashMap to reference count the variables
     let mut map: HashMap<String, (Vec<&SourcedVariable>, i32)> = HashMap::new();
-    let mut resolved = Vec::new();
-    let mut unresolved = Vec::new();
+    let mut resolved = Set::new();
+    let mut unresolved = Set::new();
+    let mut siblings_map: HashMap<String, _> = HashMap::new();
 
     // Iterate over the variables and increment the reference count
     for parsed in &var_diff.parsed_vars {
         for var in &parsed.variables {
             match var {
                 Either::Left(_) => todo!(),
-                Either::Right(var) => {
-                    map.entry(var.name.clone())
+                Either::Right(v) => {
+                    map.entry(v.name.clone())
                         .and_modify(|(refs, counter)| {
                             refs.push(parsed);
                             *counter += 1;
                         })
                         .or_insert((vec![parsed], 1));
+                    // siblings_map.insert(v.name.clone(), &parsed.variables);
+                    siblings_map
+                        .entry(v.name.clone())
+                        .or_insert_with(Vec::new)
+                        .push((&parsed.path, &parsed.variables));
                 }
             }
         }
@@ -706,86 +790,265 @@ fn resolve_variables(var_diff: KeyDiffInfo<'_>) -> Vec<ResolvedVariable> {
     for (host_var, (refs, count)) in map {
         if count == 1 {
             let src = refs.first().unwrap();
-            resolved.push(ResolvedVariable::from_src(src));
+            resolved.insert(ResolvedVariable::from_src(src));
         } else {
-            let mut src_values = HashMap::new();
-            for src in &refs {
-                // p!("{:#?}", src);
-                match &src.value {
-                    ParsedValue::Color(c) => {
-                        let operations = src
-                            .variables
-                            .iter()
-                            .filter_map(|var| match var {
-                                Either::Left(_) => None,
-                                Either::Right(var) if var.name == host_var => Some(&var.operations),
-                                _ => None,
-                            })
-                            .collect::<Vec<_>>();
+            let mut identity_values: HashMap<String, Vec<&SourcedVariable>> = HashMap::new();
 
-                        let reverse = ColorChange::inverse_ops(operations);
-                        for op in reverse {
-                            let mut base = c.clone();
-                            // print!("{:#?} -> ", base.hex);
-                            base.update(op);
-                            // p!("{:#?}", base.hex);
-                            src_values
-                                .entry(base.hex.to_string())
-                                .and_modify(|(count, _)| *count += 1)
-                                .or_insert((1, ParsedValue::Color(base)));
-                            // src_values.push(ParsedValue::Color(base));
-                        }
+            // 1. Group variables by IDENTITY Value
+            for src in &refs {
+                let value = &src.value;
+                let ops = src
+                    .variables
+                    .iter()
+                    .filter_map(|var| match var {
+                        Either::Left(_) => None,
+                        Either::Right(var) => Some(&var.operations),
+                    })
+                    .collect::<Vec<_>>();
+
+                let iden_ops = ColorChange::identitiy_ops(ops);
+
+                match value {
+                    ParsedValue::Color(c) => {
+                        let mut color = c.clone();
+                        color.update_ops(&iden_ops);
+                        let color_str = color.to_string();
+                        let vals = identity_values.entry(color_str).or_default();
+                        vals.push(src);
                     }
-                    ParsedValue::Null => {}
-                    s => {
-                        src_values
-                            .entry(src.value.to_string())
-                            .and_modify(|(count, _)| *count += 1)
-                            .or_insert((1, s.clone()));
+                    _ => {
+                        let mut vals = identity_values.entry(value.to_string()).or_default();
+                        vals.push(src);
                     }
                 }
             }
 
-            let max = src_values
+            // 2. Find the most used identity value
+            let (max_key, max) = identity_values
                 .iter()
-                .max_by_key(|(_, (count, _))| *count)
+                .max_by(|a, b| a.1.len().cmp(&b.1.len()))
                 .unwrap();
 
-            // Now to go through the srcs and resolve them
+            let all_max = identity_values.values().all(|v| v.len() == max.len());
 
-            let valid_srcs: Vec<&&SourcedVariable> = refs
-                .iter()
-                .filter(|src| {
-                    let value = match &src.value {
-                        ParsedValue::Color(c) => ParsedValue::Color(c.clone()),
-                        ParsedValue::Null => ParsedValue::Null,
-                        s => s.clone(),
-                    };
+            let match_source = |src: &&SourcedVariable| {
+                let ops = src
+                    .variables
+                    .iter()
+                    .filter_map(|var| match var {
+                        Either::Left(_) => None,
+                        Either::Right(var) => Some(&var.operations),
+                    })
+                    .cloned()
+                    .collect::<Vec<_>>();
 
-                    value == max.1 .1
-                })
-                .collect();
+                identity_values
+                    .iter()
+                    .filter(|(iden, _)| match iden.parse::<Color>() {
+                        Ok(color) => {
+                            let mut color = color.clone();
+                            color.update_ops(&ops);
+                            color.to_string() == src.value.to_string()
+                        }
+                        _ => **iden == src.value.to_string(),
+                    })
+                    .collect::<HashMap<_, _>>()
+            };
 
-            if valid_srcs.is_empty() {
-                let src = refs.first().unwrap();
-                resolved.push(ResolvedVariable::from_src(src));
-
-                refs.iter().skip(1).for_each(|s| {
-                    unresolved.push(ResolvedVariable::from_src(s));
-                });
+            if !all_max {
+                for (key, src) in &identity_values {
+                    if key == max_key {
+                        let src = src.first().unwrap();
+                        resolved.insert(ResolvedVariable::from_src(src));
+                    } else {
+                        for src in src {
+                            let matches = match_source(src);
+                            if !matches.contains_key(max_key) {
+                                unresolved.insert(ResolvedVariable::from_src(src));
+                            }
+                        }
+                    }
+                }
             } else {
-                let src = valid_srcs.first().unwrap();
-                resolved.push(ResolvedVariable::from_src(src));
+                let mut matches: HashMap<&String, Set<_>> = HashMap::new();
+                identity_values.iter().for_each(|(key, v)| {
+                    matches.insert(key, Set::from_iter(v.iter()));
+                });
+                for (key, source) in &identity_values {
+                    for src in source {
+                        let m = match_source(src);
+                        // p!("{} {:?}", src.path, m.keys());
+                        m.keys().for_each(|k| {
+                            // println!("SRC:\n{:?}\nMATCHES\n{:?}\n\n", (key, &src.path), k);
+                            let mut v = matches.entry(k).or_default();
+                            v.insert(src);
+                        });
+                    }
+                }
+
+                // d!(&matches);
+                let (max_key, max) = matches
+                    .iter()
+                    .max_by(|a, b| a.1.len().cmp(&b.1.len()))
+                    .unwrap();
+                let all_max = matches.values().all(|v| v.len() == max.len());
+                // d!(&matches, max_key, all_max, max.len());
+
+                if !all_max {
+                    let first_src = max.iter().next().unwrap();
+                    let var = ResolvedVariable::new_pathless(
+                        ParsedValue::from_str(max_key).unwrap(),
+                        first_src,
+                    );
+                    resolved.insert(var);
+                    for (key, sources) in &matches {
+                        if key != max_key {
+                            for src in sources {
+                                if !max.contains(src) {
+                                    unresolved.insert(ResolvedVariable::from_src(src));
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    let first_src = max.iter().next().unwrap();
+                    resolved.insert(ResolvedVariable::from_src(first_src));
+
+                    for (key, src) in &identity_values {
+                        for src in src {
+                            if !max.contains(src) {
+                                unresolved.insert(ResolvedVariable::from_src(src));
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 
-    resolved.dedup_by(|a, b| a.path == b.path);
+    // Resolve multivariables
+    // Rules:
+    // 1. There can only be one resolved variable "X".
+    // 2. If variable "X" = "Y" exists and "X" = "Z" exists,
+    //  AND X has no sibling variables, then Override "X"'s path to Y
+    //  AND X has sibling variables Z, then X = Z until there is no resolved Z
+    //
+    // To put in plain terms, If there are two resolved values with the same variable, one must move to another variable or be overriden
 
-    p!("RESOLVED: {:#?}", resolved);
-    p!("UNRESOLVED {:#?}", unresolved);
+    // Group resolved variables by name
+    let mut need_fix: HashMap<String, (bool, _)> = HashMap::new();
 
-    todo!()
+    for var in &resolved {
+        match need_fix.get(&var.variable.name) {
+            Some(_) => {
+                need_fix.insert(var.variable.name.clone(), (true, var));
+            }
+            None => {
+                need_fix.insert(var.variable.name.clone(), (false, var));
+            }
+        }
+    }
+
+    // d!(&need_fix, &siblings_map);
+    let mut sub_resolved = HashMap::new();
+    let mut sub_unresolved = HashMap::new();
+
+    for (name, (nf, variable)) in need_fix {
+        let path = format!("/{}", variable.path);
+        // If nf is true there are multiple variables with the same name.
+        //
+        // If variable has any siblings not resolved, then take the first non-resolved siblings and replace the variable's name with it
+        // If all siblings are resolved, then add the variable to the unresolved set
+
+        // If nf is false, then the variable is resolved and there are no siblings so can ignore
+        if !nf {
+            continue;
+        }
+
+        // Get the siblings of the variable
+        if let Some(siblings) = siblings_map.get(&name) {
+            let mut found_unresolved = false;
+
+            for sibling in siblings {
+                if path != *sibling.0 {
+                    // d!(&variable.path.to_string(), sibling.0);
+                    continue;
+                }
+                for sibling_var in sibling.1 {
+                    if let Either::Right(sv) = sibling_var {
+                        if !resolved.iter().any(|v| v.variable.name == sv.name) {
+                            // Found an unresolved sibling, replace the variable's name with it
+                            let mut new_variable = variable.clone();
+                            new_variable.variable.name = sv.name.clone();
+                            sub_resolved.insert(variable.path.clone(), new_variable);
+                            found_unresolved = true;
+                        }
+                    }
+                }
+            }
+
+            if !found_unresolved {
+                // All siblings are resolved, add the variable to the unresolved set
+                sub_unresolved.insert(variable.path.clone(), variable.clone());
+            }
+        }
+    }
+
+    d!(&sub_resolved, &sub_unresolved);
+
+    d!(&unresolved);
+    // d!(&resolved, &sub_resolved);
+
+    for (path, variable) in sub_resolved {
+        unresolved.retain(|v| v.path != path);
+        resolved.retain(|v| v.path != path);
+        resolved.insert(variable);
+    }
+
+    for (path, variable) in sub_unresolved {
+        resolved.retain(|v| v.path != path);
+        unresolved.retain(|v| v.path != path);
+        unresolved.insert(variable);
+    }
+
+    // d!(&resolved, &overrides);
+
+    overrides.extend(unresolved);
+
+    for var in &resolved {
+        overrides.retain(|v| v.path != var.path);
+    }
+
+    (resolved, overrides)
+}
+
+fn display_vars(v: &Set<ResolvedVariable>, path: bool) -> String {
+    let mut out = String::new();
+    let mut v = v.iter().collect::<Vec<_>>();
+    v.sort_by(|a, b| match (path) {
+        true => a.path.to_string().cmp(&b.path.to_string()),
+        _ => a.variable.name.cmp(&b.variable.name),
+    });
+    for res in v {
+        let var = match (path) {
+            true => format!("/{}", res.path),
+            _ => res.variable.name.clone(),
+        };
+        let val = res.value.to_string();
+        out.push_str(&format!("- {} = {}\n", var, val));
+    }
+    out
+}
+
+fn display_path(v: &Set<JsonPath>) -> String {
+    // format!("- {}", v.to_string())
+    let mut out = String::new();
+    let mut v = v.iter().collect::<Vec<_>>();
+    v.sort_by_key(|p| p.to_string());
+    for path in v {
+        out.push_str(&format!("- /{}\n", path));
+    }
+    out
 }
 
 pub fn reverse(
@@ -799,6 +1062,7 @@ pub fn reverse(
     //     theme,
     //     ReverseFlags::parse(flags)?
     // );
+
     // Step 1: Deserialize the template and theme files into Objects.
     let theme: Value = serde_json::from_reader(&theme.file)
         .map_err(|json_err| Error::Processing(format!("Invalid theme json: {}", json_err)))?;
@@ -808,11 +1072,28 @@ pub fn reverse(
 
     // Step 2: Built Data Structures (Deletions, Overrides, Variables, Colors)
     // let mut deletions: HashMap<String, Value> = get_deletions(&theme, &template);
-    let mut var_diff = key_diff(&template, &theme, String::from(""), true);
-    let mut override_diff = key_diff(&theme, &template, String::from(""), false);
+    let var_diff = key_diff(&template, &theme, String::from(""), true);
+    let override_diff = key_diff(&theme, &template, String::from(""), false);
+    // d!(&var_diff, &override_diff);
 
-    _ = resolve_variables(var_diff);
-    // p!("Var Diff:\n{} \n\nOverrides:\n{}", var_diff, override_diff);
+    let mut overrides: Set<_> = override_diff
+        .missing
+        .iter()
+        .chain(override_diff.collisions.iter())
+        .map(|key| ResolvedVariable::from_path(key, &theme))
+        .collect();
+
+    let mut deletions: Set<_> = var_diff
+        .missing
+        .iter()
+        .map(|key| key.parse::<JsonPath>().unwrap())
+        .collect();
+
+    let (variables, overrides) = resolve_variables(&var_diff, overrides);
+
+    p!("Variables:\n{}", display_vars(&variables, false));
+    p!("Overrides:\n{}", display_vars(&overrides, true));
+    p!("Deletions:\n{}", display_path(&deletions));
 
     // deletion_diff.resolve_variables();
 

@@ -3,7 +3,7 @@ pub use crate::*;
 pub use anyhow;
 pub use either::Either;
 pub use std::{
-    collections::HashMap,
+    collections::{HashMap, HashSet as Set},
     dbg as d,
     env::args,
     fs::{read_dir, File},
@@ -24,5 +24,13 @@ macro_rules! error {
 macro_rules! ahh {
     ( $($args:expr),+) => {
         Err(Error::Processing(format!($($args),+)))
+    };
+}
+
+#[macro_export]
+macro_rules! dp {
+    ( $($args:expr),+) => {
+        d!($(format!("{}", $args)),+)
+        // d!(format!($({})+, $($args),+))
     };
 }

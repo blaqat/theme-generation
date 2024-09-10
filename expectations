@@ -1,0 +1,28 @@
+Resolved:
+	- named_angels = "named"
+	- apple = "#F00" or  1
+	- light_apple = "#FF8080"
+	- pear = "#FF008850"
+	- grape = "#FF008850" # MISSING: Need to test multi variable, this should be missing
+	- transparent = "#F000"
+	- yippieee = None,
+	- banana = 2
+
+
+Overrides:
+    - /fruits =  {"grapes": [ "#8000FF", { "a": "#FF0088" } ]}
+    - /angels/gabriel = False
+    - /number = 4
+    - /list/2 = 3
+    - /list/0 = 1
+    - /apple = "apple" # MISSING: Need to handle collisions of non variable strings, as well as null
+
+    if apple == 1:
+        - /darker_apple = "#FF000050"
+        - /banana = "#FFB31A"
+    elif apple == "#F00":
+    	- /list/1 = 1
+
+Deletions:
+    - /angels/evil.dooer
+    - /a_real_evil_dooer_mwahahha

@@ -15,3 +15,17 @@ pub fn same_type(a: &Value, b: &Value) -> bool {
 pub fn has_keys(a: &Value) -> bool {
     matches!(a, Value::Object(_) | Value::Array(_))
 }
+
+pub fn potential_var(a: &str) -> bool {
+    matches!(a.as_bytes(), [b'$' | b'@', ..])
+}
+
+pub fn potential_set(a: &Value, b: &Value) -> bool {
+    match (a, b) {
+        (Value::String(a), b) | (b, Value::String(a)) => match (potential_var(a), b) {
+            (false, Value::String(b)) => potential_var(b),
+            _ => true,
+        },
+        _ => false,
+    }
+}
