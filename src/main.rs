@@ -1,4 +1,4 @@
-#![allow(unused)]
+// #![allow(unused)]
 #![feature(let_chains)]
 #![feature(if_let_guard)]
 

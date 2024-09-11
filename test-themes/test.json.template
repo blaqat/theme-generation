@@ -4,7 +4,7 @@
 		"gabriel": true,
 		"named": "$named_angels"
 	},
-	"apple": "@pear",
+	"apple": "wf",
 	"darker_apple": "$apple..50",
 	"lighter_apple": "$light_apple",
 	"banana": "$apple..(h=40, s-10)",

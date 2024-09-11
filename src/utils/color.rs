@@ -1,5 +1,6 @@
 use palette::{Hsv, IntoColor, Srgb};
 use std::fmt;
+use std::hash::Hash;
 use std::ops::{Add, Div, Mul, Sub};
 use std::path::Display;
 use std::str::FromStr;
@@ -25,7 +26,7 @@ fn is_xx(s: &str) -> bool {
     s.len() == 2 && s.chars().next() == s.chars().nth(1)
 }
 
-pub type ColorOperations<'a> = Vec<ColorChange<'a>>;
+pub type ColorOperations = Vec<ColorChange>;
 
 #[derive(Debug)]
 pub enum ColorError {
@@ -94,32 +95,41 @@ impl ColorComponent {
 }
 
 #[derive(Debug, PartialEq, Clone, Hash, Eq)]
-pub struct ColorChange<'a>(ColorComponent, &'a str);
+pub struct ColorChange(pub ColorComponent, pub String);
 
 // let applied_changes = vec![ColorChange(ColorComponent::Alpha(3), "/")];
 // let applied_changes = vec![color_change!(Alpha "/", 3)];
+// let applied_changes = color_change!(Alpha "/", 3;)
+#[macro_export]
 macro_rules! color_change {
     ($setting: ident=$val: expr) => {
-        ColorChange(ColorComponent::$setting($val), "=")
+        ColorChange(ColorComponent::$setting($val), "=".to_string())
     };
     ($setting: ident $op: expr; $val: expr) => {
-        ColorChange(ColorComponent::$setting($val), $op)
+        ColorChange(ColorComponent::$setting($val), $op.to_string())
     };
-    ($($setting: ident: $op: expr, $val: expr);+) => {
-        vec![$(color_change!($setting $op; $val)),+]
+    ($setting: ident: $op: expr, $val: expr;) => {
+        vec![color_change!($setting $op; $val)]
+    };
+    ($($setting: ident: $op: expr, $val: expr);*) => {
+        vec![$(color_change!($setting $op; $val)),*]
+    };
+    ($setting: ident $val: expr,) => {
+        vec![color_change!($setting=$val)]
     };
     ($($setting: ident $val: expr),+) => {
         vec![$(color_change!($setting=$val)),+]
     };
 }
 
-impl<'a> ColorChange<'a> {
-    fn apply(self, color: &'a Color) -> Result<ColorComponent, ColorError> {
-        let new_change = match self.1 {
+impl ColorChange {
+    fn apply(self, color: &Color) -> Result<ColorComponent, ColorError> {
+        let new_change = match self.1.as_str() {
             "+" => color + self.0,
             "-" => color - self.0,
             "=" => self.0,
             "/" => color / self.0,
+            "*" => color * self.0,
             _ => return Err(ColorError::ColorChange),
         };
 
@@ -127,21 +137,21 @@ impl<'a> ColorChange<'a> {
     }
 
     pub fn identity(c: ColorChange) -> ColorChange {
-        match (&c.0, c.1) {
+        match (&c.0, c.1.as_str()) {
             (ColorComponent::Alpha(_), "=") => color_change!(Alpha = 100),
             _ => c,
         }
     }
 
-    pub fn inverse(changes: &'a ColorOperations) -> ColorOperations<'a> {
+    pub fn inverse(changes: &ColorOperations) -> ColorOperations {
         changes
             .iter()
             .cloned()
-            .map(|c| match (&c.0, c.1) {
-                (_, "+") => ColorChange(c.0, "-"),
-                (_, "-") => ColorChange(c.0, "+"),
-                (_, "/") => ColorChange(c.0, "*"),
-                (_, "*") => ColorChange(c.0, "/"),
+            .map(|c| match (&c.0, c.1.as_str()) {
+                (_, "+") => ColorChange(c.0, String::from("-")),
+                (_, "-") => ColorChange(c.0, String::from("+")),
+                (_, "/") => ColorChange(c.0, String::from("*")),
+                (_, "*") => ColorChange(c.0, String::from("/")),
                 (ColorComponent::Alpha(_), "=") => color_change!(Alpha = 100),
                 _ => c,
             })
@@ -149,11 +159,18 @@ impl<'a> ColorChange<'a> {
             .collect()
     }
 
-    pub fn inverse_ops(changes: Vec<&'a ColorOperations>) -> Vec<ColorOperations<'a>> {
+    pub fn inverse_ops(changes: Vec<&ColorOperations>) -> Vec<ColorOperations> {
         changes.iter().map(|c| ColorChange::inverse(c)).collect()
     }
 
-    pub fn identitiy_ops(changes: Vec<&'a ColorOperations>) -> Vec<ColorOperations<'a>> {
+    pub fn identity_op(changes: &ColorOperations) -> ColorOperations {
+        changes
+            .iter()
+            .map(|c| ColorChange::identity(c.clone()))
+            .collect()
+    }
+
+    pub fn identity_ops(changes: Vec<&ColorOperations>) -> Vec<ColorOperations> {
         changes
             .iter()
             .map(|c| c.iter().map(|c| ColorChange::identity(c.clone())).collect())
@@ -186,7 +203,7 @@ Components can be represented by the first letter of their name
 Examples
 h+10 s/50 r=2
 */
-impl<'a> FromStr for ColorChange<'a> {
+impl FromStr for ColorChange {
     type Err = ColorError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
@@ -217,11 +234,11 @@ impl<'a> FromStr for ColorChange<'a> {
             _ => return Err(ColorError::ColorComponent),
         };
 
-        Ok(Self(component, op))
+        Ok(Self(component, op.to_string()))
     }
 }
 
-#[derive(Debug, PartialEq, Clone, Hash, Eq)]
+#[derive(Debug, Clone, Eq)]
 pub struct Color {
     alpha: i16,
     red: i16,
@@ -232,6 +249,29 @@ pub struct Color {
     value: i16,
     pub hex: String,
 }
+
+impl PartialEq for Color {
+    fn eq(&self, other: &Self) -> bool {
+        ((self.hue == other.hue
+            && self.saturation == other.saturation
+            && self.value == other.value)
+            || (self.red == other.red && self.green == other.green && self.blue == other.blue))
+            && self.alpha == other.alpha
+    }
+}
+
+impl Hash for Color {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        self.alpha.hash(state);
+        self.red.hash(state);
+        self.green.hash(state);
+        self.blue.hash(state);
+        self.hue.hash(state);
+        self.saturation.hash(state);
+        self.value.hash(state);
+    }
+}
+
 impl fmt::Display for Color {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", self.hex)
@@ -284,7 +324,7 @@ impl Color {
         }
     }
 
-    fn from_hex(hex: &str) -> Result<Self, ColorError> {
+    pub fn from_hex(hex: &str) -> Result<Self, ColorError> {
         if !Self::is_valid_hex(hex) {
             return Err(ColorError::Hex(hex.to_owned()));
         }
@@ -508,6 +548,20 @@ mod tests {
         let applied_changes = color_change! {
             Alpha: "/", 3;
             Saturation: "-", 10
+        };
+
+        color.update(applied_changes);
+
+        assert_eq!(color.hex, String::from("#FF191955"));
+    }
+
+    #[test]
+    fn grey() {
+        let hex = "#EDF4EC";
+        let mut color = Color::from_hex(hex).unwrap();
+
+        let applied_changes = color_change! {
+            Hue: "*", 2;
         };
 
         color.update(applied_changes);
