@@ -55,6 +55,30 @@ impl ValidatedFile {
             file_type,
         })
     }
+
+    fn all_variable_files(source_directory: &Path) -> Result<Vec<Self>, Error> {
+        // Variable files are toml files.
+        let mut files = Vec::new();
+
+        for entry in source_directory
+            .read_dir()
+            .map_err(|_| Error::InvalidFile(String::from(source_directory.to_str().unwrap())))?
+        {
+            // d!(&entry);
+            let entry = entry.map_err(|_| {
+                Error::InvalidFile(String::from(source_directory.to_str().unwrap()))
+            })?;
+            let path = entry.path();
+            let path_str = path
+                .to_str()
+                .ok_or(Error::InvalidFile(String::from(path.to_str().unwrap())))?;
+            if path.is_file() && path_str.ends_with(".toml") {
+                files.push(ValidatedFile::from_str(path_str)?);
+            }
+        }
+
+        Ok(files)
+    }
 }
 
 #[derive(Debug, PartialEq, Eq, Hash)]
@@ -185,18 +209,43 @@ fn run(args: Vec<String>) -> Result<(), Error> {
             }
         }
         ValidCommands::Generate => {
-            let template_file = ValidatedFile::from_str(&command_args[0])?;
-            let variable_file = ValidatedFile::from_str(&command_args[1])?;
-
-            match (&template_file.file_type, &variable_file.file_type) {
-                (FileType::Template, FileType::Variable) => {
-                    commands::generate(template_file, variable_file, flags)
-                }
-                (FileType::Variable, FileType::Template) => {
-                    commands::generate(variable_file, template_file, flags)
-                }
-                _ => Err(Error::InvalidFileType),
+            let mut directory = call_dir.clone();
+            // d!(&flags);
+            if flags.iter().any(|flag| flag.starts_with("-i")) {
+                let flags = commands::generate::GenerateFlags::parse(flags.clone());
+                directory = flags.directory();
+                // d!(&directory);
             }
+
+            let (template_file, variable_files) =
+                match (command_args[0].as_str(), command_args[1].as_str()) {
+                    ("all", template_file) | (template_file, "all") => {
+                        let template_file = ValidatedFile::from_str(template_file)?;
+                        if let FileType::Template = template_file.file_type {
+                            let variable_files = ValidatedFile::all_variable_files(&directory)?;
+                            (template_file, variable_files)
+                        } else {
+                            return Err(Error::InvalidFileType);
+                        }
+                    }
+                    (template_file, variable_file) => {
+                        let files = (
+                            ValidatedFile::from_str(template_file)?,
+                            ValidatedFile::from_str(variable_file)?,
+                        );
+
+                        match (&files.0.file_type, &files.1.file_type) {
+                            (FileType::Template, FileType::Variable) => (files.0, vec![files.1]),
+                            (FileType::Variable, FileType::Template) => (files.1, vec![files.0]),
+                            _ => return Err(Error::InvalidFileType),
+                        }
+                    }
+                };
+
+            // d!(&template_file, variable_files);
+            // todo!();
+
+            commands::generate(template_file, variable_files, flags)
         }
     }
 }

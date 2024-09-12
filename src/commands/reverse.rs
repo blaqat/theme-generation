@@ -1447,10 +1447,10 @@ mod steps {
         let data = grouped_toml.as_table().unwrap();
         let mut doc = String::new();
         macro_rules! w {
-        ($($args:expr),+) => {
-            prelude::w!(doc, $($args),+)
-        };
-    }
+            ($($args:expr),+) => {
+                prelude::w!(doc, $($args),+)
+            };
+        }
 
         w!("# Reverse Generation Tool Version 3.0");
         for (k, v) in data
@@ -1524,6 +1524,7 @@ enum ReverseFlags {
     Threshold(usize),
     OutputDirectory(PathBuf),
     Name(String),
+    InnerPath(JsonPath),
 }
 
 #[derive(PartialEq, Debug)]
@@ -1533,6 +1534,7 @@ struct Flags {
     threshold: usize,          // Default to 3
     output_directory: PathBuf, // Default to current directory
     name: String,
+    path: Option<JsonPath>,
 }
 
 impl ReverseFlags {
@@ -1547,6 +1549,7 @@ impl ReverseFlags {
         let mut threshold = 3;
         let mut output_directory = PathBuf::from(".");
         let mut name = String::from("reversed-theme");
+        let mut path = None;
 
         for flag in flags {
             match flag {
@@ -1555,6 +1558,7 @@ impl ReverseFlags {
                 Self::Threshold(value) => threshold = value,
                 Self::OutputDirectory(path) => output_directory = path,
                 Self::Name(n) => name = n,
+                Self::InnerPath(p) => path = Some(p),
             }
         }
 
@@ -1564,6 +1568,7 @@ impl ReverseFlags {
             threshold,
             output_directory,
             name,
+            path,
         }
     }
 }
@@ -1575,13 +1580,20 @@ impl FromStr for ReverseFlags {
         match flag {
             "-v" => Ok(Self::Verbose),
             "-c" => Ok(Self::Check),
+            flag if flag.starts_with("-p") => {
+                let path = flag.split("=").last().unwrap();
+                let path = JsonPath::from_str(path)
+                    .map_err(|_| Error::InvalidFlag("reverse".to_owned(), flag.to_owned()))?;
+                Ok(Self::InnerPath(path))
+            }
             flag if flag.starts_with("-n") => {
                 let name = flag.split("=").last().unwrap();
                 Ok(Self::Name(name.to_owned()))
             }
             flag if flag.starts_with("-o") => {
                 let path = flag.split("=").last().unwrap();
-                let path = Path::new(path);
+                let path = path.replace("~", std::env::var("HOME").unwrap().as_str());
+                let path = Path::new(&path);
                 if !path.exists() {
                     return Err(Error::InvalidFlag("reverse".to_owned(), flag.to_owned()));
                 }
@@ -1619,105 +1631,154 @@ pub fn reverse(
     let flags = ReverseFlags::parse(flags);
 
     // Step 1: Deserialize the template and theme files into Objects.
-    let theme: Value = serde_json::from_reader(&theme.file)
+    let mut theme: Value = serde_json::from_reader(&theme.file)
         .map_err(|json_err| Error::Processing(format!("Invalid theme json: {}", json_err)))?;
-    let template: Value = serde_json::from_reader(&template.file)
+    let mut template: Value = serde_json::from_reader(&template.file)
         .map_err(|json_err| Error::Processing(format!("Invalid template json: {}", json_err)))?;
     // .map_err(|e| Error::Processing(String::from("Invalid template json.")))?;
 
-    // Step 2: Built Data Structures (Deletions, Overrides, Variables, Colors)
-    // let mut deletions: HashMap<String, Value> = get_deletions(&theme, &template);
-    let var_diff = key_diff(&template, &theme, String::from(""), true);
-    let override_diff = key_diff(&theme, &template, String::from(""), false);
-    // d!(&var_diff, &override_diff);
+    if let Some(starting_path) = flags.path {
+        theme = starting_path
+            .traverse(&theme)
+            .map_err(|_| Error::Processing(String::from("Invalid starting path.")))?
+            .clone();
 
-    let mut overrides: Set<_> = override_diff
-        .missing
-        .iter()
-        .chain(override_diff.collisions.iter())
-        .map(|key| ResolvedVariable::from_path(key, &theme))
-        .collect();
+        template = starting_path
+            .traverse(&template)
+            .map_err(|_| Error::Processing(String::from("Invalid starting path.")))?
+            .clone();
 
-    let mut deletions: Set<_> = var_diff
-        .missing
-        .iter()
-        .map(|key| key.parse::<JsonPath>().unwrap())
-        .collect();
-
-    // Step 3: Resolve Variables and Overrides
-    let (variables, overrides) = resolve_variables(&var_diff, overrides);
-    drop(var_diff);
-
-    // Step 4: Build Color Redundancy Map & Replace Colors
-    let mut color_map = to_color_map(&variables, &overrides);
-    // d!(&color_map);
-
-    // Step 5: Replace Colors In variables and overrides limited by threshold
-    for (var_name, mut var) in variables.to_map().into_iter() {
-        let val = replace_color(&var.value, &color_map, flags.threshold);
-        // d!(&var_name, &val);
-        var.value = val;
-        variables.insert(&var_name, var.clone());
-    }
-
-    for (var_name, mut var) in overrides.to_map().into_iter() {
-        let val = replace_color(&var.value, &color_map, flags.threshold);
-        var.value = val;
-        overrides.insert(&var_name, var.clone());
-    }
-
-    // Step 6: Add Colors to VariablesSet
-    for (value, (color, v)) in color_map.iter() {
-        if v.len() < flags.threshold {
-            continue;
+        if !same_type(&theme, &template) {
+            return Err(Error::Processing(String::from(
+                "Starting path types do not match.",
+            )));
         }
-        let first = v.first().unwrap();
-        let var = ResolvedVariable::init(color, ParsedValue::String(value.to_owned()));
-        variables.inc_insert(color, var);
     }
-    drop(color_map);
 
-    // Step 7: Create Groupings
-    // e.g varname "a.b.c" = 1, "a.b.d" = 2 should be [a.b] = {c = 1, d = 2}
-    // if group only has one key, then it should be merged with the parent group
-    // e.g varname "a.b.c" = 1 should be "a.b.c" = 1
-    let mut grouped_json = json!({});
-    for (var_name, var) in variables.to_map().into_iter() {
-        let split = var_name.rsplit_once('.');
-        let path = if let Some((group, key)) = split {
-            format!("{}/{}", group, key)
-        } else {
-            var_name.clone()
-        }
-        .parse::<JsonPath>()
-        .unwrap();
+    let mut reverse = |theme: Value, template: Value, file_name: String| -> Result<(), Error> {
+        // Step 2: Built Data Structures (Deletions, Overrides, Variables, Colors)
+        // let mut deletions: HashMap<String, Value> = get_deletions(&theme, &template);
+        let var_diff = key_diff(&template, &theme, String::from(""), true);
+        let override_diff = key_diff(&theme, &template, String::from(""), false);
+        // d!(&var_diff, &override_diff);
 
-        if let ParsedValue::Null = var.value {
-            continue;
+        let mut overrides: Set<_> = override_diff
+            .missing
+            .iter()
+            .chain(override_diff.collisions.iter())
+            .map(|key| ResolvedVariable::from_path(key, &theme))
+            .collect();
+
+        let mut deletions: Set<_> = var_diff
+            .missing
+            .iter()
+            .map(|key| key.parse::<JsonPath>().unwrap())
+            .collect();
+
+        // Step 3: Resolve Variables and Overrides
+        let (variables, overrides) = resolve_variables(&var_diff, overrides);
+        drop(var_diff);
+
+        // Step 4: Build Color Redundancy Map & Replace Colors
+        let mut color_map = to_color_map(&variables, &overrides);
+        // d!(&color_map);
+
+        // Step 5: Replace Colors In variables and overrides limited by threshold
+        for (var_name, mut var) in variables.to_map().into_iter() {
+            let val = replace_color(&var.value, &color_map, flags.threshold);
+            // d!(&var_name, &val);
+            var.value = val;
+            variables.insert(&var_name, var.clone());
         }
 
-        path.pave(&mut grouped_json, var.value.into_value());
+        for (var_name, mut var) in overrides.to_map().into_iter() {
+            let val = replace_color(&var.value, &color_map, flags.threshold);
+            var.value = val;
+            overrides.insert(&var_name, var.clone());
+        }
+
+        // Step 6: Add Colors to VariablesSet
+        for (value, (color, v)) in color_map.iter() {
+            if v.len() < flags.threshold {
+                continue;
+            }
+            let first = v.first().unwrap();
+            let var = ResolvedVariable::init(color, ParsedValue::String(value.to_owned()));
+            variables.inc_insert(color, var);
+        }
+        drop(color_map);
+
+        // Step 7: Create Groupings
+        // e.g varname "a.b.c" = 1, "a.b.d" = 2 should be [a.b] = {c = 1, d = 2}
+        // if group only has one key, then it should be merged with the parent group
+        // e.g varname "a.b.c" = 1 should be "a.b.c" = 1
+        let mut grouped_json = json!({});
+        for (var_name, var) in variables.to_map().into_iter() {
+            let split = var_name.rsplit_once('.');
+            let path = if let Some((group, key)) = split {
+                format!("{}/{}", group, key)
+            } else {
+                var_name.clone()
+            }
+            .parse::<JsonPath>()
+            .unwrap();
+
+            if let ParsedValue::Null = var.value {
+                continue;
+            }
+
+            path.pave(&mut grouped_json, var.value.into_value());
+        }
+
+        // Step 8: Build the Toml Output
+        let toml_output = generate_toml_string(grouped_json, &overrides, &deletions)
+            .map_err(|e| Error::Processing(format!("Could not generate toml output: {:?}\nThis is probably indicative of needing to use the -p inner path", e)))?;
+        let out_dir = flags.output_directory.clone();
+
+        let mut out_file = out_dir.clone();
+        let file_name = format!("{}.toml", file_name);
+        out_file.push(file_name);
+
+        let mut file = File::create(out_file)
+            .map_err(|e| Error::Processing(format!("Could not create file: {}", e)))?;
+        file.write_all(toml_output.as_bytes());
+
+        // p!("{}", &doc.to_string());
+
+        // p!("Variables:\n{}", display_vars(&variables, false));
+        // p!("Overrides:\n{}", display_vars(&overrides, true));
+        // p!("Deletions:\n{}", display_path(&deletions));
+        // deletion_diff.resolve_variables();
+        Ok(())
+    };
+
+    match (&theme, &template) {
+        (Value::Object(t), Value::Object(te)) => {
+            reverse(theme, template, flags.name)?;
+        }
+        (Value::Array(theme), Value::Array(template)) => {
+            let template = template.first().unwrap();
+            for (i, theme) in theme.iter().enumerate() {
+                d!(i);
+                if !same_type(theme, template) {
+                    return Err(Error::Processing(format!(
+                        "Array index {} types do not match.",
+                        i
+                    )));
+                }
+                let default_name = "/name".parse::<JsonPath>().unwrap().traverse(theme).ok();
+                let name = {
+                    if let Some(name) = default_name {
+                        name.as_str().unwrap().to_string()
+                    } else {
+                        format!("{}{}", flags.name, i)
+                    }
+                };
+                reverse(theme.clone(), template.clone(), name)?;
+            }
+        }
+        _ => return Err(Error::Processing(String::from("Invalid starting path."))),
     }
 
-    // d!(&grouped_toml);
-
-    // Step 8: Build the Toml Output
-    let toml_output = generate_toml_string(grouped_json, &overrides, &deletions)?;
-    let file_name = format!("{}.toml", flags.name);
-    let out_dir = flags.output_directory;
-
-    let mut out_file = out_dir.clone();
-    out_file.push(file_name);
-
-    let mut file = File::create(out_file)
-        .map_err(|e| Error::Processing(format!("Could not create file: {}", e)))?;
-    file.write_all(toml_output.as_bytes());
-
-    // p!("{}", &doc.to_string());
-
-    // p!("Variables:\n{}", display_vars(&variables, false));
-    // p!("Overrides:\n{}", display_vars(&overrides, true));
-    // p!("Deletions:\n{}", display_path(&deletions));
-    // deletion_diff.resolve_variables();
     Ok(())
 }

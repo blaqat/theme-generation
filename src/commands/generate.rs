@@ -1,5 +1,6 @@
 use crate::prelude::*;
 use commands::reverse::json::JsonPath;
+use palette::convert::IntoColorUnclampedMut;
 use std::{cell::RefCell, cmp::Ordering, io::Read, path::PathBuf, ptr::replace};
 
 // Generate:
@@ -17,19 +18,29 @@ use std::{cell::RefCell, cmp::Ordering, io::Read, path::PathBuf, ptr::replace};
 //         -n name	Set name of output theme file
 
 #[derive(PartialEq, Debug)]
-enum GenerateFlags {
+pub enum GenerateFlags {
     Verbose,
     Check,
     OutputDirectory(PathBuf),
+    InputDirectory(PathBuf),
+    InnerPath(JsonPath),
     Name(String),
 }
 
 #[derive(PartialEq, Debug)]
-struct Flags {
+pub struct Flags {
     verbose: bool,
     check: bool,
     output_directory: PathBuf, // Default to current directory
+    input_directory: PathBuf,  // Default to current directory
     name: String,
+    path: Option<JsonPath>,
+}
+
+impl Flags {
+    pub fn directory(&self) -> PathBuf {
+        self.input_directory.clone()
+    }
 }
 
 impl GenerateFlags {
@@ -37,19 +48,23 @@ impl GenerateFlags {
         flags.iter().map(|flag| Self::from_str(flag)).collect()
     }
 
-    fn parse(flags: Vec<String>) -> Flags {
+    pub fn parse(flags: Vec<String>) -> Flags {
         let flags = Self::into_vec(flags).unwrap();
         let mut verbose = false;
         let mut check = false;
         let mut output_directory = PathBuf::from(".");
+        let mut input_directory = PathBuf::from(".");
         let mut name = String::from("generated-theme");
+        let mut path = None;
 
         for flag in flags {
             match flag {
                 Self::Verbose => verbose = true,
                 Self::Check => check = true,
                 Self::OutputDirectory(path) => output_directory = path,
+                Self::InputDirectory(path) => input_directory = path,
                 Self::Name(n) => name = n,
+                Self::InnerPath(p) => path = Some(p),
             }
         }
 
@@ -57,7 +72,9 @@ impl GenerateFlags {
             verbose,
             check,
             output_directory,
+            input_directory,
             name,
+            path,
         }
     }
 }
@@ -66,6 +83,17 @@ impl FromStr for GenerateFlags {
     type Err = Error;
 
     fn from_str(flag: &str) -> Result<Self, Error> {
+        let get_directory = |path: &str| -> Result<PathBuf, Error> {
+            let path = path.replace("~", std::env::var("HOME").unwrap().as_str());
+            let path = Path::new(&path);
+            if !path.exists() {
+                return Err(Error::InvalidFlag(
+                    "generate".to_owned(),
+                    path.to_str().unwrap().to_owned(),
+                ));
+            }
+            Ok(path.to_path_buf())
+        };
         match flag {
             "-v" => Ok(Self::Verbose),
             "-c" => Ok(Self::Check),
@@ -73,13 +101,25 @@ impl FromStr for GenerateFlags {
                 let name = flag.split("=").last().unwrap();
                 Ok(Self::Name(name.to_owned()))
             }
+            flag if flag.starts_with("-p") => {
+                let path = flag.split("=").last().unwrap();
+                let path = JsonPath::from_str(path)
+                    .map_err(|_| Error::InvalidFlag("reverse".to_owned(), flag.to_owned()))?;
+                Ok(Self::InnerPath(path))
+            }
+            flag if flag.starts_with("-i") => {
+                let path = flag.split("=").last().unwrap();
+                get_directory(flag.split("=").last().unwrap()).map(Self::InputDirectory)
+            }
             flag if flag.starts_with("-o") => {
                 let path = flag.split("=").last().unwrap();
-                let path = Path::new(path);
-                if !path.exists() {
-                    return Err(Error::InvalidFlag("reverse".to_owned(), flag.to_owned()));
-                }
-                Ok(Self::OutputDirectory(path.to_path_buf()))
+                // let path = path.replace("~", std::env::var("HOME").unwrap().as_str());
+                // let path = Path::new(&path);
+                // if !path.exists() {
+                //     return Err(Error::InvalidFlag("reverse".to_owned(), flag.to_owned()));
+                // }
+                // Ok(Self::OutputDirectory(path.to_path_buf()))
+                get_directory(flag.split("=").last().unwrap()).map(Self::OutputDirectory)
             }
             _ => Err(Error::InvalidFlag("reverse".to_owned(), flag.to_owned())),
         }
@@ -205,7 +245,7 @@ mod steps {
 
 pub fn generate(
     template: ValidatedFile,
-    mut variables: ValidatedFile,
+    mut variables: Vec<ValidatedFile>,
     flags: Vec<String>,
 ) -> Result<(), Error> {
     // p!(
@@ -214,86 +254,153 @@ pub fn generate(
     //     variables,
     //     GenerateFlags::into_vec(flags)?
     // );
-
     let flags = GenerateFlags::parse(flags);
+    let mut gen = |mut template: serde_json::Value,
+                   variables: serde_json::Value|
+     -> Result<serde_json::Value, Error> {
+        // Step 2: Resolve recursive variables
+        let variables = steps::resolve_variables(&variables, &variables, &vec![]);
+        // d!(&variables);
 
-    // Step 1: Deserialize the template and variable files into Objects.
-    let mut template: serde_json::Value = serde_json::from_reader(&template.file)
-        .map_err(|json_err| Error::Processing(format!("Invalid template json: {}", json_err)))?;
-    let variables: serde_json::Value = {
-        let mut contents = String::new();
-        variables
-            .file
-            .read_to_string(&mut contents)
-            .map_err(|json_err| {
-                Error::Processing(format!("Invalid variable toml: {}", json_err))
-            })?;
-        serde_json::to_value(toml::from_str::<toml::Value>(&contents).unwrap())
-    }
-    .map_err(|json_err| Error::Processing(format!("Invalid variable toml: {}", json_err)))?;
-
-    // d!(template, variables);
-
-    // Step 2: Resolve recursive variables
-    let variables = steps::resolve_variables(&variables, &variables, &vec![]);
-    // d!(&variables);
-
-    // Step 4: Apply Deletions
-    if let Some(del_obj) = variables.get("deletions")
-        && let Some(deletions) = del_obj.as_object().unwrap().get("keys")
-    {
-        let deletions = deletions.as_array().unwrap();
-        for key in deletions {
-            let path = key.as_str().unwrap().parse::<JsonPath>().map_err(|_| {
-                Error::Processing(format!(
-                    "Invalid path in deletions: {}",
-                    key.as_str().unwrap()
-                ))
-            })?;
-
-            let found = path.remove(&mut template);
-        }
-    }
-
-    // Step 3: Match variables with template
-    let mut matches = steps::match_variables(&template, &variables);
-    // d!(&matches);
-
-    // Step 5: Apply Overrides
-    if let Some(overrides) = variables.get("overrides") {
-        let overrides = overrides.as_object().unwrap();
-        for (key, value) in overrides.iter() {
-            let path = key
-                .parse::<JsonPath>()
-                .map_err(|_| Error::Processing(format!("Invalid path in overrides: {}", key)))?;
-            path.pave(&mut matches, value.clone());
-        }
-    }
-
-    // Step 6: Generate the new theme file
-    let json_output = serde_json::to_string_pretty(&matches).unwrap();
-    let default_name = "/name".parse::<JsonPath>().unwrap().traverse(&matches).ok();
-
-    let file_name = format!("{}.json", {
-        if flags.name == "generated-theme"
-            && let Some(default) = default_name
+        // Step 4: Apply Deletions
+        if let Some(del_obj) = variables.get("deletions")
+            && let Some(deletions) = del_obj.as_object().unwrap().get("keys")
         {
-            default.as_str().unwrap()
-        } else {
-            &flags.name
+            let deletions = deletions.as_array().unwrap();
+            for key in deletions {
+                let path = key.as_str().unwrap().parse::<JsonPath>().map_err(|_| {
+                    Error::Processing(format!(
+                        "Invalid path in deletions: {}",
+                        key.as_str().unwrap()
+                    ))
+                })?;
+
+                let found = path.remove(&mut template);
+            }
         }
-    });
 
-    let out_dir = flags.output_directory;
+        // Step 3: Match variables with template
+        let mut matches = steps::match_variables(&template, &variables);
+        // d!(&matches);
 
-    let mut out_file = out_dir.clone();
-    out_file.push(file_name);
+        // Step 5: Apply Overrides
+        if let Some(overrides) = variables.get("overrides") {
+            let overrides = overrides.as_object().unwrap();
+            for (key, value) in overrides.iter() {
+                let path = key.parse::<JsonPath>().map_err(|_| {
+                    Error::Processing(format!("Invalid path in overrides: {}", key))
+                })?;
+                path.pave(&mut matches, value.clone());
+            }
+        }
 
-    let mut file = File::create(out_file)
-        .map_err(|e| Error::Processing(format!("Could not create file: {}", e)))?;
-    file.write_all(json_output.as_bytes());
+        Ok(matches)
+    };
 
-    // d!(&matches);
+    let write_to_file = |matches: &serde_json::Value, generate_names: bool| -> Result<(), Error> {
+        // Step 6: Generate the new theme file
+        let json_output = serde_json::to_string_pretty(&matches).unwrap();
+        let default_name = "/name".parse::<JsonPath>().unwrap().traverse(matches).ok();
+
+        let file_name = format!("{}.json", {
+            if flags.name == "generated-theme"
+                && let Some(default) = default_name
+            {
+                default.as_str().unwrap()
+            } else {
+                &flags.name
+            }
+        });
+
+        let out_dir = flags.output_directory.clone();
+        let mut out_file = out_dir.clone();
+
+        out_file.push(&file_name);
+        if generate_names {
+            let mut loop_num = 0;
+            let mut new_name = String::from("");
+            while out_file.exists() {
+                write!(new_name, "new-").unwrap();
+                let mut a = new_name.clone();
+                a.push_str(&file_name);
+                out_file.pop();
+                out_file.push(&a);
+            }
+        }
+
+        let mut file = File::create(out_file)
+            .map_err(|e| Error::Processing(format!("Could not create file: {}", e)))?;
+        file.write_all(json_output.as_bytes());
+        Ok(())
+    };
+
+    let mut base: serde_json::Value = serde_json::from_reader(&template.file)
+        .map_err(|json_err| Error::Processing(format!("Invalid template json: {}", json_err)))?;
+    let mut template: serde_json::Value = base.clone();
+    let mut make_new_files_per_variable = true;
+    let mut has_made_file = false;
+    let mut is_array = false;
+    let mut data: serde_json::Value = serde_json::Value::Null;
+
+    if let Some(ref starting_path) = flags.path {
+        template = starting_path
+            .traverse(&template)
+            .map_err(|_| Error::Processing(String::from("Invalid starting path.")))?
+            .clone();
+
+        match template {
+            serde_json::Value::Object(_) => {
+                data = serde_json::json!({});
+            }
+            serde_json::Value::Array(a) => {
+                data = serde_json::json!([]);
+                is_array = true;
+                template = a[0].clone();
+            }
+            _ => {
+                return Err(Error::Processing(String::from(
+                    "Starting path must be an object or array.",
+                )))
+            }
+        }
+
+        make_new_files_per_variable = false;
+    }
+
+    for (i, variable) in variables.iter_mut().enumerate() {
+        // d!(&variable);
+        // Step 1: Deserialize the template and variable files into Objects.
+        let vars: serde_json::Value = {
+            let mut contents = String::new();
+            variable
+                .file
+                .read_to_string(&mut contents)
+                .map_err(|json_err| {
+                    Error::Processing(format!("Invalid variable toml: {}", json_err))
+                })?;
+            serde_json::to_value(toml::from_str::<toml::Value>(&contents).unwrap())
+        }
+        .map_err(|json_err| Error::Processing(format!("Invalid variable toml: {}", json_err)))?;
+
+        // d!(&template);
+        let matches = gen(template.clone(), vars)?;
+
+        if !make_new_files_per_variable {
+            if is_array {
+                data.as_array_mut().unwrap().push(matches);
+            } else {
+                data[i] = matches;
+            }
+        } else {
+            write_to_file(&matches, true);
+        }
+    }
+
+    if !make_new_files_per_variable {
+        let mut full = base.clone();
+        flags.path.clone().unwrap().pave(&mut full, data.clone());
+        write_to_file(&full, false);
+    }
 
     Ok(())
     // todo!()

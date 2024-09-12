@@ -1,0 +1,184 @@
+# Reverse Generation Tool Version 3.0
+name = "Mariana Sublime Auto"
+theme = "dark"
+
+# Theme Colors
+[color]
+darkseagreen = "#8CC592"
+darkslategray7 = "#2F3841"
+indianred = "#EF5266"
+lightseagreen = "#43B0AE"
+plum = "#C98FC2"
+sandybrown = "#F9AE58"
+sandybrown3 = "#FDAB5E"
+slategray = "#78808A"
+steelblue = "#568FBC"
+
+[background]
+bottombar = "#2E3238"
+panel = "#21262A"
+primary = "$color.darkslategray7"
+secondary = "#22262A"
+tabbar = "#4E565E"
+terminal = "$color.darkslategray7"
+toolbar = "$color.darkslategray7"
+topbar = "#2E3238"
+
+[border]
+primary = "#4E565E"
+secondary = "#2E3842"
+
+[button]
+active = "#505050"
+disabled = "#3C3C3C"
+selected = "#4A4A4A"
+
+[cursor]
+background = "#4D5864"
+hover = "#3E3E3E"
+line = "#45525D"
+match = "#5FB4B440"
+primary = "$color.sandybrown"
+search = "#FAC7618F"
+spaces = "#3D464F"
+
+[element]
+active = "#3E3E3E"
+disabled = "#2D2D2D"
+hover = "#2A2A2A"
+selected = "#383F46"
+
+[foreground]
+ignored = "$color.slategray"
+inactive = "$color.slategray"
+line = "#B9C0CB"
+placeholder = "#8A8C8E"
+primary = "#D2D9E4"
+secondary = "$color.slategray"
+
+[scheme]
+black = "#1E1E1E"
+black2 = "#252526"
+blue = "$color.steelblue"
+blue2 = "$color.steelblue"
+cyan = "$color.lightseagreen"
+cyan2 = "#42A6A4"
+green = "$color.darkseagreen"
+green2 = "$color.darkseagreen"
+primary = "$color.sandybrown"
+purple = "$color.plum"
+purple2 = "$color.plum"
+red = "$color.indianred"
+red2 = "$color.indianred"
+white = "#D2D9E3"
+white2 = "#D2D9E3"
+yellow = "$color.sandybrown3"
+yellow2 = "$color.sandybrown3"
+
+[scrollbar]
+primary = "#687076"
+secondary = "#434C54"
+
+[syntax.attribute]
+color = "#9CDCFE"
+style = "normal"
+weight = 500
+
+[syntax.boolean]
+color = "$color.indianred"
+style = "italic"
+weight = 500
+
+[syntax.builtin]
+color = "$color.indianred"
+style = "italic"
+weight = 500
+
+[syntax.comment]
+color = "#999FAB"
+style = "normal"
+weight = 500
+
+[syntax.constant]
+color = "#4EC9B0"
+style = "normal"
+weight = 500
+
+[syntax.constructor]
+color = "$color.lightseagreen"
+style = "normal"
+weight = 500
+
+[syntax.function]
+color = "$color.steelblue"
+style = "normal"
+weight = 500
+
+[syntax.keyword]
+color = "$color.plum"
+style = "italic"
+weight = 500
+
+[syntax.number]
+color = "$color.sandybrown3"
+style = "normal"
+weight = 500
+
+[syntax.operator]
+color = "#F7705A"
+style = "normal"
+weight = 500
+
+[syntax.punctuation.delimiter]
+color = "#9BA3AF"
+style = "normal"
+weight = 500
+
+[syntax.punctuation.list]
+color = "#A2A9B6"
+style = "normal"
+weight = 500
+
+[syntax.punctuation.primary]
+color = "#F2F3F3"
+style = "normal"
+weight = 500
+
+[syntax.punctuation.special]
+color = "#3F8C8E"
+style = "normal"
+weight = 500
+
+[syntax.special]
+color = "$color.sandybrown"
+style = "normal"
+weight = 500
+
+[syntax.string]
+color = "#F00"
+style = "normal"
+weight = 500
+
+[syntax.tag]
+color = "$color.indianred"
+style = "normal"
+weight = 500
+
+[syntax.type]
+color = "$color.lightseagreen"
+style = "normal"
+weight = 500
+
+[tabs]
+active = "$color.darkslategray7"
+inactive = "#4F565E"
+
+# Overrides
+[overrides]
+
+# Deletions
+[deletions]
+keys = [
+	"/style/syntax/function.definition",
+	"/style/syntax/function.method"
+]

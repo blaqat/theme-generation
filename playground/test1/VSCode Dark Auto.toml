@@ -1,0 +1,204 @@
+# Reverse Generation Tool Version 3.0
+name = "VSCode Dark Auto"
+theme = "dark"
+
+# Theme Colors
+[color]
+black = "#1E1E1E"
+cornflowerblue = "#569CD6"
+darkgray = "#A0A0A0"
+darkslategray = "#3E3E3E"
+darkslategray3 = "#252526"
+darkslategray4 = "#2D2D2D"
+lightgray = "#D4D4D4"
+lightskyblue = "#9CDCFE"
+mediumaquamarine = "#4EC9B0"
+
+[background]
+bottombar = "#333"
+panel = "$color.darkslategray3"
+primary = "$color.black"
+secondary = "$color.darkslategray3"
+tabbar = "$color.darkslategray3"
+terminal = "$color.black"
+toolbar = "$color.darkslategray4"
+topbar = "#333"
+
+[border]
+primary = "$color.darkslategray"
+secondary = "#2A2A2A"
+
+[button]
+active = "#505050"
+disabled = "#3C3C3C"
+selected = "#4A4A4A"
+
+[cursor]
+background = "#4E4E4E40"
+hover = "$color.darkslategray"
+line = "$color.darkslategray4"
+match = "#4A4A4A"
+primary = "#FFF"
+search = "#515C6A"
+spaces = "#303030"
+
+[element]
+active = "$color.darkslategray"
+disabled = "$color.darkslategray4"
+hover = "#2A2A2A"
+selected = "#37373D"
+
+[foreground]
+ignored = "$color.darkgray"
+inactive = "$color.darkgray"
+line = "#5A5A5A"
+placeholder = "#808080"
+primary = "$color.lightgray"
+secondary = "$color.darkgray"
+
+[scheme]
+black = "$color.black"
+black2 = "$color.darkslategray3"
+blue = "$color.cornflowerblue"
+blue2 = "#64B5F6"
+cyan = "$color.mediumaquamarine"
+cyan2 = "#4DD0E1"
+green = "#6A9955"
+green2 = "#8BC34A"
+primary = "$color.cornflowerblue"
+purple = "#C586C0"
+purple2 = "#E57373"
+red = "#F44747"
+red2 = "#FF6B6B"
+white = "$color.lightgray"
+white2 = "#FFF"
+yellow = "#D7BA7D"
+yellow2 = "#FFC107"
+
+[scrollbar]
+primary = "#424242"
+secondary = "$color.darkslategray"
+
+[syntax.attribute]
+color = "$color.lightskyblue"
+style = "normal"
+weight = 400
+
+[syntax.boolean]
+color = "$color.cornflowerblue"
+style = "normal"
+weight = 400
+
+[syntax.comment]
+color = "#6A9955"
+style = "italic"
+weight = 400
+
+[syntax.constant]
+color = "$color.mediumaquamarine"
+style = "normal"
+weight = 400
+
+[syntax.constructor]
+color = "$color.mediumaquamarine"
+style = "normal"
+weight = 700
+
+[syntax.function]
+color = "#DCDCAA"
+style = "normal"
+weight = 400
+
+[syntax.keyword]
+color = "#C586C0"
+style = "normal"
+weight = 700
+
+[syntax.member]
+color = "$color.lightskyblue"
+style = "normal"
+weight = 400
+
+[syntax.number]
+color = "#B5CEA8"
+style = "normal"
+weight = 400
+
+[syntax.operator]
+color = "$color.lightgray"
+style = "normal"
+weight = 400
+
+[syntax.parameter]
+color = "$color.lightskyblue"
+style = "normal"
+weight = 400
+
+[syntax.property]
+color = "$color.lightskyblue"
+style = "normal"
+weight = 400
+
+[syntax.punctuation.bracket]
+color = "$color.lightgray"
+style = "normal"
+weight = 400
+
+[syntax.punctuation.delimiter]
+color = "$color.lightgray"
+style = "normal"
+weight = 400
+
+[syntax.punctuation.list]
+color = "$color.lightgray"
+style = "normal"
+weight = 400
+
+[syntax.punctuation.primary]
+color = "$color.lightgray"
+style = "normal"
+weight = 400
+
+[syntax.punctuation.special]
+color = "$color.lightgray"
+style = "normal"
+weight = 400
+
+[syntax.special]
+color = "#D7BA7D"
+style = "normal"
+weight = 400
+
+[syntax.string]
+color = "@lightskyblue..h+000"
+style = "normal"
+weight = 800
+
+[syntax.tag]
+color = "$color.cornflowerblue"
+style = "normal"
+weight = 700
+
+[syntax.type]
+color = "$color.mediumaquamarine"
+style = "normal"
+weight = 700
+
+[syntax.var]
+color = "$color.lightskyblue"
+style = "normal"
+weight = 400
+
+[tabs]
+active = "$color.black"
+inactive = "$color.darkslategray4"
+
+# Overrides
+[overrides]
+
+# Deletions
+[deletions]
+keys = [
+	"/style/syntax/function.method",
+	"/style/syntax/function.definition"
+]
