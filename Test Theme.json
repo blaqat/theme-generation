@@ -2,7 +2,6 @@
   "$schema": "https://zed.dev/schema/themes/v0.1.0.json",
   "author": "blaqat",
   "name": "Test Theme",
-  "test-rec": "#5D9973E6",
   "themes": [
     {
       "appearance": "dark",

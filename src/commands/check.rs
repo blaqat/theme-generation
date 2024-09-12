@@ -1,5 +1,6 @@
 use crate::prelude::*;
 // use json_patch;
+use commands::reverse::variable::*;
 use serde_json::{json, Map, Value};
 
 const DNE: &str = "DNE";
@@ -59,9 +60,9 @@ pub fn json_deep_diff(data1: &Value, data2: &Value, prefix: String, start_keys: 
             }
         }
         (val1, val2) => {
-            let str1 = val1.to_string();
-            let str2 = val2.to_string();
-            if str1.to_lowercase() != str2.to_lowercase() {
+            let p1 = ParsedValue::from_value(val1);
+            let p2 = ParsedValue::from_value(val2);
+            if p1 != p2 {
                 keys.push(prefix);
             }
         }

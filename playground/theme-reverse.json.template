@@ -2,7 +2,6 @@
   "$schema": "https://zed.dev/schema/themes/v0.1.0.json",
 	"name": "theme-reverse",
 	"author": "blaqat",
-	"test-rec": "$rec",
 	"themes": [
 		{
 			"name": "$name",
