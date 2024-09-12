@@ -2,7 +2,7 @@ use color_name::Color as ColorName;
 use palette::{Hsv, IntoColor, Srgb};
 use std::fmt;
 use std::hash::Hash;
-use std::ops::{Add, Div, Mul, Sub};
+use std::ops::{Add, BitAnd, Div, Mul, Sub};
 use std::path::Display;
 use std::str::FromStr;
 
@@ -46,6 +46,7 @@ pub enum ColorComponent {
     Green(i16),
     Blue(i16),
     Alpha(i16),
+    Hex(String),
 }
 
 macro_rules! impl_color_components_op {
@@ -64,6 +65,7 @@ macro_rules! impl_color_components_op {
                     ColorComponent::Green(val) => ColorComponent::Green(self.green $op val),
                     ColorComponent::Blue(val) => ColorComponent::Blue(self.blue $op val),
                     ColorComponent::Alpha(val) => ColorComponent::Alpha(self.alpha $op val),
+                    ColorComponent::Hex(_) => unreachable!(),
                 }
             }
         }
@@ -74,6 +76,18 @@ impl_color_components_op!(Add, add, +);
 impl_color_components_op!(Div, div, /);
 impl_color_components_op!(Mul, mul, *);
 impl_color_components_op!(Sub, sub, -);
+
+impl BitAnd<ColorComponent> for &Color {
+    type Output = ColorComponent;
+
+    fn bitand(self, rhs: ColorComponent) -> Self::Output {
+        if let ColorComponent::Hex(val) = rhs {
+            ColorComponent::Hex(format!("{}{}", self.to_alphaless_hex(), val))
+        } else {
+            unreachable!()
+        }
+    }
+}
 
 impl ColorComponent {
     fn validate_change(&mut self) {
@@ -91,6 +105,8 @@ impl ColorComponent {
             Self::Red(val) | Self::Green(val) | Self::Blue(val) => {
                 *val = (*val).clamp(0, MAX_RGB);
             }
+
+            Self::Hex(hex) => {}
         }
     }
 }
@@ -103,6 +119,9 @@ pub struct ColorChange(pub ColorComponent, pub String);
 // let applied_changes = color_change!(Alpha "/", 3;)
 #[macro_export]
 macro_rules! color_change {
+    ($setting: ident . $val: expr) => {
+        ColorChange(ColorComponent::$setting($val), ".".to_string())
+    };
     ($setting: ident=$val: expr) => {
         ColorChange(ColorComponent::$setting($val), "=".to_string())
     };
@@ -131,6 +150,7 @@ impl ColorChange {
             "=" => self.0,
             "/" => color / self.0,
             "*" => color * self.0,
+            "." => color & self.0,
             _ => return Err(ColorError::ColorChange),
         };
 
@@ -140,6 +160,7 @@ impl ColorChange {
     pub fn identity(c: ColorChange) -> ColorChange {
         match (&c.0, c.1.as_str()) {
             (ColorComponent::Alpha(_), "=") => color_change!(Alpha = 100),
+            (ColorComponent::Hex(_), ".") => color_change!(Alpha = 100),
             _ => c,
         }
     }
@@ -154,6 +175,7 @@ impl ColorChange {
                 (_, "/") => ColorChange(c.0, String::from("*")),
                 (_, "*") => ColorChange(c.0, String::from("/")),
                 (ColorComponent::Alpha(_), "=") => color_change!(Alpha = 100),
+                (ColorComponent::Hex(_), ".") => color_change!(Alpha = 100),
                 _ => c,
             })
             .rev()
@@ -217,9 +239,11 @@ impl FromStr for ColorChange {
 
         // Special Alpha Append Operator
         if op == "." {
-            let val: i16 = i16::from_str_radix(&chars.collect::<String>(), 16)
-                .map_err(|_| ColorError::ColorOperator)?;
-            return Ok(color_change!(Alpha = val));
+            // let val: i16 = i16::from_str_radix(&chars.collect::<String>(), 16)
+            //     .map_err(|_| ColorError::ColorOperator)?;
+            // let val: f32 = val as f32 / 255.0 * 100.0;
+            let val = chars.collect::<String>();
+            return Ok(color_change!(Hex.val));
         }
 
         let val: i16 = chars.collect::<String>().parse().unwrap();
@@ -303,6 +327,17 @@ impl FromStr for Color {
 }
 
 impl Color {
+    fn update_from(&mut self, other: &Self) {
+        self.alpha = other.alpha;
+        self.red = other.red;
+        self.green = other.green;
+        self.blue = other.blue;
+        self.hue = other.hue;
+        self.saturation = other.saturation;
+        self.value = other.value;
+        self.hex = other.hex.to_string();
+    }
+
     fn is_valid_hex(hex: &str) -> bool {
         let hex = hex.to_uppercase();
         hex.starts_with("#")
@@ -310,7 +345,7 @@ impl Color {
             && matches!(hex.len(), 4 | 5 | 7 | 9)
     }
 
-    fn norm_hex(hex: &str) -> String {
+    pub fn norm_hex(hex: &str) -> String {
         let hex = hex.to_uppercase();
         if hex.len() == 4 || hex.len() == 5 {
             let mut new_hex = String::with_capacity(9);
@@ -469,6 +504,7 @@ impl Color {
                 ColorComponent::Blue(b) => self.blue = b,
 
                 ColorComponent::Alpha(a) => self.alpha = a,
+                _ => {}
             }
 
             match setting {
@@ -477,16 +513,17 @@ impl Color {
                 | ColorComponent::Value(_)
                 | ColorComponent::Saturation(_) => {
                     self.update_rgb();
+                    self.update_hex();
                 }
 
                 ColorComponent::Red(_) | ColorComponent::Green(_) | ColorComponent::Blue(_) => {
                     self.update_hsv();
+                    self.update_hex();
                 }
 
-                _ => {}
+                ColorComponent::Alpha(_) => self.update_hex(),
+                ColorComponent::Hex(ref hex) => self.update_from(&Color::from_hex(hex)?),
             }
-
-            self.update_hex();
         }
 
         Ok(())

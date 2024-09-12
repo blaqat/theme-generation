@@ -2,8 +2,9 @@ use crate::prelude::*;
 use core::fmt::{self, Display};
 use std::{cell::RefCell, cmp::Ordering, path::PathBuf, ptr::replace};
 // use json_patch;
-use commands::reverse::json::*;
+use json::*;
 use serde_json::{json, Map, Value};
+use steps::*;
 use variable::*;
 
 const UNRESOLVED_POINTER_CONST: usize = 2497;
@@ -397,7 +398,8 @@ pub mod variable {
                 Self::Null => Value::Null,
             }
         }
-        fn from_value(v: &Value) -> Result<Self, Error> {
+
+        pub fn from_value(v: &Value) -> Result<Self, Error> {
             match v {
                 Value::Null => Ok(Self::Null),
                 Value::String(str) => str.parse(),
@@ -780,6 +782,46 @@ pub mod variable {
     }
 
     #[derive(Debug)]
+    pub struct KeyDiffInfo {
+        pub missing: Vec<String>,
+        pub collisions: Vec<String>,
+        pub parsed_vars: Vec<SourcedVariable>,
+    }
+
+    impl std::fmt::Display for KeyDiffInfo {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            let mut output = String::new();
+            if !self.missing.is_empty() {
+                output.push_str("Missing keys:\n");
+                for key in &self.missing {
+                    output.push_str(&format!("  {}\n", key));
+                }
+            }
+            if !self.collisions.is_empty() {
+                output.push_str("Collisions:\n");
+                for key in &self.collisions {
+                    output.push_str(&format!("  {}\n", key));
+                }
+            }
+            if !self.parsed_vars.is_empty() {
+                output.push_str("Variables:\n");
+                for var in &self.parsed_vars {
+                    output.push_str(&format!("{}\n", var));
+                }
+            }
+            write!(f, "{}", output)
+        }
+    }
+
+    impl KeyDiffInfo {
+        pub fn extend(&mut self, other: Self) {
+            self.missing.extend(other.missing);
+            self.collisions.extend(other.collisions);
+            self.parsed_vars.extend(other.parsed_vars);
+        }
+    }
+
+    #[derive(Debug)]
     pub struct VariableSet {
         variables: RefCell<HashMap<String, ResolvedVariable>>,
     }
@@ -955,6 +997,489 @@ pub mod variable {
     }
 }
 
+mod steps {
+    use super::variable::*;
+    use super::*;
+
+    pub fn resolve_variables(
+        var_diff: &KeyDiffInfo,
+        mut overrides: Set<ResolvedVariable>,
+    ) -> (VariableSet, VariableSet) {
+        let res_var_diff = var_diff
+            .parsed_vars
+            .iter()
+            .filter(|v| !v.variables.is_empty())
+            .map(ResolvedVariable::from_src)
+            .collect::<Vec<_>>();
+
+        let mut var_set = VariableSet::new();
+        let mut unvar_set = VariableSet::new();
+
+        for var in res_var_diff {
+            let name = var.name().to_string();
+            var_set.safe_insert(&name, var);
+        }
+
+        for o in overrides {
+            let name = o.name().to_string();
+            unvar_set.safe_insert(&name, o);
+        }
+
+        let (mut pointers, mut unresolved_vars): (Vec<_>, Vec<_>) = var_set
+            .get_unresolved()
+            .into_iter()
+            .partition(|v| v.is_pointer());
+
+        type UnresolvedSet<'a> =
+            HashMap<JsonPath, HashMap<ParsedValue, Vec<(String, &'a ResolvedVariable)>>>;
+
+        let mut unresolved_set: UnresolvedSet = HashMap::new();
+        for pointer in pointers {
+            if let (var_name, ParsedValue::Variables(paths)) = (pointer.path, pointer.value) {
+                for path in paths {
+                    let unresolved_var = unresolved_vars
+                        .iter()
+                        .find(|v| v.path.to_string() == path)
+                        .unwrap();
+
+                    let identity = unresolved_var.identity();
+                    let value = unresolved_var.value.clone();
+
+                    unresolved_set
+                        .entry(var_name.clone())
+                        .or_default()
+                        .entry(identity)
+                        .or_default()
+                        .push((path, unresolved_var));
+                }
+            }
+        }
+
+        // Identities
+        for (var_name, iden_map) in &mut unresolved_set {
+            let map = iden_map.clone();
+
+            let identities = map.keys().collect::<Vec<_>>();
+            let values = map.values().flatten().map(|(_, v)| v).collect::<Vec<_>>();
+
+            identities
+                .iter()
+                .map(|identity| {
+                    (
+                        identity,
+                        values
+                            .iter()
+                            .filter(|v| v.results_from(identity))
+                            .collect::<Vec<_>>(),
+                    )
+                })
+                .for_each(|(identity, identity_of)| {
+                    identity_of.iter().for_each(|v| {
+                        iden_map
+                            .entry((*identity).clone())
+                            .or_default()
+                            .push((v.path.to_string(), v));
+                    });
+                });
+
+            let mut imv = iden_map
+                .values()
+                .map(|v| {
+                    let mut v = v.clone();
+                    v.dedup();
+                    v
+                })
+                .collect::<Vec<_>>();
+
+            let max_len = imv.iter().map(|v| v.len()).max().unwrap();
+            let (mut max, mut rest): (Vec<_>, Vec<_>) =
+                imv.iter().partition(|v| v.len() == max_len);
+            max.dedup();
+            rest.dedup();
+            let (mut first, max_rest) = (max.first().unwrap(), max.clone());
+            let mut first_found = first.first().unwrap();
+            let mut first_var = first_found.1.clone();
+            let identity = iden_map
+                .iter()
+                .find(|(_, v)| v.contains(first_found))
+                .unwrap()
+                .0;
+            first_var.value = identity.clone();
+            first_var.next();
+            var_set.insert(&var_name.join(), first_var);
+
+            rest.extend(max_rest);
+            let mut rest = rest
+                .into_iter()
+                .flatten()
+                .filter(|v| !first.contains(v))
+                .collect::<Vec<_>>();
+
+            for (s, u) in &rest {
+                // STILL A CHANCE!
+                let mut first = true;
+                let mut inserted = false;
+
+                let mut current = (*u).clone();
+                while current.could_resolve() && !inserted {
+                    let mut new = (*u).clone();
+                    if first {
+                        new.next();
+                        first = false;
+                    }
+                    let mut new_new = new.clone();
+                    new.next();
+                    match new_new.next() {
+                        Some(next) if !var_set.has_variable(&next.name) => {
+                            let identity = iden_map
+                                .iter()
+                                .find(|(_, v)| v.contains(&(s.clone(), *u)))
+                                .unwrap()
+                                .0;
+                            var_set.insert(&next.name, new);
+                            inserted = true;
+                        }
+                        Some(_) => current = new.clone(),
+                        None => {
+                            unvar_set.insert(&var_name.join(), new);
+                            inserted = true;
+                        }
+                    }
+                }
+                if !inserted {
+                    unvar_set.insert(&var_name.join(), (*u).clone());
+                }
+            }
+        }
+
+        var_set.resolve();
+
+        (var_set, unvar_set)
+    }
+
+    pub fn key_diff(data1: &Value, data2: &Value, prefix: String, log_vars: bool) -> KeyDiffInfo {
+        let mut info = KeyDiffInfo {
+            missing: Vec::new(),
+            collisions: Vec::new(),
+            parsed_vars: Vec::new(),
+        };
+
+        match (data1, data2) {
+            (Value::Object(map1), Value::Object(map2)) => {
+                for (key, val) in map1.iter() {
+                    match map2.get(key) {
+                        Some(val2) => {
+                            let next_diff =
+                                key_diff(val, val2, format!("{prefix}/{key}"), log_vars);
+                            info.extend(next_diff)
+                        }
+                        _ => info.missing.push(format!("{prefix}/{key}")),
+                    }
+                }
+            }
+
+            (Value::Array(vec1), Value::Array(vec2)) => {
+                for (key, val) in vec1.iter().enumerate() {
+                    match vec2.get(key) {
+                        Some(val2) => {
+                            let next_diff =
+                                key_diff(val, val2, format!("{prefix}/{key}"), log_vars);
+                            info.extend(next_diff);
+                        }
+                        _ => info.missing.push(format!("{prefix}/{key}")),
+                    }
+                }
+            }
+
+            (val1, val2) if !log_vars && same_type(val1, val2) && val1 != val2 => {
+                if !potential_set(val1, val2) {
+                    info.collisions.push(prefix);
+                } else if log_vars && let (Value::String(str), val) = (val1, val2) {
+                    info.parsed_vars
+                        .push(SourcedVariable::new(prefix, str, val))
+                }
+            }
+
+            (Value::String(str), val) | (val, Value::String(str)) => {
+                if log_vars {
+                    info.parsed_vars
+                        .push(SourcedVariable::new(prefix, str, val))
+                }
+            }
+
+            (val1, val2) if !log_vars && has_keys(val1) != has_keys(val2) => {
+                info.collisions.push(prefix);
+            }
+
+            _ => (),
+        }
+
+        info
+    }
+
+    fn display_vars(v: &VariableSet, path: bool) -> String {
+        let mut out = String::new();
+
+        let v = {
+            match path {
+                true => v.path_sorted(),
+                _ => v.sorted(),
+            }
+        };
+
+        for res in v {
+            let var = match (path) {
+                true => format!("{}", res.path),
+                _ => res.name(),
+            };
+            let val = res.value.to_string();
+            out.push_str(&format!("- {} = {}\n", var, val));
+        }
+        out
+    }
+
+    fn display_path(v: &Set<JsonPath>) -> String {
+        // format!("- {}", v.to_string())
+        let mut out = String::new();
+        let mut v = v.iter().collect::<Vec<_>>();
+        v.sort_by_key(|p| p.to_string());
+        for path in v {
+            out.push_str(&format!("- {}\n", path));
+        }
+        out
+    }
+
+    fn get_nested_values(j: &Value) -> Vec<Value> {
+        match j {
+            Value::Object(map) => map.values().flat_map(get_nested_values).collect(),
+            Value::Array(vec) => vec.iter().flat_map(get_nested_values).collect(),
+            val => vec![val.clone()],
+        }
+    }
+
+    type ColorMap = HashMap<String, (String, Vec<Color>)>;
+    pub fn to_color_map(v: &VariableSet, o: &VariableSet) -> ColorMap {
+        let mut color_map: ColorMap = HashMap::new();
+        let get_num_matching_names =
+            |n: &str, map: &ColorMap| map.values().filter(|(name, _)| name.starts_with(n)).count();
+
+        let mut update_color_map = |col: &Color| {
+            let mut name = col.get_name();
+            if name == "404" {
+                name = format!("color.{}", color_map.keys().len() + 1)
+            }
+
+            let mut name = match col.get_name().as_str() {
+                "404" => format!("color.{}", color_map.keys().len()),
+                s => s.to_owned(),
+            };
+
+            name = match get_num_matching_names(&name, &color_map) {
+                0 => name,
+                n => format!("{}{}", name, n + 1),
+            };
+
+            let colors = color_map.entry(col.to_alphaless_hex()).or_default();
+            if colors.0.is_empty() {
+                colors.0 = name;
+            }
+            colors.1.push(col.clone());
+        };
+
+        v.to_vec()
+            .iter()
+            .chain(o.to_vec().iter())
+            .for_each(|var| match var.value {
+                ParsedValue::Color(ref col) => {
+                    update_color_map(col);
+                }
+                ParsedValue::String(ref s) if let Ok(ref col) = s.parse::<Color>() => {
+                    update_color_map(col);
+                }
+                ParsedValue::Value(ref v) => match v {
+                    value if has_keys(value) => {
+                        let values = get_nested_values(value);
+                        for val in values {
+                            match val {
+                                Value::String(ref s) if let Ok(ref col) = s.parse::<Color>() => {
+                                    update_color_map(col);
+                                }
+                                _ => (),
+                            }
+                        }
+                    }
+                    Value::String(s) if let Ok(ref col) = s.parse::<Color>() => {
+                        update_color_map(col);
+                    }
+                    _ => (),
+                },
+                _ => (),
+            });
+
+        color_map
+    }
+
+    pub fn replace_color(val: &ParsedValue, color_map: &ColorMap, threshold: usize) -> ParsedValue {
+        let get_color = |c: &Color| {
+            let hex = c.to_alphaless_hex();
+            let (name, v) = color_map.get(&hex).unwrap();
+            if v.len() >= threshold {
+                if c.has_alpha() {
+                    ParsedValue::String(format!("${}..{}", name, c.get_alpha()))
+                } else {
+                    ParsedValue::String(format!("${}", name))
+                }
+            } else {
+                ParsedValue::String(c.to_string())
+            }
+        };
+
+        match val {
+            ParsedValue::Color(ref col) => get_color(col),
+            ParsedValue::String(ref s) if let Ok(ref col) = s.parse::<Color>() => get_color(col),
+            ParsedValue::Value(ref v) => match v {
+                Value::Array(a) => {
+                    let mut new_array = Vec::new();
+                    for val in a {
+                        let replaced =
+                            replace_color(&ParsedValue::Value(val.clone()), color_map, threshold);
+                        match replaced {
+                            ParsedValue::String(s) => new_array.push(Value::String(s)),
+                            ParsedValue::Value(v) => new_array.push(v),
+                            ParsedValue::Null => new_array.push(Value::Null),
+                            ParsedValue::Color(_) => unreachable!(),
+                            ParsedValue::Variables(_) => unreachable!(),
+                        }
+                    }
+                    ParsedValue::Value(Value::Array(new_array))
+                }
+                Value::Object(o) => {
+                    let mut new_obj = Map::new();
+                    for (key, val) in o.iter() {
+                        let replaced =
+                            replace_color(&ParsedValue::Value(val.clone()), color_map, threshold);
+                        match replaced {
+                            ParsedValue::String(s) => {
+                                new_obj.insert(key.to_owned(), Value::String(s))
+                            }
+                            ParsedValue::Value(v) => new_obj.insert(key.to_owned(), v),
+                            ParsedValue::Null => new_obj.insert(key.to_owned(), Value::Null),
+                            ParsedValue::Color(c) => unreachable!(),
+                            ParsedValue::Variables(_) => unreachable!(),
+                        };
+                    }
+                    ParsedValue::Value(Value::Object(new_obj))
+                }
+                Value::String(s) => {
+                    replace_color(&ParsedValue::String(s.to_owned()), color_map, threshold)
+                }
+                _ => val.clone(),
+            },
+            _ => val.clone(),
+        }
+    }
+
+    /// Order:
+    /// 1. Top Level Variables
+    /// 2. Color Variables
+    /// 3. Grouped Variables
+    /// 4. Overrides
+    /// 5. Deletions
+    pub fn generate_toml_string(
+        variables: Value,
+        overrides: &VariableSet,
+        deletions: &Set<JsonPath>,
+    ) -> Result<String, Error> {
+        macro_rules! t {
+            ($var_name:ident=$from:expr) => {
+                let $var_name: toml::Value = {
+                    match $from {
+                        Value::Null => toml::Value::String(String::from(TOML_NULL)),
+                        a => serde_json::from_value(a).map_err(|json_err| {
+                            Error::Processing(format!("Invalid theme json: {}", json_err))
+                        })?,
+                    }
+                };
+            };
+        }
+
+        // let grouped_toml: toml::Value = serde_json::from_value(grouped_json.clone())
+        //     .map_err(|json_err| Error::Processing(format!("Invalid theme json: {}", json_err)))?;
+        t!(grouped_toml = variables);
+
+        let data = grouped_toml.as_table().unwrap();
+        let mut doc = String::new();
+        macro_rules! w {
+        ($($args:expr),+) => {
+            prelude::w!(doc, $($args),+)
+        };
+    }
+
+        w!("# Reverse Generation Tool Version 3.0");
+        for (k, v) in data
+            .iter()
+            .filter(|(_, v)| matches!(v, toml::Value::String(_)))
+        {
+            w!("{} = {}", k, v);
+        }
+
+        // d!(data);
+
+        w!("\n# Theme Colors");
+        w!("[color]");
+        for (k, v) in data.iter().filter(|(k, _)| *k == "color") {
+            for (color, value) in v.as_table().unwrap().iter() {
+                w!("{} = {}", color, value);
+            }
+        }
+
+        for (k, v) in data.iter().filter(|(k, _)| *k != "color") {
+            if v.is_table() {
+                w!("\n[{}]", k);
+                for (k, v) in v.as_table().unwrap().iter() {
+                    match v {
+                        toml::Value::Array(a) => {
+                            w!("{} = [", k);
+                            for (i, v) in a.iter().enumerate() {
+                                if i == a.len() - 1 {
+                                    w!("\t{}", v);
+                                } else {
+                                    w!("\t{},", v);
+                                }
+                            }
+                            w!("]");
+                        }
+                        _ => w!("{} = {}", k, v),
+                    }
+                }
+            }
+        }
+
+        w!("\n# Overrides");
+        w!("[overrides]");
+        // d!(&overrides);
+        for (_, v) in overrides.to_map().into_iter() {
+            // d!(&k, &v);
+            t!(val = v.value.into_value());
+            w!(r#""{}" = {}"#, v.path.join(), val);
+        }
+
+        w!("\n# Deletions");
+        w!("[deletions]");
+        w!("keys = [");
+        for (i, d) in deletions.iter().enumerate() {
+            if i == deletions.len() - 1 {
+                w!("\t\"{}\"", d);
+            } else {
+                w!("\t\"{}\",", d);
+            }
+        }
+        w!("]");
+
+        Ok(doc)
+    }
+}
+
 #[derive(PartialEq, Debug)]
 enum ReverseFlags {
     Verbose,
@@ -1035,519 +1560,6 @@ impl FromStr for ReverseFlags {
             _ => Err(Error::InvalidFlag("reverse".to_owned(), flag.to_owned())),
         }
     }
-}
-
-fn resolve_variables(
-    var_diff: &KeyDiffInfo,
-    mut overrides: Set<ResolvedVariable>,
-) -> (VariableSet, VariableSet) {
-    let res_var_diff = var_diff
-        .parsed_vars
-        .iter()
-        .filter(|v| !v.variables.is_empty())
-        .map(ResolvedVariable::from_src)
-        .collect::<Vec<_>>();
-
-    let mut var_set = VariableSet::new();
-    let mut unvar_set = VariableSet::new();
-
-    for var in res_var_diff {
-        let name = var.name().to_string();
-        var_set.safe_insert(&name, var);
-    }
-
-    for o in overrides {
-        let name = o.name().to_string();
-        unvar_set.safe_insert(&name, o);
-    }
-
-    let (mut pointers, mut unresolved_vars): (Vec<_>, Vec<_>) = var_set
-        .get_unresolved()
-        .into_iter()
-        .partition(|v| v.is_pointer());
-
-    type UnresolvedSet<'a> =
-        HashMap<JsonPath, HashMap<ParsedValue, Vec<(String, &'a ResolvedVariable)>>>;
-
-    let mut unresolved_set: UnresolvedSet = HashMap::new();
-    for pointer in pointers {
-        if let (var_name, ParsedValue::Variables(paths)) = (pointer.path, pointer.value) {
-            for path in paths {
-                let unresolved_var = unresolved_vars
-                    .iter()
-                    .find(|v| v.path.to_string() == path)
-                    .unwrap();
-
-                let identity = unresolved_var.identity();
-                let value = unresolved_var.value.clone();
-
-                unresolved_set
-                    .entry(var_name.clone())
-                    .or_default()
-                    .entry(identity)
-                    .or_default()
-                    .push((path, unresolved_var));
-            }
-        }
-    }
-
-    // Identities
-    for (var_name, iden_map) in &mut unresolved_set {
-        let map = iden_map.clone();
-
-        let identities = map.keys().collect::<Vec<_>>();
-        let values = map.values().flatten().map(|(_, v)| v).collect::<Vec<_>>();
-
-        identities
-            .iter()
-            .map(|identity| {
-                (
-                    identity,
-                    values
-                        .iter()
-                        .filter(|v| v.results_from(identity))
-                        .collect::<Vec<_>>(),
-                )
-            })
-            .for_each(|(identity, identity_of)| {
-                identity_of.iter().for_each(|v| {
-                    iden_map
-                        .entry((*identity).clone())
-                        .or_default()
-                        .push((v.path.to_string(), v));
-                });
-            });
-
-        let mut imv = iden_map
-            .values()
-            .map(|v| {
-                let mut v = v.clone();
-                v.dedup();
-                v
-            })
-            .collect::<Vec<_>>();
-
-        let max_len = imv.iter().map(|v| v.len()).max().unwrap();
-        let (mut max, mut rest): (Vec<_>, Vec<_>) = imv.iter().partition(|v| v.len() == max_len);
-        max.dedup();
-        rest.dedup();
-        let (mut first, max_rest) = (max.first().unwrap(), max.clone());
-        let mut first_found = first.first().unwrap();
-        let mut first_var = first_found.1.clone();
-        let identity = iden_map
-            .iter()
-            .find(|(_, v)| v.contains(first_found))
-            .unwrap()
-            .0;
-        first_var.value = identity.clone();
-        first_var.next();
-        var_set.insert(&var_name.join(), first_var);
-
-        rest.extend(max_rest);
-        let mut rest = rest
-            .into_iter()
-            .flatten()
-            .filter(|v| !first.contains(v))
-            .collect::<Vec<_>>();
-
-        for (s, u) in &rest {
-            // STILL A CHANCE!
-            let mut first = true;
-            let mut inserted = false;
-
-            let mut current = (*u).clone();
-            while current.could_resolve() && !inserted {
-                let mut new = (*u).clone();
-                if first {
-                    new.next();
-                    first = false;
-                }
-                let mut new_new = new.clone();
-                new.next();
-                match new_new.next() {
-                    Some(next) if !var_set.has_variable(&next.name) => {
-                        let identity = iden_map
-                            .iter()
-                            .find(|(_, v)| v.contains(&(s.clone(), *u)))
-                            .unwrap()
-                            .0;
-                        var_set.insert(&next.name, new);
-                        inserted = true;
-                    }
-                    Some(_) => current = new.clone(),
-                    None => {
-                        unvar_set.insert(&var_name.join(), new);
-                        inserted = true;
-                    }
-                }
-            }
-            if !inserted {
-                unvar_set.insert(&var_name.join(), (*u).clone());
-            }
-        }
-    }
-
-    var_set.resolve();
-
-    (var_set, unvar_set)
-}
-
-#[derive(Debug)]
-struct KeyDiffInfo {
-    missing: Vec<String>,
-    collisions: Vec<String>,
-    parsed_vars: Vec<SourcedVariable>,
-}
-
-impl std::fmt::Display for KeyDiffInfo {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let mut output = String::new();
-        if !self.missing.is_empty() {
-            output.push_str("Missing keys:\n");
-            for key in &self.missing {
-                output.push_str(&format!("  {}\n", key));
-            }
-        }
-        if !self.collisions.is_empty() {
-            output.push_str("Collisions:\n");
-            for key in &self.collisions {
-                output.push_str(&format!("  {}\n", key));
-            }
-        }
-        if !self.parsed_vars.is_empty() {
-            output.push_str("Variables:\n");
-            for var in &self.parsed_vars {
-                output.push_str(&format!("{}\n", var));
-            }
-        }
-        write!(f, "{}", output)
-    }
-}
-
-impl KeyDiffInfo {
-    fn extend(&mut self, other: Self) {
-        self.missing.extend(other.missing);
-        self.collisions.extend(other.collisions);
-        self.parsed_vars.extend(other.parsed_vars);
-    }
-}
-
-fn key_diff(data1: &Value, data2: &Value, prefix: String, log_vars: bool) -> KeyDiffInfo {
-    let mut info = KeyDiffInfo {
-        missing: Vec::new(),
-        collisions: Vec::new(),
-        parsed_vars: Vec::new(),
-    };
-
-    match (data1, data2) {
-        (Value::Object(map1), Value::Object(map2)) => {
-            for (key, val) in map1.iter() {
-                match map2.get(key) {
-                    Some(val2) => {
-                        let next_diff = key_diff(val, val2, format!("{prefix}/{key}"), log_vars);
-                        info.extend(next_diff)
-                    }
-                    _ => info.missing.push(format!("{prefix}/{key}")),
-                }
-            }
-        }
-
-        (Value::Array(vec1), Value::Array(vec2)) => {
-            for (key, val) in vec1.iter().enumerate() {
-                match vec2.get(key) {
-                    Some(val2) => {
-                        let next_diff = key_diff(val, val2, format!("{prefix}/{key}"), log_vars);
-                        info.extend(next_diff);
-                    }
-                    _ => info.missing.push(format!("{prefix}/{key}")),
-                }
-            }
-        }
-
-        (val1, val2) if !log_vars && same_type(val1, val2) && val1 != val2 => {
-            if !potential_set(val1, val2) {
-                info.collisions.push(prefix);
-            } else if log_vars && let (Value::String(str), val) = (val1, val2) {
-                info.parsed_vars
-                    .push(SourcedVariable::new(prefix, str, val))
-            }
-        }
-
-        (Value::String(str), val) | (val, Value::String(str)) => {
-            if log_vars {
-                info.parsed_vars
-                    .push(SourcedVariable::new(prefix, str, val))
-            }
-        }
-
-        (val1, val2) if !log_vars && has_keys(val1) != has_keys(val2) => {
-            info.collisions.push(prefix);
-        }
-
-        _ => (),
-    }
-
-    info
-}
-
-fn display_vars(v: &VariableSet, path: bool) -> String {
-    let mut out = String::new();
-
-    let v = {
-        match path {
-            true => v.path_sorted(),
-            _ => v.sorted(),
-        }
-    };
-
-    for res in v {
-        let var = match (path) {
-            true => format!("{}", res.path),
-            _ => res.name(),
-        };
-        let val = res.value.to_string();
-        out.push_str(&format!("- {} = {}\n", var, val));
-    }
-    out
-}
-
-fn display_path(v: &Set<JsonPath>) -> String {
-    // format!("- {}", v.to_string())
-    let mut out = String::new();
-    let mut v = v.iter().collect::<Vec<_>>();
-    v.sort_by_key(|p| p.to_string());
-    for path in v {
-        out.push_str(&format!("- {}\n", path));
-    }
-    out
-}
-
-fn get_nested_values(j: &Value) -> Vec<Value> {
-    match j {
-        Value::Object(map) => map.values().flat_map(get_nested_values).collect(),
-        Value::Array(vec) => vec.iter().flat_map(get_nested_values).collect(),
-        val => vec![val.clone()],
-    }
-}
-
-type ColorMap = HashMap<String, (String, Vec<Color>)>;
-fn to_color_map(v: &VariableSet, o: &VariableSet) -> ColorMap {
-    let mut color_map: ColorMap = HashMap::new();
-    let get_num_matching_names =
-        |n: &str, map: &ColorMap| map.values().filter(|(name, _)| name.starts_with(n)).count();
-
-    let mut update_color_map = |col: &Color| {
-        let mut name = col.get_name();
-        if name == "404" {
-            name = format!("color.{}", color_map.keys().len() + 1)
-        }
-
-        let mut name = match col.get_name().as_str() {
-            "404" => format!("color.{}", color_map.keys().len()),
-            s => s.to_owned(),
-        };
-
-        name = match get_num_matching_names(&name, &color_map) {
-            0 => name,
-            n => format!("{}{}", name, n + 1),
-        };
-
-        let colors = color_map.entry(col.to_alphaless_hex()).or_default();
-        if colors.0.is_empty() {
-            colors.0 = name;
-        }
-        colors.1.push(col.clone());
-    };
-
-    v.to_vec()
-        .iter()
-        .chain(o.to_vec().iter())
-        .for_each(|var| match var.value {
-            ParsedValue::Color(ref col) => {
-                update_color_map(col);
-            }
-            ParsedValue::String(ref s) if let Ok(ref col) = s.parse::<Color>() => {
-                update_color_map(col);
-            }
-            ParsedValue::Value(ref v) => match v {
-                value if has_keys(value) => {
-                    let values = get_nested_values(value);
-                    for val in values {
-                        match val {
-                            Value::String(ref s) if let Ok(ref col) = s.parse::<Color>() => {
-                                update_color_map(col);
-                            }
-                            _ => (),
-                        }
-                    }
-                }
-                Value::String(s) if let Ok(ref col) = s.parse::<Color>() => {
-                    update_color_map(col);
-                }
-                _ => (),
-            },
-            _ => (),
-        });
-
-    color_map
-}
-
-fn replace_color(val: &ParsedValue, color_map: &ColorMap, threshold: usize) -> ParsedValue {
-    let get_color = |c: &Color| {
-        let hex = c.to_alphaless_hex();
-        let (name, v) = color_map.get(&hex).unwrap();
-        if v.len() >= threshold {
-            if c.has_alpha() {
-                ParsedValue::String(format!("${}..{}", name, c.get_alpha()))
-            } else {
-                ParsedValue::String(format!("${}", name))
-            }
-        } else {
-            ParsedValue::String(c.to_string())
-        }
-    };
-
-    match val {
-        ParsedValue::Color(ref col) => get_color(col),
-        ParsedValue::String(ref s) if let Ok(ref col) = s.parse::<Color>() => get_color(col),
-        ParsedValue::Value(ref v) => match v {
-            Value::Array(a) => {
-                let mut new_array = Vec::new();
-                for val in a {
-                    let replaced =
-                        replace_color(&ParsedValue::Value(val.clone()), color_map, threshold);
-                    match replaced {
-                        ParsedValue::String(s) => new_array.push(Value::String(s)),
-                        ParsedValue::Value(v) => new_array.push(v),
-                        ParsedValue::Null => new_array.push(Value::Null),
-                        ParsedValue::Color(_) => unreachable!(),
-                        ParsedValue::Variables(_) => unreachable!(),
-                    }
-                }
-                ParsedValue::Value(Value::Array(new_array))
-            }
-            Value::Object(o) => {
-                let mut new_obj = Map::new();
-                for (key, val) in o.iter() {
-                    let replaced =
-                        replace_color(&ParsedValue::Value(val.clone()), color_map, threshold);
-                    match replaced {
-                        ParsedValue::String(s) => new_obj.insert(key.to_owned(), Value::String(s)),
-                        ParsedValue::Value(v) => new_obj.insert(key.to_owned(), v),
-                        ParsedValue::Null => new_obj.insert(key.to_owned(), Value::Null),
-                        ParsedValue::Color(c) => unreachable!(),
-                        ParsedValue::Variables(_) => unreachable!(),
-                    };
-                }
-                ParsedValue::Value(Value::Object(new_obj))
-            }
-            Value::String(s) => {
-                replace_color(&ParsedValue::String(s.to_owned()), color_map, threshold)
-            }
-            _ => val.clone(),
-        },
-        _ => val.clone(),
-    }
-}
-
-/// Order:
-/// 1. Top Level Variables
-/// 2. Color Variables
-/// 3. Grouped Variables
-/// 4. Overrides
-/// 5. Deletions
-fn generate_toml_string(
-    variables: Value,
-    overrides: &VariableSet,
-    deletions: &Set<JsonPath>,
-) -> Result<String, Error> {
-    macro_rules! t {
-        ($var_name:ident=$from:expr) => {
-            let $var_name: toml::Value = {
-                match $from {
-                    Value::Null => toml::Value::String(String::from(TOML_NULL)),
-                    a => serde_json::from_value(a).map_err(|json_err| {
-                        Error::Processing(format!("Invalid theme json: {}", json_err))
-                    })?,
-                }
-            };
-        };
-    }
-
-    // let grouped_toml: toml::Value = serde_json::from_value(grouped_json.clone())
-    //     .map_err(|json_err| Error::Processing(format!("Invalid theme json: {}", json_err)))?;
-    t!(grouped_toml = variables);
-
-    let data = grouped_toml.as_table().unwrap();
-    let mut doc = String::new();
-    macro_rules! w {
-        ($($args:expr),+) => {
-            prelude::w!(doc, $($args),+)
-        };
-    }
-
-    w!("# Reverse Generation Tool Version 3.0");
-    for (k, v) in data
-        .iter()
-        .filter(|(_, v)| matches!(v, toml::Value::String(_)))
-    {
-        w!("{} = {}", k, v);
-    }
-
-    // d!(data);
-
-    w!("\n# Theme Colors");
-    w!("[color]");
-    for (k, v) in data.iter().filter(|(k, _)| *k == "color") {
-        for (color, value) in v.as_table().unwrap().iter() {
-            w!("{} = {}", color, value);
-        }
-    }
-
-    for (k, v) in data.iter().filter(|(k, _)| *k != "color") {
-        if v.is_table() {
-            w!("\n[{}]", k);
-            for (k, v) in v.as_table().unwrap().iter() {
-                match v {
-                    toml::Value::Array(a) => {
-                        w!("{} = [", k);
-                        for (i, v) in a.iter().enumerate() {
-                            if i == a.len() - 1 {
-                                w!("\t{}", v);
-                            } else {
-                                w!("\t{},", v);
-                            }
-                        }
-                        w!("]");
-                    }
-                    _ => w!("{} = {}", k, v),
-                }
-            }
-        }
-    }
-
-    w!("\n# Overrides");
-    w!("[overrides]");
-    // d!(&overrides);
-    for (_, v) in overrides.to_map().into_iter() {
-        // d!(&k, &v);
-        t!(val = v.value.into_value());
-        w!(r#""{}" = {}"#, v.path.join(), val);
-    }
-
-    w!("\n# Deletions");
-    w!("[deletions]");
-    w!("keys = [");
-    for (i, d) in deletions.iter().enumerate() {
-        if i == deletions.len() - 1 {
-            w!("\t\"{}\"", d);
-        } else {
-            w!("\t\"{}\",", d);
-        }
-    }
-    w!("]");
-
-    Ok(doc)
 }
 
 // Var paths:
@@ -1670,6 +1682,5 @@ pub fn reverse(
     // p!("Overrides:\n{}", display_vars(&overrides, true));
     // p!("Deletions:\n{}", display_path(&deletions));
     // deletion_diff.resolve_variables();
-
-    todo!("REVERSE")
+    Ok(())
 }
