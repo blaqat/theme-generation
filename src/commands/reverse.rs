@@ -1,19 +1,11 @@
 use crate::prelude::*;
-use commands::check::{json_deep_diff, DiffInfo};
 use core::fmt::{self, Display};
-use std::{
-    borrow::BorrowMut,
-    cell::{Ref, RefCell},
-    cmp::Ordering,
-    iter::once,
-    path::PathBuf,
-    ptr,
-};
-use Either::Right;
+use std::{cell::RefCell, cmp::Ordering, path::PathBuf, ptr::replace};
 // use json_patch;
 use serde_json::{json, Map, Value};
 
 const UNRESOLVED_POINTER_CONST: usize = 2497;
+const TOML_NULL: &str = "$none";
 
 // Reverse:
 //     Description:
@@ -37,10 +29,6 @@ enum JsonKey {
 }
 
 impl JsonKey {
-    fn key(&self) -> String {
-        self.to_string()
-    }
-
     fn inner(&self) -> String {
         match self {
             JsonKey::Key(k) => k.clone(),
@@ -95,7 +83,7 @@ impl FromStr for JsonPath {
 
 impl JsonPath {
     fn new() -> Self {
-        JsonPath(vec![])
+        JsonPath(Vec::new())
     }
 
     fn join(&self) -> String {
@@ -363,13 +351,50 @@ mod test {
 enum ReverseFlags {
     Verbose,
     Check,
-    Threshold(i32),
+    Threshold(usize),
     OutputDirectory(PathBuf),
+    Name(String),
+}
+
+#[derive(PartialEq, Debug)]
+struct Flags {
+    verbose: bool,
+    check: bool,
+    threshold: usize,          // Default to 3
+    output_directory: PathBuf, // Default to current directory
+    name: String,
 }
 
 impl ReverseFlags {
-    fn parse(flags: Vec<String>) -> Result<Vec<Self>, Error> {
+    fn into_vec(flags: Vec<String>) -> Result<Vec<Self>, Error> {
         flags.iter().map(|flag| Self::from_str(flag)).collect()
+    }
+
+    fn parse(flags: Vec<String>) -> Flags {
+        let flags = Self::into_vec(flags).unwrap();
+        let mut verbose = false;
+        let mut check = false;
+        let mut threshold = 3;
+        let mut output_directory = PathBuf::from(".");
+        let mut name = String::from("reversed-theme");
+
+        for flag in flags {
+            match flag {
+                Self::Verbose => verbose = true,
+                Self::Check => check = true,
+                Self::Threshold(value) => threshold = value,
+                Self::OutputDirectory(path) => output_directory = path,
+                Self::Name(n) => name = n,
+            }
+        }
+
+        Flags {
+            verbose,
+            check,
+            threshold,
+            output_directory,
+            name,
+        }
     }
 }
 
@@ -380,6 +405,10 @@ impl FromStr for ReverseFlags {
         match flag {
             "-v" => Ok(Self::Verbose),
             "-c" => Ok(Self::Check),
+            flag if flag.starts_with("-n") => {
+                let name = flag.split("=").last().unwrap();
+                Ok(Self::Name(name.to_owned()))
+            }
             flag if flag.starts_with("-o") => {
                 let path = flag.split("=").last().unwrap();
                 let path = Path::new(path);
@@ -447,6 +476,15 @@ impl FromStr for ParsedValue {
 }
 
 impl ParsedValue {
+    fn into_value(self) -> Value {
+        match self {
+            Self::Color(color) => Value::String(color.to_string()),
+            Self::Variables(vars) => Value::String(vars.join("|")),
+            Self::Value(value) => value,
+            Self::String(str) => Value::String(str),
+            Self::Null => Value::Null,
+        }
+    }
     fn from_value(v: &Value) -> Result<Self, Error> {
         match v {
             Value::Null => Ok(Self::Null),
@@ -460,7 +498,7 @@ impl ParsedValue {
         match self {
             ParsedValue::Color(c) => {
                 let mut color = c.clone();
-                color.update(iden_ops);
+                _ = color.update(iden_ops);
                 let color_str = color.to_string();
                 ParsedValue::String(color_str)
             }
@@ -473,7 +511,7 @@ impl ParsedValue {
         match self {
             ParsedValue::Color(c) => {
                 let mut color = c.clone();
-                color.update_ops(&iden_ops);
+                _ = color.update_ops(&iden_ops);
                 let color_str = color.to_string();
                 ParsedValue::String(color_str)
             }
@@ -571,6 +609,20 @@ impl<'a> ResolvedVariable {
             value: ParsedValue::Null,
             variables: Vec::new(),
             resolved_id: None,
+        }
+    }
+
+    fn init(name: &str, value: ParsedValue) -> Self {
+        let variable = ParsedVariable {
+            name: name.to_string(),
+            operations: Vec::new(),
+        };
+
+        Self {
+            value,
+            variables: vec![variable],
+            path: JsonPath::new(),
+            resolved_id: Some(0),
         }
     }
 
@@ -851,6 +903,26 @@ impl<'a> VariableSet {
         self.variables.borrow_mut().insert(name.to_string(), var);
     }
 
+    fn inc_insert(&self, name: &str, var: ResolvedVariable) {
+        if !self.has_variable(name) {
+            self.insert(name, var);
+        } else {
+            // d!(&name);
+            let mut vars = self.variables.borrow_mut();
+            let existing = vars.get(name).unwrap().clone();
+
+            let mut count = 1;
+            while vars.contains_key(&format!("{}{}", name, count)) {
+                count += 1;
+            }
+
+            let existing_name = format!("{}{}", name, count);
+            // d!(&existing_name);
+            vars.insert(existing_name, existing);
+            vars.insert(name.to_owned(), var);
+        }
+    }
+
     fn safe_insert(&self, name: &str, mut var: ResolvedVariable) {
         if !self.has_variable(name) || var.identity_eq(&self.variables.borrow()[name]) {
             self.insert(name, var);
@@ -950,40 +1022,6 @@ fn resolve_variables(
     var_diff: &KeyDiffInfo,
     mut overrides: Set<ResolvedVariable>,
 ) -> (VariableSet, VariableSet) {
-    // HashMap to reference count the variables
-    let mut map: HashMap<String, (Vec<&SourcedVariable>, i32)> = HashMap::new();
-    let mut resolved = VariableSet::new();
-    let mut unresolved = VariableSet::new();
-    let mut siblings_map: HashMap<String, _> = HashMap::new();
-
-    macro_rules! INSERT_RESOLVED {
-        ($res:expr) => {
-            resolved.push($res);
-            resolved.sort_by(|a, b| a.variable.name.cmp(&b.variable.name));
-        };
-    }
-
-    // Iterate over the variables and increment the reference count
-    for parsed in &var_diff.parsed_vars {
-        for var in &parsed.variables {
-            match var {
-                Either::Left(_) => todo!(),
-                Either::Right(v) => {
-                    map.entry(v.name.clone())
-                        .and_modify(|(refs, counter)| {
-                            refs.push(parsed);
-                            *counter += 1;
-                        })
-                        .or_insert((vec![parsed], 1));
-                    siblings_map
-                        .entry(v.name.clone())
-                        .or_insert_with(Vec::new)
-                        .push((&parsed.path, &parsed.variables));
-                }
-            }
-        }
-    }
-
     let res_var_diff = var_diff
         .parsed_vars
         .iter()
@@ -1008,10 +1046,6 @@ fn resolve_variables(
         .get_unresolved()
         .into_iter()
         .partition(|v| v.is_pointer());
-
-    // d!(&pointers, &unresolved_vars);
-
-    // type UnresolvedSet<'a> = HashMap<JsonPath, Vec<(String, ParsedValue<'a>, ParsedValue<'a>)>>;
 
     type UnresolvedSet<'a> =
         HashMap<JsonPath, HashMap<ParsedValue, Vec<(String, &'a ResolvedVariable)>>>;
@@ -1078,14 +1112,6 @@ fn resolve_variables(
         let (mut max, mut rest): (Vec<_>, Vec<_>) = imv.iter().partition(|v| v.len() == max_len);
         max.dedup();
         rest.dedup();
-        //     .filter(|v| v.len() == max_len)
-        //     .collect::<Vec<_>>();
-        // let rest = iden_map
-        //     .values()
-        //     .filter(|v| v.len() != max_len)
-        //     .collect::<Vec<_>>();
-
-        // d!(&var_name, &max_len, &max, &rest);
         let (mut first, max_rest) = (max.first().unwrap(), max.clone());
         let mut first_found = first.first().unwrap();
         let mut first_var = first_found.1.clone();
@@ -1106,51 +1132,43 @@ fn resolve_variables(
             .collect::<Vec<_>>();
 
         for (s, u) in &rest {
-            if u.could_resolve() {
-                // STILL A CHANCE!
+            // STILL A CHANCE!
+            let mut first = true;
+            let mut inserted = false;
+
+            let mut current = (*u).clone();
+            while current.could_resolve() && !inserted {
                 let mut new = (*u).clone();
-                new.next(); // Current Variable (Value was None)
+                if first {
+                    new.next();
+                    first = false;
+                }
                 let mut new_new = new.clone();
                 new.next();
                 match new_new.next() {
-                    Some(next) => {
+                    Some(next) if !var_set.has_variable(&next.name) => {
                         let identity = iden_map
                             .iter()
                             .find(|(_, v)| v.contains(&(s.clone(), *u)))
                             .unwrap()
                             .0;
-                        // d!(&next.name);
                         var_set.insert(&next.name, new);
+                        inserted = true;
                     }
+                    Some(_) => current = new.clone(),
                     None => {
                         unvar_set.insert(&var_name.join(), new);
+                        inserted = true;
                     }
                 }
-            } else {
-                // NO CHANCE!
+            }
+            if !inserted {
                 unvar_set.insert(&var_name.join(), (*u).clone());
             }
         }
-        // rest.into_iter().filter(|v| !v.is_empty()).for_each(|v| { let mut first = v.first().unwrap().1.clone();
-        //     let identity = iden_map
-        //         .iter()
-        //         .find(|(_, v)| v.contains(v.first().unwrap()))
-        //         .unwrap()
-        //         .0;
-        //     first.value = identity.clone();
-        //     first.next();
-        //     unvar_set.insert(&var_name.join(), first);
-        // });
     }
 
     var_set.resolve();
-
-    // p!("{}", display_vars(&var_set, false));
-    // p!("\n\n{}", display_vars(&unvar_set, false));
-    // d!(unresolved_set);
-
-    // Own the variables
-    // Move to resolved and unresolved maps
 
     (var_set, unvar_set)
 }
@@ -1236,12 +1254,13 @@ fn key_diff(data1: &Value, data2: &Value, prefix: String, log_vars: bool) -> Key
             }
         }
 
-        (Value::String(str), val) | (Value::String(str), val) => {
+        (Value::String(str), val) | (val, Value::String(str)) => {
             if log_vars {
                 info.parsed_vars
                     .push(SourcedVariable::new(prefix, str, val))
             }
         }
+
         (val1, val2) if !log_vars && has_keys(val1) != has_keys(val2) => {
             info.collisions.push(prefix);
         }
@@ -1265,7 +1284,6 @@ fn display_vars(v: &VariableSet, path: bool) -> String {
     for res in v {
         let var = match (path) {
             true => format!("{}", res.path),
-            // _ if res.is_resolvable() => res.resolved().map(|v| v.name.clone()).unwrap_or_default(),
             _ => res.name(),
         };
         let val = res.value.to_string();
@@ -1285,6 +1303,239 @@ fn display_path(v: &Set<JsonPath>) -> String {
     out
 }
 
+fn get_nested_values(j: &Value) -> Vec<Value> {
+    match j {
+        Value::Object(map) => map.values().flat_map(get_nested_values).collect(),
+        Value::Array(vec) => vec.iter().flat_map(get_nested_values).collect(),
+        val => vec![val.clone()],
+    }
+}
+
+type ColorMap = HashMap<String, (String, Vec<Color>)>;
+fn to_color_map(v: &VariableSet, o: &VariableSet) -> ColorMap {
+    let mut color_map: ColorMap = HashMap::new();
+    let get_num_matching_names =
+        |n: &str, map: &ColorMap| map.values().filter(|(name, _)| name.starts_with(n)).count();
+
+    let mut update_color_map = |col: &Color| {
+        let mut name = col.get_name();
+        if name == "404" {
+            name = format!("color.{}", color_map.keys().len() + 1)
+        }
+
+        let mut name = match col.get_name().as_str() {
+            "404" => format!("color.{}", color_map.keys().len()),
+            s => s.to_owned(),
+        };
+
+        name = match get_num_matching_names(&name, &color_map) {
+            0 => name,
+            n => format!("{}{}", name, n + 1),
+        };
+
+        let colors = color_map.entry(col.to_alphaless_hex()).or_default();
+        if colors.0.is_empty() {
+            colors.0 = name;
+        }
+        colors.1.push(col.clone());
+    };
+
+    v.to_vec()
+        .iter()
+        .chain(o.to_vec().iter())
+        .for_each(|var| match var.value {
+            ParsedValue::Color(ref col) => {
+                update_color_map(col);
+            }
+            ParsedValue::String(ref s) if let Ok(ref col) = s.parse::<Color>() => {
+                update_color_map(col);
+            }
+            ParsedValue::Value(ref v) => match v {
+                value if has_keys(value) => {
+                    let values = get_nested_values(value);
+                    for val in values {
+                        match val {
+                            Value::String(ref s) if let Ok(ref col) = s.parse::<Color>() => {
+                                update_color_map(col);
+                            }
+                            _ => (),
+                        }
+                    }
+                }
+                Value::String(s) if let Ok(ref col) = s.parse::<Color>() => {
+                    update_color_map(col);
+                }
+                _ => (),
+            },
+            _ => (),
+        });
+
+    color_map
+}
+
+fn replace_color(val: &ParsedValue, color_map: &ColorMap, threshold: usize) -> ParsedValue {
+    let get_color = |c: &Color| {
+        let hex = c.to_alphaless_hex();
+        let (name, v) = color_map.get(&hex).unwrap();
+        if v.len() >= threshold {
+            if c.has_alpha() {
+                ParsedValue::String(format!("${}..{}", name, c.get_alpha()))
+            } else {
+                ParsedValue::String(format!("${}", name))
+            }
+        } else {
+            ParsedValue::String(c.to_string())
+        }
+    };
+
+    match val {
+        ParsedValue::Color(ref col) => get_color(col),
+        ParsedValue::String(ref s) if let Ok(ref col) = s.parse::<Color>() => get_color(col),
+        ParsedValue::Value(ref v) => match v {
+            Value::Array(a) => {
+                let mut new_array = Vec::new();
+                for val in a {
+                    let replaced =
+                        replace_color(&ParsedValue::Value(val.clone()), color_map, threshold);
+                    match replaced {
+                        ParsedValue::String(s) => new_array.push(Value::String(s)),
+                        ParsedValue::Value(v) => new_array.push(v),
+                        ParsedValue::Null => new_array.push(Value::Null),
+                        ParsedValue::Color(_) => unreachable!(),
+                        ParsedValue::Variables(_) => unreachable!(),
+                    }
+                }
+                ParsedValue::Value(Value::Array(new_array))
+            }
+            Value::Object(o) => {
+                let mut new_obj = Map::new();
+                for (key, val) in o.iter() {
+                    let replaced =
+                        replace_color(&ParsedValue::Value(val.clone()), color_map, threshold);
+                    match replaced {
+                        ParsedValue::String(s) => new_obj.insert(key.to_owned(), Value::String(s)),
+                        ParsedValue::Value(v) => new_obj.insert(key.to_owned(), v),
+                        ParsedValue::Null => new_obj.insert(key.to_owned(), Value::Null),
+                        ParsedValue::Color(c) => unreachable!(),
+                        ParsedValue::Variables(_) => unreachable!(),
+                    };
+                }
+                ParsedValue::Value(Value::Object(new_obj))
+            }
+            Value::String(s) => {
+                replace_color(&ParsedValue::String(s.to_owned()), color_map, threshold)
+            }
+            _ => val.clone(),
+        },
+        _ => val.clone(),
+    }
+}
+
+/// Order:
+/// 1. Top Level Variables
+/// 2. Color Variables
+/// 3. Grouped Variables
+/// 4. Overrides
+/// 5. Deletions
+fn generate_toml_string(
+    variables: Value,
+    overrides: &VariableSet,
+    deletions: &Set<JsonPath>,
+) -> Result<String, Error> {
+    macro_rules! t {
+        ($var_name:ident=$from:expr) => {
+            let $var_name: toml::Value = {
+                match $from {
+                    Value::Null => toml::Value::String(String::from(TOML_NULL)),
+                    a => serde_json::from_value(a).map_err(|json_err| {
+                        Error::Processing(format!("Invalid theme json: {}", json_err))
+                    })?,
+                }
+            };
+        };
+    }
+
+    // let grouped_toml: toml::Value = serde_json::from_value(grouped_json.clone())
+    //     .map_err(|json_err| Error::Processing(format!("Invalid theme json: {}", json_err)))?;
+    t!(grouped_toml = variables);
+
+    let data = grouped_toml.as_table().unwrap();
+    let mut doc = String::new();
+    macro_rules! w {
+        ($($args:expr),+) => {
+            prelude::w!(doc, $($args),+)
+        };
+    }
+
+    w!("# Reverse Generation Tool Version 3.0");
+    for (k, v) in data
+        .iter()
+        .filter(|(_, v)| matches!(v, toml::Value::String(_)))
+    {
+        w!("{} = {}", k, v);
+    }
+
+    // d!(data);
+
+    w!("\n# Theme Colors");
+    w!("[color]");
+    for (k, v) in data.iter().filter(|(k, _)| *k == "color") {
+        for (color, value) in v.as_table().unwrap().iter() {
+            w!("{} = {}", color, value);
+        }
+    }
+
+    for (k, v) in data.iter().filter(|(k, _)| *k != "color") {
+        if v.is_table() {
+            w!("\n[{}]", k);
+            for (k, v) in v.as_table().unwrap().iter() {
+                match v {
+                    toml::Value::Array(a) => {
+                        w!("{} = [", k);
+                        for (i, v) in a.iter().enumerate() {
+                            if i == a.len() - 1 {
+                                w!("\t{}", v);
+                            } else {
+                                w!("\t{},", v);
+                            }
+                        }
+                        w!("]");
+                    }
+                    _ => w!("{} = {}", k, v),
+                }
+            }
+        }
+    }
+
+    w!("\n# Overrides");
+    w!("[overrides]");
+    // d!(&overrides);
+    for (_, v) in overrides.to_map().into_iter() {
+        // d!(&k, &v);
+        t!(val = v.value.into_value());
+        w!(r#""{}" = {}"#, v.path.join(), val);
+    }
+
+    w!("\n# Deletions");
+    w!("[deletions]");
+    w!("keys = [");
+    for (i, d) in deletions.iter().enumerate() {
+        if i == deletions.len() - 1 {
+            w!("\t\"{}\"", d);
+        } else {
+            w!("\t\"{}\",", d);
+        }
+    }
+    w!("]");
+
+    Ok(doc)
+}
+
+// Var paths:
+// - background.bars.bottombar = #ECEFF4
+// ==
+// [background.bars] //Group
+// bottombar = #ECEFF4
 pub fn reverse(
     template: ValidatedFile,
     theme: ValidatedFile,
@@ -1294,8 +1545,10 @@ pub fn reverse(
     //     "Template:\n{:?}\n\nTheme:\n{:?}\n\nFlags:\n{:?}",
     //     template,
     //     theme,
-    //     ReverseFlags::parse(flags)?
+    //     ReverseFlags::parse(&flags)?
     // );
+
+    let flags = ReverseFlags::parse(flags);
 
     // Step 1: Deserialize the template and theme files into Objects.
     let theme: Value = serde_json::from_reader(&theme.file)
@@ -1323,12 +1576,80 @@ pub fn reverse(
         .map(|key| key.parse::<JsonPath>().unwrap())
         .collect();
 
+    // Step 3: Resolve Variables and Overrides
     let (variables, overrides) = resolve_variables(&var_diff, overrides);
+    drop(var_diff);
 
-    p!("Variables:\n{}", display_vars(&variables, false));
-    p!("Overrides:\n{}", display_vars(&overrides, true));
-    p!("Deletions:\n{}", display_path(&deletions));
+    // Step 4: Build Color Redundancy Map & Replace Colors
+    let mut color_map = to_color_map(&variables, &overrides);
+    // d!(&color_map);
 
+    // Step 5: Replace Colors In variables and overrides limited by threshold
+    for (var_name, mut var) in variables.to_map().into_iter() {
+        let val = replace_color(&var.value, &color_map, flags.threshold);
+        // d!(&var_name, &val);
+        var.value = val;
+        variables.insert(&var_name, var.clone());
+    }
+
+    for (var_name, mut var) in overrides.to_map().into_iter() {
+        let val = replace_color(&var.value, &color_map, flags.threshold);
+        var.value = val;
+        overrides.insert(&var_name, var.clone());
+    }
+
+    // Step 6: Add Colors to VariablesSet
+    for (value, (color, v)) in color_map.iter() {
+        if v.len() < flags.threshold {
+            continue;
+        }
+        let first = v.first().unwrap();
+        let var = ResolvedVariable::init(color, ParsedValue::String(value.to_owned()));
+        variables.inc_insert(color, var);
+    }
+    drop(color_map);
+
+    // Step 7: Create Groupings
+    // e.g varname "a.b.c" = 1, "a.b.d" = 2 should be [a.b] = {c = 1, d = 2}
+    // if group only has one key, then it should be merged with the parent group
+    // e.g varname "a.b.c" = 1 should be "a.b.c" = 1
+    let mut grouped_json = json!({});
+    for (var_name, var) in variables.to_map().into_iter() {
+        let split = var_name.rsplit_once('.');
+        let path = if let Some((group, key)) = split {
+            format!("{}/{}", group, key)
+        } else {
+            var_name.clone()
+        }
+        .parse::<JsonPath>()
+        .unwrap();
+
+        if let ParsedValue::Null = var.value {
+            continue;
+        }
+
+        path.pave(&mut grouped_json, var.value.into_value());
+    }
+
+    // d!(&grouped_toml);
+
+    // Step 8: Build the Toml Output
+    let toml_output = generate_toml_string(grouped_json, &overrides, &deletions)?;
+    let file_name = format!("{}.toml", flags.name);
+    let out_dir = flags.output_directory;
+
+    let mut out_file = out_dir.clone();
+    out_file.push(file_name);
+
+    let mut file = File::create(out_file)
+        .map_err(|e| Error::Processing(format!("Could not create file: {}", e)))?;
+    file.write_all(toml_output.as_bytes());
+
+    // p!("{}", &doc.to_string());
+
+    // p!("Variables:\n{}", display_vars(&variables, false));
+    // p!("Overrides:\n{}", display_vars(&overrides, true));
+    // p!("Deletions:\n{}", display_path(&deletions));
     // deletion_diff.resolve_variables();
 
     todo!("REVERSE")

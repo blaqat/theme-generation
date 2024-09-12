@@ -2,6 +2,8 @@
 pub use crate::*;
 pub use anyhow;
 pub use either::Either;
+pub use std::fmt::Write as _;
+pub use std::io::Write as _;
 pub use std::{
     collections::{HashMap, HashSet as Set},
     dbg as d,
@@ -32,5 +34,12 @@ macro_rules! dp {
     ( $($args:expr),+) => {
         d!($(format!("{}", $args)),+)
         // d!(format!($({})+, $($args),+))
+    };
+}
+
+#[macro_export]
+macro_rules! w {
+    ( $w:expr, $($args:expr),+) => {
+        writeln!(&mut $w, $($args),+).unwrap()
     };
 }

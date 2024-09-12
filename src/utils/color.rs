@@ -1,3 +1,4 @@
+use color_name::Color as ColorName;
 use palette::{Hsv, IntoColor, Srgb};
 use std::fmt;
 use std::hash::Hash;
@@ -309,7 +310,7 @@ impl Color {
             && matches!(hex.len(), 4 | 5 | 7 | 9)
     }
 
-    fn to_full_hex(hex: &str) -> String {
+    fn norm_hex(hex: &str) -> String {
         let hex = hex.to_uppercase();
         if hex.len() == 4 || hex.len() == 5 {
             let mut new_hex = String::with_capacity(9);
@@ -324,12 +325,33 @@ impl Color {
         }
     }
 
+    pub fn get_alpha(&self) -> String {
+        let alpha = (self.alpha as f32) * 2.55;
+        format!("{:02X}", alpha.ceil() as u8)
+    }
+
+    pub fn has_alpha(&self) -> bool {
+        self.alpha != 100
+    }
+
+    pub fn to_alphaless_hex(&self) -> String {
+        match self.has_alpha() {
+            true => format!("#{:02X}{:02X}{:02X}", self.red, self.green, self.blue),
+            false => Self::norm_hex(&self.hex),
+        }
+    }
+
+    pub fn get_name(&self) -> String {
+        let rgb: [u8; 3] = [self.red as u8, self.green as u8, self.blue as u8];
+        "color.".to_owned() + &ColorName::similar(rgb).to_lowercase()
+    }
+
     pub fn from_hex(hex: &str) -> Result<Self, ColorError> {
         if !Self::is_valid_hex(hex) {
             return Err(ColorError::Hex(hex.to_owned()));
         }
 
-        let hex = Self::to_full_hex(hex);
+        let hex = Self::norm_hex(hex);
 
         let red =
             i16::from_str_radix(&hex[1..3], 16).map_err(|_| ColorError::Hex(hex.to_owned()))?;
