@@ -58,7 +58,7 @@ impl ValidatedFile {
 }
 
 #[derive(Debug, PartialEq, Eq, Hash)]
-enum ValidCommands {
+pub enum ValidCommands {
     Check,
     Generate,
     Reverse,
@@ -66,7 +66,7 @@ enum ValidCommands {
 }
 
 #[derive(Debug, PartialEq, Eq)]
-enum Error {
+pub enum Error {
     NoCommand,
     InvalidCommand,
     NotEnoughArguments(ValidCommands),
