@@ -38,7 +38,7 @@ impl ValidatedFile {
 
         let file_type = match format.as_str() {
             "json" => FileType::Theme,
-            "yaml" => FileType::Variable,
+            "toml" => FileType::Variable,
             "template" => FileType::Template,
             _ => return Err(Error::InvalidIOFormat(format)),
         };
@@ -184,7 +184,20 @@ fn run(args: Vec<String>) -> Result<(), Error> {
                 _ => Err(Error::InvalidFileType),
             }
         }
-        ValidCommands::Generate => todo!(),
+        ValidCommands::Generate => {
+            let template_file = ValidatedFile::from_str(&command_args[0])?;
+            let variable_file = ValidatedFile::from_str(&command_args[1])?;
+
+            match (&template_file.file_type, &variable_file.file_type) {
+                (FileType::Template, FileType::Variable) => {
+                    commands::generate(template_file, variable_file, flags)
+                }
+                (FileType::Variable, FileType::Template) => {
+                    commands::generate(variable_file, template_file, flags)
+                }
+                _ => Err(Error::InvalidFileType),
+            }
+        }
     }
 }
 

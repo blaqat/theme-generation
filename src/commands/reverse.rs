@@ -26,6 +26,8 @@ const TOML_NULL: &str = "$none";
 //         -o directory	Set output directory of variable file
 
 pub mod json {
+    use std::ops::Deref;
+
     use super::*;
 
     #[derive(Debug, PartialEq, Clone, PartialOrd, Eq, Hash)]
@@ -119,6 +121,39 @@ pub mod json {
         fn set(&self, json: &mut Value, val: Value) -> Result<(), Error> {
             if let Some(value) = json.pointer_mut(&format!("{}", self)) {
                 *value = val;
+                Ok(())
+            } else {
+                ahh!("Invalid path: {}", self.to_string())
+            }
+        }
+
+        pub fn remove(&self, json: &mut Value) -> Result<(), Error> {
+            let (last, rest) = self.0.split_last().unwrap();
+            let val_at_last = self.traverse(json)?;
+            let path = JsonPath::from_vec(rest.to_vec());
+
+            if let Some(value) = json.pointer_mut(&format!("{}", path)) {
+                match value {
+                    Value::Array(a) => {
+                        if let JsonKey::Index(idx) = last {
+                            a.remove(*idx);
+                        } else {
+                            return ahh!("Invalid path: {}", self.to_string());
+                        }
+                    }
+                    Value::Object(o) => match last {
+                        JsonKey::Index(idx) => {
+                            o.remove(&idx.to_string());
+                        }
+                        JsonKey::Key(k) => {
+                            // d!(&k);
+                            o.remove(k);
+                            // d!(&o.get(k));
+                        }
+                        _ => return ahh!("Invalid path: {}", self.to_string()),
+                    },
+                    _ => unreachable!(),
+                }
                 Ok(())
             } else {
                 ahh!("Invalid path: {}", self.to_string())
@@ -462,10 +497,9 @@ pub mod variable {
             match s.split_once("..") {
                 Some((name, operations)) => {
                     let mut chars = operations.chars();
-                    let operations: ColorOperations = match chars
-                        .next()
-                        .ok_or_else(|| Error::Processing(format!("Resolving Variable: {}", s)))?
-                    {
+                    let operations: ColorOperations = match chars.next().ok_or_else(|| {
+                        Error::Processing(format!("Resolving Next Variable: {}", s))
+                    })? {
                         // name..(component op val, component op val, ...)
                         '(' if operations.ends_with(")") => operations[1..operations.len() - 1]
                             .split(",")
@@ -473,20 +507,23 @@ pub mod variable {
                             .collect(),
 
                         // name..comp op val
-                        comp if comp.is_alphabetic() => vec![operations.parse().map_err(|e| {
-                            Error::Processing(format!("Resolving Variable: {:?}", e))
-                        })?],
+                        comp if comp.is_alphabetic()
+                            && let Ok(parsed) = operations.parse() =>
+                        {
+                            vec![parsed]
+                        }
 
                         // name..val (short hand for alpha = val)
-                        val if val.is_ascii_digit() => {
+                        val if val.is_ascii_hexdigit() => {
+                            // d!(&val);
                             vec![format!("a.{}", operations).parse().map_err(|e| {
-                                Error::Processing(format!("Resolving Variable: {:?}", e))
+                                Error::Processing(format!("Resolving Hex Variable: {:?}", e))
                             })?]
                         }
 
                         // name..op val (short hand for alpha op val)
                         _ => vec![format!("a{}", operations).parse().map_err(|e| {
-                            Error::Processing(format!("Resolving Variable: {:?}", e))
+                            Error::Processing(format!("Resolving Alpha Variable: {:?}", e))
                         })?],
                     };
 

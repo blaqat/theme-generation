@@ -2,6 +2,8 @@
 name = "Polar"
 primary = "$color.mediumaquamarine"
 theme = "dark"
+rec = "$rec2..h+50"
+rec2 = "@gray..-10"
 
 # Theme Colors
 [color]
