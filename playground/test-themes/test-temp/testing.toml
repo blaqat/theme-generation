@@ -5,6 +5,9 @@ light_apple = "#FF8080"
 named_angels = "named"
 pear = "@red"
 transparent = "@red..00"
+a = 1
+b = 2
+c = 3
 
 # Theme Colors
 [color]

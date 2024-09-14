@@ -4,6 +4,7 @@
 		"gabriel": true,
 		"named": "$named_angels"
 	},
+	"double-test": "$a|$b|$c",
 	"banana-test": "$banana",
 	"apple": "wf",
 	"darker_apple": "$apple..50",

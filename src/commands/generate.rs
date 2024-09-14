@@ -213,42 +213,41 @@ mod steps {
 
     // }
 
+    fn handle_value(parsed: ParsedValue, variables: &Value) -> Value {
+        match parsed {
+            ParsedValue::Variables(ref var)
+                if let Ok(parsed_var) = var.first().unwrap().parse::<ParsedVariable>()
+                    && let Ok(path) = parsed_var.name.replace(".", "/").parse::<JsonPath>() =>
+            {
+                let ops = parsed_var.operations;
+                let val = path.traverse(variables).unwrap_or(&Value::Null).clone();
+                match val {
+                    Value::String(ref v)
+                        if !ops.is_empty()
+                            && let Ok(parsed) = v.parse::<ParsedValue>()
+                            && let ParsedValue::Color(mut color) = parsed =>
+                    {
+                        color.update(ops);
+                        Value::String(color.to_string())
+                    }
+                    Value::Null if var.len() > 1 => {
+                        handle_value(ParsedValue::Variables(var[1..].to_vec()), variables)
+                    }
+                    _ => val,
+                }
+            }
+            v => v.into_value(),
+        }
+    }
+
     pub fn match_variables(template: &Value, variables: &Value) -> Value {
         let mut new_data = template.clone();
-
-        macro_rules! handle_val {
-            ($parsed: expr) => {
-                match $parsed {
-                    ParsedValue::Variables(ref var)
-                        if let Ok(parsed_var) = var.first().unwrap().parse::<ParsedVariable>()
-                            && let Ok(path) =
-                                parsed_var.name.replace(".", "/").parse::<JsonPath>() =>
-                    {
-                        let ops = parsed_var.operations;
-                        let val = path.traverse(variables).unwrap_or(&Value::Null).clone();
-                        match val {
-                            Value::String(ref v)
-                                if !ops.is_empty()
-                                    && let Ok(parsed) = v.parse::<ParsedValue>()
-                                    && let ParsedValue::Color(mut color) = parsed =>
-                            {
-                                color.update(ops);
-                                Value::String(color.to_string())
-                            }
-                            _ => val,
-                        }
-                    }
-                    v => v.into_value(),
-                }
-            };
-        }
 
         for (key, value) in template.as_object().unwrap().iter() {
             match value {
                 Value::String(str) if let Ok(parsed) = str.parse::<ParsedValue>() => {
-                    new_data[key] = handle_val!(parsed)
+                    new_data[key] = handle_value(parsed, variables)
                 }
-
                 serde_json::Value::Array(a) => {
                     let mut new_arr = Vec::with_capacity(a.len());
                     for (i, value) in a.iter().enumerate() {
@@ -257,7 +256,7 @@ mod steps {
                         } else if let Value::String(v) = value
                             && let Ok(parsed) = v.parse::<ParsedValue>()
                         {
-                            new_arr.push(handle_val!(parsed));
+                            new_arr.push(handle_value(parsed, variables));
                         } else {
                             new_arr.push(value.clone());
                         }
