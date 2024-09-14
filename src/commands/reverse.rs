@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use core::fmt::{self, Display};
-use std::{cell::RefCell, cmp::Ordering, path::PathBuf, ptr::replace};
+use itertools::Itertools;
+use std::{cell::RefCell, cmp::Ordering, path::PathBuf};
 // use json_patch;
 use json::*;
 use serde_json::{json, Map, Value};
@@ -1178,7 +1179,7 @@ mod steps {
                                 .find(|(_, v)| v.contains(&(s.clone(), *u)))
                                 .unwrap()
                                 .0;
-                            var_set.insert(&next.name, new);
+                            unvar_set.insert(&next.name, new);
                             inserted = true;
                         }
                         Some(_) => current = new.clone(),
@@ -1460,9 +1461,10 @@ mod steps {
         }
 
         w!("# Reverse Generation Tool Version 3.0");
+        d!(data);
         for (k, v) in data
             .iter()
-            .filter(|(_, v)| matches!(v, toml::Value::String(_)))
+            .filter(|(_, v)| !matches!(v, toml::Value::Table(_)))
         {
             w!("{} = {}", k, v);
         }
@@ -1472,7 +1474,12 @@ mod steps {
         w!("\n# Theme Colors");
         w!("[color]");
         for (k, v) in data.iter().filter(|(k, _)| *k == "color") {
-            for (color, value) in v.as_table().unwrap().iter() {
+            for (color, value) in v
+                .as_table()
+                .unwrap()
+                .iter()
+                .sorted_by(|(a, _), (b, _)| a.cmp(b))
+            {
                 w!("{} = {}", color, value);
             }
         }
@@ -1502,7 +1509,11 @@ mod steps {
         w!("\n# Overrides");
         w!("[overrides]");
         // d!(&overrides);
-        for (_, v) in overrides.to_map().into_iter() {
+        for (_, v) in overrides
+            .to_map()
+            .into_iter()
+            .sorted_by_key(|(k, _)| k.clone())
+        {
             // d!(&k, &v);
             t!(val = v.value.into_value());
             w!(r#""{}" = {}"#, v.path.join(), val);
@@ -1511,7 +1522,11 @@ mod steps {
         w!("\n# Deletions");
         w!("[deletions]");
         w!("keys = [");
-        for (i, d) in deletions.iter().enumerate() {
+        for (i, d) in deletions
+            .iter()
+            .sorted_by(|(a), (b)| a.to_string().cmp(&b.to_string()))
+            .enumerate()
+        {
             if i == deletions.len() - 1 {
                 w!("\t\"{}\"", d);
             } else {
@@ -1766,7 +1781,6 @@ pub fn reverse(
         (Value::Array(theme), Value::Array(template)) => {
             let template = template.first().unwrap();
             for (i, theme) in theme.iter().enumerate() {
-                // d!(i);
                 if !same_type(theme, template) {
                     return Err(Error::Processing(format!(
                         "Array index {} types do not match.",
