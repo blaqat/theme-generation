@@ -25,12 +25,14 @@ pub enum GenerateFlags {
     InputDirectory(PathBuf),
     InnerPath(JsonPath),
     Name(String),
+    ReplaceName,
 }
 
 #[derive(PartialEq, Debug)]
 pub struct Flags {
     verbose: bool,
     check: bool,
+    replace_name: bool,
     output_directory: PathBuf, // Default to current directory
     input_directory: PathBuf,  // Default to current directory
     name: String,
@@ -56,6 +58,7 @@ impl GenerateFlags {
         let mut input_directory = PathBuf::from(".");
         let mut name = String::from("generated-theme");
         let mut path = None;
+        let mut replace_name = false;
 
         for flag in flags {
             match flag {
@@ -65,6 +68,7 @@ impl GenerateFlags {
                 Self::InputDirectory(path) => input_directory = path,
                 Self::Name(n) => name = n,
                 Self::InnerPath(p) => path = Some(p),
+                Self::ReplaceName => replace_name = true,
             }
         }
 
@@ -75,6 +79,7 @@ impl GenerateFlags {
             input_directory,
             name,
             path,
+            replace_name,
         }
     }
 }
@@ -96,6 +101,7 @@ impl FromStr for GenerateFlags {
         };
         match flag {
             "-v" => Ok(Self::Verbose),
+            "-r" => Ok(Self::ReplaceName),
             "-c" => Ok(Self::Check),
             flag if flag.starts_with("-n") => {
                 let name = flag.split("=").last().unwrap();
@@ -210,26 +216,37 @@ mod steps {
     pub fn match_variables(template: &Value, variables: &Value) -> Value {
         let mut new_data = template.clone();
 
-        d!(&template);
-        for (key, value) in template.as_object().unwrap().iter() {
-            match value {
-                Value::String(str) if let Ok(parsed) = str.parse::<ParsedValue>() => match parsed {
+        macro_rules! handle_val {
+            ($parsed: expr) => {
+                match $parsed {
                     ParsedValue::Variables(ref var)
                         if let Ok(parsed_var) = var.first().unwrap().parse::<ParsedVariable>()
                             && let Ok(path) =
                                 parsed_var.name.replace(".", "/").parse::<JsonPath>() =>
                     {
-                        new_data[key] = path.traverse(variables).unwrap_or(&Value::Null).clone();
+                        path.traverse(variables).unwrap_or(&Value::Null).clone()
                         // d!(&new_data[key]);
                     }
-                    v => new_data[key] = v.into_value(),
-                },
+                    v => v.into_value(),
+                }
+            };
+        }
+
+        for (key, value) in template.as_object().unwrap().iter() {
+            match value {
+                Value::String(str) if let Ok(parsed) = str.parse::<ParsedValue>() => {
+                    new_data[key] = handle_val!(parsed);
+                }
 
                 serde_json::Value::Array(a) => {
                     let mut new_arr = Vec::with_capacity(a.len());
                     for (i, value) in a.iter().enumerate() {
                         if let Value::Object(v) = value {
                             new_arr.push(match_variables(value, variables));
+                        } else if let Value::String(v) = value
+                            && let Ok(parsed) = v.parse::<ParsedValue>()
+                        {
+                            new_arr.push(handle_val!(parsed));
                         } else {
                             new_arr.push(value.clone());
                         }
@@ -397,7 +414,7 @@ pub fn generate(
                 data[i] = matches;
             }
         } else {
-            write_to_file(&matches, true);
+            write_to_file(&matches, !flags.replace_name);
         }
     }
 
