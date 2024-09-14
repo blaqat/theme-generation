@@ -144,6 +144,7 @@ mod steps {
         _source: &Value,
         _operations: &Vec<Vec<ColorChange>>,
     ) -> Value {
+        // d!(_source);
         let mut resolved: Value = json!({});
         match resolving {
             Value::Object(obj) => {
@@ -161,7 +162,6 @@ mod steps {
             }
 
             Value::String(str) if let Ok(parsed) = str.parse::<ParsedValue>() => {
-                // d!(&parsed);
                 match parsed {
                     ParsedValue::Variables(ref var)
                         if let Ok(parsed_var) = var.first().unwrap().parse::<ParsedVariable>() =>
@@ -224,8 +224,19 @@ mod steps {
                             && let Ok(path) =
                                 parsed_var.name.replace(".", "/").parse::<JsonPath>() =>
                     {
-                        path.traverse(variables).unwrap_or(&Value::Null).clone()
-                        // d!(&new_data[key]);
+                        let ops = parsed_var.operations;
+                        let val = path.traverse(variables).unwrap_or(&Value::Null).clone();
+                        match val {
+                            Value::String(ref v)
+                                if !ops.is_empty()
+                                    && let Ok(parsed) = v.parse::<ParsedValue>()
+                                    && let ParsedValue::Color(mut color) = parsed =>
+                            {
+                                color.update(ops);
+                                Value::String(color.to_string())
+                            }
+                            _ => val,
+                        }
                     }
                     v => v.into_value(),
                 }
@@ -235,7 +246,7 @@ mod steps {
         for (key, value) in template.as_object().unwrap().iter() {
             match value {
                 Value::String(str) if let Ok(parsed) = str.parse::<ParsedValue>() => {
-                    new_data[key] = handle_val!(parsed);
+                    new_data[key] = handle_val!(parsed)
                 }
 
                 serde_json::Value::Array(a) => {
@@ -282,7 +293,6 @@ pub fn generate(
      -> Result<serde_json::Value, Error> {
         // Step 2: Resolve recursive variables
         let variables = steps::resolve_variables(&variables, &variables, &vec![]);
-        // d!(&variables);
 
         // Step 4: Apply Deletions
         if let Some(del_obj) = variables.get("deletions")
