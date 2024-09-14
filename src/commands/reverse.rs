@@ -417,6 +417,11 @@ pub mod variable {
                 Ok(Self::Variables(vars))
             } else if let Ok(color) = s.parse() {
                 Ok(Self::Color(color))
+            } else if let Ok(potential_color) = s.parse::<ParsedVariable>()
+                && let Ok(color) =
+                    Color::from_change(&potential_color.name, &potential_color.operations)
+            {
+                Ok(Self::Color(color))
             } else {
                 Ok(Self::String(s.to_string()))
             }
@@ -1362,9 +1367,11 @@ mod steps {
             let (name, v) = color_map.get(&hex).unwrap();
             if v.len() >= threshold {
                 if c.has_alpha() {
-                    ParsedValue::String(format!("${}..{}", name, c.get_alpha()))
+                    ParsedValue::String(
+                        format!("${}..{}", name, c.get_alpha()).replace("$color.", "@"),
+                    )
                 } else {
-                    ParsedValue::String(format!("${}", name))
+                    ParsedValue::String(format!("${}", name).replace("$color.", "@"))
                 }
             } else {
                 ParsedValue::String(c.to_string())
@@ -1759,7 +1766,7 @@ pub fn reverse(
         (Value::Array(theme), Value::Array(template)) => {
             let template = template.first().unwrap();
             for (i, theme) in theme.iter().enumerate() {
-                d!(i);
+                // d!(i);
                 if !same_type(theme, template) {
                     return Err(Error::Processing(format!(
                         "Array index {} types do not match.",

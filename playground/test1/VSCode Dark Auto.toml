@@ -7,25 +7,25 @@ theme = "dark"
 black = "#1E1E1E"
 cornflowerblue = "#569CD6"
 darkgray = "#A0A0A0"
-darkslategray = "#3E3E3E"
-darkslategray3 = "#252526"
-darkslategray4 = "#2D2D2D"
+darkslategray = "#2D2D2D"
+darkslategray4 = "#3E3E3E"
+darkslategray5 = "#252526"
 lightgray = "#D4D4D4"
 lightskyblue = "#9CDCFE"
 mediumaquamarine = "#4EC9B0"
 
 [background]
 bottombar = "#333"
-panel = "$color.darkslategray3"
-primary = "$color.black"
-secondary = "$color.darkslategray3"
-tabbar = "$color.darkslategray3"
-terminal = "$color.black"
-toolbar = "$color.darkslategray4"
+panel = "@darkslategray5"
+primary = "@black.."
+secondary = "@darkslategray5"
+tabbar = "@darkslategray5"
+terminal = "@black"
+toolbar = "@darkslategray"
 topbar = "#333"
 
 [border]
-primary = "$color.darkslategray"
+primary = "@darkslategray4"
 secondary = "#2A2A2A"
 
 [button]
@@ -35,72 +35,73 @@ selected = "#4A4A4A"
 
 [cursor]
 background = "#4E4E4E40"
-hover = "$color.darkslategray"
-line = "$color.darkslategray4"
+hover = "@darkslategray4"
+line = "@darkslategray"
 match = "#4A4A4A"
 primary = "#FFF"
 search = "#515C6A"
 spaces = "#303030"
 
 [element]
-active = "$color.darkslategray"
-disabled = "$color.darkslategray4"
+active = "@darkslategray4"
+disabled = "@darkslategray"
 hover = "#2A2A2A"
 selected = "#37373D"
 
 [foreground]
-ignored = "$color.darkgray"
-inactive = "$color.darkgray"
+ignored = "@darkgray"
+inactive = "@darkgray"
 line = "#5A5A5A"
 placeholder = "#808080"
-primary = "$color.lightgray"
-secondary = "$color.darkgray"
+primary = "@lightgray"
+secondary = "@darkgray"
 
 [scheme]
-black = "$color.black"
-black2 = "$color.darkslategray3"
-blue = "$color.cornflowerblue"
+black = "@black"
+black2 = "@darkslategray5"
+blue = "@cornflowerblue"
 blue2 = "#64B5F6"
-cyan = "$color.mediumaquamarine"
+cyan = "@mediumaquamarine"
 cyan2 = "#4DD0E1"
 green = "#6A9955"
 green2 = "#8BC34A"
-primary = "$color.cornflowerblue"
+primary = "@cornflowerblue"
 purple = "#C586C0"
 purple2 = "#E57373"
 red = "#F44747"
 red2 = "#FF6B6B"
-white = "$color.lightgray"
+white = "@lightgray"
 white2 = "#FFF"
 yellow = "#D7BA7D"
 yellow2 = "#FFC107"
 
 [scrollbar]
 primary = "#424242"
-secondary = "$color.darkslategray"
+secondary = "@darkslategray4"
 
 [syntax.attribute]
-color = "$color.lightskyblue"
+color = "@lightskyblue"
 style = "normal"
 weight = 400
 
 [syntax.boolean]
-color = "$color.cornflowerblue"
+color = "@cornflowerblue"
 style = "normal"
 weight = 400
 
+# apple
 [syntax.comment]
 color = "#6A9955"
 style = "italic"
 weight = 400
 
 [syntax.constant]
-color = "$color.mediumaquamarine"
+color = "@mediumaquamarine"
 style = "normal"
 weight = 400
 
 [syntax.constructor]
-color = "$color.mediumaquamarine"
+color = "@mediumaquamarine"
 style = "normal"
 weight = 700
 
@@ -115,52 +116,52 @@ style = "normal"
 weight = 700
 
 [syntax.member]
-color = "$color.lightskyblue"
+color = "@lightskyblue"
 style = "normal"
 weight = 400
 
 [syntax.number]
-color = "#B5CEA8"
+color = "#B5CEA8..s=100"
 style = "normal"
 weight = 400
 
 [syntax.operator]
-color = "$color.lightgray"
+color = "@lightgray"
 style = "normal"
 weight = 400
 
 [syntax.parameter]
-color = "$color.lightskyblue"
+color = "@lightskyblue"
 style = "normal"
 weight = 400
 
 [syntax.property]
-color = "$color.lightskyblue"
+color = "@lightskyblue"
 style = "normal"
 weight = 400
 
 [syntax.punctuation.bracket]
-color = "$color.lightgray"
+color = "@lightgray"
 style = "normal"
 weight = 400
 
 [syntax.punctuation.delimiter]
-color = "$color.lightgray"
+color = "@lightgray"
 style = "normal"
 weight = 400
 
 [syntax.punctuation.list]
-color = "$color.lightgray"
+color = "@lightgray"
 style = "normal"
 weight = 400
 
 [syntax.punctuation.primary]
-color = "$color.lightgray"
+color = "@lightgray"
 style = "normal"
 weight = 400
 
 [syntax.punctuation.special]
-color = "$color.lightgray"
+color = "@lightgray"
 style = "normal"
 weight = 400
 
@@ -170,28 +171,28 @@ style = "normal"
 weight = 400
 
 [syntax.string]
-color = "@lightskyblue..h+000"
+color = "@lightskyblue..(h-170, s+20)"
 style = "normal"
-weight = 800
+weight = 900
 
 [syntax.tag]
-color = "$color.cornflowerblue"
+color = "@cornflowerblue"
 style = "normal"
 weight = 700
 
 [syntax.type]
-color = "$color.mediumaquamarine"
+color = "@mediumaquamarine"
 style = "normal"
 weight = 700
 
 [syntax.var]
-color = "$color.lightskyblue"
+color = "@lightskyblue"
 style = "normal"
 weight = 400
 
 [tabs]
-active = "$color.black"
-inactive = "$color.darkslategray4"
+active = "@black"
+inactive = "@darkslategray"
 
 # Overrides
 [overrides]
@@ -199,6 +200,6 @@ inactive = "$color.darkslategray4"
 # Deletions
 [deletions]
 keys = [
-	"/style/syntax/function.method",
-	"/style/syntax/function.definition"
+	"/style/syntax/function.definition",
+	"/style/syntax/function.method"
 ]

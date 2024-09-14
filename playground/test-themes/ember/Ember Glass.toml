@@ -1,0 +1,309 @@
+# Reverse Generation Tool Version 3.0
+name = "Ember Dark"
+theme = "dark"
+
+# Theme Colors
+[color]
+black2 = "#f5e4d1..s=10"
+black = "#f5e4d1..(a.c0, s=40)"
+darkslategray = "#515151"
+darkslategray2 = "#dcbe85..(v+50, s=40, h-20)"
+darkslategray3 = "#114D77"
+deeppink = "#EC076F..(v+20, s-10)"
+dodgerblue = "#007EE4..(v+90, s=70, h-5)"
+gainsboro2 = "#DCDDDE"
+ghostwhite = "#141320"
+gold = "#FFCC00..(v+90, s=70, h-5)"
+green = "#007A01..(v+40, s=50, h-0)"
+lavender = "#141320"
+lavender2 = "#191926"
+mediumblue = "#022FB8..(v+90, s=70, h-5)"
+mediumturquoise = "#55B4D3"
+mediumvioletred = "#A71D5D..(v+90, s-33)"
+mediumvioletred2 = "#C8099D."
+slateblue = "#7441C1..(v+90, s-19)"
+
+[background]
+gutter = "$background.primary"
+panel = "@ghostwhite"
+primary = "#191926..(v+00, s+2, h+00)"
+secondary = "@ghostwhite"
+terminal = "@black..00"
+code = "#191926"
+
+[background.bars]
+bottombar = "#100F1A"
+scrollbar = "@lavender..00"
+scrollbar_thumb = "$cursor.line..90"
+toolbar = "#191926"
+topbar = "@ghostwhite"
+
+[background.bars.tabbar]
+active = "#191926"
+background = "@ghostwhite"
+inactive = "@ghostwhite"
+
+[border]
+primary = "@lavender..(s=50, v=12)"
+secondary = "@lavender"
+
+[button]
+primary = "@lavender2"
+
+[code.error]
+background = "$background.code"
+border = "$scheme.red"
+foreground = "$scheme.red"
+
+[code.info]
+background = "$background.code"
+border = "$scheme.blue"
+foreground = "#7359a4..h-20"
+
+[code.warning]
+background = "$background.code"
+foreground = "$scheme.yellow"
+border = "$scheme.yellow"
+
+[cursor]
+background = "@darkslategray2"
+line = "#202231..(h+9, s=35)"
+match = "@lavender..(v+20, a-10)"
+primary = "@black..F0"
+search = "#FFFF54..(s=50, a-90)"
+selection = "#302f46a0"
+spaces = "@green..05"
+
+[element]
+active = "@lavender2"
+hover = "@lavender2"
+selected = "#302f46"
+
+[foreground]
+hover = "#EDEEF0"
+secondary = "@black2"
+primary = "@black"
+hint = "#F00"
+
+[foreground.linenumber]
+active = "@black"
+inactive = "#AAA..40"
+
+[git.created]
+background = "#E9EFD2BD"
+border = "#D7E3AE"
+foreground = "#62A35C"
+
+[git.ignored]
+background = "@gainsboro2..7D"
+border = "#CFD1D2"
+foreground = "#828A99"
+
+[git.modified]
+foreground = "@mediumblue"
+
+[indent]
+active = "@black2..50"
+inactive = "@black2..1F"
+multi = [
+	"@mediumblue",
+	"@mediumvioletred2",
+	"@green",
+	"null",
+	"@deeppink",
+	"@gold",
+	"@slateblue",
+	"@darkslategray",
+	"@deeppink",
+	"@mediumblue",
+	"@mediumvioletred2",
+	"@green",
+	"null",
+	"@gold",
+]
+
+[players.2]
+background = "@darkslategray3..7D"
+cursor = "@darkslategray3"
+selection = "@mediumturquoise..3B"
+
+[scheme]
+black = "@black"
+black2 = "@black..50"
+black3 = "@black..50"
+blue = "@mediumblue"
+blue2 = "@mediumblue..50"
+blue3 = "#C4DAF6"
+cyan = "@slateblue"
+cyan2 = "@slateblue..50"
+cyan3 = "@slateblue"
+green = "@green"
+green2 = "@green..50"
+pink = "@mediumvioletred2"
+pink2 = "@mediumvioletred2..50"
+pink3 = "@mediumvioletred2"
+red = "@deeppink"
+red2 = "@deeppink..50"
+red3 = "@deeppink"
+white = "@darkslategray"
+white2 = "@darkslategray..50"
+white3 = "@darkslategray"
+yellow = "@gold"
+yellow2 = "@mediumblue"
+yellow3 = "@gold"
+
+[syntax.attribute]
+color = "@slateblue"
+
+[syntax.boolean]
+color = "@deeppink"
+weight = 700
+
+[syntax.comment]
+color = "#F94A30..(v+50, s=60, h-9, a-10)"
+weight = 700
+
+[syntax.constant]
+color = "@black"
+style = "italic"
+weight = 400
+
+[syntax.constructor]
+color = "@mediumvioletred"
+
+[syntax.emphasis]
+color = "@deeppink"
+
+[syntax.escape]
+color = "@green"
+
+[syntax.function]
+color = "#A900AB..(v+50, s=60, h-9)"
+
+[syntax.keyword]
+color = "@deeppink"
+weight = 700
+
+[syntax.method]
+color = "@slateblue"
+weight = 700
+
+[syntax.number]
+color = "@green"
+
+[syntax.operator]
+color = "@mediumvioletred"
+weight = 700
+
+[syntax.property]
+color = "@black"
+
+[syntax.punctuation]
+color = "#f5e4d1"
+
+[syntax.punctuation.bracket]
+color = "#dcbe85..h=180"
+
+[syntax.punctuation.delimiter]
+color = "#f5e4d1"
+
+[syntax.punctuation.special]
+color = "@black"
+
+[syntax.string]
+color = "@dodgerblue"
+weight = 400
+
+[syntax.string.regex]
+color = "@dodgerblue"
+
+[syntax.string.special]
+color = "#0086B3"
+
+[syntax.tag]
+color = "@mediumblue"
+weight = 700
+
+[syntax.text]
+color = "@dodgerblue"
+
+[syntax.type]
+color = "@mediumblue"
+weight = 500
+
+[syntax.variable]
+color = "@darkslategray2"
+
+[syntax.variable.special]
+color = "@darkslategray2"
+
+# # Overrides
+[overrides]
+# "style/players/3" = { background = "@darkslategray3..7D", cursor = "#ECB1543B", selection = "@mediumturquoise..3B" }
+# "style/terminal.ansi.bright_yellow" = "@gold..50"
+# "style/terminal.ansi.dim_green" = "@green"
+# "style/renamed" = "$none"
+# "style/success" = "#62A35C"
+# "style/hidden.background" = "@gainsboro2..7D"
+"style/scrollbar.track.border" = "@lavender"
+# "style/background" = "#FEFEFE"
+# "style/hint.background" = "#DEEBFA7D"
+# "style/editor.wrap_guide" = "$none"
+"style/syntax/comment.doc/color" = "$syntax.comment.color..h+225"
+"style/syntax/variable.special/color" = "$syntax.variable.color..(h+100, s-10, v-10)"
+# "style/syntax/variable.special/font_style" = "italic"
+# "style/syntax/variable.special/font_weight" = "100"
+# "style/syntax/variable.special/background_color" = "$syntax.variable.color..(h+120, a=02)"
+# "style/conflict.border" = "#FFE1BE"
+# "style/conflict" = "@gold"
+"style/syntax/comment/font_style" = "italic"
+# "style/hidden" = "#A9ACAE"
+# "style/border.focused" = "#BF8CBC"
+# "style/info" = "#3B9EE5"
+# "style/hidden.border" = "#D5D6D8"
+# "style/renamed.border" = "$none"
+# "style/modified.border" = "$none"
+# "style/conflict.background" = "#FFEEDABD"
+# "style/terminal.foreground" = "@black"
+# "style/players/2" = { background = "@darkslategray3..7D", cursor = "#C1408A3B", selection = "@mediumturquoise..3B" }
+"style/scrollbar.thumb.hover_background" = "$none"
+"style/syntax/comment.doc/font_weight" = "$none"
+# "style/players/4" = { background = "@darkslategray3..7D", cursor = "#00671C3B", selection = "@mediumturquoise..3B" }
+# "style/terminal.ansi.dim_blue" = "@mediumblue"
+# "style/players/5" = { background = "@darkslategray3..7D", cursor = "#EF72713B", selection = "@gainsboro2..3B" }
+# "style/success.background" = "$none"
+# "style/renamed.background" = "$none"
+# "style/elevated_surface.background" = "@lavender"
+
+# Deletions
+[deletions]
+keys = [
+	"/style/syntax/function.special",
+	"/style/syntax/lifetime",
+	"/style/syntax/predictive",
+	"/style/syntax/preproc",
+	"/style/syntax/primary",
+	"/style/syntax/punctuation.special.symbol",
+	"/style/syntax/hint",
+	"/style/scrollbar.thumb.background",
+	"/style/syntax/link_text",
+	"/style/syntax/string.doc",
+	"/style/syntax/type.super",
+	"/style/syntax/variable.member",
+	"/style/syntax/variable.parameter",
+	"/style/syntax/link_uri",
+	"/style/syntax/constant.character",
+	"/style/syntax/type.builtin",
+	"/style/syntax/function.special.definition",
+	"/style/syntax/embedded",
+	"/style/syntax/function.definition",
+	"/style/title_bar.inactive_background",
+	"/style/syntax/label",
+	"/style/syntax/variant",
+	"/style/syntax/type.interface",
+	"/style/syntax/enum",
+	"/style/syntax/property.json_key",
+	"/style/syntax/constant.builtin",
+	"/style/syntax/escape",
+	"/style/syntax/function.builtin",
+]

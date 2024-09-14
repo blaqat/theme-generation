@@ -338,6 +338,12 @@ impl Color {
         self.hex = other.hex.to_string();
     }
 
+    pub fn from_change(hex: &str, ops: &[ColorChange]) -> Result<Self, ColorError> {
+        let mut color = Self::from_hex(hex)?;
+        color.update(ops.to_vec())?;
+        Ok(color)
+    }
+
     fn is_valid_hex(hex: &str) -> bool {
         let hex = hex.to_uppercase();
         hex.starts_with("#")
@@ -532,6 +538,8 @@ impl Color {
 
 #[cfg(test)]
 mod tests {
+    use crate::commands::variable::{ParsedValue, ParsedVariable};
+
     use super::*;
 
     #[test]
@@ -612,6 +620,17 @@ mod tests {
         color.update(applied_changes);
 
         assert_eq!(color.hex, String::from("#FF191955"));
+    }
+
+    #[test]
+    fn color_opped() {
+        let hex = "#FF0000..(h=25)";
+        let parsed = hex.parse::<ParsedVariable>().unwrap();
+
+        let color = Color::from_change(&parsed.name, &parsed.operations);
+        dbg!(&color);
+
+        assert!(false);
     }
 
     #[test]
