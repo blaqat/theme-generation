@@ -630,7 +630,7 @@ mod tests {
         let color = Color::from_change(&parsed.name, &parsed.operations);
         dbg!(&color);
 
-        assert!(false);
+        panic!();
     }
 
     #[test]
