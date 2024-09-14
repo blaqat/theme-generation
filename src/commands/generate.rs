@@ -210,6 +210,7 @@ mod steps {
     pub fn match_variables(template: &Value, variables: &Value) -> Value {
         let mut new_data = template.clone();
 
+        d!(&template);
         for (key, value) in template.as_object().unwrap().iter() {
             match value {
                 Value::String(str) if let Ok(parsed) = str.parse::<ParsedValue>() => match parsed {
@@ -227,7 +228,11 @@ mod steps {
                 serde_json::Value::Array(a) => {
                     let mut new_arr = Vec::with_capacity(a.len());
                     for (i, value) in a.iter().enumerate() {
-                        new_arr.push(match_variables(value, variables));
+                        if let Value::Object(v) = value {
+                            new_arr.push(match_variables(value, variables));
+                        } else {
+                            new_arr.push(value.clone());
+                        }
                     }
                     new_data[key] = Value::Array(new_arr);
                 }
