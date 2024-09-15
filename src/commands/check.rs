@@ -1,6 +1,5 @@
 use crate::prelude::*;
 // use json_patch;
-use commands::reverse::variable::*;
 use serde_json::{json, Map, Value};
 
 const DNE: &str = "DNE";

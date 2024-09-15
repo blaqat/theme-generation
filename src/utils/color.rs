@@ -538,7 +538,7 @@ impl Color {
 
 #[cfg(test)]
 mod tests {
-    use crate::commands::variable::{ParsedValue, ParsedVariable};
+    use crate::utils::parsing::{ParsedValue, ParsedVariable};
 
     use super::*;
 

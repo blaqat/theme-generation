@@ -1,5 +1,4 @@
 use crate::prelude::*;
-use commands::reverse::json::JsonPath;
 use palette::convert::IntoColorUnclampedMut;
 use std::{cell::RefCell, cmp::Ordering, io::Read, path::PathBuf, ptr::replace};
 
@@ -129,8 +128,6 @@ impl FromStr for GenerateFlags {
 
 mod steps {
     use super::*;
-    use commands::reverse::json::JsonPath;
-    use commands::reverse::variable::{ParsedValue, ParsedVariable};
     use serde_json::json;
     type Value = serde_json::Value;
 

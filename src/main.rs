@@ -2,8 +2,6 @@
 #![feature(let_chains)]
 #![feature(if_let_guard)]
 
-use commands::variable;
-
 use crate::prelude::*;
 
 mod commands;
