@@ -219,7 +219,6 @@ mod steps {
                 .collect::<Vec<_>>();
 
             for (_, u) in &rest {
-                // STILL A CHANCE!
                 let mut first = true;
                 let mut inserted = false;
 
@@ -459,7 +458,6 @@ mod steps {
                     match $from {
                         // Value::Null => toml::Value::String(String::from(TOML_NULL)),
                         // a => {
-                        //     d!(&a);
                         //     serde_json::from_value(a).map_err(|json_err| {
                         //         Error::Processing(format!("Unhandeled theme json: {}", json_err))
                         //     })?
@@ -483,7 +481,6 @@ mod steps {
         }
 
         w!("# Reverse Generation Tool Version 3.0");
-        // d!(data);
         for (k, v) in data
             .iter()
             .filter(|(_, v)| !matches!(v, toml::Value::Table(_)))
@@ -491,7 +488,6 @@ mod steps {
             w!("{} = {}", k, v);
         }
 
-        // d!(data);
 
         w!("\n# Theme Colors");
         w!("[color]");
@@ -530,13 +526,11 @@ mod steps {
 
         w!("\n# Overrides");
         w!("[overrides]");
-        // d!(&overrides);
         for (_, v) in overrides
             .to_map()
             .into_iter()
             .sorted_by_key(|(k, _)| k.clone())
         {
-            // d!(&k, &v);
             t!(val = v.value.into_value());
             w!(r#""{}" = {}"#, v.path.join(), val);
         }
@@ -598,7 +592,6 @@ pub fn reverse(
         // Step 2: Built Data Structures (Deletions, Overrides, Variables, Colors)
         let var_diff = key_diff(&template, &theme, String::from(""), true);
         let override_diff = key_diff(&theme, &template, String::from(""), false);
-        // d!(&var_diff, &override_diff);
 
         let overrides: Set<_> = override_diff
             .missing
@@ -619,12 +612,10 @@ pub fn reverse(
 
         // Step 4: Build Color Redundancy Map & Replace Colors
         let color_map = to_color_map(&variables, &overrides);
-        // d!(&color_map);
 
         // Step 5: Replace Colors In variables and overrides limited by threshold
         for (var_name, mut var) in variables.to_map().into_iter() {
             let val = replace_color(&var.value, &color_map, flags.threshold);
-            // d!(&var_name, &val);
             var.value = val;
             variables.insert(&var_name, var.clone());
         }

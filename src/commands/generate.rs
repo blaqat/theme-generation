@@ -121,10 +121,8 @@ mod steps {
     type Value = serde_json::Value;
 
     pub fn resolve_self_variables(source: &Value, key: &Vec<&str>) -> Value {
-        // d!(key);
         match source {
             Value::Object(obj) => {
-                // d!(obj);
                 let mut new_obj = obj.clone();
                 for (k, v) in obj.iter() {
                     let mut new_keys = key.clone();
@@ -135,7 +133,6 @@ mod steps {
                 Value::Object(new_obj)
             }
             Value::Array(a) => {
-                // d!(a);
                 let mut new_arr = Vec::new();
                 for v in a.iter() {
                     new_arr.push(resolve_self_variables(v, key));
@@ -145,7 +142,6 @@ mod steps {
             Value::String(s) if s.contains("$self") => {
                 let self_key = key.get(key.len() - 2).unwrap_or(&"");
                 let s = s.replace("$self.", self_key);
-                // d!(&new_s);
                 Value::String(s)
             }
             _ => source.clone(),
@@ -157,12 +153,10 @@ mod steps {
         _source: &Value,
         _operations: &Vec<Vec<ColorChange>>,
     ) -> Value {
-        // d!(_source);
         let mut resolved: Value = json!({});
         match resolving {
             Value::Object(obj) => {
                 for (key, value) in obj.iter() {
-                    // d!(key);
                     resolved[key] = resolve_variables(value, _source, _operations);
                 }
             }
@@ -180,15 +174,12 @@ mod steps {
                     ParsedValue::Variables(ref var)
                         if let Ok(parsed_var) = var.first().unwrap().parse::<ParsedVariable>() =>
                     {
-                        // d!(&parsed_var);
                         let path = parsed_var
                             .name
                             .replace(".", "/")
                             .parse::<JsonPath>()
                             .unwrap();
-                        // d!(&path);
 
-                        // d!(&path);
 
                         let value = path.traverse(_source);
 
@@ -198,17 +189,12 @@ mod steps {
                             resolved = resolve_variables(v, _source, &new_ops);
                         } else {
                             resolved = Value::Null;
-                            // d!(&resolved.clone());
                         }
 
-                        // d!(&resolved);
                     }
                     ParsedValue::Color(ref c) => {
                         let mut c = c.clone();
-                        // d!(_operations);
-                        // d!(&c);
                         let _ = c.update_ops(_operations.as_slice());
-                        // d!(&c);
                         resolved = Value::String(c.to_string());
                     }
                     ParsedValue::Null => unreachable!(),
@@ -298,7 +284,6 @@ pub fn generate(
      -> Result<serde_json::Value, Error> {
         // Step 2: Resolve recursive variables
         let variables = steps::resolve_self_variables(&variables, &vec!["$"]);
-        // d!(&variables);
         let variables = steps::resolve_variables(&variables, &variables, &vec![]);
 
         // Step 3: Apply Deletions
@@ -320,7 +305,6 @@ pub fn generate(
 
         // Step 4: Match variables with template
         let mut matches = steps::match_variables(&template, &variables);
-        // d!(&matches);
 
         // Step 5: Apply Overrides
         if let Some(overrides) = variables.get("overrides") {
@@ -408,7 +392,6 @@ pub fn generate(
 
     // Generate Per Each Variable.toml File
     for (i, variable) in variables.iter_mut().enumerate() {
-        // d!(&variable);
         // Step 1: Deserialize the template and variable files into Objects.
         let vars: serde_json::Value = {
             let mut contents = String::new();

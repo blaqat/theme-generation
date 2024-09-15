@@ -20,19 +20,16 @@ pub fn watch(
     variable_files: Vec<ValidatedFile>,
     flags: Vec<String>,
 ) -> Result<(), Error> {
-    // d!(&directory);
     let (tx, rx) = std::sync::mpsc::channel();
     let mut debouncer = new_debouncer(std::time::Duration::from_millis(100), tx)
         .map_err(|_| Error::Processing(String::from("Error creating notify watcher.")))?;
 
     let watcher = debouncer.watcher();
 
-    // d!(variable_files);
 
     for file in &variable_files {
         let mut path = directory.clone();
         path.push(&file.name);
-        // d!(&path);
 
         watcher
             .watch(&path, RecursiveMode::Recursive)

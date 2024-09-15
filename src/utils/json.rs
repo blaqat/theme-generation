@@ -163,9 +163,7 @@ impl JsonPath {
                         o.remove(&idx.to_string());
                     }
                     JsonKey::Key(k) => {
-                        // d!(&k);
                         o.remove(k);
-                        // d!(&o.get(k));
                     }
                 },
                 _ => unreachable!(),

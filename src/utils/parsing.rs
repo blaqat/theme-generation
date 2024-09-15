@@ -126,7 +126,6 @@ impl FromStr for ParsedVariable {
 
                     // name..val (short hand for alpha = val)
                     val if val.is_ascii_hexdigit() => {
-                        // d!(&val);
                         vec![format!("a.{}", operations).parse().map_err(|e| {
                             Error::Processing(format!("Resolving Hex Variable: {:?}", e))
                         })?]
@@ -410,7 +409,6 @@ impl VariableSet {
         if !self.has_variable(name) {
             self.insert(name, var);
         } else {
-            // d!(&name);
             let mut vars = self.variables.borrow_mut();
             let existing = vars.get(name).unwrap().clone();
 
@@ -420,7 +418,6 @@ impl VariableSet {
             }
 
             let existing_name = format!("{}{}", name, count);
-            // d!(&existing_name);
             vars.insert(existing_name, existing);
             vars.insert(name.to_owned(), var);
         }

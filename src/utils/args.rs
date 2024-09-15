@@ -62,7 +62,6 @@ impl ValidatedFile {
             .read_dir()
             .map_err(|_| Error::InvalidFile(String::from(source_directory.to_str().unwrap())))?
         {
-            // d!(&entry);
             let entry = entry.map_err(|_| {
                 Error::InvalidFile(String::from(source_directory.to_str().unwrap()))
             })?;
@@ -121,7 +120,6 @@ impl ValidCommands {
 }
 
 pub fn run_command(args: Vec<String>) -> Result<(), Error> {
-    // d!(&args);
     if args.len() < 2 {
         return Err(Error::NoCommand);
     }

@@ -39,13 +39,6 @@ macro_rules! ahh {
 }
 
 #[macro_export]
-macro_rules! dp {
-    ( $($args:expr),+) => {
-        d!($(format!("{}", $args)),+)
-    };
-}
-
-#[macro_export]
 macro_rules! w {
     ( $w:expr, $($args:expr),+) => {
         writeln!(&mut $w, $($args),+).unwrap()
