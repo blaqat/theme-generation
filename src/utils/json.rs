@@ -119,7 +119,6 @@ impl FromStr for JsonPath {
         Ok(JsonPath(path))
     }
 }
-
 impl JsonPath {
     pub fn new() -> Self {
         JsonPath(Vec::new())

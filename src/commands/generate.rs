@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use regex::Regex;
 use std::{io::Read, path::PathBuf};
 
 /**
@@ -169,38 +170,34 @@ mod steps {
                 resolved = Value::Array(res_arr);
             }
 
-            Value::String(str) if let Ok(parsed) = str.parse::<ParsedValue>() => {
-                match parsed {
-                    ParsedValue::Variables(ref var)
-                        if let Ok(parsed_var) = var.first().unwrap().parse::<ParsedVariable>() =>
-                    {
-                        let path = parsed_var
-                            .name
-                            .replace(".", "/")
-                            .parse::<JsonPath>()
-                            .unwrap();
+            Value::String(str) if let Ok(parsed) = str.parse::<ParsedValue>() => match parsed {
+                ParsedValue::Variables(ref var)
+                    if let Ok(parsed_var) = var.first().unwrap().parse::<ParsedVariable>() =>
+                {
+                    let path = parsed_var
+                        .name
+                        .replace(".", "/")
+                        .parse::<JsonPath>()
+                        .unwrap();
 
+                    let value = path.traverse(_source);
 
-                        let value = path.traverse(_source);
-
-                        if let Ok(v) = value {
-                            let mut new_ops = _operations.clone();
-                            new_ops.push(parsed_var.operations);
-                            resolved = resolve_variables(v, _source, &new_ops);
-                        } else {
-                            resolved = Value::Null;
-                        }
-
+                    if let Ok(v) = value {
+                        let mut new_ops = _operations.clone();
+                        new_ops.push(parsed_var.operations);
+                        resolved = resolve_variables(v, _source, &new_ops);
+                    } else {
+                        resolved = Value::Null;
                     }
-                    ParsedValue::Color(ref c) => {
-                        let mut c = c.clone();
-                        let _ = c.update_ops(_operations.as_slice());
-                        resolved = Value::String(c.to_string());
-                    }
-                    ParsedValue::Null => unreachable!(),
-                    v => resolved = v.into_value(),
                 }
-            }
+                ParsedValue::Color(ref c) => {
+                    let mut c = c.clone();
+                    let _ = c.update_ops(_operations.as_slice());
+                    resolved = Value::String(c.to_string());
+                }
+                ParsedValue::Null => unreachable!(),
+                v => resolved = v.into_value(),
+            },
 
             value => {
                 resolved = value.clone();
@@ -270,6 +267,32 @@ mod steps {
 
         new_data
     }
+
+    pub fn replace_regex(key_map: &Map<String, Value>, data: &mut Value, start_path: String) {
+        match data {
+            Value::Object(m) => {
+                for (k, val) in m.iter_mut() {
+                    replace_regex(key_map, val, format!("{}/{}", start_path, k));
+                }
+            }
+            Value::Array(a) => {
+                for (k, val) in a.iter_mut().enumerate() {
+                    replace_regex(key_map, val, format!("{}/{}", start_path, k));
+                }
+            }
+            _ => {
+                for (key, value) in key_map.iter() {
+                    let rgx = Regex::new(&format!("^{key}$"));
+                    if let Ok(regex) = rgx
+                        && (regex.find(&start_path).is_some() || regex.is_match(&start_path))
+                        && let Ok(_) = start_path.parse::<JsonPath>()
+                    {
+                        *data = value.clone();
+                    }
+                }
+            }
+        }
+    }
 }
 
 pub fn generate(
@@ -307,6 +330,11 @@ pub fn generate(
         let mut matches = steps::match_variables(&template, &variables);
 
         // Step 5: Apply Overrides
+        if let Some(regex_overrides) = variables.get("overrides-regex") {
+            let regex_overrides = regex_overrides.as_object().unwrap();
+            steps::replace_regex(regex_overrides, &mut matches, String::new())
+        }
+
         if let Some(overrides) = variables.get("overrides") {
             let overrides = overrides.as_object().unwrap();
             for (key, value) in overrides.iter() {
