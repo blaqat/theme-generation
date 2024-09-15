@@ -1,0 +1,29 @@
+# Reverse Generation Tool Version 3.0
+apple = "@red"
+banana = 2
+light_apple = "#FF8080"
+named_angels = "named"
+pear = "#Fa0"
+transparent = "@red..00"
+
+# Theme Colors
+[color]
+red = "#FF0000"
+
+# Overrides
+[overrides]
+"angels/gabriel" = false
+"apple" = "@red"
+"fruits" = { grapes = ["#8000FF", { a = "@red" }] }
+"list/2" = 3
+"number" = 4
+"list/0" = "@red"
+
+# Deletions
+[deletions]
+keys = [
+	"/AmIHappy?",
+	"/a_real_evil_dooer_mwahahha",
+	"/angels/evil.dooer",
+	"/double-test",
+]

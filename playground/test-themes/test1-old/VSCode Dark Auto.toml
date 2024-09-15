@@ -1,0 +1,199 @@
+name = "VSCode Dark Auto"
+theme = "dark"
+
+[colors]
+color1 = "#D4D4D4"
+color2 = "#FF6B6B"
+color3 = "#569CD6"
+color4 = "#3E3E3E"
+color5 = "#252526"
+color6 = "#1E1E1E"
+color7 = "#8BC34A"
+color8 = "#FFC107"
+color9 = "#64B5F6"
+color10 = "#4EC9B0"
+
+[background]
+secondary = "$colors.color5"
+primary = "$colors.color6"
+bottombar = "#333333"
+topbar = "#333333"
+toolbar = "#2D2D2D"
+tabbar = "$colors.color5"
+panel = "$colors.color5"
+terminal = "$colors.color6"
+
+[border]
+primary = "$colors.color4"
+secondary = "#2A2A2A"
+
+[button]
+active = "#505050"
+selected = "#4A4A4A"
+disabled = "#3C3C3C"
+
+[cursor]
+hover = "$colors.color4"
+search = "#515C6A"
+line = "#2D2D2D"
+spaces = "#303030"
+match = "#4A4A4A"
+primary = "#FFFFFF"
+background = "#4e4e4e40"
+
+[element]
+hover = "#2A2A2A"
+active = "$colors.color4"
+selected = "#37373D"
+disabled = "#2D2D2D"
+
+[foreground]
+primary = "$colors.color1"
+secondary = "#A0A0A0"
+placeholder = "#808080"
+inactive = "#A0A0A0"
+line = "#5A5A5A"
+ignored = "#A0A0A0"
+
+[scheme]
+primary = "$colors.color3"
+black = "$colors.color6"
+black2 = "$colors.color5"
+red = "#F44747"
+red2 = "$colors.color2"
+green = "#6A9955"
+green2 = "$colors.color7"
+yellow = "#D7BA7D"
+yellow2 = "$colors.color8"
+blue = "$colors.color3"
+blue2 = "$colors.color9"
+purple = "#C586C0"
+purple2 = "#E57373"
+cyan = "$colors.color10"
+cyan2 = "#4DD0E1"
+white = "$colors.color1"
+white2 = "#FFFFFF"
+
+[scrollbar]
+primary = "#424242"
+secondary = "$colors.color4"
+
+[syntax.attribute]
+color = "#9CDCFE"
+style = "normal"
+weight = 400
+
+[syntax.boolean]
+color = "$colors.color3"
+style = "normal"
+weight = 400
+
+[syntax.comment]
+color = "#6A9955"
+style = "italic"
+weight = 400
+
+[syntax.constant]
+color = "$colors.color10"
+style = "normal"
+weight = 400
+
+[syntax.constructor]
+color = "$colors.color10"
+style = "normal"
+weight = 700
+
+[syntax.function]
+color = "#DCDCAA"
+style = "normal"
+weight = 400
+
+[syntax.keyword]
+color = "#C586C0"
+style = "normal"
+weight = 700
+
+[syntax.member]
+color = "#9CDCFE"
+style = "normal"
+weight = 400
+
+[syntax.number]
+color = "#B5CEA8"
+style = "normal"
+weight = 400
+
+[syntax.operator]
+color = "$colors.color1"
+style = "normal"
+weight = 400
+
+[syntax.parameter]
+color = "#9CDCFE"
+style = "normal"
+weight = 400
+
+[syntax.property]
+color = "#9CDCFE"
+style = "normal"
+weight = 400
+
+[syntax.punctuation.bracket]
+color = "$colors.color1"
+style = "normal"
+weight = 400
+
+[syntax.punctuation.delimiter]
+color = "$colors.color1"
+style = "normal"
+weight = 400
+
+[syntax.punctuation.list]
+color = "$colors.color1"
+style = "normal"
+weight = 400
+
+[syntax.punctuation.primary]
+color = "$colors.color1"
+style = "normal"
+weight = 400
+
+[syntax.punctuation.special]
+color = "$colors.color1"
+style = "normal"
+weight = 400
+
+[syntax.special]
+color = "#D7BA7D"
+style = "normal"
+weight = 400
+
+[syntax.string]
+color = "$colors.color2"
+style = "normal"
+weight = 800
+
+[syntax.tag]
+color = "$colors.color3"
+style = "normal"
+weight = 700
+
+[syntax.type]
+color = "$colors.color10"
+style = "normal"
+weight = 700
+
+[syntax.var]
+color = "#9CDCFE"
+style = "normal"
+weight = 400
+
+[tabs]
+inactive = "#2D2D2D"
+active = "$colors.color6"
+
+[deletions]
+keys = [
+	"style.syntax.[function.method]", 
+	"style.syntax.[function.definition]"
+]

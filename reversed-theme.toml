@@ -1,0 +1,285 @@
+# Reverse Generation Tool Version 3.0
+name = "Polar"
+primary = "$color.mediumaquamarine"
+theme = "dark"
+rec = "$rec2..h+50"
+rec2 = "@gray..-10"
+
+# Theme Colors
+[color]
+burlywood = "#D9B46D"
+cadetblue = "#69ADBF"
+darkslategray = "#283140"
+gray = "#78995C"
+indianred = "#B3505A"
+lightsteelblue = "#ADB9CC"
+mediumaquamarine = "#7CADBF"
+mediumaquamarine2 = "#6BB3B1"
+palevioletred = "#CC7078"
+rosybrown = "#A66C9B"
+steelblue = "#4D7299"
+white = "#FFFFFF"
+whitesmoke = "#EDEDF3"
+whitesmoke2 = "#ECEFF4"
+
+[background]
+gutter = "$color.white"
+panel = "$color.whitesmoke2..1F"
+primary = "$color.white"
+secondary = "$color.white"
+terminal = "$color.white"
+
+[background.bars]
+bottombar = "$color.whitesmoke2"
+scrollbar = "$color.white"
+scrollbar_thumb = "$color.whitesmoke2..99"
+toolbar = "$color.white"
+topbar = "$color.whitesmoke2"
+
+[background.bars.tabbar]
+active = "$color.white"
+background = "$color.whitesmoke2"
+inactive = "#F7F7FA"
+
+[border]
+scrollbar = "$color.white..50"
+secondary = "$color.whitesmoke2"
+
+[button]
+active = "#CEEFF4"
+disabled = "#3C3C3C"
+primary = "$color.whitesmoke2"
+selected = "$color.whitesmoke"
+
+[code.error]
+background = "$color.palevioletred..10"
+border = "$color.palevioletred"
+foreground = "$color.indianred"
+
+[code.info]
+background = "$color.steelblue..10"
+border = "$color.steelblue"
+foreground = "$color.steelblue..8F"
+
+[code.warning]
+background = "$color.burlywood..10"
+border = "$color.burlywood"
+foreground = "$color.burlywood"
+
+[cursor]
+background = "#EAECF1"
+highlighted = "#EDEFF39F"
+line = "$color.whitesmoke..C0"
+match = "#CFE6F39F"
+primary = "$color.darkslategray"
+search = "$color.cadetblue..66"
+selection = "$color.whitesmoke"
+spaces = "#DFE2EB"
+
+[element]
+active = "$color.mediumaquamarine"
+hover = "$color.mediumaquamarine..40"
+selected = "#E6E9EF"
+
+[foreground]
+hover = "$color.whitesmoke2"
+inactive = "$color.lightsteelblue"
+link = "$color.mediumaquamarine"
+placeholder = "$color.lightsteelblue..B3"
+primary = "$color.darkslategray"
+secondary = "$color.darkslategray..B0"
+
+[foreground.linenumber]
+active = "$color.darkslategray"
+inactive = "#F005"
+
+[git.created]
+background = "$color.gray"
+border = "$color.gray"
+foreground = "$color.gray"
+
+[git.ignored]
+foreground = "$color.darkslategray..43"
+
+[git.modified]
+foreground = "$color.burlywood"
+
+[indent]
+multi = [
+	"$color.steelblue",
+	"$color.rosybrown",
+	"$color.gray",
+	"$color.burlywood",
+	"$color.indianred",
+	"$color.cadetblue",
+	"#6C717D",
+	"$color.steelblue",
+	"$color.rosybrown",
+	"$color.gray",
+	"$color.burlywood",
+	"$color.palevioletred"
+]
+
+[scheme]
+black = "$color.whitesmoke2"
+black2 = "$color.lightsteelblue"
+black3 = "$color.lightsteelblue"
+blue = "$color.steelblue"
+blue2 = "$color.steelblue"
+blue3 = "$color.steelblue"
+cyan = "$color.cadetblue"
+cyan2 = "$color.mediumaquamarine2"
+cyan3 = "$color.mediumaquamarine2"
+green = "$color.gray"
+green2 = "$color.gray"
+green3 = "$color.gray"
+pink3 = "$color.rosybrown"
+red = "$color.indianred"
+red2 = "$color.palevioletred"
+red3 = "$color.palevioletred"
+white = "#6C717D"
+white2 = "#2E3440"
+white3 = "#2E3440"
+yellow = "$color.burlywood"
+yellow2 = "$color.burlywood"
+yellow3 = "$color.burlywood"
+
+[syntax.attribute]
+color = "$color.mediumaquamarine2"
+style = "normal"
+
+[syntax.boolean]
+color = "$color.steelblue"
+style = "normal"
+
+[syntax.comment]
+color = "#AEB9CE"
+style = "normal"
+
+[syntax.constant]
+style = "normal"
+
+[syntax.constructor]
+color = "$color.steelblue"
+style = "normal"
+
+[syntax.doc]
+color = "$color.gray"
+style = "normal"
+
+[syntax.enum]
+color = "$color.burlywood"
+style = "normal"
+
+[syntax.escape]
+color = "$color.gray"
+style = "normal"
+
+[syntax.function]
+color = "$color.cadetblue"
+style = "normal"
+
+[syntax.hint]
+color = "$color.steelblue..8F"
+style = "italic"
+
+[syntax.lifetime]
+color = "$color.mediumaquamarine2"
+style = "normal"
+
+[syntax.method]
+color = "$color.cadetblue"
+style = "normal"
+
+[syntax.number]
+color = "$color.rosybrown"
+style = "normal"
+
+[syntax.operator]
+color = "$color.steelblue"
+style = "normal"
+
+[syntax.primary]
+color = "$color.mediumaquamarine"
+
+[syntax.property]
+color = "$color.darkslategray"
+style = "normal"
+
+[syntax.punctuation]
+color = "$color.darkslategray"
+style = "normal"
+
+[syntax.punctuation.bracket]
+color = "$color.darkslategray"
+style = "normal"
+
+[syntax.punctuation.delimiter]
+color = "$color.steelblue"
+style = "normal"
+
+[syntax.punctuation.special]
+color = "$color.steelblue"
+style = "normal"
+
+[syntax.punctuation.symbol]
+color = "$color.steelblue"
+style = "normal"
+
+[syntax.special]
+color = "$color.mediumaquamarine2"
+style = "normal"
+
+[syntax.string]
+color = "$color.gray"
+style = "normal"
+
+[syntax.string.regex]
+color = "$color.gray"
+style = "normal"
+
+[syntax.string.special]
+color = "$color.gray"
+style = "normal"
+
+[syntax.tag]
+color = "$color.steelblue"
+style = "normal"
+
+[syntax.type]
+color = "$color.mediumaquamarine2"
+style = "normal"
+
+[syntax.variable]
+style = "normal"
+
+[syntax.variable.parameter]
+style = "normal"
+
+[syntax.variable.special]
+color = "$color.burlywood"
+style = "normal"
+
+# Overrides
+[overrides]
+"themes/0/style/syntax/keyword/font_style" = "normal"
+"themes/0/style/syntax/function.builtin/font_style" = "normal"
+"themes/0/style/terminal.ansi.magenta" = "$color.rosybrown"
+"themes/0/style/border" = "$color.whitesmoke2"
+"themes/0/style/scrollbar.thumb.hover_background" = "$none"
+"themes/0/style/syntax/keyword/color" = "$color.steelblue"
+"themes/0/style/syntax/function.builtin/color" = "$color.cadetblue"
+"name" = "Test Theme"
+"themes/0/style/hidden" = "$color.steelblue..8F"
+"themes/0/style/hidden.border" = "$none"
+"themes/0/style/terminal.ansi.bright_magenta" = "$color.rosybrown"
+"themes/0/style/deleted.background" = "$color.palevioletred..5F"
+"themes/0/style/border.focused" = "$color.whitesmoke2"
+"themes/0/style/renamed.border" = "$none"
+
+# Deletions
+[deletions]
+keys = [
+	"/themes/0/style/editor.indent_guide",
+	"/themes/0/style/editor.indent_guide_active"
+]

@@ -1,0 +1,241 @@
+use crate::prelude::*;
+
+pub mod serde_value {
+    use super::*;
+    use toml::Value as t_Value;
+
+    pub fn into_toml(val: Value) -> Result<t_Value, Error> {
+        match val {
+            Value::Null => Ok(t_Value::String(crate::commands::TOML_NULL.to_string())),
+            Value::Array(a) => {
+                let mut arr = Vec::new();
+                for v in a.into_iter() {
+                    arr.push(into_toml(v)?);
+                }
+                Ok(t_Value::Array(arr))
+            }
+            Value::Object(o) => {
+                let mut map = toml::map::Map::new();
+                for (k, v) in o.into_iter() {
+                    map.insert(k.clone(), into_toml(v)?);
+                }
+                Ok(t_Value::Table(map))
+            }
+            a => serde_json::from_value(a)
+                .map_err(|e| Error::Processing(format!("Unhandeled theme json: {}", e))),
+        }
+    }
+
+    pub fn same_type(a: &Value, b: &Value) -> bool {
+        matches!(
+            (a, b),
+            (Value::Null, Value::Null)
+                | (Value::Bool(_), Value::Bool(_))
+                | (Value::Number(_), Value::Number(_))
+                | (Value::String(_), Value::String(_))
+                | (Value::Array(_), Value::Array(_))
+                | (Value::Object(_), Value::Object(_))
+        )
+    }
+
+    pub fn has_keys(a: &Value) -> bool {
+        matches!(a, Value::Object(_) | Value::Array(_))
+    }
+
+    pub fn potential_var(a: &str) -> bool {
+        matches!(a.as_bytes(), [b'$' | b'@', ..])
+    }
+
+    pub fn potential_set(a: &Value, b: &Value) -> bool {
+        match (a, b) {
+            (Value::String(a), b) | (b, Value::String(a)) => match (potential_var(a), b) {
+                (false, Value::String(b)) => potential_var(b),
+                _ => true,
+            },
+            _ => false,
+        }
+    }
+}
+
+#[derive(Debug, PartialEq, Clone, PartialOrd, Eq, Hash)]
+enum JsonKey {
+    Key(String),
+    Index(usize),
+}
+
+impl JsonKey {
+    fn inner(&self) -> String {
+        match self {
+            JsonKey::Key(k) => k.clone(),
+            JsonKey::Index(i) => i.to_string(),
+        }
+    }
+}
+
+impl Display for JsonKey {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", self.inner())
+    }
+}
+
+/**
+JsonPath are strings that represent a path to a value in a JSON object.
+
+For example /a/b/c would be the path to the value 3 in the object {"a": {"b": {"c": 3}}}
+
+/a/1 would be the path to the value 2 in the object {"a": [1, 2, 3]}
+*/
+#[derive(Debug, PartialEq, Clone, Eq, Hash)]
+pub struct JsonPath(Vec<JsonKey>);
+
+impl Display for JsonPath {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(
+            f,
+            "{}",
+            self.0
+                .iter()
+                .fold(String::new(), |acc, e| acc + "/" + &e.to_string())
+        )
+    }
+}
+
+impl FromStr for JsonPath {
+    type Err = Error;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let path = s
+            .split('/')
+            .filter(|x| !x.is_empty())
+            .map(|x| x.trim().to_string())
+            .map(|x| {
+                if let Ok(i) = x.parse::<usize>() {
+                    JsonKey::Index(i)
+                } else {
+                    JsonKey::Key(x)
+                }
+            })
+            .collect();
+        Ok(JsonPath(path))
+    }
+}
+impl JsonPath {
+    pub fn new() -> Self {
+        JsonPath(Vec::new())
+    }
+
+    pub fn join(&self) -> String {
+        self.0
+            .iter()
+            .map(|e| e.to_string())
+            .reduce(|acc, e| acc + "/" + &e.to_string())
+            .unwrap_or_default()
+    }
+
+    fn from_vec(v: Vec<JsonKey>) -> Self {
+        JsonPath(v)
+    }
+
+    pub fn traverse<'a>(&self, json: &'a Value) -> Result<&'a Value, Error> {
+        if let Some(value) = json.pointer(&format!("{}", self)) {
+            Ok(value)
+        } else {
+            ahh!("Invalid path: {}", self.to_string())
+        }
+    }
+
+    pub fn remove(&self, json: &mut Value) -> Result<(), Error> {
+        let (last, rest) = self.0.split_last().unwrap();
+        let path = JsonPath::from_vec(rest.to_vec());
+
+        if let Some(value) = json.pointer_mut(&format!("{}", path)) {
+            match value {
+                Value::Array(a) => {
+                    if let JsonKey::Index(idx) = last {
+                        a.remove(*idx);
+                    } else {
+                        return ahh!("Invalid path: {}", self.to_string());
+                    }
+                }
+                Value::Object(o) => match last {
+                    JsonKey::Index(idx) => {
+                        o.remove(&idx.to_string());
+                    }
+                    JsonKey::Key(k) => {
+                        o.remove(k);
+                    }
+                },
+                _ => unreachable!(),
+            }
+            Ok(())
+        } else {
+            ahh!("Invalid path: {}", self.to_string())
+        }
+    }
+
+    pub fn pave(&self, json: &mut Value, val: Value) -> Result<(), Error> {
+        let mut current_value = json;
+        let len = self.0.len();
+
+        for (i, key) in self.0.iter().enumerate() {
+            let is_last = len == i + 1;
+            match key {
+                JsonKey::Index(idx) => match current_value {
+                    Value::Array(arr) => {
+                        let len = arr.len();
+                        if *idx >= len {
+                            arr.resize_with(*idx + 1, || {
+                                if is_last {
+                                    val.clone()
+                                } else {
+                                    Value::Null
+                                }
+                            });
+                        }
+                        current_value = &mut arr[*idx];
+                    }
+                    _ if is_last => {
+                        let mut temp_arr = Vec::with_capacity(*idx);
+                        for _ in 0..=*idx {
+                            temp_arr.push(Value::Null);
+                        }
+
+                        let rest_of_path = JsonPath::from_vec(self.0[i..].to_vec());
+                        let mut rest_of_json = Value::Array(temp_arr);
+                        rest_of_path.pave(&mut rest_of_json, val.clone()).unwrap();
+
+                        *current_value = rest_of_json;
+                        return Ok(());
+                    }
+                    _ => return ahh!("Invalid path: {}", self.to_string()),
+                },
+                JsonKey::Key(k) => match current_value {
+                    Value::Object(obj) => {
+                        let entry = obj.entry(k).or_insert_with(|| {
+                            if is_last {
+                                val.clone()
+                            } else {
+                                Value::Object(Map::new())
+                            }
+                        });
+                        current_value = entry;
+                    }
+
+                    _ if is_last => {
+                        let rest_of_path = JsonPath::from_vec(self.0[i..].to_vec());
+                        let mut rest_of_json = Value::Object(Map::new());
+                        rest_of_path.pave(&mut rest_of_json, val.clone()).unwrap();
+
+                        *current_value = rest_of_json;
+                        return Ok(());
+                    }
+                    _ => return ahh!("Invalid path: {}", self.to_string()),
+                },
+            }
+        }
+
+        *current_value = val;
+
+        Ok(())
+    }
+}

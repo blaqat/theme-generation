@@ -1,2 +1,8 @@
-playground/
-themes/
+.DS_Store
+.zed
+.old-version
+
+
+# Added by cargo
+
+/target

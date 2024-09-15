@@ -1,0 +1,25 @@
+{
+	"angels": {
+		"evil.dooer": "$mwahaha",
+		"gabriel": true,
+		"named": "$named_angels"
+	},
+	"double-test": "$a|$b|$c",
+	"banana-test": "$banana",
+	"apple": "wf",
+	"AmIHappy?": "$testing.b",
+	"darker_apple": "$apple..50",
+	"lighter_apple": "$light_apple",
+	"banana": "$apple..(h=40, s-10)",
+	"pear_or_grape": "$pear..40|$grape..40",
+	"make_apple_transparent": "$transparent..-50",
+	"not_a_real_variable": "$yippieee",
+	"a_real_evil_dooer_mwahahha": true,
+	"list": [
+		"$pear",
+		"$banana",
+		{
+			"nested": "$apple"
+		}
+	]
+}

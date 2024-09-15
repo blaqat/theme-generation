@@ -1,0 +1,21 @@
+[package]
+name = "theme-generation"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0"
+thiserror = "1.0"
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+json-patch = "*"
+palette = "0.7.6"
+either = "1.13.0"
+color-name = "1.0.0"
+toml = "0.8.19"
+toml_edit = "0.22.20"
+itertools = "0.13.0"
+notify-debouncer-mini = "0.4.1"
+notify = "6.1.1"
+regex = "1.10.6"
