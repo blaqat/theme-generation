@@ -20,7 +20,6 @@ use std::{cell::RefCell, cmp::Ordering, io::Read, path::PathBuf, ptr::replace};
 #[derive(PartialEq, Debug)]
 pub enum GenerateFlags {
     Verbose,
-    Check,
     OutputDirectory(PathBuf),
     InputDirectory(PathBuf),
     InnerPath(JsonPath),
@@ -31,7 +30,6 @@ pub enum GenerateFlags {
 #[derive(PartialEq, Debug)]
 pub struct Flags {
     verbose: bool,
-    check: bool,
     replace_name: bool,
     output_directory: PathBuf, // Default to current directory
     input_directory: PathBuf,  // Default to current directory
@@ -63,7 +61,6 @@ impl GenerateFlags {
         for flag in flags {
             match flag {
                 Self::Verbose => verbose = true,
-                Self::Check => check = true,
                 Self::OutputDirectory(path) => output_directory = path,
                 Self::InputDirectory(path) => input_directory = path,
                 Self::Name(n) => name = n,
@@ -74,7 +71,6 @@ impl GenerateFlags {
 
         Flags {
             verbose,
-            check,
             output_directory,
             input_directory,
             name,
@@ -102,7 +98,6 @@ impl FromStr for GenerateFlags {
         match flag {
             "-v" => Ok(Self::Verbose),
             "-r" => Ok(Self::ReplaceName),
-            "-c" => Ok(Self::Check),
             flag if flag.starts_with("-n") => {
                 let name = flag.split("=").last().unwrap();
                 Ok(Self::Name(name.to_owned()))
@@ -139,6 +134,38 @@ mod steps {
     use serde_json::json;
     type Value = serde_json::Value;
 
+    pub fn resolve_self_variables(source: &Value, key: &Vec<&str>) -> Value {
+        // d!(key);
+        match source {
+            Value::Object(obj) => {
+                // d!(obj);
+                let mut new_obj = obj.clone();
+                for (k, v) in obj.iter() {
+                    let mut new_keys = key.clone();
+                    let var_name = &format!("${}.", k);
+                    new_keys.push(var_name.as_str());
+                    new_obj[k] = resolve_self_variables(v, &new_keys);
+                }
+                Value::Object(new_obj)
+            }
+            Value::Array(a) => {
+                // d!(a);
+                let mut new_arr = Vec::new();
+                for v in a.iter() {
+                    new_arr.push(resolve_self_variables(v, key));
+                }
+                Value::Array(new_arr)
+            }
+            Value::String(s) if s.contains("$self") => {
+                let self_key = key.get(key.len() - 2).unwrap_or(&"");
+                let mut new_s = s.replace("$self.", self_key);
+                // d!(&new_s);
+                Value::String(new_s)
+            }
+            _ => source.clone(),
+        }
+    }
+
     pub fn resolve_variables(
         resolving: &Value,
         _source: &Value,
@@ -153,6 +180,7 @@ mod steps {
                     resolved[key] = resolve_variables(value, _source, _operations);
                 }
             }
+
             Value::Array(arr) => {
                 let mut res_arr = Vec::with_capacity(arr.len());
                 for (i, value) in arr.iter().enumerate() {
@@ -166,11 +194,13 @@ mod steps {
                     ParsedValue::Variables(ref var)
                         if let Ok(parsed_var) = var.first().unwrap().parse::<ParsedVariable>() =>
                     {
+                        // d!(&parsed_var);
                         let path = parsed_var
                             .name
                             .replace(".", "/")
                             .parse::<JsonPath>()
                             .unwrap();
+                        // d!(&path);
 
                         // d!(&path);
 
@@ -208,10 +238,6 @@ mod steps {
 
         resolved
     }
-
-    // fn match_rec(a: &Value, variables: &Value) -> Value {
-
-    // }
 
     fn handle_value(parsed: ParsedValue, variables: &Value) -> Value {
         match parsed {
@@ -291,6 +317,8 @@ pub fn generate(
                    variables: serde_json::Value|
      -> Result<serde_json::Value, Error> {
         // Step 2: Resolve recursive variables
+        let variables = steps::resolve_self_variables(&variables, &vec!["$"]);
+        // d!(&variables);
         let variables = steps::resolve_variables(&variables, &variables, &vec![]);
 
         // Step 4: Apply Deletions
@@ -413,7 +441,7 @@ pub fn generate(
         }
         .map_err(|json_err| Error::Processing(format!("Invalid variable toml: {}", json_err)))?;
 
-        // d!(&template);
+        // Generate the new theme file
         let matches = gen(template.clone(), vars)?;
 
         if !make_new_files_per_variable {

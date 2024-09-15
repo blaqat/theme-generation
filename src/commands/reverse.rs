@@ -1461,7 +1461,7 @@ mod steps {
         }
 
         w!("# Reverse Generation Tool Version 3.0");
-        d!(data);
+        // d!(data);
         for (k, v) in data
             .iter()
             .filter(|(_, v)| !matches!(v, toml::Value::Table(_)))
@@ -1542,7 +1542,6 @@ mod steps {
 #[derive(PartialEq, Debug)]
 enum ReverseFlags {
     Verbose,
-    Check,
     Threshold(usize),
     OutputDirectory(PathBuf),
     Name(String),
@@ -1552,7 +1551,6 @@ enum ReverseFlags {
 #[derive(PartialEq, Debug)]
 struct Flags {
     verbose: bool,
-    check: bool,
     threshold: usize,          // Default to 3
     output_directory: PathBuf, // Default to current directory
     name: String,
@@ -1567,7 +1565,6 @@ impl ReverseFlags {
     fn parse(flags: Vec<String>) -> Flags {
         let flags = Self::into_vec(flags).unwrap();
         let mut verbose = false;
-        let mut check = false;
         let mut threshold = 3;
         let mut output_directory = PathBuf::from(".");
         let mut name = String::from("reversed-theme");
@@ -1576,7 +1573,6 @@ impl ReverseFlags {
         for flag in flags {
             match flag {
                 Self::Verbose => verbose = true,
-                Self::Check => check = true,
                 Self::Threshold(value) => threshold = value,
                 Self::OutputDirectory(path) => output_directory = path,
                 Self::Name(n) => name = n,
@@ -1586,7 +1582,6 @@ impl ReverseFlags {
 
         Flags {
             verbose,
-            check,
             threshold,
             output_directory,
             name,
@@ -1601,7 +1596,6 @@ impl FromStr for ReverseFlags {
     fn from_str(flag: &str) -> Result<Self, Error> {
         match flag {
             "-v" => Ok(Self::Verbose),
-            "-c" => Ok(Self::Check),
             flag if flag.starts_with("-p") => {
                 let path = flag.split("=").last().unwrap();
                 let path = JsonPath::from_str(path)
