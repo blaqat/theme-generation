@@ -2,22 +2,105 @@ use crate::prelude::*;
 use itertools::Itertools;
 use steps::*;
 
+/**
+Reverse:
+    Description:
+        - Template + OriginalTheme = Variables
+        - This generates a variable file by substituting values in the original theme file with variables in the template file.
+        - This takes the OriginalTheme as the source of truth. Things in the template that arent in the OriginalTheme will be ignored.
+        - The generated file will be saved in the current directory.
+    Usage:
+        substitutor rev template_file originalTheme [optional flags]
+    Flags:
+        -t int          Threshold for how many same colors to exist before adding to [colors] subgroup
+        -o directory    Set output directory of variable file
+        -n              Name of the output file
+        -p path         Json Path to start the reverse process at
+*/
+
 pub const TOML_NULL: &str = "$none";
 
-// Reverse:
-//     Description:
-//         - Template + OriginalTheme = Variables
-//         - This generates a variable file by substituting values in the original theme file with variables in the template file.
-//         - This takes the OriginalTheme as the source of truth. Things in the template that arent in the OriginalTheme will be ignored.
-//         - The generated file will be saved in the current directory.
-//     Usage:
-//         substitutor rev template_file originalTheme [optional flags]
-//     Flags:
-//         -v	Toggles verbose logging for debug purposes
-//         -c	Runs substitutor check on originalTheme and a generatedTheme of the generated variableFile
-//         -t int	Threshold for how many same colors to exist before adding to [colors] subgroup
-//         (-t=N)
-//         -o directory	Set output directory of variable file
+#[derive(PartialEq, Debug)]
+enum ReverseFlags {
+    Threshold(usize),
+    OutputDirectory(PathBuf),
+    Name(String),
+    InnerPath(JsonPath),
+}
+
+#[derive(PartialEq, Debug)]
+struct Flags {
+    threshold: usize,          // Default to 3
+    output_directory: PathBuf, // Default to current directory
+    name: String,
+    path: Option<JsonPath>,
+}
+
+impl ReverseFlags {
+    fn into_vec(flags: Vec<String>) -> Result<Vec<Self>, Error> {
+        flags.iter().map(|flag| Self::from_str(flag)).collect()
+    }
+
+    fn parse(flags: Vec<String>) -> Flags {
+        let flags = Self::into_vec(flags).unwrap();
+        let mut threshold = 3;
+        let mut output_directory = PathBuf::from(".");
+        let mut name = String::from("reversed-theme");
+        let mut path = None;
+
+        for flag in flags {
+            match flag {
+                Self::Threshold(value) => threshold = value,
+                Self::OutputDirectory(path) => output_directory = path,
+                Self::Name(n) => name = n,
+                Self::InnerPath(p) => path = Some(p),
+            }
+        }
+
+        Flags {
+            threshold,
+            output_directory,
+            name,
+            path,
+        }
+    }
+}
+
+impl FromStr for ReverseFlags {
+    type Err = Error;
+
+    fn from_str(flag: &str) -> Result<Self, Error> {
+        match flag {
+            flag if flag.starts_with("-p") => {
+                let path = flag.split("=").last().unwrap();
+                let path = JsonPath::from_str(path)
+                    .map_err(|_| Error::InvalidFlag("reverse".to_owned(), flag.to_owned()))?;
+                Ok(Self::InnerPath(path))
+            }
+            flag if flag.starts_with("-n") => {
+                let name = flag.split("=").last().unwrap();
+                Ok(Self::Name(name.to_owned()))
+            }
+            flag if flag.starts_with("-o") => {
+                let path = flag.split("=").last().unwrap();
+                let path = path.replace("~", std::env::var("HOME").unwrap().as_str());
+                let path = Path::new(&path);
+                if !path.exists() {
+                    return Err(Error::InvalidFlag("reverse".to_owned(), flag.to_owned()));
+                }
+                Ok(Self::OutputDirectory(path.to_path_buf()))
+            }
+            flag if flag.starts_with("-t") => {
+                let threshold = flag.split("=").last().unwrap();
+                let threshold = threshold
+                    .parse()
+                    .map_err(|_| Error::InvalidFlag("reverse".to_owned(), flag.to_owned()))?;
+                Ok(Self::Threshold(threshold))
+            }
+            _ => Err(Error::InvalidFlag("reverse".to_owned(), flag.to_owned())),
+        }
+    }
+}
 
 mod steps {
     use super::*;
@@ -521,111 +604,11 @@ mod steps {
     }
 }
 
-#[derive(PartialEq, Debug)]
-enum ReverseFlags {
-    Verbose,
-    Threshold(usize),
-    OutputDirectory(PathBuf),
-    Name(String),
-    InnerPath(JsonPath),
-}
-
-#[derive(PartialEq, Debug)]
-struct Flags {
-    verbose: bool,
-    threshold: usize,          // Default to 3
-    output_directory: PathBuf, // Default to current directory
-    name: String,
-    path: Option<JsonPath>,
-}
-
-impl ReverseFlags {
-    fn into_vec(flags: Vec<String>) -> Result<Vec<Self>, Error> {
-        flags.iter().map(|flag| Self::from_str(flag)).collect()
-    }
-
-    fn parse(flags: Vec<String>) -> Flags {
-        let flags = Self::into_vec(flags).unwrap();
-        let mut verbose = false;
-        let mut threshold = 3;
-        let mut output_directory = PathBuf::from(".");
-        let mut name = String::from("reversed-theme");
-        let mut path = None;
-
-        for flag in flags {
-            match flag {
-                Self::Verbose => verbose = true,
-                Self::Threshold(value) => threshold = value,
-                Self::OutputDirectory(path) => output_directory = path,
-                Self::Name(n) => name = n,
-                Self::InnerPath(p) => path = Some(p),
-            }
-        }
-
-        Flags {
-            verbose,
-            threshold,
-            output_directory,
-            name,
-            path,
-        }
-    }
-}
-
-impl FromStr for ReverseFlags {
-    type Err = Error;
-
-    fn from_str(flag: &str) -> Result<Self, Error> {
-        match flag {
-            "-v" => Ok(Self::Verbose),
-            flag if flag.starts_with("-p") => {
-                let path = flag.split("=").last().unwrap();
-                let path = JsonPath::from_str(path)
-                    .map_err(|_| Error::InvalidFlag("reverse".to_owned(), flag.to_owned()))?;
-                Ok(Self::InnerPath(path))
-            }
-            flag if flag.starts_with("-n") => {
-                let name = flag.split("=").last().unwrap();
-                Ok(Self::Name(name.to_owned()))
-            }
-            flag if flag.starts_with("-o") => {
-                let path = flag.split("=").last().unwrap();
-                let path = path.replace("~", std::env::var("HOME").unwrap().as_str());
-                let path = Path::new(&path);
-                if !path.exists() {
-                    return Err(Error::InvalidFlag("reverse".to_owned(), flag.to_owned()));
-                }
-                Ok(Self::OutputDirectory(path.to_path_buf()))
-            }
-            flag if flag.starts_with("-t") => {
-                let threshold = flag.split("=").last().unwrap();
-                let threshold = threshold
-                    .parse()
-                    .map_err(|_| Error::InvalidFlag("reverse".to_owned(), flag.to_owned()))?;
-                Ok(Self::Threshold(threshold))
-            }
-            _ => Err(Error::InvalidFlag("reverse".to_owned(), flag.to_owned())),
-        }
-    }
-}
-
-// Var paths:
-// - background.bars.bottombar = #ECEFF4
-// ==
-// [background.bars] //Group
-// bottombar = #ECEFF4
 pub fn reverse(
     template: ValidatedFile,
     theme: ValidatedFile,
     flags: Vec<String>,
 ) -> Result<(), Error> {
-    // p!(
-    //     "Template:\n{:?}\n\nTheme:\n{:?}\n\nFlags:\n{:?}",
-    //     template,
-    //     theme,
-    //     ReverseFlags::parse(&flags)?
-    // );
-
     let flags = ReverseFlags::parse(flags);
 
     // Step 1: Deserialize the template and theme files into Objects.
@@ -634,8 +617,8 @@ pub fn reverse(
     let mut template: Value = serde_json::from_reader(&template.file).map_err(|json_err| {
         Error::Processing(format!("Invalid template file json: {}", json_err))
     })?;
-    // .map_err(|e| Error::Processing(String::from("Invalid template json.")))?;
 
+    // Step 1.5: Traverse to the starting path if it exists.
     if let Some(starting_path) = flags.path {
         theme = starting_path
             .traverse(&theme)
@@ -656,7 +639,6 @@ pub fn reverse(
 
     let mut reverse = |theme: Value, template: Value, file_name: String| -> Result<(), Error> {
         // Step 2: Built Data Structures (Deletions, Overrides, Variables, Colors)
-        // let mut deletions: HashMap<String, Value> = get_deletions(&theme, &template);
         let var_diff = key_diff(&template, &theme, String::from(""), true);
         let override_diff = key_diff(&theme, &template, String::from(""), false);
         // d!(&var_diff, &override_diff);
@@ -709,8 +691,6 @@ pub fn reverse(
 
         // Step 7: Create Groupings
         // e.g varname "a.b.c" = 1, "a.b.d" = 2 should be [a.b] = {c = 1, d = 2}
-        // if group only has one key, then it should be merged with the parent group
-        // e.g varname "a.b.c" = 1 should be "a.b.c" = 1
         let mut grouped_json = json!({});
         for (var_name, var) in variables.to_map().into_iter() {
             let split = var_name.rsplit_once('.');
@@ -742,12 +722,6 @@ pub fn reverse(
             .map_err(|e| Error::Processing(format!("Could not create file: {}", e)))?;
         file.write_all(toml_output.as_bytes());
 
-        // p!("{}", &doc.to_string());
-
-        // p!("Variables:\n{}", display_vars(&variables, false));
-        // p!("Overrides:\n{}", display_vars(&overrides, true));
-        // p!("Deletions:\n{}", display_path(&deletions));
-        // deletion_diff.resolve_variables();
         Ok(())
     };
 

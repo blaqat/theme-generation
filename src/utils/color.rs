@@ -6,7 +6,7 @@ use std::ops::{Add, BitAnd, Div, Mul, Sub};
 use std::path::Display;
 use std::str::FromStr;
 
-/*
+/**
 Colors are hex strings that have easy access to their hue, saturation, value, and lightness.
 Valid Color Strings Include:
 - #RRGGBB
@@ -23,6 +23,7 @@ const MAX_RGB: i16 = 255;
 const MAX_SVA: i16 = 100;
 const MAX_HUE: i16 = 360;
 
+/// Checks if a string is XX where X is any character
 fn is_xx(s: &str) -> bool {
     s.len() == 2 && s.chars().next() == s.chars().nth(1)
 }
@@ -111,6 +112,18 @@ impl ColorComponent {
     }
 }
 
+/**
+Color Changes are represented mainly by
+(Component Operator Value)
+
+Examples
+    hue+10 saturation/2 red=2
+
+Components can be represented by the first letter of their name
+
+Examples
+    h+10 s/50 r=2
+*/
 #[derive(Debug, PartialEq, Clone, Hash, Eq)]
 pub struct ColorChange(pub ColorComponent, pub String);
 
@@ -216,16 +229,6 @@ fn get_operator(op: Option<char>) -> Result<&'static str, ColorError> {
     }
 }
 
-/*
-Color Changes are represented mainly by
-Component Operator Value
-Examples
-hue+10 saturation/2 red=2
-
-Components can be represented by the first letter of their name
-Examples
-h+10 s/50 r=2
-*/
 impl FromStr for ColorChange {
     type Err = ColorError;
 
@@ -238,10 +241,10 @@ impl FromStr for ColorChange {
         let op = get_operator(chars.next())?;
 
         // Special Alpha Append Operator
+        // #FF0000..XX == #FF0000XX
+        // VS Normal Alpha Set
+        // #FF0000.=XXX == #FF0000..(XXX * 2.55) (Alpha is 0-100)
         if op == "." {
-            // let val: i16 = i16::from_str_radix(&chars.collect::<String>(), 16)
-            //     .map_err(|_| ColorError::ColorOperator)?;
-            // let val: f32 = val as f32 / 255.0 * 100.0;
             let val = chars.collect::<String>();
             return Ok(color_change!(Hex.val));
         }

@@ -2,23 +2,25 @@ use crate::prelude::*;
 use palette::convert::IntoColorUnclampedMut;
 use std::{cell::RefCell, cmp::Ordering, io::Read, path::PathBuf, ptr::replace};
 
-// Generate:
-//     Description:
-//         - Template + Variables = GeneratedTheme
-//         - This generates a new file by substituting variables in the template file with values from the variable file.
-//         - This takes the Template as the source of truth. Things in the variable file that arent in the template will be ignored.
-//         - The generated file will be saved in the current directory.
-//     Usage:
-//         substitutor gen template_file variableFile [optional flags]
-//     Flags:
-//         -v	Toggles verbose logging for debug purposes
-//         -c originalTheme	Run substitutor check on originalTheme and generatedTheme
-//         -o directory	Set output directory of generatedTheme
-//         -n name	Set name of output theme file
+/**
+Generate:
+    Description:
+        - Template + Variables = GeneratedTheme
+        - This generates a new file by substituting variables in the template file with values from the variable file.
+        - This takes the Template as the source of truth. Things in the variable file that arent in the template will be ignored.
+        - The generated file will be saved in the current directory.
+    Usage:
+        substitutor gen template_file variableFile [optional flags]
+    Flags:
+        -o directory    Set output directory of variable file
+        -i directory    Set directory where the .toml files are located
+        -p path         Json Path to start the reverse process at
+        -n              Name of the output file
+        -r              Overwrite the output file of the same name if it exists
+*/
 
 #[derive(PartialEq, Debug)]
 pub enum GenerateFlags {
-    Verbose,
     OutputDirectory(PathBuf),
     InputDirectory(PathBuf),
     InnerPath(JsonPath),
@@ -28,7 +30,6 @@ pub enum GenerateFlags {
 
 #[derive(PartialEq, Debug)]
 pub struct Flags {
-    verbose: bool,
     replace_name: bool,
     output_directory: PathBuf, // Default to current directory
     input_directory: PathBuf,  // Default to current directory
@@ -49,7 +50,6 @@ impl GenerateFlags {
 
     pub fn parse(flags: Vec<String>) -> Flags {
         let flags = Self::into_vec(flags).unwrap();
-        let mut verbose = false;
         let mut check = false;
         let mut output_directory = PathBuf::from(".");
         let mut input_directory = PathBuf::from(".");
@@ -59,7 +59,6 @@ impl GenerateFlags {
 
         for flag in flags {
             match flag {
-                Self::Verbose => verbose = true,
                 Self::OutputDirectory(path) => output_directory = path,
                 Self::InputDirectory(path) => input_directory = path,
                 Self::Name(n) => name = n,
@@ -69,7 +68,6 @@ impl GenerateFlags {
         }
 
         Flags {
-            verbose,
             output_directory,
             input_directory,
             name,
@@ -95,7 +93,6 @@ impl FromStr for GenerateFlags {
             Ok(path.to_path_buf())
         };
         match flag {
-            "-v" => Ok(Self::Verbose),
             "-r" => Ok(Self::ReplaceName),
             flag if flag.starts_with("-n") => {
                 let name = flag.split("=").last().unwrap();
@@ -113,12 +110,6 @@ impl FromStr for GenerateFlags {
             }
             flag if flag.starts_with("-o") => {
                 let path = flag.split("=").last().unwrap();
-                // let path = path.replace("~", std::env::var("HOME").unwrap().as_str());
-                // let path = Path::new(&path);
-                // if !path.exists() {
-                //     return Err(Error::InvalidFlag("reverse".to_owned(), flag.to_owned()));
-                // }
-                // Ok(Self::OutputDirectory(path.to_path_buf()))
                 get_directory(flag.split("=").last().unwrap()).map(Self::OutputDirectory)
             }
             _ => Err(Error::InvalidFlag("reverse".to_owned(), flag.to_owned())),
@@ -221,7 +212,6 @@ mod steps {
                         c.update_ops(_operations.as_slice());
                         // d!(&c);
                         resolved = Value::String(c.to_string());
-                        // resolved = parsed.into_value();
                     }
                     ParsedValue::Null => unreachable!(),
                     v => resolved = v.into_value(),
@@ -303,13 +293,8 @@ pub fn generate(
     mut variables: Vec<ValidatedFile>,
     flags: Vec<String>,
 ) -> Result<(), Error> {
-    // p!(
-    //     "Template:\n{:?}\n\nToml:\n{:?}\n\nFlags:\n{:?}",
-    //     template,
-    //     variables,
-    //     GenerateFlags::into_vec(flags)?
-    // );
     let flags = GenerateFlags::parse(flags);
+
     let mut gen = |mut template: serde_json::Value,
                    variables: serde_json::Value|
      -> Result<serde_json::Value, Error> {
@@ -318,7 +303,7 @@ pub fn generate(
         // d!(&variables);
         let variables = steps::resolve_variables(&variables, &variables, &vec![]);
 
-        // Step 4: Apply Deletions
+        // Step 3: Apply Deletions
         if let Some(del_obj) = variables.get("deletions")
             && let Some(deletions) = del_obj.as_object().unwrap().get("keys")
         {
@@ -335,7 +320,7 @@ pub fn generate(
             }
         }
 
-        // Step 3: Match variables with template
+        // Step 4: Match variables with template
         let mut matches = steps::match_variables(&template, &variables);
         // d!(&matches);
 
@@ -398,6 +383,7 @@ pub fn generate(
     let mut is_array = false;
     let mut data: serde_json::Value = serde_json::Value::Null;
 
+    // Step 0: Traverse to the starting path if it exists
     if let Some(ref starting_path) = flags.path {
         template = starting_path
             .traverse(&template)
@@ -423,6 +409,7 @@ pub fn generate(
         make_new_files_per_variable = false;
     }
 
+    // Generate Per Each Variable.toml File
     for (i, variable) in variables.iter_mut().enumerate() {
         // d!(&variable);
         // Step 1: Deserialize the template and variable files into Objects.
@@ -438,7 +425,7 @@ pub fn generate(
         }
         .map_err(|json_err| Error::Processing(format!("Invalid variable toml: {}", json_err)))?;
 
-        // Generate the new theme file
+        // Step 2-5: Generate the variable matches
         let matches = gen(template.clone(), vars)?;
 
         if !make_new_files_per_variable {
@@ -448,10 +435,12 @@ pub fn generate(
                 data[i] = matches;
             }
         } else {
+            // Step 6: Write the new theme file
             write_to_file(&matches, !flags.replace_name);
         }
     }
 
+    // Step 6: Write the new theme file
     if !make_new_files_per_variable {
         let mut full = base.clone();
         flags.path.clone().unwrap().pave(&mut full, data.clone());
@@ -459,5 +448,4 @@ pub fn generate(
     }
 
     Ok(())
-    // todo!()
 }

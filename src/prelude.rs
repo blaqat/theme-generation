@@ -1,10 +1,14 @@
 //! Crate preulde
 pub use crate::*;
+
+/// External crates
 pub use anyhow;
 pub use either::Either;
 pub use notify::RecursiveMode;
 pub use notify_debouncer_mini::{new_debouncer, DebouncedEvent};
 pub use serde_json::{json, Map, Value};
+
+/// Standard library
 pub use std::{
     collections::{HashMap, HashSet as Set},
     dbg as d,
@@ -16,9 +20,11 @@ pub use std::{
     println as p,
     str::FromStr,
 };
+
+/// Internal modules
 pub use utils::*;
 
-// Red error macro
+/// Macros
 #[macro_export]
 macro_rules! error {
     ( $($args:expr),+ ) => {
@@ -37,7 +43,6 @@ macro_rules! ahh {
 macro_rules! dp {
     ( $($args:expr),+) => {
         d!($(format!("{}", $args)),+)
-        // d!(format!($({})+, $($args),+))
     };
 }
 

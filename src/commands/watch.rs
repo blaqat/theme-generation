@@ -1,17 +1,19 @@
 use crate::prelude::*;
-/// Watch Mode:
-///     Description:
-///         - Watch changes to .toml files in a directory or a specific file and generate the theme file on each change.
-///         - This makes it better to see live changes fast as you are making a theme
-///     Usage:
-///         substitutor watch templateFile variableFile|all [optional flags]
-///     Flags:
-///         -p path         Inner path to the theme in the theme file
-///         -o directory    Set output directory of generatedTheme
-///         -n name         Set name of output theme file
-///         -i directory    Set directory where the .toml files are located
 
-// commands::watch(&mut directory, template_file, variable_files, flags)
+/**
+Watch Mode:
+    Description:
+        - Watch changes to .toml files in a directory or a specific file and generate the theme file on each change.
+        - This makes it better to see live changes fast as you are making a theme
+    Usage:
+        substitutor watch templateFile variableFile|all [optional flags]
+    Flags:
+        -p path         Inner path to the theme in the theme file
+        -o directory    Set output directory of generatedTheme
+        -n name         Set name of output theme file
+        -i directory    Set directory where the .toml files are located
+*/
+
 pub fn watch(
     directory: PathBuf,
     template_file: ValidatedFile,
@@ -42,9 +44,6 @@ pub fn watch(
             Ok(ref event) if let Ok(ref event) = event => {
                 let variable_files = variable_files.iter().map(|v| v.clone()).collect();
                 commands::generate(template_file.clone(), variable_files, flags.clone())?;
-            }
-            Err(std::sync::mpsc::TryRecvError::Empty) => {
-                // No events to process, continue the loop
             }
             Ok(_) => {}
             Err(e) => {

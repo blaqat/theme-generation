@@ -79,9 +79,13 @@ impl Display for JsonKey {
     }
 }
 
-// JsonPath are strings that represent a path to a value in a JSON object.
-// For example /a/b/c would be the path to the value 3 in the object {"a": {"b": {"c": 3}}}
-// /a/1 would be the path to the value 2 in the object {"a": [1, 2, 3]}
+/**
+JsonPath are strings that represent a path to a value in a JSON object.
+
+For example /a/b/c would be the path to the value 3 in the object {"a": {"b": {"c": 3}}}
+
+/a/1 would be the path to the value 2 in the object {"a": [1, 2, 3]}
+*/
 #[derive(Debug, PartialEq, Clone, Eq, Hash)]
 pub struct JsonPath(Vec<JsonKey>);
 
