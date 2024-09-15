@@ -13,6 +13,8 @@ mod utils;
 const DEFAULT_ERROR_MESSAGE: &str =
     "Usage: substitutor [check|gen|rev] or substitutor help to get more information.";
 
+const DEFAULT_EDIT_DIRECTORY: &str = "~/.config/theme-substitutor/";
+
 #[derive(Debug, Clone)]
 enum FileType {
     Theme,
@@ -214,6 +216,7 @@ Edit Mode:
 */
 
 fn run(args: Vec<String>) -> Result<(), Error> {
+    // d!(&args);
     if args.len() < 2 {
         return Err(Error::NoCommand);
     }
@@ -307,48 +310,38 @@ fn run(args: Vec<String>) -> Result<(), Error> {
         }
 
         ValidCommands::Watch => {
-            // substitutor gen $"($template_file)" all -n=$"($out_name)" -p=/themes -o=~/.config/zed/themes/
             let (mut directory, template_file, variable_files) = get_generation_files()?;
 
-            // d!(&directory);
-            let (tx, rx) = std::sync::mpsc::channel();
-            let mut debouncer = new_debouncer(std::time::Duration::from_millis(100), tx)
-                .map_err(|e| Error::Processing(String::from("Error creating notify watcher.")))?;
-
-            let mut watcher = debouncer.watcher();
-
-            // d!(variable_files);
-
-            for file in &variable_files {
-                let mut path = directory.clone();
-                path.push(&file.name);
-                // d!(&path);
-
-                watcher
-                    .watch(&path, RecursiveMode::Recursive)
-                    .map_err(|e| Error::Processing(String::from("Error watching file.")))?;
-            }
-
-            loop {
-                match rx.try_recv() {
-                    Ok(ref event) if let Ok(ref event) = event => {
-                        let variable_files = variable_files.iter().map(|v| v.clone()).collect();
-                        commands::generate(template_file.clone(), variable_files, flags.clone())?;
-                    }
-                    Err(std::sync::mpsc::TryRecvError::Empty) => {
-                        // No events to process, continue the loop
-                    }
-                    Ok(_) => {}
-                    Err(e) => {
-                        error!("watch error: {:?}", e);
-                    }
-                }
-            }
-
-            Ok(())
+            commands::watch(directory, template_file, variable_files, flags)
         }
 
-        ValidCommands::Edit => todo!(),
+        ValidCommands::Edit => {
+            let edit_path = call_dir.clone();
+
+            let template_file = ValidatedFile::from_str(&command_args[0])?;
+            let theme_file = ValidatedFile::from_str(&command_args[1])?;
+            let mut watch_flags = flags.clone();
+            let reverse_flags = flags.into_iter().filter(|x| !x.starts_with("-o")).collect();
+            let watch_command = |name| {
+                vec!["", "watch", name, "all"]
+                    .into_iter()
+                    .map(String::from)
+                    .chain(watch_flags.clone())
+                    .collect::<Vec<String>>()
+            };
+
+            match (&template_file.file_type, &theme_file.file_type) {
+                (FileType::Template, FileType::Theme) => {
+                    commands::reverse(template_file.clone(), theme_file, reverse_flags)?;
+                    run(watch_command(&template_file.name))
+                }
+                (FileType::Theme, FileType::Template) => {
+                    commands::reverse(theme_file.clone(), template_file, reverse_flags)?;
+                    run(watch_command(&theme_file.name))
+                }
+                _ => Err(Error::InvalidFileType),
+            }
+        }
     }
 }
 
