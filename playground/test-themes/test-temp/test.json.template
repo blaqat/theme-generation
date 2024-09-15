@@ -7,6 +7,7 @@
 	"double-test": "$a|$b|$c",
 	"banana-test": "$banana",
 	"apple": "wf",
+	"AmIHappy?": "$testing.b",
 	"darker_apple": "$apple..50",
 	"lighter_apple": "$light_apple",
 	"banana": "$apple..(h=40, s-10)",

@@ -3,11 +3,8 @@ apple = "@red"
 banana = 2
 light_apple = "#FF8080"
 named_angels = "named"
-pear = "@red"
+pear = "#Fa0"
 transparent = "@red..00"
-a = 1
-b = 2
-c = 3
 
 # Theme Colors
 [color]
@@ -20,11 +17,13 @@ red = "#FF0000"
 "fruits" = { grapes = ["#8000FF", { a = "@red" }] }
 "list/2" = 3
 "number" = 4
-"pear_or_grape" = "#FF008840"
+"list/0" = "@red"
 
 # Deletions
 [deletions]
 keys = [
+	"/AmIHappy?",
 	"/a_real_evil_dooer_mwahahha",
-	"/angels/evil.dooer"
+	"/angels/evil.dooer",
+	"/double-test",
 ]

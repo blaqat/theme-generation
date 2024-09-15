@@ -211,7 +211,7 @@ color = "#f5e4d1"
 color = "@black"
 
 [syntax.string]
-color = "@dodgerblue"
+color = "#F00"
 weight = 400
 
 [syntax.string.regex]
