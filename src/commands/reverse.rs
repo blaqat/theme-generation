@@ -417,6 +417,14 @@ mod steps {
             ($var_name:ident=$from:expr) => {
                 let $var_name: toml::Value = {
                     match $from {
+                        // Value::Null => toml::Value::String(String::from(TOML_NULL)),
+                        // a => {
+                        //     d!(&a);
+                        //     serde_json::from_value(a).map_err(|json_err| {
+                        //         Error::Processing(format!("Unhandeled theme json: {}", json_err))
+                        //     })?
+                        // }
+                        a => into_toml(a)?,
                     }
                 };
             };

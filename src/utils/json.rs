@@ -3,6 +3,29 @@ use std::ops::Deref;
 
 pub mod serde_value {
     use super::*;
+    use toml::Value as t_Value;
+
+    pub fn into_toml(val: Value) -> Result<t_Value, Error> {
+        match val {
+            Value::Null => Ok(t_Value::String(crate::commands::TOML_NULL.to_string())),
+            Value::Array(a) => {
+                let mut arr = Vec::new();
+                for v in a.into_iter() {
+                    arr.push(into_toml(v)?);
+                }
+                Ok(t_Value::Array(arr))
+            }
+            Value::Object(o) => {
+                let mut map = toml::map::Map::new();
+                for (k, v) in o.into_iter() {
+                    map.insert(k.clone(), into_toml(v)?);
+                }
+                Ok(t_Value::Table(map))
+            }
+            a => serde_json::from_value(a)
+                .map_err(|e| Error::Processing(format!("Unhandeled theme json: {}", e))),
+        }
+    }
 
     pub fn same_type(a: &Value, b: &Value) -> bool {
         matches!(
