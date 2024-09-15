@@ -107,7 +107,7 @@ mod steps {
 
     pub fn resolve_variables(
         var_diff: &KeyDiffInfo,
-        mut overrides: Set<ResolvedVariable>,
+        overrides: Set<ResolvedVariable>,
     ) -> (VariableSet, VariableSet) {
         let res_var_diff = var_diff
             .parsed_vars
@@ -116,8 +116,8 @@ mod steps {
             .map(ResolvedVariable::from_src)
             .collect::<Vec<_>>();
 
-        let mut var_set = VariableSet::new();
-        let mut unvar_set = VariableSet::new();
+        let var_set = VariableSet::new();
+        let unvar_set = VariableSet::new();
 
         for var in res_var_diff {
             let name = var.name().to_string();
@@ -129,7 +129,7 @@ mod steps {
             unvar_set.safe_insert(&name, o);
         }
 
-        let (mut pointers, mut unresolved_vars): (Vec<_>, Vec<_>) = var_set
+        let (pointers, unresolved_vars): (Vec<_>, Vec<_>) = var_set
             .get_unresolved()
             .into_iter()
             .partition(|v| v.is_pointer());
@@ -147,7 +147,6 @@ mod steps {
                         .unwrap();
 
                     let identity = unresolved_var.identity();
-                    let value = unresolved_var.value.clone();
 
                     unresolved_set
                         .entry(var_name.clone())
@@ -186,7 +185,7 @@ mod steps {
                     });
                 });
 
-            let mut imv = iden_map
+            let imv = iden_map
                 .values()
                 .map(|v| {
                     let mut v = v.clone();
@@ -200,8 +199,8 @@ mod steps {
                 imv.iter().partition(|v| v.len() == max_len);
             max.dedup();
             rest.dedup();
-            let (mut first, max_rest) = (max.first().unwrap(), max.clone());
-            let mut first_found = first.first().unwrap();
+            let (first, max_rest) = (max.first().unwrap(), max.clone());
+            let first_found = first.first().unwrap();
             let mut first_var = first_found.1.clone();
             let identity = iden_map
                 .iter()
@@ -213,13 +212,13 @@ mod steps {
             var_set.insert(&var_name.join(), first_var);
 
             rest.extend(max_rest);
-            let mut rest = rest
+            let rest = rest
                 .into_iter()
                 .flatten()
                 .filter(|v| !first.contains(v))
                 .collect::<Vec<_>>();
 
-            for (s, u) in &rest {
+            for (_, u) in &rest {
                 // STILL A CHANCE!
                 let mut first = true;
                 let mut inserted = false;
@@ -235,11 +234,6 @@ mod steps {
                     new.next();
                     match new_new.next() {
                         Some(next) if !var_set.has_variable(&next.name) => {
-                            let identity = iden_map
-                                .iter()
-                                .find(|(_, v)| v.contains(&(s.clone(), *u)))
-                                .unwrap()
-                                .0;
                             unvar_set.insert(&next.name, new);
                             inserted = true;
                         }
@@ -321,38 +315,6 @@ mod steps {
         info
     }
 
-    fn display_vars(v: &VariableSet, path: bool) -> String {
-        let mut out = String::new();
-
-        let v = {
-            match path {
-                true => v.path_sorted(),
-                _ => v.sorted(),
-            }
-        };
-
-        for res in v {
-            let var = match (path) {
-                true => format!("{}", res.path),
-                _ => res.name(),
-            };
-            let val = res.value.to_string();
-            out.push_str(&format!("- {} = {}\n", var, val));
-        }
-        out
-    }
-
-    fn display_path(v: &Set<JsonPath>) -> String {
-        // format!("- {}", v.to_string())
-        let mut out = String::new();
-        let mut v = v.iter().collect::<Vec<_>>();
-        v.sort_by_key(|p| p.to_string());
-        for path in v {
-            out.push_str(&format!("- {}\n", path));
-        }
-        out
-    }
-
     fn get_nested_values(j: &Value) -> Vec<Value> {
         match j {
             Value::Object(map) => map.values().flat_map(get_nested_values).collect(),
@@ -368,11 +330,6 @@ mod steps {
             |n: &str, map: &ColorMap| map.values().filter(|(name, _)| name.starts_with(n)).count();
 
         let mut update_color_map = |col: &Color| {
-            let mut name = col.get_name();
-            if name == "404" {
-                name = format!("color.{}", color_map.keys().len() + 1)
-            }
-
             let mut name = match col.get_name().as_str() {
                 "404" => format!("color.{}", color_map.keys().len()),
                 s => s.to_owned(),
@@ -470,7 +427,7 @@ mod steps {
                             }
                             ParsedValue::Value(v) => new_obj.insert(key.to_owned(), v),
                             ParsedValue::Null => new_obj.insert(key.to_owned(), Value::Null),
-                            ParsedValue::Color(c) => unreachable!(),
+                            ParsedValue::Color(_) => unreachable!(),
                             ParsedValue::Variables(_) => unreachable!(),
                         };
                     }
@@ -538,7 +495,7 @@ mod steps {
 
         w!("\n# Theme Colors");
         w!("[color]");
-        for (k, v) in data.iter().filter(|(k, _)| *k == "color") {
+        for (_, v) in data.iter().filter(|(k, _)| *k == "color") {
             for (color, value) in v
                 .as_table()
                 .unwrap()
@@ -589,7 +546,7 @@ mod steps {
         w!("keys = [");
         for (i, d) in deletions
             .iter()
-            .sorted_by(|(a), (b)| a.to_string().cmp(&b.to_string()))
+            .sorted_by(|a, b| a.to_string().cmp(&b.to_string()))
             .enumerate()
         {
             if i == deletions.len() - 1 {
@@ -637,20 +594,20 @@ pub fn reverse(
         }
     }
 
-    let mut reverse = |theme: Value, template: Value, file_name: String| -> Result<(), Error> {
+    let reverse = |theme: Value, template: Value, file_name: String| -> Result<(), Error> {
         // Step 2: Built Data Structures (Deletions, Overrides, Variables, Colors)
         let var_diff = key_diff(&template, &theme, String::from(""), true);
         let override_diff = key_diff(&theme, &template, String::from(""), false);
         // d!(&var_diff, &override_diff);
 
-        let mut overrides: Set<_> = override_diff
+        let overrides: Set<_> = override_diff
             .missing
             .iter()
             .chain(override_diff.collisions.iter())
             .map(|key| ResolvedVariable::from_path(key, &theme))
             .collect();
 
-        let mut deletions: Set<_> = var_diff
+        let deletions: Set<_> = var_diff
             .missing
             .iter()
             .map(|key| key.parse::<JsonPath>().unwrap())
@@ -661,7 +618,7 @@ pub fn reverse(
         drop(var_diff);
 
         // Step 4: Build Color Redundancy Map & Replace Colors
-        let mut color_map = to_color_map(&variables, &overrides);
+        let color_map = to_color_map(&variables, &overrides);
         // d!(&color_map);
 
         // Step 5: Replace Colors In variables and overrides limited by threshold
@@ -683,7 +640,6 @@ pub fn reverse(
             if v.len() < flags.threshold {
                 continue;
             }
-            let first = v.first().unwrap();
             let var = ResolvedVariable::init(color, ParsedValue::String(value.to_owned()));
             variables.inc_insert(color, var);
         }
@@ -706,7 +662,7 @@ pub fn reverse(
                 continue;
             }
 
-            path.pave(&mut grouped_json, var.value.into_value());
+            path.pave(&mut grouped_json, var.value.into_value())?;
         }
 
         // Step 8: Build the Toml Output
@@ -720,13 +676,14 @@ pub fn reverse(
 
         let mut file = File::create(out_file)
             .map_err(|e| Error::Processing(format!("Could not create file: {}", e)))?;
-        file.write_all(toml_output.as_bytes());
+        file.write_all(toml_output.as_bytes())
+            .map_err(|e| Error::Processing(format!("Could not write to file: {}", e)))?;
 
         Ok(())
     };
 
     match (&theme, &template) {
-        (Value::Object(t), Value::Object(te)) => {
+        (Value::Object(_), Value::Object(_)) => {
             reverse(theme, template, flags.name)?;
         }
         (Value::Array(theme), Value::Array(template)) => {

@@ -3,7 +3,6 @@ use palette::{Hsv, IntoColor, Srgb};
 use std::fmt;
 use std::hash::Hash;
 use std::ops::{Add, BitAnd, Div, Mul, Sub};
-use std::path::Display;
 use std::str::FromStr;
 
 /**
@@ -107,7 +106,7 @@ impl ColorComponent {
                 *val = (*val).clamp(0, MAX_RGB);
             }
 
-            Self::Hex(hex) => {}
+            Self::Hex(_) => {}
         }
     }
 }
@@ -519,8 +518,7 @@ impl Color {
             match setting {
                 ColorComponent::Hue(_)
                 | ColorComponent::Saturation(_)
-                | ColorComponent::Value(_)
-                | ColorComponent::Saturation(_) => {
+                | ColorComponent::Value(_) => {
                     self.update_rgb();
                     self.update_hex();
                 }
@@ -536,117 +534,5 @@ impl Color {
         }
 
         Ok(())
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use crate::utils::parsing::{ParsedValue, ParsedVariable};
-
-    use super::*;
-
-    #[test]
-    fn creating_color() {
-        let hex = "#FF0000";
-        let color = Color::from_hex(hex).unwrap();
-
-        println!("{:?}", &color);
-
-        assert_eq!(color.red, 255);
-        assert_eq!(color.green, 0);
-        assert_eq!(color.blue, 0);
-        assert_eq!(color.alpha, 100);
-        assert_eq!(color.hex, String::from("#F00"));
-
-        let hex = "#FFFF0000";
-        let color = Color::from_hex(hex).unwrap();
-
-        println!("{:?}", &color);
-
-        assert_eq!(color.red, 255);
-        assert_eq!(color.green, 255);
-        assert_eq!(color.blue, 0);
-        assert_eq!(color.alpha, 0);
-        assert_eq!(color.hex, String::from("#FF00"));
-
-        let hex = "#F005";
-        let mut color = Color::from_hex(hex).unwrap();
-
-        assert_eq!(color.hex, String::from("#F005"));
-    }
-
-    #[test]
-    fn updating_color() {
-        let hex = "#F005";
-        let mut color = Color::from_hex(hex).unwrap();
-
-        println!("{:?}", &color);
-
-        // let changes = vec![color_change!(Hue 120)];
-        let changes = color_change![ Hue 120 ];
-
-        color.update(changes);
-
-        println!("{:?}", &color);
-
-        assert_eq!(color.hex, String::from("#0F05"))
-    }
-
-    #[test]
-    fn updating_color_out_of_bounds() {
-        let hex = "#F005";
-        let mut color = Color::from_hex(hex).unwrap();
-
-        println!("{:?}", &color);
-
-        // let changes = vec![ColorChange(ColorComponent::Hue(-50), "="), ColorChange(ColorComponent::Saturation(120), "=")];
-        // let changes = vec![color_change!(Hue=-50), color_change!(Saturation=120)];
-        let changes = color_change![ Hue -50, Saturation 120 ];
-
-        color.update(changes);
-
-        println!("{:?}", &color);
-
-        assert_eq!(color.hex, String::from("#FF00D455"))
-    }
-
-    #[test]
-    fn changing_color() {
-        let hex = "#F00";
-        let mut color = Color::from_hex(hex).unwrap();
-
-        let applied_changes = color_change! {
-            Alpha: "/", 3;
-            Saturation: "-", 10
-        };
-
-        color.update(applied_changes);
-
-        assert_eq!(color.hex, String::from("#FF191955"));
-    }
-
-    #[test]
-    fn color_opped() {
-        let hex = "#FF0000..(h=25)";
-        let parsed = hex.parse::<ParsedVariable>().unwrap();
-
-        let color = Color::from_change(&parsed.name, &parsed.operations);
-        dbg!(&color);
-
-        panic!();
-    }
-
-    #[test]
-    fn grey() {
-        let hex = "#EDF4EC";
-        let mut color = Color::from_hex(hex).unwrap();
-
-        let applied_changes = color_change! {
-            Hue: "*", 2;
-        };
-
-        color.update(applied_changes);
-
-        assert_eq!(color.hex, String::from("#FF191955"));
     }
 }

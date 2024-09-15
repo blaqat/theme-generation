@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use serde_json::{json, Map, Value};
+use serde_json::{json, Value};
 
 /**
 Check:
@@ -21,13 +21,6 @@ pub struct DiffInfo {
 }
 
 impl DiffInfo {
-    pub fn new(diffs: Vec<String>) -> Self {
-        DiffInfo {
-            diffs,
-            total_keys: 0,
-        }
-    }
-
     fn merge(mut self, other: DiffInfo) -> Self {
         self.diffs.extend(other.diffs);
         self.diffs.sort();

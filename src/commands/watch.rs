@@ -23,9 +23,9 @@ pub fn watch(
     // d!(&directory);
     let (tx, rx) = std::sync::mpsc::channel();
     let mut debouncer = new_debouncer(std::time::Duration::from_millis(100), tx)
-        .map_err(|e| Error::Processing(String::from("Error creating notify watcher.")))?;
+        .map_err(|_| Error::Processing(String::from("Error creating notify watcher.")))?;
 
-    let mut watcher = debouncer.watcher();
+    let watcher = debouncer.watcher();
 
     // d!(variable_files);
 
@@ -36,19 +36,17 @@ pub fn watch(
 
         watcher
             .watch(&path, RecursiveMode::Recursive)
-            .map_err(|e| Error::Processing(String::from("Error watching file.")))?;
+            .map_err(|e| Error::Processing(format!("Error watching file. {}", e)))?;
     }
 
     loop {
         match rx.try_recv() {
-            Ok(ref event) if let Ok(ref event) = event => {
+            Ok(ref event) if let Ok(_) = event => {
                 let variable_files = variable_files.iter().map(|v| v.clone()).collect();
                 commands::generate(template_file.clone(), variable_files, flags.clone())?;
             }
             Ok(_) => {}
-            Err(e) => {
-                error!("watch error: {:?}", e);
-            }
+            Err(_) => {}
         }
     }
 }

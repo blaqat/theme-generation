@@ -5,16 +5,15 @@ pub use crate::*;
 pub use anyhow;
 pub use either::Either;
 pub use notify::RecursiveMode;
-pub use notify_debouncer_mini::{new_debouncer, DebouncedEvent};
+pub use notify_debouncer_mini::new_debouncer;
 pub use serde_json::{json, Map, Value};
 
 /// Standard library
 pub use std::{
     collections::{HashMap, HashSet as Set},
-    dbg as d,
     env::args,
     fmt::{self, Display, Write as _},
-    fs::{read_dir, File},
+    fs::File,
     io::Write as _,
     path::{Path, PathBuf},
     println as p,

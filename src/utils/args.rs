@@ -1,5 +1,5 @@
 use crate::prelude::*;
-const DEFAULT_EDIT_DIRECTORY: &str = "~/.config/theme-substitutor/";
+// const DEFAULT_EDIT_DIRECTORY: &str = "~/.config/theme-substitutor/";
 
 #[derive(Debug, Clone)]
 enum FileType {
@@ -76,30 +76,6 @@ impl ValidatedFile {
         }
 
         Ok(files)
-    }
-
-    fn from_file(file: File, path: &Path) -> Result<Self, Error> {
-        let format = path
-            .extension()
-            .and_then(|e| e.to_str())
-            .ok_or(Error::InvalidFile(String::from(path.to_str().unwrap())))?
-            .to_owned();
-
-        let file_type = match format.as_str() {
-            "json" => FileType::Theme,
-            "toml" => FileType::Variable,
-            "template" => FileType::Template,
-            _ => return Err(Error::InvalidIOFormat(format)),
-        };
-
-        let name = path.to_str().unwrap().to_owned();
-
-        Ok(Self {
-            format,
-            file,
-            name,
-            file_type,
-        })
     }
 }
 
@@ -212,7 +188,7 @@ pub fn run_command(args: Vec<String>) -> Result<(), Error> {
             commands::help(help_command);
             Ok(())
         }
-        (command) if command_args.len() < 2 => Err(Error::NotEnoughArguments(command)),
+        command if command_args.len() < 2 => Err(Error::NotEnoughArguments(command)),
         ValidCommands::Check => {
             let file1 = ValidatedFile::from_str(&command_args[0])?;
             let file2 = ValidatedFile::from_str(&command_args[1])?;
@@ -239,17 +215,15 @@ pub fn run_command(args: Vec<String>) -> Result<(), Error> {
         }
 
         ValidCommands::Watch => {
-            let (mut directory, template_file, variable_files) = get_generation_files()?;
+            let (directory, template_file, variable_files) = get_generation_files()?;
 
             commands::watch(directory, template_file, variable_files, flags)
         }
 
         ValidCommands::Edit => {
-            let edit_path = call_dir.clone();
-
             let template_file = ValidatedFile::from_str(&command_args[0])?;
             let theme_file = ValidatedFile::from_str(&command_args[1])?;
-            let mut watch_flags = flags.clone();
+            let watch_flags = flags.clone();
             let reverse_flags = flags.into_iter().filter(|x| !x.starts_with("-o")).collect();
             let watch_command = |name| {
                 vec!["", "watch", name, "all"]

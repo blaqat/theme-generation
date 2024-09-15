@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use std::{cell::RefCell, cmp::Ordering, path::PathBuf};
+use std::cell::RefCell;
 
 type VarNames = Vec<String>;
 const UNRESOLVED_POINTER_CONST: usize = 2497;
@@ -72,19 +72,6 @@ impl ParsedValue {
         }
     }
 
-    fn identity(&self, ops: &ColorOperations) -> Self {
-        let iden_ops = ColorChange::identity_op(ops);
-        match self {
-            ParsedValue::Color(c) => {
-                let mut color = c.clone();
-                _ = color.update(iden_ops);
-                let color_str = color.to_string();
-                ParsedValue::String(color_str)
-            }
-            v => v.clone(),
-        }
-    }
-
     fn identity_ops(&self, ops: Vec<&ColorOperations>) -> Self {
         let iden_ops = ColorChange::identity_ops(ops);
         match self {
@@ -105,14 +92,7 @@ pub struct ParsedVariable {
     pub operations: ColorOperations,
 }
 
-impl ParsedVariable {
-    pub fn new() -> Self {
-        Self {
-            name: String::new(),
-            operations: Vec::new(),
-        }
-    }
-}
+impl ParsedVariable {}
 
 impl Display for ParsedVariable {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -187,15 +167,6 @@ pub struct ResolvedVariable {
 }
 
 impl<'a> ResolvedVariable {
-    pub fn new() -> Self {
-        Self {
-            path: JsonPath::new(),
-            value: ParsedValue::Null,
-            variables: Vec::new(),
-            resolved_id: None,
-        }
-    }
-
     pub fn init(name: &str, value: ParsedValue) -> Self {
         let variable = ParsedVariable {
             name: name.to_string(),
@@ -216,15 +187,6 @@ impl<'a> ResolvedVariable {
             value: ParsedValue::Variables(Vec::from_iter(unresolved_paths.iter().cloned())),
             variables: Vec::new(),
             resolved_id: Some(UNRESOLVED_POINTER_CONST),
-        }
-    }
-
-    fn from_parsed(path: String, value: ParsedValue, variable: ParsedVariable) -> Self {
-        Self {
-            path: path.parse::<JsonPath>().unwrap(),
-            value,
-            variables: vec![variable],
-            resolved_id: Some(0),
         }
     }
 
@@ -265,11 +227,6 @@ impl<'a> ResolvedVariable {
         }
     }
 
-    fn has_next(&self) -> bool {
-        self.resolved_id
-            .map_or(!self.variables.is_empty(), |i| i + 1 < self.variables.len())
-    }
-
     fn is_resolvable(&self) -> bool {
         match self.resolved_id {
             Some(i) => i < self.variables.len(),
@@ -304,16 +261,6 @@ impl<'a> ResolvedVariable {
         self.resolved_id = None;
     }
 
-    fn next_id(&mut self) {
-        let i = self.resolved_id.map(|i| i + 1).unwrap_or(0);
-
-        if i < self.variables.len() {
-            self.resolved_id.replace(i);
-        } else {
-            self.resolved_id = None;
-        }
-    }
-
     pub fn next(&mut self) -> Option<&ParsedVariable> {
         let i = self.resolved_id.map(|i| i + 1).unwrap_or(0);
 
@@ -342,15 +289,11 @@ impl<'a> ResolvedVariable {
                     .map(|v| v.operations)
                     .collect();
 
-                b.update_ops(&ops);
-
-                // if !a.eq(&b) {
-                //     d!(&a, &b);
-                // }
+                let _ = b.update_ops(&ops);
 
                 *a == b
             }
-            (ParsedValue::Color(a), ParsedValue::String(b))
+            (ParsedValue::Color(_), ParsedValue::String(b))
                 if let Ok(color) = b.parse::<Color>() =>
             {
                 self.results_from(&ParsedValue::Color(color))
@@ -401,50 +344,6 @@ impl SourcedVariable {
             variables,
         }
     }
-
-    /// List of Reversed values if value is a Color and Operations are present
-    fn reversed_values(&self) -> Vec<Color> {
-        if let ParsedValue::Color(color) = &self.value {
-            self.variables
-                .iter()
-                .filter_map(|v| match v {
-                    Either::Right(var) if !var.operations.is_empty() => Some(&var.operations),
-                    _ => None,
-                })
-                .rev()
-                .fold(vec![], |mut acc, op| {
-                    let mut new_color = color.clone();
-                    let inverse = ColorChange::inverse(op);
-                    print!("\n\nOP {} {:?}", &new_color, inverse);
-                    new_color.update(inverse);
-                    p!(" -> {}\n\n", &new_color);
-                    acc.push(new_color);
-                    acc
-                })
-        } else {
-            vec![]
-        }
-    }
-
-    fn filter_used(&self, used: &HashMap<String, bool>) -> Self {
-        let variables = self
-            .variables
-            .iter()
-            .filter_map(|v| match v {
-                Either::Left(var) if used.contains_key(var) => Some(Either::Left(var.to_string())),
-                Either::Right(var) if used.contains_key(&var.name) => {
-                    Some(Either::Right(var.to_owned()))
-                }
-                _ => None,
-            })
-            .collect();
-
-        Self {
-            path: self.path.to_string(),
-            value: self.value.to_owned(),
-            variables,
-        }
-    }
 }
 
 #[derive(Debug)]
@@ -492,31 +391,11 @@ pub struct VariableSet {
     variables: RefCell<HashMap<String, ResolvedVariable>>,
 }
 
-impl<'a> VariableSet {
+impl VariableSet {
     pub fn new() -> Self {
         Self {
             variables: RefCell::new(HashMap::new()),
         }
-    }
-
-    fn from_slice(vars: &'a [ResolvedVariable]) -> Self {
-        Self {
-            variables: RefCell::new(
-                vars.iter()
-                    .map(|v| match v.resolved() {
-                        Some(var) => (var.name.to_string(), v.to_owned()),
-                        None => (v.path.to_string(), v.to_owned()),
-                    })
-                    .collect(),
-            ),
-        }
-    }
-
-    fn get(&self, name: &str) -> Option<impl std::ops::Deref<Target = ResolvedVariable> + '_> {
-        self.variables
-            .borrow()
-            .get(name)
-            .map(|v| std::cell::Ref::map(self.variables.borrow(), |m| m.get(name).unwrap()))
     }
 
     pub fn has_variable(&self, name: &str) -> bool {
@@ -584,19 +463,6 @@ impl<'a> VariableSet {
         self.variables.borrow().clone()
     }
 
-    fn get_set(&self) -> HashMap<String, ResolvedVariable> {
-        self.variables.borrow().clone()
-    }
-
-    fn get_resolved(&self) -> Vec<ResolvedVariable> {
-        self.variables
-            .borrow()
-            .values()
-            .filter(|v| v.is_resolvable())
-            .cloned()
-            .collect()
-    }
-
     pub fn get_unresolved(&self) -> Vec<ResolvedVariable> {
         self.variables
             .borrow()
@@ -606,58 +472,15 @@ impl<'a> VariableSet {
             .collect()
     }
 
-    pub fn sorted(&self) -> Vec<ResolvedVariable> {
-        let mut vars: Vec<_> = self.to_vec();
-
-        vars.sort_by(|a, b| match (a.resolved(), b.resolved()) {
-            (Some(a), Some(b)) => a.name.cmp(&b.name),
-            (Some(a), None) => Ordering::Less,
-            (None, Some(_)) => Ordering::Greater,
-            _ => Ordering::Equal,
-        });
-
-        vars
-    }
-
     pub fn resolve(&self) {
         let mut vars = self.variables.borrow_mut();
 
-        let mut resolved = vars
+        let resolved = vars
             .clone()
             .into_iter()
             .filter(|(_, v)| v.is_resolvable())
             .collect::<HashMap<_, _>>();
 
         *vars = resolved;
-    }
-
-    pub fn path_sorted(&self) -> Vec<ResolvedVariable> {
-        let mut vars: Vec<_> = self.to_vec();
-        vars.sort_by(|a, b| a.path.to_string().cmp(&b.path.to_string()));
-        vars
-    }
-
-    fn is_resolvable(&self) -> bool {
-        self.variables.borrow().values().all(|v| v.is_resolvable())
-    }
-}
-
-mod test {
-    use super::*;
-    use utils::parsing::ParsedVariable;
-    #[test]
-    fn test_results_from() {
-        let mut a = ResolvedVariable::new();
-        let mut pa = ParsedVariable::new();
-        pa.name = "a".to_string();
-        pa.operations = color_change! {
-            Red: "+", 30;
-        };
-        a.variables = vec![pa];
-        a.value = ParsedValue::Color(Color::from_hex("#ECEFF4").unwrap());
-
-        let b = ParsedValue::Color(Color::from_hex("#CEEFF4").unwrap());
-
-        assert!(a.results_from(&b));
     }
 }

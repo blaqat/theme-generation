@@ -1,6 +1,5 @@
 use crate::prelude::*;
-use palette::convert::IntoColorUnclampedMut;
-use std::{cell::RefCell, cmp::Ordering, io::Read, path::PathBuf, ptr::replace};
+use std::{io::Read, path::PathBuf};
 
 /**
 Generate:
@@ -50,7 +49,6 @@ impl GenerateFlags {
 
     pub fn parse(flags: Vec<String>) -> Flags {
         let flags = Self::into_vec(flags).unwrap();
-        let mut check = false;
         let mut output_directory = PathBuf::from(".");
         let mut input_directory = PathBuf::from(".");
         let mut name = String::from("generated-theme");
@@ -106,11 +104,11 @@ impl FromStr for GenerateFlags {
             }
             flag if flag.starts_with("-i") => {
                 let path = flag.split("=").last().unwrap();
-                get_directory(flag.split("=").last().unwrap()).map(Self::InputDirectory)
+                get_directory(path).map(Self::InputDirectory)
             }
             flag if flag.starts_with("-o") => {
                 let path = flag.split("=").last().unwrap();
-                get_directory(flag.split("=").last().unwrap()).map(Self::OutputDirectory)
+                get_directory(path).map(Self::OutputDirectory)
             }
             _ => Err(Error::InvalidFlag("reverse".to_owned(), flag.to_owned())),
         }
@@ -146,9 +144,9 @@ mod steps {
             }
             Value::String(s) if s.contains("$self") => {
                 let self_key = key.get(key.len() - 2).unwrap_or(&"");
-                let mut new_s = s.replace("$self.", self_key);
+                let s = s.replace("$self.", self_key);
                 // d!(&new_s);
-                Value::String(new_s)
+                Value::String(s)
             }
             _ => source.clone(),
         }
@@ -171,7 +169,7 @@ mod steps {
 
             Value::Array(arr) => {
                 let mut res_arr = Vec::with_capacity(arr.len());
-                for (i, value) in arr.iter().enumerate() {
+                for value in arr.iter() {
                     res_arr.push(resolve_variables(value, _source, _operations));
                 }
                 resolved = Value::Array(res_arr);
@@ -209,7 +207,7 @@ mod steps {
                         let mut c = c.clone();
                         // d!(_operations);
                         // d!(&c);
-                        c.update_ops(_operations.as_slice());
+                        let _ = c.update_ops(_operations.as_slice());
                         // d!(&c);
                         resolved = Value::String(c.to_string());
                     }
@@ -240,7 +238,7 @@ mod steps {
                             && let Ok(parsed) = v.parse::<ParsedValue>()
                             && let ParsedValue::Color(mut color) = parsed =>
                     {
-                        color.update(ops);
+                        let _ = color.update(ops);
                         Value::String(color.to_string())
                     }
                     Value::Null if var.len() > 1 => {
@@ -263,8 +261,8 @@ mod steps {
                 }
                 serde_json::Value::Array(a) => {
                     let mut new_arr = Vec::with_capacity(a.len());
-                    for (i, value) in a.iter().enumerate() {
-                        if let Value::Object(v) = value {
+                    for value in a.iter() {
+                        if let Value::Object(_) = value {
                             new_arr.push(match_variables(value, variables));
                         } else if let Value::String(v) = value
                             && let Ok(parsed) = v.parse::<ParsedValue>()
@@ -276,7 +274,7 @@ mod steps {
                     }
                     new_data[key] = Value::Array(new_arr);
                 }
-                serde_json::Value::Object(o) => {
+                serde_json::Value::Object(_) => {
                     new_data[key] = match_variables(value, variables);
                 }
 
@@ -295,8 +293,8 @@ pub fn generate(
 ) -> Result<(), Error> {
     let flags = GenerateFlags::parse(flags);
 
-    let mut gen = |mut template: serde_json::Value,
-                   variables: serde_json::Value|
+    let gen = |mut template: serde_json::Value,
+               variables: serde_json::Value|
      -> Result<serde_json::Value, Error> {
         // Step 2: Resolve recursive variables
         let variables = steps::resolve_self_variables(&variables, &vec!["$"]);
@@ -316,7 +314,7 @@ pub fn generate(
                     ))
                 })?;
 
-                let found = path.remove(&mut template);
+                path.remove(&mut template)?;
             }
         }
 
@@ -331,7 +329,7 @@ pub fn generate(
                 let path = key.parse::<JsonPath>().map_err(|_| {
                     Error::Processing(format!("Invalid path in overrides: {}", key))
                 })?;
-                path.pave(&mut matches, value.clone());
+                path.pave(&mut matches, value.clone())?;
             }
         }
 
@@ -358,7 +356,6 @@ pub fn generate(
 
         out_file.push(&file_name);
         if generate_names {
-            let mut loop_num = 0;
             let mut new_name = String::from("");
             while out_file.exists() {
                 write!(new_name, "new-").unwrap();
@@ -371,15 +368,15 @@ pub fn generate(
 
         let mut file = File::create(out_file)
             .map_err(|e| Error::Processing(format!("Could not create file: {}", e)))?;
-        file.write_all(json_output.as_bytes());
+        file.write_all(json_output.as_bytes())
+            .map_err(|e| Error::Processing(format!("Could not write to file: {}", e)))?;
         Ok(())
     };
 
-    let mut base: serde_json::Value = serde_json::from_reader(&template.file)
+    let base: serde_json::Value = serde_json::from_reader(&template.file)
         .map_err(|json_err| Error::Processing(format!("Invalid template json: {}", json_err)))?;
     let mut template: serde_json::Value = base.clone();
     let mut make_new_files_per_variable = true;
-    let mut has_made_file = false;
     let mut is_array = false;
     let mut data: serde_json::Value = serde_json::Value::Null;
 
@@ -436,15 +433,15 @@ pub fn generate(
             }
         } else {
             // Step 6: Write the new theme file
-            write_to_file(&matches, !flags.replace_name);
+            write_to_file(&matches, !flags.replace_name)?;
         }
     }
 
     // Step 6: Write the new theme file
     if !make_new_files_per_variable {
         let mut full = base.clone();
-        flags.path.clone().unwrap().pave(&mut full, data.clone());
-        write_to_file(&full, false);
+        flags.path.clone().unwrap().pave(&mut full, data.clone())?;
+        write_to_file(&full, false)?;
     }
 
     Ok(())

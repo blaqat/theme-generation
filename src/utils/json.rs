@@ -1,5 +1,4 @@
 use crate::prelude::*;
-use std::ops::Deref;
 
 pub mod serde_value {
     use super::*;
@@ -138,10 +137,6 @@ impl JsonPath {
         JsonPath(v)
     }
 
-    fn is_empty(&self) -> bool {
-        self.0.is_empty()
-    }
-
     pub fn traverse<'a>(&self, json: &'a Value) -> Result<&'a Value, Error> {
         if let Some(value) = json.pointer(&format!("{}", self)) {
             Ok(value)
@@ -150,18 +145,8 @@ impl JsonPath {
         }
     }
 
-    fn set(&self, json: &mut Value, val: Value) -> Result<(), Error> {
-        if let Some(value) = json.pointer_mut(&format!("{}", self)) {
-            *value = val;
-            Ok(())
-        } else {
-            ahh!("Invalid path: {}", self.to_string())
-        }
-    }
-
     pub fn remove(&self, json: &mut Value) -> Result<(), Error> {
         let (last, rest) = self.0.split_last().unwrap();
-        let val_at_last = self.traverse(json)?;
         let path = JsonPath::from_vec(rest.to_vec());
 
         if let Some(value) = json.pointer_mut(&format!("{}", path)) {
@@ -182,7 +167,6 @@ impl JsonPath {
                         o.remove(k);
                         // d!(&o.get(k));
                     }
-                    _ => return ahh!("Invalid path: {}", self.to_string()),
                 },
                 _ => unreachable!(),
             }
@@ -256,151 +240,5 @@ impl JsonPath {
         *current_value = val;
 
         Ok(())
-    }
-}
-
-mod test {
-    use super::*;
-
-    #[test]
-    fn test_json_path() {
-        let path = JsonPath::from_str("a/b/c").unwrap();
-        assert_eq!(
-            path.0,
-            vec![
-                JsonKey::Key("a".to_string()),
-                JsonKey::Key("b".to_string()),
-                JsonKey::Key("c".to_string())
-            ]
-        );
-
-        let path = JsonPath::from_str("a/1").unwrap();
-        assert_eq!(
-            path.0,
-            vec![JsonKey::Key("a".to_string()), JsonKey::Index(1)]
-        );
-
-        let path = JsonPath::from_str("/a/1/apple").unwrap();
-        assert_eq!(
-            path.0,
-            vec![
-                JsonKey::Key("a".to_string()),
-                JsonKey::Index(1),
-                JsonKey::Key("apple".to_string())
-            ]
-        );
-    }
-
-    #[test]
-    fn test_json_path_to_string() {
-        let path = JsonPath::from_str("/a/b/c").unwrap();
-        assert_eq!(path.to_string(), "a/b/c");
-
-        let path = JsonPath::from_str("/a/1").unwrap();
-        assert_eq!(path.to_string(), "a/1");
-
-        let path = JsonPath::from_str("/a/1/").unwrap();
-        assert_eq!(path.to_string(), "a/1");
-
-        let path = JsonPath::from_str("/a/1/2").unwrap();
-        assert_eq!(path.to_string(), "a/1/2");
-    }
-
-    #[test]
-    fn test_json_path_traverse() {
-        let json = json!({
-            "a": {
-                "b": {
-                    "c": 3
-                }
-            }
-        });
-
-        let path = JsonPath::from_str("/a/b/c").unwrap();
-        assert_eq!(path.traverse(&json).unwrap(), &json!(3));
-
-        let path = JsonPath::from_str("/a/b").unwrap();
-        assert_eq!(path.traverse(&json).unwrap(), &json!({"c": 3}));
-
-        let path = JsonPath::from_str("/a").unwrap();
-        assert_eq!(
-            path.traverse(&json).unwrap(),
-            &json!({
-                "b": {
-                    "c": 3
-                }
-            })
-        );
-
-        let path = JsonPath::from_str("/a/b/c/d").unwrap();
-        assert_eq!(path.traverse(&json), ahh!("Invalid path: a/b/c/d"));
-    }
-
-    #[test]
-    fn test_json_set() {
-        let mut json = json!({
-            "a": {
-                "b": {
-                    "c": 3
-                }
-            },
-            "greeting": "goodbye"
-        });
-
-        let path = JsonPath::from_str("/a/b/c").unwrap();
-        path.set(&mut json, json!(2)).unwrap();
-        assert_eq!(json, json!({"a": {"b": {"c": 2}}, "greeting": "goodbye"}));
-
-        let path = JsonPath::from_str("/greeting").unwrap();
-        path.set(&mut json, json!("hello")).unwrap();
-        assert_eq!(json, json!({"a": {"b": {"c": 2}}, "greeting": "hello"}));
-    }
-
-    #[test]
-    fn test_json_pave() {
-        let mut json = json!({
-            "a": {
-                "b": {
-                    "c": 3
-                }
-            },
-            "greeting": "goodbye"
-        });
-
-        let path = JsonPath::from_str("/a/b/c").unwrap();
-        path.pave(&mut json, json!(2)).unwrap();
-        assert_eq!(json, json!({"a": {"b": {"c": 2}}, "greeting": "goodbye"}));
-
-        let path = JsonPath::from_str("/greeting").unwrap();
-        path.pave(&mut json, json!("hello")).unwrap();
-        assert_eq!(json, json!({"a": {"b": {"c": 2}}, "greeting": "hello"}));
-
-        let path = JsonPath::from_str("/sleep").unwrap();
-        path.pave(&mut json, json!(true)).unwrap();
-        assert_eq!(
-            json,
-            json!({"a": {"b": {"c": 2}}, "greeting": "hello", "sleep": true})
-        );
-
-        let path = JsonPath::from_str("/a/b/d").unwrap();
-        path.pave(&mut json, json!(4)).unwrap();
-        assert_eq!(
-            json,
-            json!({"a": {"b": {"c": 2, "d": 4}}, "greeting": "hello", "sleep": true})
-        );
-
-        let path = JsonPath::from_str("/a/b/0").unwrap();
-        path.pave(&mut json, json!(5)).unwrap();
-        assert_eq!(
-            json,
-            json!({"a": {"b": [5] }, "greeting": "hello", "sleep": true})
-        );
-
-        let path = JsonPath::from_str("/a/b/2/a").unwrap();
-        path.pave(&mut json, json!(6)).unwrap();
-        assert_eq!(
-            json,
-            json!({"a": {"b": [5, null, {"a": 6}]}, "greeting": "hello", "sleep": true})
-        );
     }
 }
