@@ -2,8 +2,11 @@
 pub use crate::*;
 pub use anyhow;
 pub use either::Either;
+pub use notify::RecursiveMode;
+pub use notify_debouncer_mini::{new_debouncer, DebouncedEvent};
 pub use std::fmt::Write as _;
 pub use std::io::Write as _;
+pub use std::path::{Path, PathBuf};
 pub use std::{
     collections::{HashMap, HashSet as Set},
     dbg as d,

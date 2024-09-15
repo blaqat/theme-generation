@@ -2,7 +2,7 @@
 #![feature(let_chains)]
 #![feature(if_let_guard)]
 
-use std::path::Path;
+use commands::variable;
 
 use crate::prelude::*;
 
@@ -13,7 +13,7 @@ mod utils;
 const DEFAULT_ERROR_MESSAGE: &str =
     "Usage: substitutor [check|gen|rev] or substitutor help to get more information.";
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 enum FileType {
     Theme,
     Template,
@@ -29,6 +29,16 @@ struct ValidatedFile {
 }
 
 impl ValidatedFile {
+    fn clone(&self) -> Self {
+        let new_file = File::open(&self.name).unwrap();
+        Self {
+            format: self.format.clone(),
+            file: new_file,
+            name: self.name.clone(),
+            file_type: self.file_type.clone(),
+        }
+    }
+
     fn from_str(file_path: &str) -> Result<Self, Error> {
         let format = Path::new(&file_path)
             .extension()
@@ -79,6 +89,30 @@ impl ValidatedFile {
 
         Ok(files)
     }
+
+    fn from_file(file: File, path: &Path) -> Result<Self, Error> {
+        let format = path
+            .extension()
+            .and_then(|e| e.to_str())
+            .ok_or(Error::InvalidFile(String::from(path.to_str().unwrap())))?
+            .to_owned();
+
+        let file_type = match format.as_str() {
+            "json" => FileType::Theme,
+            "toml" => FileType::Variable,
+            "template" => FileType::Template,
+            _ => return Err(Error::InvalidIOFormat(format)),
+        };
+
+        let name = path.to_str().unwrap().to_owned();
+
+        Ok(Self {
+            format,
+            file,
+            name,
+            file_type,
+        })
+    }
 }
 
 #[derive(Debug, PartialEq, Eq, Hash)]
@@ -87,6 +121,8 @@ pub enum ValidCommands {
     Generate,
     Reverse,
     Help,
+    Watch,
+    Edit,
 }
 
 #[derive(Debug, PartialEq, Eq)]
@@ -109,12 +145,14 @@ impl ValidCommands {
             "gen" => Ok(Self::Generate),
             "rev" => Ok(Self::Reverse),
             "help" => Ok(Self::Help),
+            "watch" => Ok(Self::Watch),
+            "edit" => Ok(Self::Edit),
             _ => Err(Error::InvalidCommand),
         }
     }
 
     fn list_commands() -> Vec<&'static str> {
-        vec!["check", "gen", "rev", "help"]
+        vec!["check", "gen", "rev", "help", "watch", "edit"]
     }
 }
 
@@ -135,12 +173,12 @@ Generate:
         - This takes the Template as the source of truth. Things in the variable file that arent in the template will be ignored.
         - The generated file will be saved in the current directory.
     Usage:
-        substitutor gen template_file variableFile [optional flags]
+        substitutor gen template_file variableFile|all [optional flags]
     Flags:
-        -v	Toggles verbose logging for debug purposes
-        -c originalTheme	Run substitutor check on originalTheme and generatedTheme
         -o directory	Set output directory of generatedTheme
         -n name	Set name of output theme file
+        -p path    Inner path to the theme in the template file
+        -i directory    Set directory where the .toml files are located
 Reverse:
     Description:
         - Template + OriginalTheme = Variables
@@ -150,10 +188,29 @@ Reverse:
     Usage:
         substitutor rev template_file originalTheme [optional flags]
     Flags:
-        -v	Toggles verbose logging for debug purposes
-        -c	Runs substitutor check on originalTheme and a generatedTheme of the generated variableFile
         -t int	Threshold for how many same colors to exist before adding to [colors] subgroup
         -o directory	Set output directory of variable file
+        -p path    Inner path to the theme in the template file
+Watch Mode:
+    Description:
+        - Watch changes to .toml files in a directory or a specific file and generate the theme file on each change.
+        - This makes it better to see live changes fast as you are making a theme
+    Usage:
+        substitutor watch templateFile variableFile|all [optional flags]
+    Flags:
+        -p path    Inner path to the theme in the theme file
+        -o directory	Set output directory of generatedTheme
+        -n name	Set name of output theme file
+        -i directory    Set directory where the .toml files are located
+Edit Mode:
+    Description:
+        - Make a directory in a pretetermined spot e.g. $HOME/.config/substitutor
+            - If the directory is not empty, prompt user to continue edit, save edit, or delete and start over.
+        - Automatically run `substitor watch templateFile all [flags]` in the directory.
+        - This makes it way faster to get started editing rather than having to reverse and then generate manually, this does both.
+    Usage:
+        substitutor edit themeFile templateFile [watch flags]
+    Flags: (Same as watch flags)
 */
 
 fn run(args: Vec<String>) -> Result<(), Error> {
@@ -179,6 +236,41 @@ fn run(args: Vec<String>) -> Result<(), Error> {
         .skip(2)
         .filter(|x| !x.starts_with("-"))
         .collect();
+
+    let get_generation_files = || -> Result<(PathBuf, ValidatedFile, Vec<ValidatedFile>), Error> {
+        let mut directory = call_dir.clone();
+        if flags.iter().any(|flag| flag.starts_with("-i")) {
+            let flags = commands::generate::GenerateFlags::parse(flags.clone());
+            directory = flags.directory();
+        }
+
+        let (template_file, variable_files) =
+            match (command_args[0].as_str(), command_args[1].as_str()) {
+                ("all", template_file) | (template_file, "all") => {
+                    let template_file = ValidatedFile::from_str(template_file)?;
+                    if let FileType::Template = template_file.file_type {
+                        let variable_files = ValidatedFile::all_variable_files(&directory)?;
+                        (template_file, variable_files)
+                    } else {
+                        return Err(Error::InvalidFileType);
+                    }
+                }
+                (template_file, variable_file) => {
+                    let files = (
+                        ValidatedFile::from_str(template_file)?,
+                        ValidatedFile::from_str(variable_file)?,
+                    );
+
+                    match (&files.0.file_type, &files.1.file_type) {
+                        (FileType::Template, FileType::Variable) => (files.0, vec![files.1]),
+                        (FileType::Variable, FileType::Template) => (files.1, vec![files.0]),
+                        _ => return Err(Error::InvalidFileType),
+                    }
+                }
+            };
+
+        Ok((directory, template_file, variable_files))
+    };
 
     match command {
         ValidCommands::Help if command_args.is_empty() => Err(Error::NoCommand),
@@ -209,44 +301,54 @@ fn run(args: Vec<String>) -> Result<(), Error> {
             }
         }
         ValidCommands::Generate => {
-            let mut directory = call_dir.clone();
-            // d!(&flags);
-            if flags.iter().any(|flag| flag.starts_with("-i")) {
-                let flags = commands::generate::GenerateFlags::parse(flags.clone());
-                directory = flags.directory();
-                // d!(&directory);
-            }
-
-            let (template_file, variable_files) =
-                match (command_args[0].as_str(), command_args[1].as_str()) {
-                    ("all", template_file) | (template_file, "all") => {
-                        let template_file = ValidatedFile::from_str(template_file)?;
-                        if let FileType::Template = template_file.file_type {
-                            let variable_files = ValidatedFile::all_variable_files(&directory)?;
-                            (template_file, variable_files)
-                        } else {
-                            return Err(Error::InvalidFileType);
-                        }
-                    }
-                    (template_file, variable_file) => {
-                        let files = (
-                            ValidatedFile::from_str(template_file)?,
-                            ValidatedFile::from_str(variable_file)?,
-                        );
-
-                        match (&files.0.file_type, &files.1.file_type) {
-                            (FileType::Template, FileType::Variable) => (files.0, vec![files.1]),
-                            (FileType::Variable, FileType::Template) => (files.1, vec![files.0]),
-                            _ => return Err(Error::InvalidFileType),
-                        }
-                    }
-                };
-
-            // d!(&template_file, variable_files);
-            // todo!();
+            let (_, template_file, variable_files) = get_generation_files()?;
 
             commands::generate(template_file, variable_files, flags)
         }
+
+        ValidCommands::Watch => {
+            // substitutor gen $"($template_file)" all -n=$"($out_name)" -p=/themes -o=~/.config/zed/themes/
+            let (mut directory, template_file, variable_files) = get_generation_files()?;
+
+            // d!(&directory);
+            let (tx, rx) = std::sync::mpsc::channel();
+            let mut debouncer = new_debouncer(std::time::Duration::from_millis(100), tx)
+                .map_err(|e| Error::Processing(String::from("Error creating notify watcher.")))?;
+
+            let mut watcher = debouncer.watcher();
+
+            // d!(variable_files);
+
+            for file in &variable_files {
+                let mut path = directory.clone();
+                path.push(&file.name);
+                // d!(&path);
+
+                watcher
+                    .watch(&path, RecursiveMode::Recursive)
+                    .map_err(|e| Error::Processing(String::from("Error watching file.")))?;
+            }
+
+            loop {
+                match rx.try_recv() {
+                    Ok(ref event) if let Ok(ref event) = event => {
+                        let variable_files = variable_files.iter().map(|v| v.clone()).collect();
+                        commands::generate(template_file.clone(), variable_files, flags.clone())?;
+                    }
+                    Err(std::sync::mpsc::TryRecvError::Empty) => {
+                        // No events to process, continue the loop
+                    }
+                    Ok(_) => {}
+                    Err(e) => {
+                        error!("watch error: {:?}", e);
+                    }
+                }
+            }
+
+            Ok(())
+        }
+
+        ValidCommands::Edit => todo!(),
     }
 }
 

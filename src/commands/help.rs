@@ -42,6 +42,27 @@ Flags:
     -o directory	Set output directory of variable file
         ",
         ValidCommands::Help => "Displays help information.",
+        ValidCommands::Watch => "Description:
+    - Watch changes to .toml files in a directory or a specific file and generate the theme file on each change.
+    - This makes it better to see live changes fast as you are making a theme
+
+Usage:
+    substitutor watch templateFile variableFile|all [optional flags]
+
+Flags:
+    -p path    Inner path to the theme in the theme file
+    -o directory	Set output directory of generatedTheme
+    -n name	Set name of output theme file",
+        ValidCommands::Edit => "Description:
+    - Make a directory in a pretetermined spot e.g. $HOME/.config/substitutor
+        - If the directory is not empty, prompt user to continue edit, save edit, or delete and start over.
+    - Automatically run `substitor watch templateFile all [flags]` in the directory.
+    - This makes it way faster to get started editing rather than having to reverse and then generate manually, this does both.
+
+Usage:
+    substitutor edit themeFile templateFile [watch flags]
+
+Flags: (Same as watch flags)"
     };
 
     p!("{help_text}");
