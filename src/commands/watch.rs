@@ -42,7 +42,7 @@ pub fn watch(
                 if let Err(e) =
                     commands::generate(template_file.clone(), variable_files, flags.clone())
                 {
-                    eprintln!("Error Generating Theme: {:?}", e);
+                    error!("Error Generating Theme: {:?}", e);
                 }
             }
             Ok(_) => {}
