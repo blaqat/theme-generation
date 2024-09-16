@@ -127,7 +127,7 @@ mod steps {
                 let mut new_obj = obj.clone();
                 for (k, v) in obj.iter() {
                     let mut new_keys = key.clone();
-                    let var_name = &format!("${}.", k);
+                    let var_name = &format!("{}.", k);
                     new_keys.push(var_name.as_str());
                     new_obj[k] = resolve_self_variables(v, &new_keys);
                 }
@@ -141,8 +141,8 @@ mod steps {
                 Value::Array(new_arr)
             }
             Value::String(s) if s.contains("$self") => {
-                let self_key = key.get(key.len() - 2).unwrap_or(&"");
-                let s = s.replace("$self.", self_key);
+                let self_key = key.get(0..key.len() - 1).unwrap_or(&[""]).join("");
+                let s = s.replace("$self.", &self_key);
                 Value::String(s)
             }
             _ => source.clone(),
