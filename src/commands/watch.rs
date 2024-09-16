@@ -26,7 +26,6 @@ pub fn watch(
 
     let watcher = debouncer.watcher();
 
-
     for file in &variable_files {
         let mut path = directory.clone();
         path.push(&file.name);
@@ -40,7 +39,11 @@ pub fn watch(
         match rx.try_recv() {
             Ok(ref event) if let Ok(_) = event => {
                 let variable_files = variable_files.iter().map(|v| v.clone()).collect();
-                commands::generate(template_file.clone(), variable_files, flags.clone())?;
+                if let Err(e) =
+                    commands::generate(template_file.clone(), variable_files, flags.clone())
+                {
+                    eprintln!("Error Generating Theme: {:?}", e);
+                }
             }
             Ok(_) => {}
             Err(_) => {}
