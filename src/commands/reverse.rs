@@ -540,7 +540,10 @@ mod steps {
         w!("keys = [");
         for (i, d) in deletions
             .iter()
-            .sorted_by(|a, b| a.to_string().cmp(&b.to_string()))
+            .sorted_by(|a, b| match (a.has_num_in_path(), b.has_num_in_path()) {
+                (true, true) => b.to_string().cmp(&a.to_string()),
+                _ => a.to_string().cmp(&b.to_string()),
+            })
             .enumerate()
         {
             if i == deletions.len() - 1 {

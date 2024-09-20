@@ -337,7 +337,9 @@ pub fn generate(
                     ))
                 })?;
 
-                path.remove(&mut template)?;
+                path.remove(&mut template).unwrap_or_else(|_| {
+                    error!("Warning: {} is not a valid deletion path.", key);
+                });
             }
         }
 
@@ -474,5 +476,6 @@ pub fn generate(
         write_to_file(&full, false)?;
     }
 
+    println!("Generated {} files", variables.len());
     Ok(())
 }
