@@ -199,9 +199,11 @@ mod steps {
                 imv.iter().partition(|v| v.len() == max_len);
             max.dedup();
             rest.dedup();
+
             let (first, max_rest) = (max.first().unwrap(), max.clone());
             let first_found = first.first().unwrap();
             let mut first_var = first_found.1.clone();
+
             let identity = iden_map
                 .iter()
                 .find(|(_, v)| v.contains(first_found))
@@ -209,6 +211,7 @@ mod steps {
                 .0;
             first_var.value = identity.clone();
             first_var.next();
+
             var_set.insert(&var_name.join(), first_var);
 
             rest.extend(max_rest);
@@ -243,6 +246,7 @@ mod steps {
                         }
                     }
                 }
+
                 if !inserted {
                     unvar_set.insert(&var_name.join(), (*u).clone());
                 }
@@ -250,6 +254,21 @@ mod steps {
         }
 
         var_set.resolve();
+
+        // Unresolve Null Mismatches
+        for (var, val) in var_set
+            .to_map()
+            .iter_mut()
+            .filter(|(_, v)| v.value == ParsedValue::Null && v.variables.len() > 1)
+        {
+            let og = val.clone();
+            while let Some(v) = val.next() {
+                if !var_set.is_null(&v.name) {
+                    unvar_set.insert(var, og);
+                    break;
+                }
+            }
+        }
 
         (var_set, unvar_set)
     }
@@ -291,9 +310,6 @@ mod steps {
             (val1, val2) if !log_vars && same_type(val1, val2) && val1 != val2 => {
                 if !potential_set(val1, val2) {
                     info.collisions.push(prefix);
-                } else if log_vars && let (Value::String(str), val) = (val1, val2) {
-                    info.parsed_vars
-                        .push(SourcedVariable::new(prefix, str, val))
                 }
             }
 
@@ -487,7 +503,6 @@ mod steps {
         {
             w!("{} = {}", k, v);
         }
-
 
         w!("\n# Theme Colors");
         w!("[color]");

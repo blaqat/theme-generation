@@ -401,6 +401,13 @@ impl VariableSet {
         self.variables.borrow().contains_key(name)
     }
 
+    pub fn is_null(&self, name: &str) -> bool {
+        match self.variables.borrow().get(name) {
+            Some(v) => v.value == ParsedValue::Null,
+            None => true,
+        }
+    }
+
     pub fn insert(&self, name: &str, var: ResolvedVariable) {
         self.variables.borrow_mut().insert(name.to_string(), var);
     }
