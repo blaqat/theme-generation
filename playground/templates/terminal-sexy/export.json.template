@@ -322,11 +322,6 @@
             "font_style": null,
             "font_weight": null
           },
-          "punctuation.bracket.arrow": {
-            "color": "@c03",
-            "font_style": null,
-            "font_weight": null
-          },
           "punctuation.delimiter": {
             "color": "@c15",
             "font_style": null,
@@ -428,7 +423,12 @@
             "font_weight": null
           },
           "variable.special": {
-            "color": "@c15",
+            "color": "@c03",
+            "font_style": null,
+            "font_weight": null
+          },
+          "variable.builtin": {
+            "color": "@c03",
             "font_style": null,
             "font_weight": null
           },

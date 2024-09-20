@@ -391,7 +391,7 @@
             "font_style": "$syntax.punctuation.bracket.style|$syntax.punctuation.style",
             "font_weight": "$syntax.punctuation.bracket.weight|$syntax.punctuation.weight"
           },
-          "punctuation.bracket.arrow":
+          "punctuation.bracket.tag":
           {
 						"color": "$syntax.punctuation.arrow.color|$syntax.punctuation.bracket.color|$syntax.punctuation.color",
 						"font_style": "$syntax.punctuation.arrow.style|$syntax.punctuation.bracket.style|$syntax.punctuation.style",
