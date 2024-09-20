@@ -1,0 +1,272 @@
+# Reverse Generation Tool Version 3.0
+name = "Tomorrow Night"
+theme = "dark"
+
+# Theme Colors
+[color]
+black = "#17181A"
+black2 = "#1D1F21"
+black3 = "#1E1F21"
+black4 = "#1C1D1F"
+burlywood = "#F0C674"
+cadetblue = "#81A2BE"
+darkgray = "#B294BB"
+darkgray2 = "#8ABEB7"
+darkkhaki = "#B5BD68"
+darkslategray3 = "#373B41"
+darkslategray4 = "#282A2E"
+indianred = "#CC6666"
+lightcoral = "#FF7882"
+sandybrown = "#DE935F"
+white = "#FFFFFF"
+
+[background]
+editor = "@black3"
+gutter = "@black3"
+primary = "@black3"
+secondary = "@black"
+
+[background.bars]
+bottombar = "@black"
+toolbar = "@black4"
+
+[background.bars.topbar]
+active = "@black"
+
+[border]
+secondary = "@black4"
+selected = "@black4"
+
+[button]
+selected = "@darkslategray3..C0"
+
+[code.error]
+background = "@black3"
+border = "@indianred"
+foreground = "@indianred"
+
+[code.hidden]
+foreground = "#63666E"
+
+[code.hint]
+background = "@black3"
+border = "@cadetblue"
+foreground = "#63666E"
+
+[code.info]
+background = "@black3"
+border = "@cadetblue"
+foreground = "@cadetblue"
+
+[code.success]
+foreground = "@darkkhaki"
+
+[code.warning]
+background = "@black3"
+border = "@burlywood"
+foreground = "@burlywood"
+
+[cursor]
+line = "@darkslategray3..80"
+search = "@burlywood..2E"
+
+[element]
+hover = "@darkslategray4..50"
+selected = "@darkslategray4"
+
+[foreground]
+accent = "@burlywood"
+hover = "#4D505740"
+inactive = "@darkslategray4"
+placeholder = "@white..50"
+primary = "#C5C8C6"
+secondary = "@white..8F"
+
+[foreground.linenumber]
+active = "@white"
+
+[git.created]
+foreground = "@darkkhaki"
+
+[git.deleted]
+background = "@lightcoral..5F"
+foreground = "@indianred"
+
+[git.ignored]
+foreground = "#4D5057"
+
+[git.modified]
+foreground = "@burlywood"
+
+[indent]
+active = "@burlywood..80"
+inactive = "none"
+multi = [
+	"@cadetblue",
+	"@darkgray",
+	"@darkkhaki",
+	"null",
+	"#FF9DA4",
+	"@burlywood",
+	"@darkgray2",
+	"#CCC",
+	"@lightcoral",
+	"@cadetblue",
+	"@darkgray",
+	"@darkkhaki",
+	"null",
+	"@burlywood"
+]
+
+[panel]
+background = "@black"
+
+[players.1]
+background = "@darkslategray3"
+cursor = "@darkgray2"
+selection = "@darkslategray3..C0"
+
+[scrollbar]
+primary = "#27292CC0"
+secondary = "@black2..00"
+track = "@black2..C0"
+
+[syntax.boolean]
+color = "@sandybrown"
+
+[syntax.comment]
+color = "#969896"
+
+[syntax.constant]
+color = "@sandybrown"
+
+[syntax.constant.builtin]
+color = "@sandybrown"
+
+[syntax.function]
+color = "#85B7B1"
+
+[syntax.keyword]
+color = "@darkgray"
+
+[syntax.lifetime]
+color = "@cadetblue"
+
+[syntax.number]
+color = "@sandybrown"
+
+[syntax.punctuation.delimiter]
+color = "@sandybrown"
+
+[syntax.string]
+color = "@darkkhaki"
+
+[syntax.tag]
+color = "#92B2CA"
+
+[syntax.title]
+color = "@darkgray"
+
+[syntax.type]
+color = "@sandybrown"
+
+[tabs]
+active = "@black4"
+background = "@black"
+inactive = "@black"
+
+[terminal]
+background = "@black3"
+black = "#000"
+blue = "@cadetblue"
+bright_black = "@white..40"
+bright_blue = "@cadetblue"
+bright_cyan = "@darkgray2"
+bright_foreground = "@white"
+bright_green = "@darkkhaki"
+bright_magenta = "@darkgray"
+bright_red = "@lightcoral"
+bright_white = "@white"
+bright_yellow = "@burlywood"
+cyan = "@darkgray2"
+dim_black = "#000"
+dim_foreground = "@white"
+dim_white = "@white"
+foreground = "@white"
+green = "@darkkhaki"
+magenta = "@darkgray"
+red = "#FF9DA4"
+white = "#CCC"
+yellow = "@burlywood"
+
+# Overrides
+[overrides]
+"style/syntax/method" = { color = "#85B7B1" }
+"style/editor.subheader.background" = "@black..50"
+"style/surface.background" = "$none"
+"style/border.selected" = "$none"
+"style/editor.highlighted_line.background" = "$none"
+"style/editor.line_number" = "$none"
+"style/pane.focused_border" = "$none"
+"style/panel.focused_border" = "$none"
+"style/scrollbar.thumb.border" = "@black2..C0"
+"style/scrollbar.thumb.hover_background" = "$none"
+
+# Deletions
+[deletions]
+keys = [
+	"/style/border",
+	"/style/hidden.background",
+	"/style/players/7",
+	"/style/players/6",
+	"/style/players/5",
+	"/style/players/4",
+	"/style/players/3",
+	"/style/players/2",
+	"/style/predictive.background",
+	"/style/scrollbar.thumb.background",
+	"/style/syntax/attribute",
+	"/style/syntax/comment.doc",
+	"/style/syntax/constant.character",
+	"/style/syntax/constructor",
+	"/style/syntax/embedded",
+	"/style/syntax/emphasis",
+	"/style/syntax/emphasis.strong",
+	"/style/syntax/enum",
+	"/style/syntax/escape",
+	"/style/syntax/function.builtin",
+	"/style/syntax/function.definition",
+	"/style/syntax/function.method",
+	"/style/syntax/function.special",
+	"/style/syntax/function.special.definition",
+	"/style/syntax/hint",
+	"/style/syntax/label",
+	"/style/syntax/link_text",
+	"/style/syntax/link_uri",
+	"/style/syntax/operator",
+	"/style/syntax/predictive",
+	"/style/syntax/preproc",
+	"/style/syntax/primary",
+	"/style/syntax/property.json_key",
+	"/style/syntax/punctuation",
+	"/style/syntax/punctuation.bracket",
+	"/style/syntax/punctuation.delimiter",
+	"/style/syntax/punctuation.special",
+	"/style/syntax/punctuation.special.symbol",
+	"/style/syntax/string.doc",
+	"/style/syntax/string.escape",
+	"/style/syntax/string.regex",
+	"/style/syntax/string.special",
+	"/style/syntax/string.special.symbol",
+	"/style/syntax/text.literal",
+	"/style/syntax/type.builtin",
+	"/style/syntax/type.interface",
+	"/style/syntax/type.super",
+	"/style/syntax/variable",
+	"/style/syntax/variable.member",
+	"/style/syntax/variable.parameter",
+	"/style/syntax/variable.special",
+	"/style/syntax/variant",
+	"/style/title_bar.inactive_background",
+	"/style/unreachable.background"
+]

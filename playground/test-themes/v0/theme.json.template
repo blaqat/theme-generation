@@ -1,6 +1,6 @@
 {
   "$schema": "https://zed.dev/schema/themes/v0.1.0.json",
-  "name": "theme",
+  "name": "v0-theme",
   "author": "blaqat",
   "themes": [
     {
@@ -147,7 +147,7 @@
           {
             "cursor": "$players.1.cursor|$cursor.primary",
             "background": "$players.1.background|$cursor.background|$background.cursor",
-            "selection": "$players.1.selection|$cursor.selection|$cursor.background"
+            "selection": "$players.1.selection,  $cursor.selection|$cursor.background"
           },
           {
             "cursor": "$players.2.cursor",
@@ -391,12 +391,6 @@
             "font_style": "$syntax.punctuation.bracket.style|$syntax.punctuation.style",
             "font_weight": "$syntax.punctuation.bracket.weight|$syntax.punctuation.weight"
           },
-          "punctuation.bracket.arrow":
-          {
-						"color": "$syntax.punctuation.arrow.color|$syntax.punctuation.bracket.color|$syntax.punctuation.color",
-						"font_style": "$syntax.punctuation.arrow.style|$syntax.punctuation.bracket.style|$syntax.punctuation.style",
-						"font_weight": "$syntax.punctuation.arrow.weight|$syntax.punctuation.bracket.weight|$syntax.punctuation.weight"
-					},
           "punctuation.delimiter":
           {
             "color": "$syntax.punctuation.delimiter.color|$syntax.punctuation.color",

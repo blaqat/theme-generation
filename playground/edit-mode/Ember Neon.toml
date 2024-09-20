@@ -1,0 +1,307 @@
+# Reverse Generation Tool Version 3.0
+name = "Ember Neon"
+theme = "dark"
+window = "blurred"
+t = "#0000"
+
+# Theme Colors
+[color]
+antiquewhite = "#F4E8DC"
+black = "#0E0E17f0"
+black2 = "#191926"
+burlywood2 = "#F4C592"
+cornflowerblue = "#4C87FF"
+cornflowerblue2 = "#4CC0FF"
+darkslategray3 = "#515151"
+darkslategray4 = "#1F1F30"
+deeppink = "#FF2188"
+lightgreen = "#6EDD6E"
+mediumpurple = "#B587FF"
+sandybrown = "#FFCC4C"
+
+[background]
+code = "@black2..v+40"
+gutter = "@black"
+panel = "@black"
+primary = "$t"
+editor = "@black"
+secondary = "#13121e"
+surface = "@black"
+terminal = "@black"
+
+[background.bars]
+bottombar = "#0e0e17"
+scrollbar = "$t"
+scrollbar_thumb = "@darkslategray4..8F"
+toolbar = "@black"
+topbar = "@black"
+
+[background.bars.tabbar]
+active = "$t"
+background = "#0e0e17"
+inactive = "$t"
+
+[border]
+primary = "@black"
+scrollbar = "$t"
+secondary = "$t"
+
+[button]
+primary = "@black2"
+
+[code.error]
+background = "@black2"
+border = "@deeppink"
+foreground = "@deeppink"
+
+[code.info]
+background = "@black2"
+border = "@cornflowerblue"
+foreground = "#5959A3"
+
+[code.warning]
+background = "@black2"
+border = "@sandybrown"
+foreground = "@sandybrown"
+
+[cursor]
+background = "@deeppink..90"
+highlighted = "@deeppink..90"
+line = "@darkslategray4..00"
+match = "#333051E6"
+primary = "@burlywood2..F0"
+search = "#FFFF7F1A"
+selection = "@mediumpurple..30"
+spaces = "@lightgreen..03"
+
+[element]
+active = "@black2"
+hover = "@black2"
+selected = "#302F46"
+
+[foreground]
+hover = "@black2..v+10"
+primary = "@burlywood2..s=20"
+secondary = "@antiquewhite..90"
+
+[foreground.linenumber]
+active = "@burlywood2..C0"
+inactive = "#AAAAAA40"
+
+[git.created]
+background = "#E9EFD2BD"
+border = "#D7E3AE"
+foreground = "#62A35C"
+
+[git.ignored]
+background = "#DCDDDE7D"
+border = "#CFD1D2"
+foreground = "#828A99"
+
+[git.modified]
+foreground = "@cornflowerblue"
+
+[indent]
+active = "@antiquewhite..50"
+inactive = "@antiquewhite..1F"
+multi = [
+	"@cornflowerblue",
+	"#C8099D.",
+	"@lightgreen",
+	"null",
+	"@deeppink",
+	"@sandybrown",
+	"@mediumpurple",
+	"@darkslategray3",
+	"@deeppink",
+	"@cornflowerblue",
+	"#C8099D.",
+	"@lightgreen",
+	"null",
+	"@sandybrown",
+]
+
+[players.2]
+background = "#114D777D"
+cursor = "#114D77"
+selection = "#55B4D33B"
+
+[scheme]
+black = "@burlywood2..C0"
+black2 = "@burlywood2..50"
+black3 = "@burlywood2..50"
+blue = "@cornflowerblue"
+blue2 = "@cornflowerblue..50"
+blue3 = "#C4DAF6"
+cyan = "@mediumpurple"
+cyan2 = "@mediumpurple..50"
+cyan3 = "@mediumpurple"
+green = "@lightgreen"
+green2 = "@lightgreen..50"
+green3 = "@lightgreen..50"
+pink = "#C8099D."
+pink2 = "#C8099D."
+pink3 = "#C8099D."
+red = "@deeppink"
+red2 = "@deeppink..50"
+red3 = "@deeppink"
+white = "@darkslategray3"
+white2 = "@darkslategray3..50"
+white3 = "@darkslategray3"
+yellow = "@sandybrown"
+yellow2 = "@cornflowerblue"
+yellow3 = "@sandybrown"
+
+[syntax.attribute]
+background = "$self.color..15"
+color = "@mediumpurple"
+
+[syntax.boolean]
+background = "$self.color..15"
+color = "@deeppink"
+weight = 700
+
+[syntax.comment]
+background = "$self.color..15"
+color = "#FF656BE6"
+weight = 700
+
+[syntax.constant]
+background = "$self.color..15"
+color = "#FFB999"
+style = "italic"
+weight = 400
+
+[syntax.constructor]
+background = "$self.color..15"
+color = "#FF82BC"
+
+[syntax.emphasis]
+background = "$self.color..15"
+color = "@deeppink"
+
+[syntax.escape]
+background = "$self.color..15"
+color = "@lightgreen"
+weight = 400
+
+[syntax.function]
+background = "$self.color..15"
+color = "#E565FF"
+
+[syntax.keyword]
+background = "$self.color..15"
+color = "@deeppink"
+weight = 700
+
+[syntax.method]
+background = "$self.color..15"
+color = "@mediumpurple"
+weight = 700
+
+[syntax.number]
+background = "$self.color..15"
+color = "@lightgreen"
+
+[syntax.operator]
+background = "$self.color..05"
+color = "#FF82BC"
+weight = 700
+
+[syntax.property]
+background = "$self.color..15"
+color = "#FFB999"
+
+[syntax.punctuation]
+color = "#F5E4D15"
+
+[syntax.punctuation.bracket]
+background = "$self.color..05"
+color = "#85DBDB"
+
+[syntax.punctuation.delimiter]
+# background = "$self.color..10"
+color = "#F5E4D1"
+
+[syntax.punctuation.special]
+background = "@burlywood2..15"
+color = "@burlywood2..C0"
+
+[syntax.string]
+background = "$self.color..15"
+color = "@cornflowerblue2"
+weight = 400
+
+[syntax.string.regex]
+background = "$self.color..15"
+color = "@cornflowerblue2"
+weight = 400
+
+[syntax.string.special]
+background = "$self.color..15"
+color = "#0086B3"
+weight = 400
+
+[syntax.tag]
+background = "$self.color..15"
+color = "@cornflowerblue"
+weight = 700
+
+[syntax.text]
+background = "$self.color..15"
+color = "@cornflowerblue2"
+
+[syntax.type]
+background = "$self.color..15"
+color = "@cornflowerblue"
+weight = 500
+
+[syntax.variable]
+background = "$self.color..15"
+color = "#FFB999"
+
+[syntax.variable.special]
+background = "$self.color..15"
+color = "#A1E5A0"
+
+# Overrides
+[overrides]
+"style/scrollbar.thumb.hover_background" = "$none"
+"style/scrollbar.thumb.border" = "$none"
+"style/border.selected" = "#100F1E"
+"style/syntax/comment.doc/color" = "#6591FFE6"
+"style/syntax/comment.doc/background_color" = "#6591FF10"
+"style/syntax/comment/font_style" = "italic"
+"style/syntax/comment.doc/font_weight" = "$none"
+
+# Deletions
+[deletions]
+keys = [
+	"/style/scrollbar.thumb.background",
+	"/style/syntax/constant.builtin",
+	"/style/syntax/constant.character",
+	"/style/syntax/embedded",
+	"/style/syntax/enum",
+	"/style/syntax/escape",
+	"/style/syntax/function.builtin",
+	"/style/syntax/function.definition",
+	"/style/syntax/function.special",
+	"/style/syntax/function.special.definition",
+	"/style/syntax/hint",
+	"/style/syntax/label",
+	"/style/syntax/lifetime",
+	"/style/syntax/link_text",
+	"/style/syntax/link_uri",
+	"/style/syntax/preproc",
+	"/style/syntax/primary",
+	"/style/syntax/property.json_key",
+	"/style/syntax/punctuation.special.symbol",
+	"/style/syntax/string.doc",
+	"/style/syntax/type.builtin",
+	"/style/syntax/type.interface",
+	"/style/syntax/type.super",
+	"/style/syntax/variable.member",
+	"/style/syntax/variable.parameter",
+	"/style/syntax/variant",
+	"/style/title_bar.inactive_background",
+]
