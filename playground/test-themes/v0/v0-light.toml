@@ -1,0 +1,296 @@
+# Reverse Generation Tool Version 3.0
+name = "v0-light"
+theme = "light"
+primary = "@teal"
+t = "#0000"
+
+# Theme Colors
+[color]
+green = "#15803D"         # strings, builtins
+teal = "#0F766E"          # cursor
+teal2 = "#cbfbf1"         # cursor highlight
+blue = "#1D4ED8"          # types, numbers, booleans
+pink = "#BE185D"          # keywords, constants, and operators
+purple = "#7E22CE"        # functions
+black = "#18181B"         # foreground
+white = "#FFF"            # background
+grey = "#A1A1AA"          # line numbers and comments
+grey2 = "#e5e5e5"         # borders
+lightgrey = "#71717A"     # inactive text
+red = "$primary..h=0"
+yellow = "$primary..h=40"
+
+[background]
+code = "@white"
+drop_target = "@white"
+panel = "@white"
+primary = "@white"
+secondary = "@white"
+surface = "@white"
+terminal = "@white"
+
+[background.bars]
+bottombar = "@white"
+scrollbar = "$t"
+scrollbar_thumb = "#939394..90"
+toolbar = "@white"
+topbar = "@white"
+
+[background.bars.tabbar]
+active = "@white"
+background = "@white"
+inactive = "@white"
+
+[border]
+code = "@grey2"
+disabled = "@grey2"
+primary = "@grey2"
+scrollbar = "$t"
+secondary = "@grey2"
+selected = "@grey2"
+transparent = "@grey2"
+
+[button]
+active = "@teal"
+disabled = "@teal"
+primary = "@teal"
+selected = "@teal"
+
+[code.error]
+background = "$code.error.foreground..a=5"
+border = "$code.error.foreground"
+foreground = "@red..v+30"
+
+[code.info]
+background = "$code.info.foreground..a=5"
+border = "$code.info.foreground"
+foreground = "@blue..v+30"
+
+[code.hint]
+background = "$code.info.background"
+border = "$code.info.border"
+foreground = "$syntax.hint.color"
+
+[code.warning]
+background = "$code.warning.foreground..a=5"
+border = "$code.warning.foreground"
+foreground = "@yellow..v+30"
+
+[cursor]
+background = "@teal..20"
+highlighted = "@teal2"
+line = "@black..10"
+# match = "@black..20"
+primary = "@black"
+search = "@yellow..a/2"
+selection = "$self.background"
+spaces = "$t"
+
+[element]
+active = "element.active"
+disabled = "element.disabled"
+hover = "element.hover"
+primary = "element.primary"
+selected = "element.selected"
+
+[foreground]
+primary = "@black"
+secondary = "@black..v-30"
+# hover = "@lightgrey..80"
+inactive = "@lightgrey"
+link = "$primary"
+placeholder = "@lightgrey"
+
+[foreground.linenumber]
+active = "$primary"
+inactive = "@grey"
+
+[git.created]
+background = "@green..a/2"
+border = "$border.primary"
+foreground = "@green"
+
+[git.ignored]
+background = "@lightgrey"
+border = "@lightgrey"
+foreground = "@lightgrey..v-20"
+
+[git.modified]
+background = "@blue..a/2"
+foreground = "@blue"
+
+[guide]
+active = "$border.primary"
+
+# [icon]
+# accent = "$primary"
+# inactive = "$primary"
+# placeholder = "$primary"
+# primary = "$primary"
+# secondary = "$primary"
+
+[indent]
+active = "@grey..a/2"
+inactive = "$self.active..a/3"
+multi = [
+	"@blue..a/2",
+	"@green..a/2",
+	"@pink..a/2",
+	"@purple..a/2",
+	"@teal..a/2",
+	"@yellow..a/2",
+]
+
+# [players.2]
+# background = "players.2.background"
+# cursor = "players.2.cursor"
+# selection = "players.2.selection"
+
+[scheme]
+black = "@black"
+black2 = "@black..v+20"
+black3 = "@black..v+20"
+blue = "@blue"
+blue2 = "@blue..v+20"
+blue3 = "@blue..v+20"
+cyan = "@teal"
+cyan2 = "@teal..v+20"
+cyan3 = "@teal..s+20"
+green = "@green"
+green2 = "@green..v+20"
+green3 = "@green..s+20"
+pink = "@pink"
+pink2 = "@pink..v+20"
+pink3 = "@pink..s+20"
+red = "@red"
+red2 = "@red..v+20"
+red3 = "@red..s+20"
+white = "@black..v+20"
+white2 = "@black..v+30"
+white3 = "@black..v+40"
+yellow = "@yellow"
+yellow2 = "@yellow..v+20"
+yellow3 = "@yellow..v+20"
+
+[syntax.attribute]
+color = "@purple"
+
+[syntax.boolean]
+color = "@blue"
+
+[syntax.builtin]
+color = "@blue"
+
+[syntax.comment]
+color = "@grey"
+
+[syntax.constant]
+color = "@black"
+
+# [syntax.constructor]
+# color = "syntax.constructor.color"
+
+[syntax.doc]
+color = "@grey"
+
+[syntax.embedded]
+color = "@black"
+
+[syntax.emphasis]
+color = "@pink"
+
+[syntax.enum]
+color = "@blue"
+
+[syntax.escape]
+color = "@green"
+
+[syntax.function]
+color = "@purple"
+
+[syntax.hint]
+color = "@grey"
+
+[syntax.keyword]
+color = "@pink"
+
+# [syntax.label]
+# color = "@blue"
+
+[syntax.lifetime]
+color = "@pink"
+
+# [syntax.macro]
+# color = "@purple"
+
+[syntax.method]
+color = "@purple"
+
+[syntax.number]
+color = "@blue"
+
+[syntax.operator]
+color = "@pink"
+
+[syntax.predictive]
+color = "@grey"
+
+[syntax.primary]
+color = "@pink"
+
+[syntax.property]
+color = "@black"
+
+[syntax.punctuation]
+color = "@black"
+
+# [syntax.punctuation.bracket]
+# color = "@pink"
+
+# [syntax.punctuation.delimiter]
+# color = "@pink"
+
+[syntax.punctuation.special]
+color = "@black"
+
+# [syntax.punctuation.symbol]
+# color = "syntax.punctuation.symbol.color|syntax.punctuation.special.color|syntax.punctuation.color"
+
+[syntax.special]
+color = "@pink"
+
+[syntax.string]
+color = "@green"
+
+[syntax.string.regex]
+color = "@green"
+
+[syntax.string.special]
+color = "@green"
+
+[syntax.tag]
+color = "@green"
+
+[syntax.text]
+color = "@black"
+
+[syntax.type]
+color = "@blue"
+
+[syntax.variable]
+color = "@black"
+
+# [syntax.variable.parameter]
+# color = "syntax.variable.parameter.color|syntax.parameter.color|syntax.variable.color"
+
+# [syntax.variable.special]
+# color = "syntax.variable.special.color|syntax.special.color|syntax.variable.color"
+
+[syntax.variant]
+color = "@blue"
+
+
+[overrides]
+"style/syntax/type.builtin/color" = "@green"
+"style/syntax/constant.builtin/color" = "@pink"
+# "style/terminal.ansi.bright_yellow" = "@red"

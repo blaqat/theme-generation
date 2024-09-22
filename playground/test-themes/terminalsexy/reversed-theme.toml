@@ -1,0 +1,32 @@
+# Reverse Generation Tool Version 3.0
+name = "Terminal Sexy Theme"
+theme = "dark"
+
+# Theme Colors
+[color]
+c00 = "#282A2E"
+c01 = "#A54242"
+c02 = "#8C9440"
+c03 = "#DE935F"
+c04 = "#5F819D"
+c05 = "#85678F"
+c06 = "#5E8D87"
+c07 = "#707880"
+c08 = "#373B41"
+c09 = "#C66"
+c10 = "#B5BD68"
+c11 = "#F0C674"
+c12 = "#81A2BE"
+c13 = "#B294BB"
+c14 = "#8ABEB7"
+c15 = "#C5C8C6"
+cbg = "#1D1F21"
+cfg = "#C5C8C6"
+
+# Overrides
+[overrides]
+
+# Deletions
+[deletions]
+keys = [
+]

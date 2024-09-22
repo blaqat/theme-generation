@@ -19,6 +19,8 @@ Generate:
         -r              Overwrite the output file of the same name if it exists
 */
 
+const MAX_RECURSION_DEPTH: usize = 8;
+
 #[derive(PartialEq, Debug)]
 pub enum GenerateFlags {
     OutputDirectory(PathBuf),
@@ -121,28 +123,31 @@ mod steps {
     use serde_json::json;
     type Value = serde_json::Value;
 
-    pub fn resolve_self_variables(source: &Value, key: &Vec<&str>) -> Value {
+    pub fn resolve_self_variables(source: &Value, key: &Vec<&str>, _max_depth: usize) -> Value {
+        if _max_depth == 0 {
+            return Value::Null;
+        }
         match source {
             Value::Object(obj) => {
                 let mut new_obj = obj.clone();
                 for (k, v) in obj.iter() {
                     let mut new_keys = key.clone();
-                    let var_name = &format!("${}.", k);
+                    let var_name = &format!("{}.", k);
                     new_keys.push(var_name.as_str());
-                    new_obj[k] = resolve_self_variables(v, &new_keys);
+                    new_obj[k] = resolve_self_variables(v, &new_keys, _max_depth - 1);
                 }
                 Value::Object(new_obj)
             }
             Value::Array(a) => {
                 let mut new_arr = Vec::new();
                 for v in a.iter() {
-                    new_arr.push(resolve_self_variables(v, key));
+                    new_arr.push(resolve_self_variables(v, key, _max_depth - 1));
                 }
                 Value::Array(new_arr)
             }
             Value::String(s) if s.contains("$self") => {
-                let self_key = key.get(key.len() - 2).unwrap_or(&"");
-                let s = s.replace("$self.", self_key);
+                let self_key = key.get(0..key.len() - 1).unwrap_or(&[""]).join("");
+                let s = s.replace("$self.", &self_key);
                 Value::String(s)
             }
             _ => source.clone(),
@@ -153,19 +158,28 @@ mod steps {
         resolving: &Value,
         _source: &Value,
         _operations: &Vec<Vec<ColorChange>>,
+        _max_depth: usize,
     ) -> Value {
+        if _max_depth == 0 {
+            return Value::Null;
+        }
         let mut resolved: Value = json!({});
         match resolving {
             Value::Object(obj) => {
                 for (key, value) in obj.iter() {
-                    resolved[key] = resolve_variables(value, _source, _operations);
+                    resolved[key] = resolve_variables(value, _source, _operations, _max_depth - 1);
                 }
             }
 
             Value::Array(arr) => {
                 let mut res_arr = Vec::with_capacity(arr.len());
                 for value in arr.iter() {
-                    res_arr.push(resolve_variables(value, _source, _operations));
+                    res_arr.push(resolve_variables(
+                        value,
+                        _source,
+                        _operations,
+                        _max_depth - 1,
+                    ));
                 }
                 resolved = Value::Array(res_arr);
             }
@@ -185,7 +199,7 @@ mod steps {
                     if let Ok(v) = value {
                         let mut new_ops = _operations.clone();
                         new_ops.push(parsed_var.operations);
-                        resolved = resolve_variables(v, _source, &new_ops);
+                        resolved = resolve_variables(v, _source, &new_ops, _max_depth - 1);
                     } else {
                         resolved = Value::Null;
                     }
@@ -306,8 +320,9 @@ pub fn generate(
                variables: serde_json::Value|
      -> Result<serde_json::Value, Error> {
         // Step 2: Resolve recursive variables
-        let variables = steps::resolve_self_variables(&variables, &vec!["$"]);
-        let variables = steps::resolve_variables(&variables, &variables, &vec![]);
+        let variables = steps::resolve_self_variables(&variables, &vec!["$"], MAX_RECURSION_DEPTH);
+        let variables =
+            steps::resolve_variables(&variables, &variables, &vec![], MAX_RECURSION_DEPTH);
 
         // Step 3: Apply Deletions
         if let Some(del_obj) = variables.get("deletions")
@@ -322,7 +337,9 @@ pub fn generate(
                     ))
                 })?;
 
-                path.remove(&mut template)?;
+                path.remove(&mut template).unwrap_or_else(|_| {
+                    error!("Warning: {} is not a valid deletion path.", key);
+                });
             }
         }
 
@@ -429,7 +446,11 @@ pub fn generate(
                 .map_err(|json_err| {
                     Error::Processing(format!("Invalid variable toml: {}", json_err))
                 })?;
-            serde_json::to_value(toml::from_str::<toml::Value>(&contents).unwrap())
+            serde_json::to_value(
+                toml::from_str::<toml::Value>(&contents).map_err(|toml_err| {
+                    Error::Processing(format!("Invalid variable toml: {}", toml_err))
+                })?,
+            )
         }
         .map_err(|json_err| Error::Processing(format!("Invalid variable toml: {}", json_err)))?;
 
@@ -455,5 +476,6 @@ pub fn generate(
         write_to_file(&full, false)?;
     }
 
+    println!("Generated {} files", variables.len());
     Ok(())
 }

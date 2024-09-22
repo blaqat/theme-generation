@@ -7,7 +7,8 @@
 			"name": "$name",
 			"appearance": "$theme",
 			"style": {
-		      	"accents": "$indent.multi",
+				"background.appearance": "$window",
+		   	"accents": "$indent.multi",
 				"border": "$border.primary",
 				"border.variant": "$border.secondary",
 				"border.focused": "$border.selected|$border.primary",
@@ -56,7 +57,7 @@
 				"scrollbar.track.background": "$background.bars.scrollbar",
 				"scrollbar.track.border": "$border.scrollbar",
 				"editor.foreground": "$foreground.primary",
-				"editor.background": "$background.primary",
+				"editor.background": "$background.editor|$background.primary",
 				"editor.gutter.background": "$background.gutter|$background.primary",
 				"editor.subheader.background": "$background.secondary",
 				"editor.indent_guide": "$indent.inactive|$indent..50",

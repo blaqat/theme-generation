@@ -1,0 +1,566 @@
+# Reverse Generation Tool Version 3.0
+name = "name"
+theme = "theme"
+
+# Theme Colors
+[color]
+
+[background]
+drop_target = "background.drop_target"
+editor = "background.editor|background.primary"
+gutter = "background.gutter|background.primary"
+primary = "background.primary"
+secondary = "background.secondary"
+surface = "background.surface|background.secondary"
+
+[background.bars]
+bottombar = "background.bars.bottombar"
+toolbar = "background.bars.toolbar"
+
+[background.bars.topbar]
+active = "background.bars.topbar.active|background.bars.topbar"
+inactive = "background.bars.topbar.inactive|background.bars.topbar.active|background.bars.topbar"
+
+[border]
+disabled = "border.disabled"
+primary = "border.primary"
+secondary = "border.secondary"
+selected = "border.selected|border.primary"
+transparent = "border.transparent"
+
+[button]
+active = "button.active"
+disabled = "button.disabled"
+primary = "button.primary"
+selected = "button.selected"
+
+[code.error]
+background = "code.error.background|background.code|scheme.red2"
+border = "code.error.border|border.code|scheme.red3|scheme.red2"
+foreground = "code.error.foreground|foreground.error|scheme.red"
+
+[code.hidden]
+background = "code.hidden.background|background.code"
+border = "code.hidden.border|border.code|scheme.black3"
+foreground = "code.hidden.foreground|foreground.hidden"
+
+[code.hint]
+background = "code.hint.background|background.code|scheme.blue2"
+border = "code.hint.border|border.code|scheme.blue3|scheme.blue2"
+foreground = "code.hint.foreground|foreground.hint"
+
+[code.info]
+background = "code.info.background|background.code|scheme.blue2"
+border = "code.info.border|border.code|scheme.blue3|scheme.blue2"
+foreground = "code.info.foreground|foreground.info|scheme.blue"
+
+[code.predictive]
+background = "code.predictive.background|background.code"
+border = "code.predictive.border|border.code"
+foreground = "code.predictive.foreground|foreground.predictive"
+
+[code.success]
+background = "code.success.background|background.code|scheme.green2"
+border = "code.success.border|border.code|scheme.green3|scheme.green2"
+foreground = "code.success.foreground|foreground.success|scheme.pink"
+
+[code.unreachable]
+background = "code.unreachable.background|background.code"
+border = "code.unreachable.border|border.code"
+foreground = "code.unreachable.foreground|foreground.unreachable"
+
+[code.warning]
+background = "code.warning.background|background.code|scheme.yellow2"
+border = "code.warning.border|border.code|scheme.yellow3|scheme.yellow2"
+foreground = "code.warning.foreground|foreground.warning|scheme.yellow"
+
+[cursor]
+highlighted = "cursor.highlighted|cursor.line"
+line = "cursor.line"
+search = "cursor.search"
+spaces = "cursor.spaces"
+
+[element]
+active = "element.active"
+disabled = "element.disabled"
+hover = "element.hover"
+primary = "element.primary"
+selected = "element.selected"
+
+[foreground]
+accent = "foreground.accent|primary"
+hover = "foreground.hover|button.hover"
+inactive = "foreground.inactive"
+link = "foreground.link|primary"
+placeholder = "foreground.placeholder"
+primary = "foreground.primary"
+read = "foreground.read|cursor.match"
+secondary = "foreground.secondary"
+write = "foreground.write|cursor.match"
+
+[foreground.linenumber]
+active = "foreground.linenumber.active|foreground.line"
+inactive = "foreground.linenumber.inactive|foreground.inactive"
+
+[git.conflict]
+background = "git.conflict.background|background.git|scheme.red2"
+border = "git.conflict.border|border.git|scheme.red3|scheme.red2"
+foreground = "git.conflict.foreground|foreground.conflict|scheme.red"
+
+[git.created]
+background = "git.created.background|background.git|scheme.green2"
+border = "git.created.border|border.git|scheme.green3|scheme.green2"
+foreground = "git.created.foreground|foreground.created|scheme.green"
+
+[git.deleted]
+background = "git.deleted.background|background.git|scheme.red2"
+border = "git.deleted.border|border.git|scheme.red3|scheme.red2"
+foreground = "git.deleted.foreground|foreground.deleted|scheme.red"
+
+[git.ignored]
+background = "git.ignored.background|background.git"
+border = "git.ignored.border|border.git"
+foreground = "git.ignored.foreground|foreground.ignored|foreground.inactive"
+
+[git.modified]
+background = "git.modified.background|background.git|scheme.yellow2"
+border = "git.modified.border|border.git|scheme.yellow3|scheme.yellow2"
+foreground = "git.modified.foreground|foreground.modified|scheme.yellow"
+
+[git.renamed]
+background = "git.renamed.background|background.git|scheme.pink2"
+border = "git.renamed.border|border.git|scheme.pink3|scheme.pink2"
+foreground = "git.renamed.foreground|foreground.renamed|scheme.pink"
+
+[guide]
+active = "guide.active"
+inactive = "guide.inactive|border.wrap"
+
+[icon]
+accent = "icon.accent|primary"
+inactive = "icon.inactive"
+placeholder = "icon.placeholder|icon.inactive"
+primary = "icon.primary"
+secondary = "icon.secondary"
+
+[indent]
+active = "indent.active|indent"
+inactive = "indent.inactive|indent..50"
+multi = "indent.multi|indents"
+
+[pane]
+focused = "pane.focused|border.selected"
+
+[panel]
+background = "panel.background|background.panel"
+focused = "panel.focused|border.selected"
+
+[players.1]
+background = "players.1.background|cursor.background|background.cursor"
+cursor = "players.1.cursor|cursor.primary"
+selection = "players.1.selection|cursor.selection|cursor.background"
+
+[players.2]
+background = "players.2.background"
+cursor = "players.2.cursor"
+selection = "players.2.selection"
+
+[players.3]
+background = "players.3.background"
+cursor = "players.3.cursor"
+selection = "players.3.selection"
+
+[players.4]
+background = "players.4.background"
+cursor = "players.4.cursor"
+selection = "players.4.selection"
+
+[players.5]
+background = "players.5.background"
+cursor = "players.5.cursor"
+selection = "players.5.selection"
+
+[players.6]
+background = "players.6.background"
+cursor = "players.6.cursor"
+selection = "players.6.selection"
+
+[players.7]
+background = "players.7.background"
+cursor = "players.7.cursor"
+selection = "players.7.selection"
+
+[players.8]
+background = "players.8.background"
+cursor = "players.8.cursor"
+selection = "players.8.selection"
+
+[scrollbar]
+primary = "scrollbar.primary|background.bars.scrollbar_thumb"
+secondary = "scrollbar.secondary|scrollbar.border|border.scrollbar"
+track = "scrollbar.track|scrollbar.secondary|background.bars.scrollbar"
+
+[syntax.attribute]
+color = "syntax.attribute.color"
+background = "syntax.attribute.background"
+style = "syntax.attribute.style"
+weight = "syntax.attribute.weight"
+
+[syntax.boolean]
+color = "syntax.boolean.color"
+background = "syntax.boolean.background"
+style = "syntax.boolean.style"
+weight = "syntax.boolean.weight"
+
+[syntax.builtin]
+color = "syntax.builtin.color|syntax.function.color"
+background = "syntax.builtin.background|syntax.function.background"
+style = "syntax.builtin.style|syntax.function.style"
+weight = "syntax.builtin.weight|syntax.function.weight"
+
+[syntax.comment]
+color = "syntax.comment.color|scheme.comment"
+background = "syntax.comment.background|scheme.comment"
+style = "syntax.comment.style"
+weight = "syntax.comment.weight"
+
+[syntax.constant]
+color = "syntax.constant.color"
+background = "syntax.constant.background"
+style = "syntax.constant.style"
+weight = "syntax.constant.weight"
+
+[syntax.constant.builtin]
+color = "syntax.constant.builtin.color|syntax.builtin.color|syntax.constant.color"
+background = "syntax.constant.builtin.background|syntax.builtin.background|syntax.constant.background"
+style = "syntax.constant.builtin.style|syntax.builtin.style|syntax.constant.style"
+weight = "syntax.constant.builtin.weight|syntax.builtin.weight|syntax.constant.weight"
+
+[syntax.constant.character]
+color = "syntax.constant.character.color|syntax.special.color|syntax.constant.color"
+background = "syntax.constant.character.background|syntax.special.background|syntax.constant.background"
+style = "syntax.constant.character.style|syntax.special.style|syntax.constant.style"
+weight = "syntax.constant.character.weight|syntax.special.weight|syntax.constant.weight"
+
+[syntax.constructor]
+color = "syntax.constructor.color|syntax.punctuation.bracket.color|syntax.punctuation.color"
+background = "syntax.constructor.background|syntax.punctuation.bracket.background|syntax.punctuation.background"
+style = "syntax.constructor.style|syntax.punctuation.bracket.style|syntax.punctuation.style"
+weight = "syntax.constructor.weight|syntax.punctuation.bracket.weight|syntax.punctuation.weight"
+
+[syntax.definition]
+color = "syntax.definition.color|syntax.special.color|syntax.function.color"
+background = "syntax.definition.background|syntax.special.background|syntax.function.background"
+style = "syntax.definition.style|syntax.special.style|syntax.function.style"
+weight = "syntax.definition.weight|syntax.function.weight"
+
+[syntax.doc]
+color = "syntax.doc.color|syntax.comment.color|scheme.comment"
+background = "syntax.doc.background|syntax.comment.background|scheme.comment"
+style = "syntax.doc.style|syntax.comment.style"
+weight = "syntax.doc.weight|syntax.comment.weight"
+
+[syntax.embedded]
+color = "syntax.embedded.color"
+background = "syntax.embedded.background"
+style = "syntax.embedded.style"
+weight = "syntax.embedded.weight"
+
+[syntax.emphasis]
+color = "syntax.emphasis.color"
+background = "syntax.emphasis.background"
+style = "syntax.emphasis.style"
+weight = "syntax.emphasis.weight"
+
+[syntax.enum]
+color = "syntax.enum.color|syntax.special.color"
+background = "syntax.enum.background|syntax.special.background"
+style = "syntax.enum.style|syntax.special.style"
+weight = "syntax.enum.weight|syntax.special.weight"
+
+[syntax.escape]
+color = "syntax.escape.color"
+background = "syntax.escape.background"
+style = "syntax.escape.style"
+weight = "syntax.escape.weight"
+
+[syntax.function]
+color = "syntax.function.color"
+background = "syntax.function.background"
+style = "syntax.function.style"
+weight = "syntax.function.weight"
+
+[syntax.hint]
+color = "syntax.hint.color|foreground.hint"
+background = "syntax.hint.background|foreground.hint"
+style = "syntax.hint.style"
+weight = "syntax.hint.weight"
+
+[syntax.json_key]
+color = "syntax.json_key.color|syntax.property.color"
+background = "syntax.json_key.background|syntax.property.background"
+style = "syntax.json_key.style|syntax.property.style"
+weight = "syntax.json_key.weight|syntax.property.weight"
+
+[syntax.keyword]
+color = "syntax.keyword.color"
+background = "syntax.keyword.background"
+style = "syntax.keyword.style"
+weight = "syntax.keyword.weight"
+
+[syntax.label]
+color = "syntax.label.color"
+background = "syntax.label.background"
+style = "syntax.label.style"
+weight = "syntax.label.weight"
+
+[syntax.lifetime]
+color = "syntax.lifetime.color|syntax.special.color"
+background = "syntax.lifetime.background|syntax.special.background"
+style = "syntax.lifetime.style|syntax.special.style"
+weight = "syntax.lifetime.weight |syntax.special.weight"
+
+[syntax.link]
+color = "syntax.link.color|foreground.link|primary"
+background = "syntax.link.background|foreground.link|primary"
+style = "syntax.link.style"
+weight = "syntax.link.weight"
+
+[syntax.method]
+color = "syntax.method.color|syntax.function.color"
+background = "syntax.method.background|syntax.function.background"
+style = "syntax.method.style|syntax.function.style"
+weight = "syntax.method.weight|syntax.function.weight"
+
+[syntax.number]
+color = "syntax.number.color"
+background = "syntax.number.background"
+style = "syntax.number.style"
+weight = "syntax.number.weight"
+
+[syntax.operator]
+color = "syntax.operator.color"
+background = "syntax.operator.background"
+style = "syntax.operator.style"
+weight = "syntax.operator.weight"
+
+[syntax.predictive]
+color = "syntax.predictive.color"
+background = "syntax.predictive.background"
+style = "syntax.predictive.style"
+weight = "syntax.predictive.weight"
+
+[syntax.preproc]
+color = "syntax.preproc.color|syntax.macro.color"
+background = "syntax.preproc.background|syntax.macro.background"
+style = "syntax.preproc.style|syntax.macro.style"
+weight = "syntax.preproc.weight|syntax.macro.weight"
+
+[syntax.primary]
+color = "syntax.primary.color|primary"
+background = "syntax.primary.background|primary"
+style = "syntax.primary.style"
+weight = "syntax.primary.weight"
+
+[syntax.property]
+color = "syntax.property.color"
+background = "syntax.property.background"
+style = "syntax.property.style"
+weight = "syntax.property.weight"
+
+[syntax.punctuation]
+color = "syntax.punctuation.color"
+background = "syntax.punctuation.background"
+style = "syntax.punctuation.style"
+weight = "syntax.punctuation.weight"
+
+[syntax.punctuation.arrow]
+color = "syntax.punctuation.arrow.color|syntax.punctuation.bracket.color|syntax.punctuation.color"
+background = "syntax.punctuation.arrow.background|syntax.punctuation.bracket.background|syntax.punctuation.background"
+style = "syntax.punctuation.arrow.style|syntax.punctuation.bracket.style|syntax.punctuation.style"
+weight = "syntax.punctuation.arrow.weight|syntax.punctuation.bracket.weight|syntax.punctuation.weight"
+
+[syntax.punctuation.bracket]
+color = "syntax.punctuation.bracket.color|syntax.punctuation.color"
+background = "syntax.punctuation.bracket.background|syntax.punctuation.background"
+style = "syntax.punctuation.bracket.style|syntax.punctuation.style"
+weight = "syntax.punctuation.bracket.weight|syntax.punctuation.weight"
+
+[syntax.punctuation.delimiter]
+color = "syntax.punctuation.delimiter.color|syntax.punctuation.color"
+background = "syntax.punctuation.delimiter.background|syntax.punctuation.background"
+style = "syntax.punctuation.delimiter.style|syntax.punctuation.style"
+weight = "syntax.punctuation.delimiter.weight|syntax.punctuation.weight"
+
+[syntax.punctuation.special]
+color = "syntax.punctuation.special.color|syntax.punctuation.color"
+background = "syntax.punctuation.special.background|syntax.punctuation.background"
+style = "syntax.punctuation.special.style|syntax.punctuation.style"
+weight = "syntax.punctuation.special.weight|syntax.punctuation.weight"
+
+[syntax.punctuation.symbol]
+color = "syntax.punctuation.symbol.color|syntax.punctuation.special.color|syntax.punctuation.color"
+background = "syntax.punctuation.symbol.background|syntax.punctuation.special.background|syntax.punctuation.background"
+style = "syntax.punctuation.symbol.style|syntax.punctuation.special.style|syntax.punctuation.style"
+weight = "syntax.punctuation.symbol.weight|syntax.punctuation.special.weight|syntax.punctuation.weight"
+
+[syntax.special]
+color = "syntax.special.color|syntax.function.color"
+background = "syntax.special.background|syntax.function.background"
+style = "syntax.special.style|syntax.function.style"
+weight = "syntax.special.weight|syntax.function.weight"
+
+[syntax.string]
+color = "syntax.string.color"
+background = "syntax.string.background"
+style = "syntax.string.style"
+weight = "syntax.string.weight"
+
+[syntax.string.doc]
+color = "syntax.string.doc.color|syntax.doc.color|syntax.string.color"
+background = "syntax.string.doc.background|syntax.doc.background|syntax.string.background"
+style = "syntax.string.doc.style|syntax.doc.style|syntax.string.style"
+weight = "syntax.string.doc.weight|syntax.doc.weight|syntax.string.weight"
+
+[syntax.string.escape]
+color = "syntax.string.escape.color|syntax.escape.color|syntax.string.color"
+background = "syntax.string.escape.background|syntax.escape.background|syntax.string.background"
+style = "syntax.string.escape.style|syntax.escape.style|syntax.string.style"
+weight = "syntax.string.escape.weight|syntax.escape.weight|syntax.string.weight"
+
+[syntax.string.regex]
+color = "syntax.string.regex.color|syntax.string.color"
+background = "syntax.string.regex.background|syntax.string.background"
+style = "syntax.string.regex.style|syntax.string.style"
+weight = "syntax.string.regex.weight|syntax.string.weight"
+
+[syntax.string.special]
+color = "syntax.string.special.color|syntax.string.color"
+background = "syntax.string.special.background|syntax.string.background"
+style = "syntax.string.special.style|syntax.string.style"
+weight = "syntax.string.special.weight|syntax.string.weight"
+
+[syntax.string.symbol]
+color = "syntax.string.symbol.color|syntax.string.special.color|syntax.string.color"
+background = "syntax.string.symbol.background|syntax.string.special.background|syntax.string.background"
+style = "syntax.string.symbol.style|syntax.string.special.style|syntax.string.style"
+weight = "syntax.string.symbol.weight|syntax.string.special.weight|syntax.string.weight"
+
+[syntax.strong]
+color = "syntax.strong.color|syntax.emphasis.color"
+background = "syntax.strong.background|syntax.emphasis.background"
+style = "syntax.strong.style|syntax.emphasis.style"
+weight = "syntax.strong.weight|syntax.emphasis.weight"
+
+[syntax.tag]
+color = "syntax.tag.color"
+background = "syntax.tag.background"
+style = "syntax.tag.style"
+weight = "syntax.tag.weight"
+
+[syntax.text.literal]
+color = "syntax.text.literal.color|syntax.text.color"
+background = "syntax.text.literal.background|syntax.text.background"
+style = "syntax.text.literal.style|syntax.text.style"
+weight = "syntax.text.literal.weight|syntax.text.weight"
+
+[syntax.title]
+color = "syntax.title.color|syntax.emphasis.color|syntax.keyword.color"
+background = "syntax.title.background|syntax.emphasis.background|syntax.keyword.background"
+style = "syntax.title.style|syntax.emphasis.style|syntax.keyword.style"
+weight = "syntax.title.weight|syntax.emphasis.weight|syntax.keyword.weight"
+
+[syntax.type]
+color = "syntax.type.color"
+background = "syntax.type.background"
+style = "syntax.type.style"
+weight = "syntax.type.weight"
+
+[syntax.type.builtin]
+color = "syntax.type.builtin.color|syntax.builtin.color|syntax.type.color"
+background = "syntax.type.builtin.background|syntax.builtin.background|syntax.type.background"
+style = "syntax.type.builtin.style|syntax.builtin.style|syntax.type.style"
+weight = "syntax.type.builtin.weight|syntax.builtin.weight|syntax.type.weight"
+
+[syntax.type.interface]
+color = "syntax.type.interface.color|syntax.type.color"
+background = "syntax.type.interface.background|syntax.type.background"
+style = "syntax.type.interface.style|syntax.type.style"
+weight = "syntax.type.interface.weight|syntax.type.weight"
+
+[syntax.type.super]
+color = "syntax.type.super.color|syntax.special.color|syntax.type.color"
+background = "syntax.type.super.background|syntax.special.background|syntax.type.background"
+style = "syntax.type.super.style|syntax.special.style|syntax.type.style"
+weight = "syntax.type.super.weight|syntax.special.weight|syntax.type.weight"
+
+[syntax.variable]
+color = "syntax.variable.color"
+background = "syntax.variable.background"
+style = "syntax.variable.style"
+weight = "syntax.variable.weight"
+
+[syntax.variable.builtin]
+color = "syntax.variable.builtin.color|syntax.builtin.color|syntax.variable.color"
+background = "syntax.variable.builtin.background|syntax.builtin.background|syntax.variable.background"
+style = "syntax.variable.builtin.style|syntax.builtin.style|syntax.variable.style"
+weight = "syntax.variable.builtin.weight|syntax.builtin.weight|syntax.variable.weight"
+
+[syntax.variable.member]
+color = "syntax.variable.member.color|syntax.member.color|syntax.variable.color"
+background = "syntax.variable.member.background|syntax.member.background|syntax.variable.background"
+style = "syntax.variable.member.style|syntax.member.style|syntax.variable.style"
+weight = "syntax.variable.member.weight|syntax.member.weight|syntax.variable.weight"
+
+[syntax.variable.parameter]
+color = "syntax.variable.parameter.color|syntax.parameter.color|syntax.variable.color"
+background = "syntax.variable.parameter.background|syntax.parameter.background|syntax.variable.background"
+style = "syntax.variable.parameter.style|syntax.parameter.style|syntax.variable.style"
+weight = "syntax.variable.parameter.weight|syntax.parameter.weight|syntax.variable.weight"
+
+[syntax.variable.special]
+color = "syntax.variable.special.color|syntax.special.color|syntax.variable.color"
+background = "syntax.variable.special.background|syntax.special.background|syntax.variable.background"
+style = "syntax.variable.special.style|syntax.special.style|syntax.variable.style"
+weight = "syntax.variable.special.weight|syntax.special.weight|syntax.variable.weight"
+
+[syntax.variant]
+color = "syntax.variant.color"
+background = "syntax.variant.background"
+style = "syntax.variant.style"
+weight = "syntax.variant.weight"
+
+[tabs]
+active = "tabs.active|background.bars.tabbar.active|background.bars.tabbar"
+background = "tabs.background|background.bars.tabbar.background|background.bars.tabbar"
+inactive = "tabs.inactive|background.bars.tabbar.inactive|background.bars.tabbar"
+
+[terminal]
+background = "terminal.background|background.terminal|background.primary"
+black = "terminal.black|scheme.black"
+blue = "terminal.blue|scheme.blue"
+bright_black = "terminal.bright_black|scheme.black2"
+bright_blue = "terminal.bright_blue|scheme.blue2"
+bright_cyan = "terminal.bright_cyan|scheme.cyan2"
+bright_foreground = "terminal.bright_foreground|terminal.foreground|foreground.primary"
+bright_green = "terminal.bright_green|scheme.green2"
+bright_magenta = "terminal.bright_magenta|scheme.pink2"
+bright_red = "terminal.bright_red|scheme.red2"
+bright_white = "terminal.bright_white|scheme.white2"
+bright_yellow = "terminal.bright_yellow|scheme.yellow2"
+cyan = "terminal.cyan|scheme.cyan"
+dim_black = "terminal.dim_black|scheme.black3|scheme.black2"
+dim_blue = "terminal.dim_blue|scheme.blue3|scheme.blue2"
+dim_cyan = "terminal.dim_cyan|scheme.cyan3|scheme.cyan2"
+dim_foreground = "terminal.dim_foreground|terminal.foreground|foreground.primary"
+dim_green = "terminal.dim_green|scheme.green3|scheme.green2"
+dim_magenta = "terminal.dim_magenta|scheme.pink3|scheme.pink2"
+dim_red = "terminal.dim_red|scheme.red3|scheme.red2"
+dim_white = "terminal.dim_white|scheme.white3|scheme.white2"
+dim_yellow = "terminal.dim_yellow|scheme.yellow3|scheme.yellow2"
+foreground = "terminal.foreground|foreground.primary"
+green = "terminal.green|scheme.green"
+magenta = "terminal.magenta|scheme.pink"
+red = "terminal.red|scheme.red"
+white = "terminal.white|scheme.white"
+yellow = "terminal.yellow|scheme.yellow"

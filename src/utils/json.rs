@@ -119,9 +119,17 @@ impl FromStr for JsonPath {
         Ok(JsonPath(path))
     }
 }
+
 impl JsonPath {
     pub fn new() -> Self {
         JsonPath(Vec::new())
+    }
+
+    pub fn has_num_in_path(&self) -> bool {
+        let re = regex::Regex::new(r"/(\d+)(/|$)").unwrap();
+        re.captures(self.to_string().as_str())
+            .and_then(|cap| cap[1].parse::<i32>().ok())
+            .is_some()
     }
 
     pub fn join(&self) -> String {
@@ -151,7 +159,9 @@ impl JsonPath {
         if let Some(value) = json.pointer_mut(&format!("{}", path)) {
             match value {
                 Value::Array(a) => {
-                    if let JsonKey::Index(idx) = last {
+                    if let JsonKey::Index(idx) = last
+                        && *idx < a.len()
+                    {
                         a.remove(*idx);
                     } else {
                         return ahh!("Invalid path: {}", self.to_string());

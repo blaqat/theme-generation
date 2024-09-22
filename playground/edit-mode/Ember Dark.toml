@@ -1,89 +1,88 @@
 # Reverse Generation Tool Version 3.0
-name = "Ember Neon"
+name = "Ember Dark"
 theme = "dark"
 
 # Theme Colors
 [color]
-antiquewhite2 = "#F4E8DC"
-black = "#0C0C14"
-black3 = "#101019"
-black5 = "#191826"
-burlywood = "#F4C592"
-burlywood2 = "#FFB999"
+antiquewhite = "#F4E8DC"
+black = "#141320"
+black2 = "#191926"
+burlywood2 = "#F4C592"
 cornflowerblue = "#4C87FF"
 cornflowerblue2 = "#4CC0FF"
-darkslategray = "#515151"
+darkslategray3 = "#515151"
+darkslategray4 = "#1F1F30"
 deeppink = "#FF2188"
 lightgreen = "#6EDD6E"
 mediumpurple = "#B587FF"
 sandybrown = "#FFCC4C"
-violet = "#E565FF"
 
 [background]
-code = "@black3"
-gutter = "@black"
+code = "@black2..v+40"
+gutter = "#161623"
 panel = "@black"
-primary = "@black"
+primary = "#161623"
 secondary = "@black"
 surface = "@black"
-terminal = "@burlywood..00"
+terminal = "@burlywood2..00"
 
 [background.bars]
-bottombar = "#09080F"
+bottombar = "#100F1A"
 scrollbar = "@black..00"
-scrollbar_thumb = "@black5..8F"
-toolbar = "@black3"
+scrollbar_thumb = "@darkslategray4..8F"
+toolbar = "@black2"
 topbar = "@black"
 
 [background.bars.tabbar]
-active = "@black3"
+active = "@black2"
 background = "@black"
 inactive = "@black"
 
 [border]
 primary = "#100F1E"
+scrollbar = "@black"
 secondary = "@black"
 
 [button]
-primary = "#0A0A0F"
+primary = "@black2"
 
 [code.error]
-background = "@black3"
+background = "@black2"
 border = "@deeppink"
 foreground = "@deeppink"
 
 [code.info]
-background = "@black3"
+background = "@black2"
 border = "@cornflowerblue"
 foreground = "#5959A3"
 
 [code.warning]
-background = "@black3"
+background = "@black2"
 border = "@sandybrown"
 foreground = "@sandybrown"
 
 [cursor]
-background = "@burlywood2"
-highlighted = "@black5"
-line = "@black5"
-match = "#2C2A47E6"
-primary = "@burlywood..F0"
+background = "#FFB999"
+highlighted = "@darkslategray4"
+line = "@darkslategray4"
+match = "#333051E6"
+primary = "@burlywood2..F0"
 search = "#FFFF7F1A"
 selection = "#302F469F"
 spaces = "@lightgreen..03"
 
 [element]
-active = "@black3"
-hover = "@black3"
-selected = "#1D1D2B"
+active = "@black2"
+hover = "@black2"
+selected = "#302F46"
 
 [foreground]
-hover = "#EDEEF0"
-primary = "@burlywood..C0"
-secondary = "@antiquewhite2"
+hover = "@black2..v+10"
+primary = "@burlywood2..s=20"
+secondary = "@antiquewhite..c0"
 
 [foreground.linenumber]
-active = "@burlywood..C0"
+active = "@burlywood2..C0"
 inactive = "#AAAAAA40"
 
 [git.created]
@@ -100,8 +99,8 @@ foreground = "#828A99"
 foreground = "@cornflowerblue"
 
 [indent]
-active = "@antiquewhite2..50"
-inactive = "@antiquewhite2..1F"
+active = "@antiquewhite..50"
+inactive = "@antiquewhite..1F"
 multi = [
 	"@cornflowerblue",
 	"#C8099D.",
@@ -110,13 +109,13 @@ multi = [
 	"@deeppink",
 	"@sandybrown",
 	"@mediumpurple",
-	"@darkslategray",
+	"@darkslategray3",
 	"@deeppink",
 	"@cornflowerblue",
 	"#C8099D.",
 	"@lightgreen",
 	"null",
-	"@sandybrown"
+	"@sandybrown",
 ]
 
 [players.2]
@@ -125,9 +124,9 @@ cursor = "#114D77"
 selection = "#55B4D33B"
 
 [scheme]
-black = "@burlywood..C0"
-black2 = "@burlywood..50"
-black3 = "@burlywood..50"
+black = "@burlywood2..C0"
+black2 = "@burlywood2..50"
+black3 = "@burlywood2..50"
 blue = "@cornflowerblue"
 blue2 = "@cornflowerblue..50"
 blue3 = "#C4DAF6"
@@ -143,9 +142,9 @@ pink3 = "#C8099D."
 red = "@deeppink"
 red2 = "@deeppink..50"
 red3 = "@deeppink"
-white = "@darkslategray"
-white2 = "@darkslategray..50"
-white3 = "@darkslategray"
+white = "@darkslategray3"
+white2 = "@darkslategray3..50"
+white3 = "@darkslategray3"
 yellow = "@sandybrown"
 yellow2 = "@cornflowerblue"
 yellow3 = "@sandybrown"
@@ -158,14 +157,11 @@ color = "@deeppink"
 weight = 700
 
 [syntax.comment]
-background = "#FF656B0D"
 color = "#FF656BE6"
-style = "italic"
 weight = 700
 
 [syntax.constant]
-background = "@burlywood..0D"
-color = "@burlywood..C0"
+color = "#FFB999"
 style = "italic"
 weight = 400
 
@@ -176,24 +172,17 @@ color = "#FF82BC"
 color = "@deeppink"
 
 [syntax.escape]
-background = "@cornflowerblue2..0D"
 color = "@lightgreen"
 weight = 400
 
 [syntax.function]
-background = "@violet..0D"
-color = "@violet"
-
-[syntax.hint]
-color = "#F00"
+color = "#E565FF"
 
 [syntax.keyword]
-background = "@deeppink..0D"
 color = "@deeppink"
 weight = 700
 
 [syntax.method]
-background = "@violet..0D"
 color = "@mediumpurple"
 weight = 700
 
@@ -205,7 +194,7 @@ color = "#FF82BC"
 weight = 700
 
 [syntax.property]
-color = "@burlywood..C0"
+color = "#FFB999"
 
 [syntax.punctuation]
 color = "#F5E4D1"
@@ -217,20 +206,17 @@ color = "#85DBDB"
 color = "#F5E4D1"
 
 [syntax.punctuation.special]
-color = "@burlywood..C0"
+color = "@burlywood2..C0"
 
 [syntax.string]
-background = "@cornflowerblue2..0D"
 color = "@cornflowerblue2"
 weight = 400
 
 [syntax.string.regex]
-background = "@cornflowerblue2..0D"
 color = "@cornflowerblue2"
 weight = 400
 
 [syntax.string.special]
-background = "@cornflowerblue2..0D"
 color = "#0086B3"
 weight = 400
 
@@ -242,25 +228,22 @@ weight = 700
 color = "@cornflowerblue2"
 
 [syntax.type]
-background = "@cornflowerblue..0D"
 color = "@cornflowerblue"
 weight = 500
 
 [syntax.variable]
-background = "@burlywood2..0D"
-color = "@burlywood2"
+color = "#FFB999"
 
 [syntax.variable.special]
-background = "@burlywood2..0D"
 color = "#A1E5A0"
 
 # Overrides
 [overrides]
 "style/scrollbar.thumb.hover_background" = "$none"
-"style/scrollbar.track.border" = "@black"
+"style/scrollbar.thumb.border" = "$none"
 "style/border.selected" = "#100F1E"
 "style/syntax/comment.doc/color" = "#6591FFE6"
-"style/syntax/comment.doc/font_style" = "$none"
+"style/syntax/comment/font_style" = "italic"
 "style/syntax/comment.doc/font_weight" = "$none"
 
 # Deletions
@@ -276,6 +259,7 @@ keys = [
 	"/style/syntax/function.definition",
 	"/style/syntax/function.special",
 	"/style/syntax/function.special.definition",
+	"/style/syntax/hint",
 	"/style/syntax/label",
 	"/style/syntax/lifetime",
 	"/style/syntax/link_text",
@@ -291,5 +275,5 @@ keys = [
 	"/style/syntax/variable.member",
 	"/style/syntax/variable.parameter",
 	"/style/syntax/variant",
-	"/style/title_bar.inactive_background"
+	"/style/title_bar.inactive_background",
 ]

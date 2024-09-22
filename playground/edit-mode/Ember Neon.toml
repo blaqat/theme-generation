@@ -1,87 +1,91 @@
 # Reverse Generation Tool Version 3.0
-name = "Ember Dark"
+name = "Ember Neon"
 theme = "dark"
+window = "blurred"
+t = "#0000"
 
 # Theme Colors
 [color]
 antiquewhite = "#F4E8DC"
-black = "#191926"
-black2 = "#141320"
-burlywood = "#F4C592"
+black = "#0E0E17f0"
+black2 = "#191926"
+burlywood2 = "#F4C592"
 cornflowerblue = "#4C87FF"
 cornflowerblue2 = "#4CC0FF"
-darkslategray2 = "#515151"
-darkslategray3 = "#1F1F30"
+darkslategray3 = "#515151"
+darkslategray4 = "#1F1F30"
 deeppink = "#FF2188"
 lightgreen = "#6EDD6E"
 mediumpurple = "#B587FF"
 sandybrown = "#FFCC4C"
 
 [background]
-code = "@black"
-gutter = "#161623"
-panel = "@black2"
-primary = "#161623"
-secondary = "@black2"
-surface = "@black2"
-terminal = "@burlywood..00"
+code = "@black2..v+40"
+gutter = "@black"
+panel = "@black"
+primary = "$t"
+editor = "@black"
+secondary = "#13121e"
+surface = "@black"
+terminal = "@black"
 
 [background.bars]
-bottombar = "#100F1A"
-scrollbar_thumb = "@darkslategray3..8F"
+bottombar = "#0e0e17"
+scrollbar = "$t"
+scrollbar_thumb = "@darkslategray4..8F"
 toolbar = "@black"
-topbar = "@black2"
+topbar = "@black"
 
 [background.bars.tabbar]
-active = "@black"
-background = "@black2"
-inactive = "@black2"
+active = "$t"
+background = "#0e0e17"
+inactive = "$t"
 
 [border]
-primary = "#100F1E"
-scrollbar = "@black2"
-secondary = "@black2"
+primary = "@black"
+scrollbar = "$t"
+secondary = "$t"
 
 [button]
-primary = "@black"
+primary = "@black2"
 
 [code.error]
-background = "@black"
+background = "@black2"
 border = "@deeppink"
 foreground = "@deeppink"
 
 [code.info]
-background = "@black"
+background = "@black2"
 border = "@cornflowerblue"
 foreground = "#5959A3"
 
 [code.warning]
-background = "@black"
+background = "@black2"
 border = "@sandybrown"
 foreground = "@sandybrown"
 
 [cursor]
-background = "#FFB999"
-highlighted = "@darkslategray3"
-line = "@darkslategray3"
+background = "@deeppink..90"
+highlighted = "@deeppink..90"
+line = "@darkslategray4..00"
 match = "#333051E6"
-primary = "@burlywood..F0"
+primary = "@burlywood2..F0"
 search = "#FFFF7F1A"
-selection = "#302F469F"
+selection = "@mediumpurple..30"
 spaces = "@lightgreen..03"
 
 [element]
-active = "@black"
-hover = "@black"
+active = "@black2"
+hover = "@black2"
 selected = "#302F46"
 
 [foreground]
-hover = "#EDEEF0"
-primary = "@burlywood..C0"
-secondary = "@antiquewhite"
+hover = "@black2..v+10"
+primary = "@burlywood2..s=20"
+secondary = "@antiquewhite..90"
 
 [foreground.linenumber]
-active = "@burlywood..C0"
+active = "@burlywood2..C0"
 inactive = "#AAAAAA40"
 
 [git.created]
@@ -108,13 +112,13 @@ multi = [
 	"@deeppink",
 	"@sandybrown",
 	"@mediumpurple",
-	"@darkslategray2",
+	"@darkslategray3",
 	"@deeppink",
 	"@cornflowerblue",
 	"#C8099D.",
 	"@lightgreen",
 	"null",
-	"@sandybrown"
+	"@sandybrown",
 ]
 
 [players.2]
@@ -123,9 +127,9 @@ cursor = "#114D77"
 selection = "#55B4D33B"
 
 [scheme]
-black = "@burlywood..C0"
-black2 = "@burlywood..50"
-black3 = "@burlywood..50"
+black = "@burlywood2..C0"
+black2 = "@burlywood2..50"
+black3 = "@burlywood2..50"
 blue = "@cornflowerblue"
 blue2 = "@cornflowerblue..50"
 blue3 = "#C4DAF6"
@@ -141,108 +145,134 @@ pink3 = "#C8099D."
 red = "@deeppink"
 red2 = "@deeppink..50"
 red3 = "@deeppink"
-white = "@darkslategray2"
-white2 = "@darkslategray2..50"
-white3 = "@darkslategray2"
+white = "@darkslategray3"
+white2 = "@darkslategray3..50"
+white3 = "@darkslategray3"
 yellow = "@sandybrown"
 yellow2 = "@cornflowerblue"
 yellow3 = "@sandybrown"
 
 [syntax.attribute]
+background = "$self.color..15"
 color = "@mediumpurple"
 
 [syntax.boolean]
+background = "$self.color..15"
 color = "@deeppink"
 weight = 700
 
 [syntax.comment]
-color = "#6591FFE6"
+background = "$self.color..15"
+color = "#FF656BE6"
+weight = 700
 
 [syntax.constant]
-color = "@burlywood..C0"
+background = "$self.color..15"
+color = "#FFB999"
 style = "italic"
 weight = 400
 
 [syntax.constructor]
+background = "$self.color..15"
 color = "#FF82BC"
 
 [syntax.emphasis]
+background = "$self.color..15"
 color = "@deeppink"
 
 [syntax.escape]
+background = "$self.color..15"
 color = "@lightgreen"
 weight = 400
 
 [syntax.function]
+background = "$self.color..15"
 color = "#E565FF"
 
 [syntax.keyword]
+background = "$self.color..15"
 color = "@deeppink"
 weight = 700
 
 [syntax.method]
+background = "$self.color..15"
 color = "@mediumpurple"
 weight = 700
 
 [syntax.number]
+background = "$self.color..15"
 color = "@lightgreen"
 
 [syntax.operator]
+background = "$self.color..05"
 color = "#FF82BC"
 weight = 700
 
 [syntax.property]
-color = "@burlywood..C0"
+background = "$self.color..15"
+color = "#FFB999"
 
 [syntax.punctuation]
-color = "#F5E4D1"
+color = "#F5E4D15"
 
 [syntax.punctuation.bracket]
+background = "$self.color..05"
 color = "#85DBDB"
 
 [syntax.punctuation.delimiter]
+# background = "$self.color..10"
 color = "#F5E4D1"
 
 [syntax.punctuation.special]
-color = "@burlywood..C0"
+background = "@burlywood2..15"
+color = "@burlywood2..C0"
 
 [syntax.string]
+background = "$self.color..15"
 color = "@cornflowerblue2"
 weight = 400
 
 [syntax.string.regex]
+background = "$self.color..15"
 color = "@cornflowerblue2"
 weight = 400
 
 [syntax.string.special]
+background = "$self.color..15"
 color = "#0086B3"
 weight = 400
 
 [syntax.tag]
+background = "$self.color..15"
 color = "@cornflowerblue"
 weight = 700
 
 [syntax.text]
+background = "$self.color..15"
 color = "@cornflowerblue2"
 
 [syntax.type]
+background = "$self.color..15"
 color = "@cornflowerblue"
 weight = 500
 
 [syntax.variable]
+background = "$self.color..15"
 color = "#FFB999"
 
 [syntax.variable.special]
+background = "$self.color..15"
 color = "#A1E5A0"
 
 # Overrides
 [overrides]
-"style/scrollbar.track.background" = "@black2..00"
+"style/scrollbar.thumb.hover_background" = "$none"
 "style/scrollbar.thumb.border" = "$none"
 "style/border.selected" = "#100F1E"
-"style/syntax/comment/color" = "#FF656BE6"
+"style/syntax/comment.doc/color" = "#6591FFE6"
+"style/syntax/comment.doc/background_color" = "#6591FF10"
 "style/syntax/comment/font_style" = "italic"
-"style/syntax/comment/font_weight" = 700
+"style/syntax/comment.doc/font_weight" = "$none"
 
 # Deletions
 [deletions]
@@ -262,7 +292,6 @@ keys = [
 	"/style/syntax/lifetime",
 	"/style/syntax/link_text",
 	"/style/syntax/link_uri",
-	"/style/syntax/predictive",
 	"/style/syntax/preproc",
 	"/style/syntax/primary",
 	"/style/syntax/property.json_key",
@@ -274,5 +303,5 @@ keys = [
 	"/style/syntax/variable.member",
 	"/style/syntax/variable.parameter",
 	"/style/syntax/variant",
-	"/style/title_bar.inactive_background"
+	"/style/title_bar.inactive_background",
 ]

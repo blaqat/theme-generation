@@ -248,7 +248,10 @@ impl FromStr for ColorChange {
             return Ok(color_change!(Hex.val));
         }
 
-        let val: i16 = chars.collect::<String>().parse().unwrap();
+        let val: i16 = chars
+            .collect::<String>()
+            .parse()
+            .map_err(|_| ColorError::ColorChange)?;
 
         let component = match component_char {
             Some('h') => ColorComponent::Hue(val),
