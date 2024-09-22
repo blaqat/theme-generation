@@ -295,6 +295,12 @@ color = "syntax.punctuation.color"
 style = "syntax.punctuation.style"
 weight = "syntax.punctuation.weight"
 
+[syntax.punctuation.arrow]
+background = "syntax.punctuation.arrow.background|syntax.punctuation.background"
+color = "syntax.punctuation.arrow.color|syntax.punctuation.bracket.color|syntax.punctuation.color"
+style = "syntax.punctuation.arrow.style|syntax.punctuation.bracket.style|syntax.punctuation.style"
+weight = "syntax.punctuation.arrow.weight|syntax.punctuation.bracket.weight|syntax.punctuation.weight"
+
 [syntax.punctuation.bracket]
 background = "syntax.punctuation.bracket.background|syntax.punctuation.background"
 color = "syntax.punctuation.bracket.color|syntax.punctuation.color"
@@ -366,6 +372,12 @@ background = "syntax.variable.background"
 color = "syntax.variable.color"
 style = "syntax.variable.style"
 weight = "syntax.variable.weight"
+
+[syntax.variable.builtin]
+background = "syntax.variable.builtin.background|syntax.variable.background"
+color = "syntax.variable.builtin.color|syntax.variable.color"
+style = "syntax.variable.builtin.style|syntax.variable.style"
+weight = "syntax.variable.builtin.weight|syntax.variable.weight"
 
 [syntax.variable.parameter]
 background = "syntax.variable.parameter.background|syntax.parameter.background|syntax.variable.background"

@@ -469,6 +469,13 @@
 						"font_weight": "$syntax.variable.weight",
 						"background_color": "$syntax.variable.background"
 					},
+          "variable.builtin":
+          {
+						"color": "$syntax.builtin.color|$syntax.variable.color",
+						"font_style": "$syntax.builtin.style|$syntax.variable.style",
+						"font_weight": "$syntax.builtin.weight|$syntax.variable.weight",
+						"background_color": "$syntax.builtin.background|$syntax.variable.background"
+					},
 					"variable.member": {
 						"color": "$syntax.variable.color",
 						"font_style": "$syntax.variable.style",

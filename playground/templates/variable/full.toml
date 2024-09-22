@@ -202,266 +202,331 @@ track = "scrollbar.track|scrollbar.secondary|background.bars.scrollbar"
 
 [syntax.attribute]
 color = "syntax.attribute.color"
+background = "syntax.attribute.background"
 style = "syntax.attribute.style"
 weight = "syntax.attribute.weight"
 
 [syntax.boolean]
 color = "syntax.boolean.color"
+background = "syntax.boolean.background"
 style = "syntax.boolean.style"
 weight = "syntax.boolean.weight"
 
 [syntax.builtin]
 color = "syntax.builtin.color|syntax.function.color"
+background = "syntax.builtin.background|syntax.function.background"
 style = "syntax.builtin.style|syntax.function.style"
 weight = "syntax.builtin.weight|syntax.function.weight"
 
 [syntax.comment]
 color = "syntax.comment.color|scheme.comment"
+background = "syntax.comment.background|scheme.comment"
 style = "syntax.comment.style"
 weight = "syntax.comment.weight"
 
 [syntax.constant]
 color = "syntax.constant.color"
+background = "syntax.constant.background"
 style = "syntax.constant.style"
 weight = "syntax.constant.weight"
 
 [syntax.constant.builtin]
 color = "syntax.constant.builtin.color|syntax.builtin.color|syntax.constant.color"
+background = "syntax.constant.builtin.background|syntax.builtin.background|syntax.constant.background"
 style = "syntax.constant.builtin.style|syntax.builtin.style|syntax.constant.style"
 weight = "syntax.constant.builtin.weight|syntax.builtin.weight|syntax.constant.weight"
 
 [syntax.constant.character]
 color = "syntax.constant.character.color|syntax.special.color|syntax.constant.color"
+background = "syntax.constant.character.background|syntax.special.background|syntax.constant.background"
 style = "syntax.constant.character.style|syntax.special.style|syntax.constant.style"
 weight = "syntax.constant.character.weight|syntax.special.weight|syntax.constant.weight"
 
 [syntax.constructor]
 color = "syntax.constructor.color|syntax.punctuation.bracket.color|syntax.punctuation.color"
+background = "syntax.constructor.background|syntax.punctuation.bracket.background|syntax.punctuation.background"
 style = "syntax.constructor.style|syntax.punctuation.bracket.style|syntax.punctuation.style"
 weight = "syntax.constructor.weight|syntax.punctuation.bracket.weight|syntax.punctuation.weight"
 
 [syntax.definition]
 color = "syntax.definition.color|syntax.special.color|syntax.function.color"
+background = "syntax.definition.background|syntax.special.background|syntax.function.background"
 style = "syntax.definition.style|syntax.special.style|syntax.function.style"
 weight = "syntax.definition.weight|syntax.function.weight"
 
 [syntax.doc]
 color = "syntax.doc.color|syntax.comment.color|scheme.comment"
+background = "syntax.doc.background|syntax.comment.background|scheme.comment"
 style = "syntax.doc.style|syntax.comment.style"
 weight = "syntax.doc.weight|syntax.comment.weight"
 
 [syntax.embedded]
 color = "syntax.embedded.color"
+background = "syntax.embedded.background"
 style = "syntax.embedded.style"
 weight = "syntax.embedded.weight"
 
 [syntax.emphasis]
 color = "syntax.emphasis.color"
+background = "syntax.emphasis.background"
 style = "syntax.emphasis.style"
 weight = "syntax.emphasis.weight"
 
 [syntax.enum]
 color = "syntax.enum.color|syntax.special.color"
+background = "syntax.enum.background|syntax.special.background"
 style = "syntax.enum.style|syntax.special.style"
 weight = "syntax.enum.weight|syntax.special.weight"
 
 [syntax.escape]
 color = "syntax.escape.color"
+background = "syntax.escape.background"
 style = "syntax.escape.style"
 weight = "syntax.escape.weight"
 
 [syntax.function]
 color = "syntax.function.color"
+background = "syntax.function.background"
 style = "syntax.function.style"
 weight = "syntax.function.weight"
 
 [syntax.hint]
 color = "syntax.hint.color|foreground.hint"
+background = "syntax.hint.background|foreground.hint"
 style = "syntax.hint.style"
 weight = "syntax.hint.weight"
 
 [syntax.json_key]
 color = "syntax.json_key.color|syntax.property.color"
+background = "syntax.json_key.background|syntax.property.background"
 style = "syntax.json_key.style|syntax.property.style"
 weight = "syntax.json_key.weight|syntax.property.weight"
 
 [syntax.keyword]
 color = "syntax.keyword.color"
+background = "syntax.keyword.background"
 style = "syntax.keyword.style"
 weight = "syntax.keyword.weight"
 
 [syntax.label]
 color = "syntax.label.color"
+background = "syntax.label.background"
 style = "syntax.label.style"
 weight = "syntax.label.weight"
 
 [syntax.lifetime]
 color = "syntax.lifetime.color|syntax.special.color"
+background = "syntax.lifetime.background|syntax.special.background"
 style = "syntax.lifetime.style|syntax.special.style"
 weight = "syntax.lifetime.weight |syntax.special.weight"
 
 [syntax.link]
 color = "syntax.link.color|foreground.link|primary"
+background = "syntax.link.background|foreground.link|primary"
 style = "syntax.link.style"
 weight = "syntax.link.weight"
 
 [syntax.method]
 color = "syntax.method.color|syntax.function.color"
+background = "syntax.method.background|syntax.function.background"
 style = "syntax.method.style|syntax.function.style"
 weight = "syntax.method.weight|syntax.function.weight"
 
 [syntax.number]
 color = "syntax.number.color"
+background = "syntax.number.background"
 style = "syntax.number.style"
 weight = "syntax.number.weight"
 
 [syntax.operator]
 color = "syntax.operator.color"
+background = "syntax.operator.background"
 style = "syntax.operator.style"
 weight = "syntax.operator.weight"
 
 [syntax.predictive]
 color = "syntax.predictive.color"
+background = "syntax.predictive.background"
 style = "syntax.predictive.style"
 weight = "syntax.predictive.weight"
 
 [syntax.preproc]
 color = "syntax.preproc.color|syntax.macro.color"
+background = "syntax.preproc.background|syntax.macro.background"
 style = "syntax.preproc.style|syntax.macro.style"
 weight = "syntax.preproc.weight|syntax.macro.weight"
 
 [syntax.primary]
 color = "syntax.primary.color|primary"
+background = "syntax.primary.background|primary"
 style = "syntax.primary.style"
 weight = "syntax.primary.weight"
 
 [syntax.property]
 color = "syntax.property.color"
+background = "syntax.property.background"
 style = "syntax.property.style"
 weight = "syntax.property.weight"
 
 [syntax.punctuation]
 color = "syntax.punctuation.color"
+background = "syntax.punctuation.background"
 style = "syntax.punctuation.style"
 weight = "syntax.punctuation.weight"
 
+[syntax.punctuation.arrow]
+color = "syntax.punctuation.arrow.color|syntax.punctuation.bracket.color|syntax.punctuation.color"
+background = "syntax.punctuation.arrow.background|syntax.punctuation.bracket.background|syntax.punctuation.background"
+style = "syntax.punctuation.arrow.style|syntax.punctuation.bracket.style|syntax.punctuation.style"
+weight = "syntax.punctuation.arrow.weight|syntax.punctuation.bracket.weight|syntax.punctuation.weight"
+
 [syntax.punctuation.bracket]
 color = "syntax.punctuation.bracket.color|syntax.punctuation.color"
+background = "syntax.punctuation.bracket.background|syntax.punctuation.background"
 style = "syntax.punctuation.bracket.style|syntax.punctuation.style"
 weight = "syntax.punctuation.bracket.weight|syntax.punctuation.weight"
 
 [syntax.punctuation.delimiter]
 color = "syntax.punctuation.delimiter.color|syntax.punctuation.color"
+background = "syntax.punctuation.delimiter.background|syntax.punctuation.background"
 style = "syntax.punctuation.delimiter.style|syntax.punctuation.style"
 weight = "syntax.punctuation.delimiter.weight|syntax.punctuation.weight"
 
 [syntax.punctuation.special]
 color = "syntax.punctuation.special.color|syntax.punctuation.color"
+background = "syntax.punctuation.special.background|syntax.punctuation.background"
 style = "syntax.punctuation.special.style|syntax.punctuation.style"
 weight = "syntax.punctuation.special.weight|syntax.punctuation.weight"
 
 [syntax.punctuation.symbol]
 color = "syntax.punctuation.symbol.color|syntax.punctuation.special.color|syntax.punctuation.color"
+background = "syntax.punctuation.symbol.background|syntax.punctuation.special.background|syntax.punctuation.background"
 style = "syntax.punctuation.symbol.style|syntax.punctuation.special.style|syntax.punctuation.style"
 weight = "syntax.punctuation.symbol.weight|syntax.punctuation.special.weight|syntax.punctuation.weight"
 
 [syntax.special]
 color = "syntax.special.color|syntax.function.color"
+background = "syntax.special.background|syntax.function.background"
 style = "syntax.special.style|syntax.function.style"
 weight = "syntax.special.weight|syntax.function.weight"
 
 [syntax.string]
 color = "syntax.string.color"
+background = "syntax.string.background"
 style = "syntax.string.style"
 weight = "syntax.string.weight"
 
 [syntax.string.doc]
 color = "syntax.string.doc.color|syntax.doc.color|syntax.string.color"
+background = "syntax.string.doc.background|syntax.doc.background|syntax.string.background"
 style = "syntax.string.doc.style|syntax.doc.style|syntax.string.style"
 weight = "syntax.string.doc.weight|syntax.doc.weight|syntax.string.weight"
 
 [syntax.string.escape]
 color = "syntax.string.escape.color|syntax.escape.color|syntax.string.color"
+background = "syntax.string.escape.background|syntax.escape.background|syntax.string.background"
 style = "syntax.string.escape.style|syntax.escape.style|syntax.string.style"
 weight = "syntax.string.escape.weight|syntax.escape.weight|syntax.string.weight"
 
 [syntax.string.regex]
 color = "syntax.string.regex.color|syntax.string.color"
+background = "syntax.string.regex.background|syntax.string.background"
 style = "syntax.string.regex.style|syntax.string.style"
 weight = "syntax.string.regex.weight|syntax.string.weight"
 
 [syntax.string.special]
 color = "syntax.string.special.color|syntax.string.color"
+background = "syntax.string.special.background|syntax.string.background"
 style = "syntax.string.special.style|syntax.string.style"
 weight = "syntax.string.special.weight|syntax.string.weight"
 
 [syntax.string.symbol]
 color = "syntax.string.symbol.color|syntax.string.special.color|syntax.string.color"
+background = "syntax.string.symbol.background|syntax.string.special.background|syntax.string.background"
 style = "syntax.string.symbol.style|syntax.string.special.style|syntax.string.style"
 weight = "syntax.string.symbol.weight|syntax.string.special.weight|syntax.string.weight"
 
 [syntax.strong]
 color = "syntax.strong.color|syntax.emphasis.color"
+background = "syntax.strong.background|syntax.emphasis.background"
 style = "syntax.strong.style|syntax.emphasis.style"
 weight = "syntax.strong.weight|syntax.emphasis.weight"
 
 [syntax.tag]
 color = "syntax.tag.color"
+background = "syntax.tag.background"
 style = "syntax.tag.style"
 weight = "syntax.tag.weight"
 
 [syntax.text.literal]
 color = "syntax.text.literal.color|syntax.text.color"
+background = "syntax.text.literal.background|syntax.text.background"
 style = "syntax.text.literal.style|syntax.text.style"
 weight = "syntax.text.literal.weight|syntax.text.weight"
 
 [syntax.title]
 color = "syntax.title.color|syntax.emphasis.color|syntax.keyword.color"
+background = "syntax.title.background|syntax.emphasis.background|syntax.keyword.background"
 style = "syntax.title.style|syntax.emphasis.style|syntax.keyword.style"
 weight = "syntax.title.weight|syntax.emphasis.weight|syntax.keyword.weight"
 
 [syntax.type]
 color = "syntax.type.color"
+background = "syntax.type.background"
 style = "syntax.type.style"
 weight = "syntax.type.weight"
 
 [syntax.type.builtin]
 color = "syntax.type.builtin.color|syntax.builtin.color|syntax.type.color"
+background = "syntax.type.builtin.background|syntax.builtin.background|syntax.type.background"
 style = "syntax.type.builtin.style|syntax.builtin.style|syntax.type.style"
 weight = "syntax.type.builtin.weight|syntax.builtin.weight|syntax.type.weight"
 
 [syntax.type.interface]
 color = "syntax.type.interface.color|syntax.type.color"
+background = "syntax.type.interface.background|syntax.type.background"
 style = "syntax.type.interface.style|syntax.type.style"
 weight = "syntax.type.interface.weight|syntax.type.weight"
 
 [syntax.type.super]
 color = "syntax.type.super.color|syntax.special.color|syntax.type.color"
+background = "syntax.type.super.background|syntax.special.background|syntax.type.background"
 style = "syntax.type.super.style|syntax.special.style|syntax.type.style"
 weight = "syntax.type.super.weight|syntax.special.weight|syntax.type.weight"
 
 [syntax.variable]
 color = "syntax.variable.color"
+background = "syntax.variable.background"
 style = "syntax.variable.style"
 weight = "syntax.variable.weight"
 
+[syntax.variable.builtin]
+color = "syntax.variable.builtin.color|syntax.builtin.color|syntax.variable.color"
+background = "syntax.variable.builtin.background|syntax.builtin.background|syntax.variable.background"
+style = "syntax.variable.builtin.style|syntax.builtin.style|syntax.variable.style"
+weight = "syntax.variable.builtin.weight|syntax.builtin.weight|syntax.variable.weight"
+
 [syntax.variable.member]
 color = "syntax.variable.member.color|syntax.member.color|syntax.variable.color"
+background = "syntax.variable.member.background|syntax.member.background|syntax.variable.background"
 style = "syntax.variable.member.style|syntax.member.style|syntax.variable.style"
 weight = "syntax.variable.member.weight|syntax.member.weight|syntax.variable.weight"
 
 [syntax.variable.parameter]
 color = "syntax.variable.parameter.color|syntax.parameter.color|syntax.variable.color"
+background = "syntax.variable.parameter.background|syntax.parameter.background|syntax.variable.background"
 style = "syntax.variable.parameter.style|syntax.parameter.style|syntax.variable.style"
 weight = "syntax.variable.parameter.weight|syntax.parameter.weight|syntax.variable.weight"
 
 [syntax.variable.special]
 color = "syntax.variable.special.color|syntax.special.color|syntax.variable.color"
+background = "syntax.variable.special.background|syntax.special.background|syntax.variable.background"
 style = "syntax.variable.special.style|syntax.special.style|syntax.variable.style"
 weight = "syntax.variable.special.weight|syntax.special.weight|syntax.variable.weight"
 
 [syntax.variant]
 color = "syntax.variant.color"
+background = "syntax.variant.background"
 style = "syntax.variant.style"
 weight = "syntax.variant.weight"
 
