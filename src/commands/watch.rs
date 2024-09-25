@@ -15,38 +15,35 @@ Watch Mode:
 */
 
 pub fn watch(
-    directory: PathBuf,
-    template_file: ValidatedFile,
-    variable_files: Vec<ValidatedFile>,
-    flags: Vec<String>,
-) -> Result<(), Error> {
+    directory: &Path,
+    template_file: &ValidatedFile,
+    variable_files: &[ValidatedFile],
+    flags: &[String],
+) -> Result<(), ProgramError> {
     let (tx, rx) = std::sync::mpsc::channel();
     let mut debouncer = new_debouncer(std::time::Duration::from_millis(100), tx)
-        .map_err(|_| Error::Processing(String::from("Error creating notify watcher.")))?;
+        .map_err(|_| ProgramError::Processing(String::from("Error creating notify watcher.")))?;
 
     let watcher = debouncer.watcher();
 
-    for file in &variable_files {
-        let mut path = directory.clone();
+    for file in variable_files {
+        let mut path = directory.to_path_buf();
         path.push(&file.name);
 
         watcher
             .watch(&path, RecursiveMode::Recursive)
-            .map_err(|e| Error::Processing(format!("Error watching file. {}", e)))?;
+            .map_err(|e| ProgramError::Processing(format!("Error watching file. {e}")))?;
     }
 
     loop {
         match rx.try_recv() {
             Ok(ref event) if let Ok(_) = event => {
-                let variable_files = variable_files.iter().map(|v| v.clone()).collect();
-                if let Err(e) =
-                    commands::generate(template_file.clone(), variable_files, flags.clone())
-                {
+                let variable_files = variable_files.to_vec();
+                if let Err(e) = commands::generate(template_file, variable_files, flags) {
                     error!("Error Generating Theme: {:?}", e);
                 }
             }
-            Ok(_) => {}
-            Err(_) => {}
+            Ok(_) | Err(_) => {}
         }
     }
 }

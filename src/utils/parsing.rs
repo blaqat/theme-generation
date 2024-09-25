@@ -16,23 +16,23 @@ pub enum ParsedValue {
 impl Display for ParsedValue {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Color(color) => write!(f, "{}", color),
-            Self::Variables(vars) => write!(f, "V{:?}", vars),
-            Self::Value(value) => write!(f, "{}", value),
-            Self::String(str) => write!(f, "'{}'", str),
+            Self::Color(color) => write!(f, "{color}"),
+            Self::Variables(vars) => write!(f, "V{vars:?}"),
+            Self::Value(value) => write!(f, "{value}"),
+            Self::String(str) => write!(f, "'{str}'"),
             Self::Null => write!(f, "NULL"),
         }
     }
 }
 
 impl FromStr for ParsedValue {
-    type Err = Error;
+    type Err = ProgramError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if s.starts_with("$") || s.starts_with("@") {
+        if s.starts_with('$') || s.starts_with('@') {
             s.chars().nth(0);
             let vars = s
-                .split("|")
+                .split('|')
                 .filter_map(|var| match var.trim().chars().next() {
                     Some('$') => Some(var[1..].to_string()),
                     Some('@') => Some(format!("color.{}", &var[1..])),
@@ -64,7 +64,7 @@ impl ParsedValue {
         }
     }
 
-    pub fn from_value(v: &Value) -> Result<Self, Error> {
+    pub fn from_value(v: &Value) -> Result<Self, ProgramError> {
         match v {
             Value::Null => Ok(Self::Null),
             Value::String(str) => str.parse(),
@@ -72,14 +72,14 @@ impl ParsedValue {
         }
     }
 
-    fn identity_ops(&self, ops: Vec<&ColorOperations>) -> Self {
-        let iden_ops = ColorChange::identity_ops(ops);
+    fn identity_ops(&self, ops: &[&Operations]) -> Self {
+        let iden_ops = Operation::identity_ops(ops);
         match self {
-            ParsedValue::Color(c) => {
+            Self::Color(c) => {
                 let mut color = c.clone();
                 _ = color.update_ops(&iden_ops);
                 let color_str = color.to_string();
-                ParsedValue::String(color_str)
+                Self::String(color_str)
             }
             v => v.clone(),
         }
@@ -89,7 +89,7 @@ impl ParsedValue {
 #[derive(Debug, Clone, PartialEq, Hash, Eq)]
 pub struct ParsedVariable {
     pub name: String,
-    pub operations: ColorOperations,
+    pub operations: Operations,
 }
 
 impl ParsedVariable {}
@@ -101,19 +101,18 @@ impl Display for ParsedVariable {
 }
 
 impl FromStr for ParsedVariable {
-    type Err = prelude::Error;
+    type Err = prelude::ProgramError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s.split_once("..") {
             Some((name, operations)) => {
                 let mut chars = operations.chars();
-                let operations: ColorOperations = match chars
-                    .next()
-                    .ok_or_else(|| Error::Processing(format!("Resolving Next Variable: {}", s)))?
-                {
+                let operations: Operations = match chars.next().ok_or_else(|| {
+                    ProgramError::Processing(format!("Resolving Next Variable: {s}"))
+                })? {
                     // name..(component op val, component op val, ...)
-                    '(' if operations.ends_with(")") => operations[1..operations.len() - 1]
-                        .split(",")
+                    '(' if operations.ends_with(')') => operations[1..operations.len() - 1]
+                        .split(',')
                         .filter_map(|op| op.parse().ok())
                         .collect(),
 
@@ -126,14 +125,14 @@ impl FromStr for ParsedVariable {
 
                     // name..val (short hand for alpha = val)
                     val if val.is_ascii_hexdigit() => {
-                        vec![format!("a.{}", operations).parse().map_err(|e| {
-                            Error::Processing(format!("Resolving Hex Variable: {:?}", e))
+                        vec![format!("a.{operations}").parse().map_err(|e| {
+                            ProgramError::Processing(format!("Resolving Hex Variable: {e:?}"))
                         })?]
                     }
 
                     // name..op val (short hand for alpha op val)
-                    _ => vec![format!("a{}", operations).parse().map_err(|e| {
-                        Error::Processing(format!("Resolving Alpha Variable: {:?}", e))
+                    _ => vec![format!("a{operations}").parse().map_err(|e| {
+                        ProgramError::Processing(format!("Resolving Alpha Variable: {e:?}"))
                     })?],
                 };
 
@@ -159,7 +158,7 @@ pub struct SourcedVariable {
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash)]
 pub struct ResolvedVariable {
-    pub path: JsonPath,
+    pub path: JSPath,
     pub value: ParsedValue,
     pub variables: Vec<ParsedVariable>,
     pub resolved_id: Option<usize>,
@@ -175,15 +174,15 @@ impl<'a> ResolvedVariable {
         Self {
             value,
             variables: vec![variable],
-            path: JsonPath::new(),
+            path: JSPath::new(),
             resolved_id: Some(0),
         }
     }
 
     fn new_pointer(var_name: &str, unresolved_paths: &[String]) -> Self {
         Self {
-            path: JsonPath::from_str(var_name).unwrap(),
-            value: ParsedValue::Variables(Vec::from_iter(unresolved_paths.iter().cloned())),
+            path: JSPath::from_str(var_name).unwrap(),
+            value: ParsedValue::Variables(unresolved_paths.to_vec()),
             variables: Vec::new(),
             resolved_id: Some(UNRESOLVED_POINTER_CONST),
         }
@@ -195,28 +194,25 @@ impl<'a> ResolvedVariable {
             .iter()
             .filter_map(|v| match v {
                 Either::Right(var) => Some(var),
-                _ => None,
+                Either::Left(_) => None,
             })
             .cloned()
             .collect();
 
         Self {
             path: src.path.parse().unwrap(),
-            value: src.value.to_owned(),
+            value: src.value.clone(),
             variables,
             resolved_id: Some(0),
         }
     }
 
     pub fn from_path(path: &str, json: &Value) -> Self {
-        let path: JsonPath = path.parse().unwrap();
+        let path: JSPath = path.parse().unwrap();
 
-        let value = {
-            match path.traverse(json) {
-                Ok(val) => ParsedValue::from_value(val).unwrap(),
-                _ => ParsedValue::Null,
-            }
-        };
+        let value = path.traverse(json).map_or(ParsedValue::Null, |val| {
+            ParsedValue::from_value(val).unwrap()
+        });
 
         Self {
             path,
@@ -227,10 +223,7 @@ impl<'a> ResolvedVariable {
     }
 
     fn is_resolvable(&self) -> bool {
-        match self.resolved_id {
-            Some(i) => i < self.variables.len(),
-            None => false,
-        }
+        self.resolved_id.map_or(false, |i| i < self.variables.len())
     }
 
     pub fn could_resolve(&self) -> bool {
@@ -238,10 +231,7 @@ impl<'a> ResolvedVariable {
     }
 
     fn resolved(&self) -> Option<&ParsedVariable> {
-        match self.resolved_id {
-            Some(id) => self.variables.get(id),
-            None => None,
-        }
+        self.resolved_id.and_then(|id| self.variables.get(id))
     }
 
     pub fn is_pointer(&self) -> bool {
@@ -249,10 +239,12 @@ impl<'a> ResolvedVariable {
     }
 
     pub fn name(&self) -> String {
-        match self.is_resolvable() {
-            true => self.resolved().unwrap().name.clone(),
-            false if self.is_pointer() => format!("*{}", self.path.join()),
-            false => self.path.to_string(),
+        if self.is_resolvable() {
+            self.resolved().unwrap().name.clone()
+        } else if self.is_pointer() {
+            format!("*{}", self.path.join())
+        } else {
+            self.path.to_string()
         }
     }
 
@@ -261,7 +253,7 @@ impl<'a> ResolvedVariable {
     }
 
     pub fn next(&mut self) -> Option<&ParsedVariable> {
-        let i = self.resolved_id.map(|i| i + 1).unwrap_or(0);
+        let i = self.resolved_id.map_or(0, |i| i + 1);
 
         if i < self.variables.len() {
             self.resolved_id.replace(i);
@@ -273,8 +265,8 @@ impl<'a> ResolvedVariable {
     }
 
     pub fn identity(&self) -> ParsedValue {
-        let ops = self.variables.iter().map(|v| &v.operations).collect();
-        self.value.identity_ops(ops)
+        let ops: Vec<_> = self.variables.iter().map(|v| &v.operations).collect();
+        self.value.identity_ops(&ops)
     }
 
     pub fn results_from(&self, identity: &ParsedValue) -> bool {
@@ -312,28 +304,28 @@ impl std::fmt::Display for SourcedVariable {
         let mut output = String::new();
 
         let var = self.variables.iter().fold(String::new(), |acc, v| match v {
-            Either::Left(var) => format!("{}{} ", acc, var),
-            Either::Right(var) => format!("{}{} ", acc, var),
+            Either::Left(var) => format!("{acc}{var} "),
+            Either::Right(var) => format!("{acc}{var} "),
         });
 
         output.push_str(&format!("{} -> [{}] {}", self.path, var, self.value,));
-        write!(f, "{}", output)
+        write!(f, "{output}")
     }
 }
 
 impl SourcedVariable {
-    pub fn new(path: String, var: &str, value: &Value) -> SourcedVariable {
+    pub fn new(path: String, var: &str, value: &Value) -> Self {
         let value = ParsedValue::from_value(value).unwrap();
         let variables = var
-            .split("|")
+            .split('|')
             .filter_map(|var| match var.trim().chars().next() {
                 Some('$') => Some(var[1..].to_string()),
                 Some('@') => Some(format!("color.{}", &var[1..])),
                 _ => None,
             })
-            .map(|v| match v.parse::<ParsedVariable>() {
-                Ok(var) => Either::Right(var),
-                _ => Either::Left(v.to_string()),
+            .map(|v| {
+                v.parse::<ParsedVariable>()
+                    .map_or_else(|_| Either::Left(v.to_string()), Either::Right)
             })
             .collect();
 
@@ -358,22 +350,22 @@ impl std::fmt::Display for KeyDiffInfo {
         if !self.missing.is_empty() {
             output.push_str("Missing keys:\n");
             for key in &self.missing {
-                output.push_str(&format!("  {}\n", key));
+                output.push_str(&format!("  {key}\n"));
             }
         }
         if !self.collisions.is_empty() {
             output.push_str("Collisions:\n");
             for key in &self.collisions {
-                output.push_str(&format!("  {}\n", key));
+                output.push_str(&format!("  {key}\n"));
             }
         }
         if !self.parsed_vars.is_empty() {
             output.push_str("Variables:\n");
             for var in &self.parsed_vars {
-                output.push_str(&format!("{}\n", var));
+                output.push_str(&format!("{var}\n"));
             }
         }
-        write!(f, "{}", output)
+        write!(f, "{output}")
     }
 }
 
@@ -402,10 +394,10 @@ impl VariableSet {
     }
 
     pub fn is_null(&self, name: &str) -> bool {
-        match self.variables.borrow().get(name) {
-            Some(v) => v.value == ParsedValue::Null,
-            None => true,
-        }
+        self.variables
+            .borrow()
+            .get(name)
+            .map_or(true, |v| v.value == ParsedValue::Null)
     }
 
     pub fn insert(&self, name: &str, var: ResolvedVariable) {
@@ -413,20 +405,20 @@ impl VariableSet {
     }
 
     pub fn inc_insert(&self, name: &str, var: ResolvedVariable) {
-        if !self.has_variable(name) {
-            self.insert(name, var);
-        } else {
+        if self.has_variable(name) {
             let mut vars = self.variables.borrow_mut();
             let existing = vars.get(name).unwrap().clone();
 
             let mut count = 1;
-            while vars.contains_key(&format!("{}{}", name, count)) {
+            while vars.contains_key(&format!("{name}{count}")) {
                 count += 1;
             }
 
-            let existing_name = format!("{}{}", name, count);
+            let existing_name = format!("{name}{count}");
             vars.insert(existing_name, existing);
             vars.insert(name.to_owned(), var);
+        } else {
+            self.insert(name, var);
         }
     }
 

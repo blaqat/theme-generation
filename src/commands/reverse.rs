@@ -1,16 +1,16 @@
 use crate::prelude::*;
 use itertools::Itertools;
-use steps::*;
+use steps::{generate_toml_string, key_diff, replace_color, resolve_variables, to_color_map};
 
 /**
 Reverse:
     Description:
-        - Template + OriginalTheme = Variables
+        - Template + `OriginalTheme` = Variables
         - This generates a variable file by substituting values in the original theme file with variables in the template file.
-        - This takes the OriginalTheme as the source of truth. Things in the template that arent in the OriginalTheme will be ignored.
+        - This takes the `OriginalTheme` as the source of truth. Things in the template that arent in th`OriginalTheme`me will be ignored.
         - The generated file will be saved in the current directory.
     Usage:
-        substitutor rev template_file originalTheme [optional flags]
+        substitutor rev `template_file` originalTheme [optional flags]
     Flags:
         -t int          Threshold for how many same colors to exist before adding to [colors] subgroup
         -o directory    Set output directory of variable file
@@ -25,7 +25,7 @@ enum ReverseFlags {
     Threshold(usize),
     OutputDirectory(PathBuf),
     Name(String),
-    InnerPath(JsonPath),
+    InnerPath(JSPath),
 }
 
 #[derive(PartialEq, Debug)]
@@ -33,15 +33,15 @@ struct Flags {
     threshold: usize,          // Default to 3
     output_directory: PathBuf, // Default to current directory
     name: String,
-    path: Option<JsonPath>,
+    path: Option<JSPath>,
 }
 
 impl ReverseFlags {
-    fn into_vec(flags: Vec<String>) -> Result<Vec<Self>, Error> {
+    fn into_vec(flags: &[String]) -> Result<Vec<Self>, ProgramError> {
         flags.iter().map(|flag| Self::from_str(flag)).collect()
     }
 
-    fn parse(flags: Vec<String>) -> Flags {
+    fn parse(flags: &[String]) -> Flags {
         let flags = Self::into_vec(flags).unwrap();
         let mut threshold = 3;
         let mut output_directory = PathBuf::from(".");
@@ -67,44 +67,55 @@ impl ReverseFlags {
 }
 
 impl FromStr for ReverseFlags {
-    type Err = Error;
+    type Err = ProgramError;
 
-    fn from_str(flag: &str) -> Result<Self, Error> {
+    fn from_str(flag: &str) -> Result<Self, ProgramError> {
         match flag {
             flag if flag.starts_with("-p") => {
-                let path = flag.split("=").last().unwrap();
-                let path = JsonPath::from_str(path)
-                    .map_err(|_| Error::InvalidFlag("reverse".to_owned(), flag.to_owned()))?;
+                let path = flag.split('=').last().unwrap();
+                let path = JSPath::from_str(path).map_err(|_| {
+                    ProgramError::InvalidFlag("reverse".to_owned(), flag.to_owned())
+                })?;
                 Ok(Self::InnerPath(path))
             }
             flag if flag.starts_with("-n") => {
-                let name = flag.split("=").last().unwrap();
+                let name = flag.split('=').last().unwrap();
                 Ok(Self::Name(name.to_owned()))
             }
             flag if flag.starts_with("-o") => {
-                let path = flag.split("=").last().unwrap();
-                let path = path.replace("~", std::env::var("HOME").unwrap().as_str());
+                let path = flag.split('=').last().unwrap();
+                let path = path.replace('~', std::env::var("HOME").unwrap().as_str());
                 let path = Path::new(&path);
                 if !path.exists() {
-                    return Err(Error::InvalidFlag("reverse".to_owned(), flag.to_owned()));
+                    return Err(ProgramError::InvalidFlag(
+                        "reverse".to_owned(),
+                        flag.to_owned(),
+                    ));
                 }
                 Ok(Self::OutputDirectory(path.to_path_buf()))
             }
             flag if flag.starts_with("-t") => {
-                let threshold = flag.split("=").last().unwrap();
-                let threshold = threshold
-                    .parse()
-                    .map_err(|_| Error::InvalidFlag("reverse".to_owned(), flag.to_owned()))?;
+                let threshold = flag.split('=').last().unwrap();
+                let threshold = threshold.parse().map_err(|_| {
+                    ProgramError::InvalidFlag("reverse".to_owned(), flag.to_owned())
+                })?;
                 Ok(Self::Threshold(threshold))
             }
-            _ => Err(Error::InvalidFlag("reverse".to_owned(), flag.to_owned())),
+            _ => Err(ProgramError::InvalidFlag(
+                "reverse".to_owned(),
+                flag.to_owned(),
+            )),
         }
     }
 }
 
 mod steps {
     use super::*;
+    type UnresolvedSet<'a> =
+        HashMap<JSPath, HashMap<ParsedValue, Vec<(String, &'a ResolvedVariable)>>>;
+    type ColorMap = HashMap<String, (String, Vec<Color>)>;
 
+    #[allow(clippy::too_many_lines)]
     pub fn resolve_variables(
         var_diff: &KeyDiffInfo,
         overrides: Set<ResolvedVariable>,
@@ -132,10 +143,7 @@ mod steps {
         let (pointers, unresolved_vars): (Vec<_>, Vec<_>) = var_set
             .get_unresolved()
             .into_iter()
-            .partition(|v| v.is_pointer());
-
-        type UnresolvedSet<'a> =
-            HashMap<JsonPath, HashMap<ParsedValue, Vec<(String, &'a ResolvedVariable)>>>;
+            .partition(ResolvedVariable::is_pointer);
 
         let mut unresolved_set: UnresolvedSet = HashMap::new();
         for pointer in pointers {
@@ -160,10 +168,14 @@ mod steps {
 
         // Identities
         for (var_name, iden_map) in &mut unresolved_set {
-            let map = iden_map.clone();
+            let orig_map = iden_map.clone();
 
-            let identities = map.keys().collect::<Vec<_>>();
-            let values = map.values().flatten().map(|(_, v)| v).collect::<Vec<_>>();
+            let identities = orig_map.keys().collect::<Vec<_>>();
+            let values = orig_map
+                .values()
+                .flatten()
+                .map(|(_, v)| v)
+                .collect::<Vec<_>>();
 
             identities
                 .iter()
@@ -177,12 +189,12 @@ mod steps {
                     )
                 })
                 .for_each(|(identity, identity_of)| {
-                    identity_of.iter().for_each(|v| {
+                    for v in identity_of {
                         iden_map
                             .entry((*identity).clone())
                             .or_default()
                             .push((v.path.to_string(), v));
-                    });
+                    }
                 });
 
             let imv = iden_map
@@ -194,7 +206,7 @@ mod steps {
                 })
                 .collect::<Vec<_>>();
 
-            let max_len = imv.iter().map(|v| v.len()).max().unwrap();
+            let max_len = imv.iter().map(Vec::len).max().unwrap();
             let (mut max, mut rest): (Vec<_>, Vec<_>) =
                 imv.iter().partition(|v| v.len() == max_len);
             max.dedup();
@@ -282,12 +294,12 @@ mod steps {
 
         match (data1, data2) {
             (Value::Object(map1), Value::Object(map2)) => {
-                for (key, val) in map1.iter() {
+                for (key, val) in map1 {
                     match map2.get(key) {
                         Some(val2) => {
                             let next_diff =
                                 key_diff(val, val2, format!("{prefix}/{key}"), log_vars);
-                            info.extend(next_diff)
+                            info.extend(next_diff);
                         }
                         _ => info.missing.push(format!("{prefix}/{key}")),
                     }
@@ -316,7 +328,7 @@ mod steps {
             (Value::String(str), val) | (val, Value::String(str)) => {
                 if log_vars {
                     info.parsed_vars
-                        .push(SourcedVariable::new(prefix, str, val))
+                        .push(SourcedVariable::new(prefix, str, val));
                 }
             }
 
@@ -338,7 +350,6 @@ mod steps {
         }
     }
 
-    type ColorMap = HashMap<String, (String, Vec<Color>)>;
     pub fn to_color_map(v: &VariableSet, o: &VariableSet) -> ColorMap {
         let mut color_map: ColorMap = HashMap::new();
         let get_num_matching_names =
@@ -405,7 +416,7 @@ mod steps {
                         format!("${}..{}", name, c.get_alpha()).replace("$color.", "@"),
                     )
                 } else {
-                    ParsedValue::String(format!("${}", name).replace("$color.", "@"))
+                    ParsedValue::String(format!("${name}").replace("$color.", "@"))
                 }
             } else {
                 ParsedValue::String(c.to_string())
@@ -425,15 +436,14 @@ mod steps {
                             ParsedValue::String(s) => new_array.push(Value::String(s)),
                             ParsedValue::Value(v) => new_array.push(v),
                             ParsedValue::Null => new_array.push(Value::Null),
-                            ParsedValue::Color(_) => unreachable!(),
-                            ParsedValue::Variables(_) => unreachable!(),
+                            ParsedValue::Color(_) | ParsedValue::Variables(_) => unreachable!(),
                         }
                     }
                     ParsedValue::Value(Value::Array(new_array))
                 }
                 Value::Object(o) => {
                     let mut new_obj = Map::new();
-                    for (key, val) in o.iter() {
+                    for (key, val) in o {
                         let replaced =
                             replace_color(&ParsedValue::Value(val.clone()), color_map, threshold);
                         match replaced {
@@ -442,8 +452,7 @@ mod steps {
                             }
                             ParsedValue::Value(v) => new_obj.insert(key.to_owned(), v),
                             ParsedValue::Null => new_obj.insert(key.to_owned(), Value::Null),
-                            ParsedValue::Color(_) => unreachable!(),
-                            ParsedValue::Variables(_) => unreachable!(),
+                            ParsedValue::Color(_) | ParsedValue::Variables(_) => unreachable!(),
                         };
                     }
                     ParsedValue::Value(Value::Object(new_obj))
@@ -466,8 +475,8 @@ mod steps {
     pub fn generate_toml_string(
         variables: Value,
         overrides: &VariableSet,
-        deletions: &Set<JsonPath>,
-    ) -> Result<String, Error> {
+        deletions: &Set<JSPath>,
+    ) -> Result<String, ProgramError> {
         macro_rules! t {
             ($var_name:ident=$from:expr) => {
                 let $var_name: toml::Value = {
@@ -520,7 +529,7 @@ mod steps {
         for (k, v) in data.iter().filter(|(k, _)| *k != "color") {
             if v.is_table() {
                 w!("\n[{}]", k);
-                for (k, v) in v.as_table().unwrap().iter() {
+                for (k, v) in v.as_table().unwrap() {
                     match v {
                         toml::Value::Array(a) => {
                             w!("{} = [", k);
@@ -573,43 +582,45 @@ mod steps {
     }
 }
 
+#[allow(clippy::too_many_lines)]
 pub fn reverse(
-    template: ValidatedFile,
-    theme: ValidatedFile,
-    flags: Vec<String>,
-) -> Result<(), Error> {
+    template: &ValidatedFile,
+    theme: &ValidatedFile,
+    flags: &[String],
+) -> Result<(), ProgramError> {
     let flags = ReverseFlags::parse(flags);
 
     // Step 1: Deserialize the template and theme files into Objects.
-    let mut theme: Value = serde_json::from_reader(&theme.file)
-        .map_err(|json_err| Error::Processing(format!("Invalid theme file json: {}", json_err)))?;
+    let mut theme: Value = serde_json::from_reader(&theme.file).map_err(|json_err| {
+        ProgramError::Processing(format!("Invalid theme file json: {json_err}"))
+    })?;
     let mut template: Value = serde_json::from_reader(&template.file).map_err(|json_err| {
-        Error::Processing(format!("Invalid template file json: {}", json_err))
+        ProgramError::Processing(format!("Invalid template file json: {json_err}"))
     })?;
 
     // Step 1.5: Traverse to the starting path if it exists.
     if let Some(starting_path) = flags.path {
         theme = starting_path
             .traverse(&theme)
-            .map_err(|_| Error::Processing(String::from("Invalid starting path.")))?
+            .map_err(|_| ProgramError::Processing(String::from("Invalid starting path.")))?
             .clone();
 
         template = starting_path
             .traverse(&template)
-            .map_err(|_| Error::Processing(String::from("Invalid starting path.")))?
+            .map_err(|_| ProgramError::Processing(String::from("Invalid starting path.")))?
             .clone();
 
         if !same_type(&theme, &template) {
-            return Err(Error::Processing(String::from(
+            return Err(ProgramError::Processing(String::from(
                 "Starting path types do not match.",
             )));
         }
     }
 
-    let reverse = |theme: Value, template: Value, file_name: String| -> Result<(), Error> {
+    let reverse = |theme: Value, template: Value, file_name: String| -> Result<(), ProgramError> {
         // Step 2: Built Data Structures (Deletions, Overrides, Variables, Colors)
-        let var_diff = key_diff(&template, &theme, String::from(""), true);
-        let override_diff = key_diff(&theme, &template, String::from(""), false);
+        let var_diff = key_diff(&template, &theme, String::new(), true);
+        let override_diff = key_diff(&theme, &template, String::new(), false);
 
         let overrides: Set<_> = override_diff
             .missing
@@ -621,7 +632,7 @@ pub fn reverse(
         let deletions: Set<_> = var_diff
             .missing
             .iter()
-            .map(|key| key.parse::<JsonPath>().unwrap())
+            .map(|key| key.parse::<JSPath>().unwrap())
             .collect();
 
         // Step 3: Resolve Variables and Overrides
@@ -632,20 +643,20 @@ pub fn reverse(
         let color_map = to_color_map(&variables, &overrides);
 
         // Step 5: Replace Colors In variables and overrides limited by threshold
-        for (var_name, mut var) in variables.to_map().into_iter() {
+        for (var_name, mut var) in variables.to_map() {
             let val = replace_color(&var.value, &color_map, flags.threshold);
             var.value = val;
             variables.insert(&var_name, var.clone());
         }
 
-        for (var_name, mut var) in overrides.to_map().into_iter() {
+        for (var_name, mut var) in overrides.to_map() {
             let val = replace_color(&var.value, &color_map, flags.threshold);
             var.value = val;
             overrides.insert(&var_name, var.clone());
         }
 
         // Step 6: Add Colors to VariablesSet
-        for (value, (color, v)) in color_map.iter() {
+        for (value, (color, v)) in &color_map {
             if v.len() < flags.threshold {
                 continue;
             }
@@ -657,17 +668,17 @@ pub fn reverse(
         // Step 7: Create Groupings
         // e.g varname "a.b.c" = 1, "a.b.d" = 2 should be [a.b] = {c = 1, d = 2}
         let mut grouped_json = json!({});
-        for (var_name, var) in variables.to_map().into_iter() {
+        for (var_name, var) in variables.to_map() {
             let split = var_name.rsplit_once('.');
             let path = if let Some((group, key)) = split {
-                format!("{}/{}", group, key)
+                format!("{group}/{key}")
             } else {
                 var_name.clone()
             }
-            .parse::<JsonPath>()
+            .parse::<JSPath>()
             .unwrap();
 
-            if let ParsedValue::Null = var.value {
+            if var.value == ParsedValue::Null {
                 continue;
             }
 
@@ -676,17 +687,17 @@ pub fn reverse(
 
         // Step 8: Build the Toml Output
         let toml_output = generate_toml_string(grouped_json, &overrides, &deletions)
-            .map_err(|e| Error::Processing(format!("Could not generate toml output: {:?}\nThis is probably indicative of needing to use the -p inner path", e)))?;
+            .map_err(|e| ProgramError::Processing(format!("Could not generate toml output: {e:?}\nThis is probably indicative of needing to use the -p inner path")))?;
         let out_dir = flags.output_directory.clone();
 
-        let mut out_file = out_dir.clone();
-        let file_name = format!("{}.toml", file_name);
+        let mut out_file = out_dir;
+        let file_name = format!("{file_name}.toml");
         out_file.push(file_name);
 
         let mut file = File::create(out_file)
-            .map_err(|e| Error::Processing(format!("Could not create file: {}", e)))?;
+            .map_err(|e| ProgramError::Processing(format!("Could not create file: {e}")))?;
         file.write_all(toml_output.as_bytes())
-            .map_err(|e| Error::Processing(format!("Could not write to file: {}", e)))?;
+            .map_err(|e| ProgramError::Processing(format!("Could not write to file: {e}")))?;
 
         Ok(())
     };
@@ -699,12 +710,11 @@ pub fn reverse(
             let template = template.first().unwrap();
             for (i, theme) in theme.iter().enumerate() {
                 if !same_type(theme, template) {
-                    return Err(Error::Processing(format!(
-                        "Array index {} types do not match.",
-                        i
+                    return Err(ProgramError::Processing(format!(
+                        "Array index {i} types do not match."
                     )));
                 }
-                let default_name = "/name".parse::<JsonPath>().unwrap().traverse(theme).ok();
+                let default_name = "/name".parse::<JSPath>().unwrap().traverse(theme).ok();
                 let name = {
                     if let Some(name) = default_name {
                         name.as_str().unwrap().to_string()
@@ -715,7 +725,11 @@ pub fn reverse(
                 reverse(theme.clone(), template.clone(), name)?;
             }
         }
-        _ => return Err(Error::Processing(String::from("Invalid starting path."))),
+        _ => {
+            return Err(ProgramError::Processing(String::from(
+                "Invalid starting path.",
+            )))
+        }
     }
 
     Ok(())

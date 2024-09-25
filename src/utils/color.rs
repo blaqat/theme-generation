@@ -27,18 +27,18 @@ fn is_xx(s: &str) -> bool {
     s.len() == 2 && s.chars().next() == s.chars().nth(1)
 }
 
-pub type ColorOperations = Vec<ColorChange>;
+pub type Operations = Vec<Operation>;
 
 #[derive(Debug)]
-pub enum ColorError {
+pub enum Error {
     Hex(String),
-    ColorComponent,
-    ColorChange,
-    ColorOperator,
+    Component,
+    Change,
+    Operator,
 }
 
 #[derive(Debug, PartialEq, Clone, Hash, Eq)]
-pub enum ColorComponent {
+pub enum Component {
     Hue(i16),
     Saturation(i16),
     Value(i16),
@@ -51,21 +51,21 @@ pub enum ColorComponent {
 
 macro_rules! impl_color_components_op {
     ($trait: ident, $func_name: ident, $op: tt) => {
-        impl $trait<ColorComponent> for &Color {
-            type Output = ColorComponent;
+        impl $trait<Component> for &Color {
+            type Output = Component;
 
-            fn $func_name(self, rhs: ColorComponent) -> Self::Output {
+            fn $func_name(self, rhs: Component) -> Self::Output {
                 match rhs {
-                    ColorComponent::Hue(val) => ColorComponent::Hue(self.hue $op val),
-                    ColorComponent::Saturation(val) => {
-                        ColorComponent::Saturation(self.saturation $op val)
+                    Component::Hue(val) => Component::Hue(self.hue $op val),
+                    Component::Saturation(val) => {
+                        Component::Saturation(self.saturation $op val)
                     }
-                    ColorComponent::Value(val) => ColorComponent::Value(self.value $op val),
-                    ColorComponent::Red(val) => ColorComponent::Red(self.red $op val),
-                    ColorComponent::Green(val) => ColorComponent::Green(self.green $op val),
-                    ColorComponent::Blue(val) => ColorComponent::Blue(self.blue $op val),
-                    ColorComponent::Alpha(val) => ColorComponent::Alpha(self.alpha $op val),
-                    ColorComponent::Hex(_) => unreachable!(),
+                    Component::Value(val) => Component::Value(self.value $op val),
+                    Component::Red(val) => Component::Red(self.red $op val),
+                    Component::Green(val) => Component::Green(self.green $op val),
+                    Component::Blue(val) => Component::Blue(self.blue $op val),
+                    Component::Alpha(val) => Component::Alpha(self.alpha $op val),
+                    Component::Hex(_) => unreachable!(),
                 }
             }
         }
@@ -77,19 +77,19 @@ impl_color_components_op!(Div, div, /);
 impl_color_components_op!(Mul, mul, *);
 impl_color_components_op!(Sub, sub, -);
 
-impl BitAnd<ColorComponent> for &Color {
-    type Output = ColorComponent;
+impl BitAnd<Component> for &Color {
+    type Output = Component;
 
-    fn bitand(self, rhs: ColorComponent) -> Self::Output {
-        if let ColorComponent::Hex(val) = rhs {
-            ColorComponent::Hex(format!("{}{}", self.to_alphaless_hex(), val))
+    fn bitand(self, rhs: Component) -> Self::Output {
+        if let Component::Hex(val) = rhs {
+            Component::Hex(format!("{}{}", self.to_alphaless_hex(), val))
         } else {
             unreachable!()
         }
     }
 }
 
-impl ColorComponent {
+impl Component {
     fn validate_change(&mut self) {
         match self {
             Self::Hue(hue) => {
@@ -124,21 +124,21 @@ Examples
     h+10 s/50 r=2
 */
 #[derive(Debug, PartialEq, Clone, Hash, Eq)]
-pub struct ColorChange(pub ColorComponent, pub String);
+pub struct Operation(pub Component, pub String);
 
-// let applied_changes = vec![ColorChange(ColorComponent::Alpha(3), "/")];
+// let applied_changes = vec![Operation(Component::Alpha(3), "/")];
 // let applied_changes = vec![color_change!(Alpha "/", 3)];
 // let applied_changes = color_change!(Alpha "/", 3;)
 #[macro_export]
-macro_rules! color_change {
+macro_rules! operation {
     ($setting: ident . $val: expr) => {
-        ColorChange(ColorComponent::$setting($val), ".".to_string())
+        Operation(Component::$setting($val), ".".to_string())
     };
     ($setting: ident=$val: expr) => {
-        ColorChange(ColorComponent::$setting($val), "=".to_string())
+        Operation(Component::$setting($val), "=".to_string())
     };
     ($setting: ident $op: expr; $val: expr) => {
-        ColorChange(ColorComponent::$setting($val), $op.to_string())
+        Operation(Component::$setting($val), $op.to_string())
     };
     ($setting: ident: $op: expr, $val: expr;) => {
         vec![color_change!($setting $op; $val)]
@@ -154,8 +154,8 @@ macro_rules! color_change {
     };
 }
 
-impl ColorChange {
-    fn apply(self, color: &Color) -> Result<ColorComponent, ColorError> {
+impl Operation {
+    fn apply(self, color: &Color) -> Result<Component, Error> {
         let new_change = match self.1.as_str() {
             "+" => color + self.0,
             "-" => color - self.0,
@@ -163,57 +163,52 @@ impl ColorChange {
             "/" => color / self.0,
             "*" => color * self.0,
             "." => color & self.0,
-            _ => return Err(ColorError::ColorChange),
+            _ => return Err(Error::Change),
         };
 
         Ok(new_change)
     }
 
-    pub fn identity(c: ColorChange) -> ColorChange {
+    pub fn identity(c: Self) -> Self {
         match (&c.0, c.1.as_str()) {
-            (ColorComponent::Alpha(_), "=") => color_change!(Alpha = 100),
-            (ColorComponent::Hex(_), ".") => color_change!(Alpha = 100),
+            (Component::Alpha(_), "=") | (Component::Hex(_), ".") => operation!(Alpha = 100),
             _ => c,
         }
     }
 
-    pub fn inverse(changes: &ColorOperations) -> ColorOperations {
+    pub fn inverse(changes: &Operations) -> Operations {
         changes
             .iter()
             .cloned()
             .map(|c| match (&c.0, c.1.as_str()) {
-                (_, "+") => ColorChange(c.0, String::from("-")),
-                (_, "-") => ColorChange(c.0, String::from("+")),
-                (_, "/") => ColorChange(c.0, String::from("*")),
-                (_, "*") => ColorChange(c.0, String::from("/")),
-                (ColorComponent::Alpha(_), "=") => color_change!(Alpha = 100),
-                (ColorComponent::Hex(_), ".") => color_change!(Alpha = 100),
+                (_, "+") => Self(c.0, String::from("-")),
+                (_, "-") => Self(c.0, String::from("+")),
+                (_, "/") => Self(c.0, String::from("*")),
+                (_, "*") => Self(c.0, String::from("/")),
+                (Component::Alpha(_), "=") | (Component::Hex(_), ".") => operation!(Alpha = 100),
                 _ => c,
             })
             .rev()
             .collect()
     }
 
-    pub fn inverse_ops(changes: Vec<&ColorOperations>) -> Vec<ColorOperations> {
-        changes.iter().map(|c| ColorChange::inverse(c)).collect()
+    pub fn inverse_ops(changes: &[&Operations]) -> Vec<Operations> {
+        changes.iter().map(|c| Self::inverse(c)).collect()
     }
 
-    pub fn identity_op(changes: &ColorOperations) -> ColorOperations {
-        changes
-            .iter()
-            .map(|c| ColorChange::identity(c.clone()))
-            .collect()
+    pub fn identity_op(changes: &Operations) -> Operations {
+        changes.iter().map(|c| Self::identity(c.clone())).collect()
     }
 
-    pub fn identity_ops(changes: Vec<&ColorOperations>) -> Vec<ColorOperations> {
+    pub fn identity_ops(changes: &[&Operations]) -> Vec<Operations> {
         changes
             .iter()
-            .map(|c| c.iter().map(|c| ColorChange::identity(c.clone())).collect())
+            .map(|c| c.iter().map(|c| Self::identity(c.clone())).collect())
             .collect()
     }
 }
 
-fn get_operator(op: Option<char>) -> Result<&'static str, ColorError> {
+const fn get_operator(op: Option<char>) -> Result<&'static str, Error> {
     match op {
         Some(c) => match c {
             '+' => Ok("+"),
@@ -222,14 +217,14 @@ fn get_operator(op: Option<char>) -> Result<&'static str, ColorError> {
             '*' => Ok("*"),
             '/' => Ok("/"),
             '.' => Ok("."),
-            _ => Err(ColorError::ColorOperator),
+            _ => Err(Error::Operator),
         },
-        None => Err(ColorError::ColorOperator),
+        None => Err(Error::Operator),
     }
 }
 
-impl FromStr for ColorChange {
-    type Err = ColorError;
+impl FromStr for Operation {
+    type Err = Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let s = s.trim();
@@ -245,23 +240,23 @@ impl FromStr for ColorChange {
         // #FF0000.=XXX == #FF0000..(XXX * 2.55) (Alpha is 0-100)
         if op == "." {
             let val = chars.collect::<String>();
-            return Ok(color_change!(Hex.val));
+            return Ok(operation!(Hex.val));
         }
 
         let val: i16 = chars
             .collect::<String>()
             .parse()
-            .map_err(|_| ColorError::ColorChange)?;
+            .map_err(|_| Error::Change)?;
 
         let component = match component_char {
-            Some('h') => ColorComponent::Hue(val),
-            Some('s') => ColorComponent::Saturation(val),
-            Some('v') => ColorComponent::Value(val),
-            Some('r') => ColorComponent::Red(val),
-            Some('g') => ColorComponent::Green(val),
-            Some('b') => ColorComponent::Blue(val),
-            Some('a') => ColorComponent::Alpha(val),
-            _ => return Err(ColorError::ColorComponent),
+            Some('h') => Component::Hue(val),
+            Some('s') => Component::Saturation(val),
+            Some('v') => Component::Value(val),
+            Some('r') => Component::Red(val),
+            Some('g') => Component::Green(val),
+            Some('b') => Component::Blue(val),
+            Some('a') => Component::Alpha(val),
+            _ => return Err(Error::Component),
         };
 
         Ok(Self(component, op.to_string()))
@@ -324,13 +319,14 @@ impl Default for Color {
 }
 
 impl FromStr for Color {
-    type Err = ColorError;
+    type Err = Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         Self::from_hex(s)
     }
 }
 
+#[allow(clippy::cast_sign_loss, clippy::cast_possible_truncation)]
 impl Color {
     fn update_from(&mut self, other: &Self) {
         self.alpha = other.alpha;
@@ -343,7 +339,7 @@ impl Color {
         self.hex = other.hex.to_string();
     }
 
-    pub fn from_change(hex: &str, ops: &[ColorChange]) -> Result<Self, ColorError> {
+    pub fn from_change(hex: &str, ops: &[Operation]) -> Result<Self, Error> {
         let mut color = Self::from_hex(hex)?;
         color.update(ops.to_vec())?;
         Ok(color)
@@ -351,7 +347,7 @@ impl Color {
 
     fn is_valid_hex(hex: &str) -> bool {
         let hex = hex.to_uppercase();
-        hex.starts_with("#")
+        hex.starts_with('#')
             && hex.chars().skip(1).all(|c| c.is_ascii_hexdigit())
             && matches!(hex.len(), 4 | 5 | 7 | 9)
     }
@@ -372,18 +368,19 @@ impl Color {
     }
 
     pub fn get_alpha(&self) -> String {
-        let alpha = (self.alpha as f32) * 2.55;
+        let alpha = f32::from(self.alpha) * 2.55;
         format!("{:02X}", alpha.ceil() as u8)
     }
 
-    pub fn has_alpha(&self) -> bool {
+    pub const fn has_alpha(&self) -> bool {
         self.alpha != 100
     }
 
     pub fn to_alphaless_hex(&self) -> String {
-        match self.has_alpha() {
-            true => format!("#{:02X}{:02X}{:02X}", self.red, self.green, self.blue),
-            false => Self::norm_hex(&self.hex),
+        if self.has_alpha() {
+            format!("#{:02X}{:02X}{:02X}", self.red, self.green, self.blue)
+        } else {
+            Self::norm_hex(&self.hex)
         }
     }
 
@@ -392,24 +389,20 @@ impl Color {
         "color.".to_owned() + &ColorName::similar(rgb).to_lowercase()
     }
 
-    pub fn from_hex(hex: &str) -> Result<Self, ColorError> {
+    pub fn from_hex(hex: &str) -> Result<Self, Error> {
         if !Self::is_valid_hex(hex) {
-            return Err(ColorError::Hex(hex.to_owned()));
+            return Err(Error::Hex(hex.to_owned()));
         }
 
         let hex = Self::norm_hex(hex);
 
-        let red =
-            i16::from_str_radix(&hex[1..3], 16).map_err(|_| ColorError::Hex(hex.to_owned()))?;
-        let green =
-            i16::from_str_radix(&hex[3..5], 16).map_err(|_| ColorError::Hex(hex.to_owned()))?;
-        let blue =
-            i16::from_str_radix(&hex[5..7], 16).map_err(|_| ColorError::Hex(hex.to_owned()))?;
+        let red = i16::from_str_radix(&hex[1..3], 16).map_err(|_| Error::Hex(hex.clone()))?;
+        let green = i16::from_str_radix(&hex[3..5], 16).map_err(|_| Error::Hex(hex.clone()))?;
+        let blue = i16::from_str_radix(&hex[5..7], 16).map_err(|_| Error::Hex(hex.clone()))?;
 
         let alpha = if hex.len() == 9 {
-            let a255 =
-                i16::from_str_radix(&hex[7..9], 16).map_err(|_| ColorError::Hex(hex.to_owned()))?;
-            let a100 = a255 as f32 / 255.0 * 100.0;
+            let a255 = i16::from_str_radix(&hex[7..9], 16).map_err(|_| Error::Hex(hex.clone()))?;
+            let a100 = f32::from(a255) / 255.0 * 100.0;
             a100.floor() as i16
         } else {
             100
@@ -431,9 +424,9 @@ impl Color {
 
     fn update_hsv(&mut self) {
         let rgb = Srgb::new(
-            self.red as f32 / 255.0,
-            self.green as f32 / 255.0,
-            self.blue as f32 / 255.0,
+            f32::from(self.red) / 255.0,
+            f32::from(self.green) / 255.0,
+            f32::from(self.blue) / 255.0,
         );
 
         let hsv: Hsv = rgb.into_color();
@@ -445,9 +438,9 @@ impl Color {
 
     fn update_rgb(&mut self) {
         let hsv = Hsv::new(
-            self.hue as f32,
-            self.saturation as f32 / 100.0,
-            self.value as f32 / 100.0,
+            f32::from(self.hue),
+            f32::from(self.saturation) / 100.0,
+            f32::from(self.value) / 100.0,
         );
         let rgb: Srgb = hsv.into_color();
 
@@ -471,12 +464,12 @@ impl Color {
                     b.chars().next().unwrap()
                 );
             } else {
-                self.hex = format!("#{}{}{}", r, g, b);
+                self.hex = format!("#{r}{g}{b}");
             }
         } else {
-            let a255 = self.alpha as f32 / 100.0 * 255.0;
+            let a255 = f32::from(self.alpha) / 100.0 * 255.0;
             let alpha = a255.ceil() as i16;
-            let a = format!("{:02X}", alpha);
+            let a = format!("{alpha:02X}");
             if rgb_xx && is_xx(&a) {
                 self.hex = format!(
                     "#{}{}{}{}",
@@ -486,12 +479,12 @@ impl Color {
                     a.chars().next().unwrap()
                 );
             } else {
-                self.hex = format!("#{}{}{}{}", r, g, b, a);
+                self.hex = format!("#{r}{g}{b}{a}");
             }
         }
     }
 
-    pub fn update_ops(&mut self, changes: &[ColorOperations]) -> Result<(), ColorError> {
+    pub fn update_ops(&mut self, changes: &[Operations]) -> Result<(), Error> {
         changes
             .iter()
             .try_for_each(|change| self.update(change.clone()))?;
@@ -499,40 +492,38 @@ impl Color {
         Ok(())
     }
 
-    pub fn update(&mut self, changes: ColorOperations) -> Result<(), ColorError> {
+    pub fn update(&mut self, changes: Operations) -> Result<(), Error> {
         for change in changes {
             let mut setting = change.apply(self)?;
 
             setting.validate_change();
 
             match setting {
-                ColorComponent::Hue(h) => self.hue = h,
-                ColorComponent::Saturation(s) => self.saturation = s,
-                ColorComponent::Value(v) => self.value = v,
+                Component::Hue(h) => self.hue = h,
+                Component::Saturation(s) => self.saturation = s,
+                Component::Value(v) => self.value = v,
 
-                ColorComponent::Red(r) => self.red = r,
-                ColorComponent::Green(g) => self.green = g,
-                ColorComponent::Blue(b) => self.blue = b,
+                Component::Red(r) => self.red = r,
+                Component::Green(g) => self.green = g,
+                Component::Blue(b) => self.blue = b,
 
-                ColorComponent::Alpha(a) => self.alpha = a,
-                _ => {}
+                Component::Alpha(a) => self.alpha = a,
+                Component::Hex(_) => {}
             }
 
             match setting {
-                ColorComponent::Hue(_)
-                | ColorComponent::Saturation(_)
-                | ColorComponent::Value(_) => {
+                Component::Hue(_) | Component::Saturation(_) | Component::Value(_) => {
                     self.update_rgb();
                     self.update_hex();
                 }
 
-                ColorComponent::Red(_) | ColorComponent::Green(_) | ColorComponent::Blue(_) => {
+                Component::Red(_) | Component::Green(_) | Component::Blue(_) => {
                     self.update_hsv();
                     self.update_hex();
                 }
 
-                ColorComponent::Alpha(_) => self.update_hex(),
-                ColorComponent::Hex(ref hex) => self.update_from(&Color::from_hex(hex)?),
+                Component::Alpha(_) => self.update_hex(),
+                Component::Hex(ref hex) => self.update_from(&Self::from_hex(hex)?),
             }
         }
 

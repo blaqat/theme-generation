@@ -1,6 +1,6 @@
 use crate::{prelude::*, ValidCommands};
 
-pub fn help(command: ValidCommands) {
+pub fn help(command: &ValidCommands) {
     let help_text = match command {
         ValidCommands::Check => "Description:
     - This checks line by line if the original file and the new file are the same.

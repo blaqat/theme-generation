@@ -5,12 +5,12 @@ use std::{io::Read, path::PathBuf};
 /**
 Generate:
     Description:
-        - Template + Variables = GeneratedTheme
+        - Template + Variables = `GeneratedTheme`
         - This generates a new file by substituting variables in the template file with values from the variable file.
         - This takes the Template as the source of truth. Things in the variable file that arent in the template will be ignored.
         - The generated file will be saved in the current directory.
     Usage:
-        substitutor gen template_file variableFile [optional flags]
+        substitutor gen `template_file` variableFile [optional flags]
     Flags:
         -o directory    Set output directory of variable file
         -i directory    Set directory where the .toml files are located
@@ -19,24 +19,22 @@ Generate:
         -r              Overwrite the output file of the same name if it exists
 */
 
-const MAX_RECURSION_DEPTH: usize = 8;
-
-#[derive(PartialEq, Debug)]
-pub enum GenerateFlags {
+#[derive(PartialEq, Eq, Debug)]
+pub enum FlagTypes {
     OutputDirectory(PathBuf),
     InputDirectory(PathBuf),
-    InnerPath(JsonPath),
+    InnerPath(JSPath),
     Name(String),
     ReplaceName,
 }
 
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Eq, Debug)]
 pub struct Flags {
     replace_name: bool,
     output_directory: PathBuf, // Default to current directory
     input_directory: PathBuf,  // Default to current directory
     name: String,
-    path: Option<JsonPath>,
+    path: Option<JSPath>,
 }
 
 impl Flags {
@@ -45,12 +43,12 @@ impl Flags {
     }
 }
 
-impl GenerateFlags {
-    fn into_vec(flags: Vec<String>) -> Result<Vec<Self>, Error> {
+impl FlagTypes {
+    fn into_vec(flags: &[String]) -> Result<Vec<Self>, ProgramError> {
         flags.iter().map(|flag| Self::from_str(flag)).collect()
     }
 
-    pub fn parse(flags: Vec<String>) -> Flags {
+    pub fn parse(flags: &[String]) -> Flags {
         let flags = Self::into_vec(flags).unwrap();
         let mut output_directory = PathBuf::from(".");
         let mut input_directory = PathBuf::from(".");
@@ -69,24 +67,24 @@ impl GenerateFlags {
         }
 
         Flags {
+            replace_name,
             output_directory,
             input_directory,
             name,
             path,
-            replace_name,
         }
     }
 }
 
-impl FromStr for GenerateFlags {
-    type Err = Error;
+impl FromStr for FlagTypes {
+    type Err = ProgramError;
 
-    fn from_str(flag: &str) -> Result<Self, Error> {
-        let get_directory = |path: &str| -> Result<PathBuf, Error> {
-            let path = path.replace("~", std::env::var("HOME").unwrap().as_str());
+    fn from_str(flag: &str) -> Result<Self, ProgramError> {
+        let get_directory = |path: &str| -> Result<PathBuf, ProgramError> {
+            let path = path.replace('~', std::env::var("HOME").unwrap().as_str());
             let path = Path::new(&path);
             if !path.exists() {
-                return Err(Error::InvalidFlag(
+                return Err(ProgramError::InvalidFlag(
                     "generate".to_owned(),
                     path.to_str().unwrap().to_owned(),
                 ));
@@ -96,52 +94,58 @@ impl FromStr for GenerateFlags {
         match flag {
             "-r" => Ok(Self::ReplaceName),
             flag if flag.starts_with("-n") => {
-                let name = flag.split("=").last().unwrap();
+                let name = flag.split('=').last().unwrap();
                 Ok(Self::Name(name.to_owned()))
             }
             flag if flag.starts_with("-p") => {
-                let path = flag.split("=").last().unwrap();
-                let path = JsonPath::from_str(path)
-                    .map_err(|_| Error::InvalidFlag("reverse".to_owned(), flag.to_owned()))?;
+                let path = flag.split('=').last().unwrap();
+                let path = JSPath::from_str(path).map_err(|_| {
+                    ProgramError::InvalidFlag("reverse".to_owned(), flag.to_owned())
+                })?;
                 Ok(Self::InnerPath(path))
             }
             flag if flag.starts_with("-i") => {
-                let path = flag.split("=").last().unwrap();
+                let path = flag.split('=').last().unwrap();
                 get_directory(path).map(Self::InputDirectory)
             }
             flag if flag.starts_with("-o") => {
-                let path = flag.split("=").last().unwrap();
+                let path = flag.split('=').last().unwrap();
                 get_directory(path).map(Self::OutputDirectory)
             }
-            _ => Err(Error::InvalidFlag("reverse".to_owned(), flag.to_owned())),
+            _ => Err(ProgramError::InvalidFlag(
+                "reverse".to_owned(),
+                flag.to_owned(),
+            )),
         }
     }
 }
 
 mod steps {
-    use super::*;
+    use super::{JSPath, Map, Operation, ParsedValue, ParsedVariable, ProgramError, Regex};
+    use crate::error;
     use serde_json::json;
     type Value = serde_json::Value;
+    const MAX_RECURSION_DEPTH: usize = 8;
 
-    pub fn resolve_self_variables(source: &Value, key: &Vec<&str>, _max_depth: usize) -> Value {
-        if _max_depth == 0 {
+    pub fn resolve_self_variables(source: &Value, key: &Vec<&str>, max_depth: usize) -> Value {
+        if max_depth == 0 {
             return Value::Null;
         }
         match source {
             Value::Object(obj) => {
                 let mut new_obj = obj.clone();
-                for (k, v) in obj.iter() {
+                for (k, v) in obj {
                     let mut new_keys = key.clone();
-                    let var_name = &format!("{}.", k);
+                    let var_name = &format!("{k}.");
                     new_keys.push(var_name.as_str());
-                    new_obj[k] = resolve_self_variables(v, &new_keys, _max_depth - 1);
+                    new_obj[k] = resolve_self_variables(v, &new_keys, max_depth - 1);
                 }
                 Value::Object(new_obj)
             }
             Value::Array(a) => {
                 let mut new_arr = Vec::new();
-                for v in a.iter() {
-                    new_arr.push(resolve_self_variables(v, key, _max_depth - 1));
+                for v in a {
+                    new_arr.push(resolve_self_variables(v, key, max_depth - 1));
                 }
                 Value::Array(new_arr)
             }
@@ -156,30 +160,25 @@ mod steps {
 
     pub fn resolve_variables(
         resolving: &Value,
-        _source: &Value,
-        _operations: &Vec<Vec<ColorChange>>,
-        _max_depth: usize,
+        source: &Value,
+        operations: &Vec<Vec<Operation>>,
+        max_depth: usize,
     ) -> Value {
-        if _max_depth == 0 {
+        if max_depth == 0 {
             return Value::Null;
         }
         let mut resolved: Value = json!({});
         match resolving {
             Value::Object(obj) => {
-                for (key, value) in obj.iter() {
-                    resolved[key] = resolve_variables(value, _source, _operations, _max_depth - 1);
+                for (key, value) in obj {
+                    resolved[key] = resolve_variables(value, source, operations, max_depth - 1);
                 }
             }
 
             Value::Array(arr) => {
                 let mut res_arr = Vec::with_capacity(arr.len());
-                for value in arr.iter() {
-                    res_arr.push(resolve_variables(
-                        value,
-                        _source,
-                        _operations,
-                        _max_depth - 1,
-                    ));
+                for value in arr {
+                    res_arr.push(resolve_variables(value, source, operations, max_depth - 1));
                 }
                 resolved = Value::Array(res_arr);
             }
@@ -188,25 +187,21 @@ mod steps {
                 ParsedValue::Variables(ref var)
                     if let Ok(parsed_var) = var.first().unwrap().parse::<ParsedVariable>() =>
                 {
-                    let path = parsed_var
-                        .name
-                        .replace(".", "/")
-                        .parse::<JsonPath>()
-                        .unwrap();
+                    let path = parsed_var.name.replace('.', "/").parse::<JSPath>().unwrap();
 
-                    let value = path.traverse(_source);
+                    let value = path.traverse(source);
 
                     if let Ok(v) = value {
-                        let mut new_ops = _operations.clone();
+                        let mut new_ops = operations.clone();
                         new_ops.push(parsed_var.operations);
-                        resolved = resolve_variables(v, _source, &new_ops, _max_depth - 1);
+                        resolved = resolve_variables(v, source, &new_ops, max_depth - 1);
                     } else {
                         resolved = Value::Null;
                     }
                 }
                 ParsedValue::Color(ref c) => {
                     let mut c = c.clone();
-                    let _ = c.update_ops(_operations.as_slice());
+                    let _ = c.update_ops(operations.as_slice());
                     resolved = Value::String(c.to_string());
                 }
                 ParsedValue::Null => unreachable!(),
@@ -223,13 +218,13 @@ mod steps {
 
     fn handle_value(parsed: ParsedValue, variables: &Value) -> Value {
         match parsed {
-            ParsedValue::Variables(ref var)
-                if let Ok(parsed_var) = var.first().unwrap().parse::<ParsedVariable>()
-                    && let Ok(path) = parsed_var.name.replace(".", "/").parse::<JsonPath>() =>
+            ParsedValue::Variables(ref variable)
+                if let Ok(parsed_var) = variable.first().unwrap().parse::<ParsedVariable>()
+                    && let Ok(path) = parsed_var.name.replace('.', "/").parse::<JSPath>() =>
             {
                 let ops = parsed_var.operations;
-                let val = path.traverse(variables).unwrap_or(&Value::Null).clone();
-                match val {
+                let value = path.traverse(variables).unwrap_or(&Value::Null).clone();
+                match value {
                     Value::String(ref v)
                         if !ops.is_empty()
                             && let Ok(parsed) = v.parse::<ParsedValue>()
@@ -238,10 +233,10 @@ mod steps {
                         let _ = color.update(ops);
                         Value::String(color.to_string())
                     }
-                    Value::Null if var.len() > 1 => {
-                        handle_value(ParsedValue::Variables(var[1..].to_vec()), variables)
+                    Value::Null if variable.len() > 1 => {
+                        handle_value(ParsedValue::Variables(variable[1..].to_vec()), variables)
                     }
-                    _ => val,
+                    _ => value,
                 }
             }
             v => v.into_value(),
@@ -251,14 +246,14 @@ mod steps {
     pub fn match_variables(template: &Value, variables: &Value) -> Value {
         let mut new_data = template.clone();
 
-        for (key, value) in template.as_object().unwrap().iter() {
+        for (key, value) in template.as_object().unwrap() {
             match value {
                 Value::String(str) if let Ok(parsed) = str.parse::<ParsedValue>() => {
-                    new_data[key] = handle_value(parsed, variables)
+                    new_data[key] = handle_value(parsed, variables);
                 }
                 serde_json::Value::Array(a) => {
                     let mut new_arr = Vec::with_capacity(a.len());
-                    for value in a.iter() {
+                    for value in a {
                         if let Value::Object(_) = value {
                             new_arr.push(match_variables(value, variables));
                         } else if let Value::String(v) = value
@@ -282,24 +277,24 @@ mod steps {
         new_data
     }
 
-    pub fn replace_regex(key_map: &Map<String, Value>, data: &mut Value, start_path: String) {
+    pub fn replace_regex(key_map: &Map<String, Value>, data: &mut Value, start_path: &str) {
         match data {
             Value::Object(m) => {
                 for (k, val) in m.iter_mut() {
-                    replace_regex(key_map, val, format!("{}/{}", start_path, k));
+                    replace_regex(key_map, val, &format!("{start_path}/{k}"));
                 }
             }
             Value::Array(a) => {
                 for (k, val) in a.iter_mut().enumerate() {
-                    replace_regex(key_map, val, format!("{}/{}", start_path, k));
+                    replace_regex(key_map, val, &format!("{start_path}/{k}"));
                 }
             }
             _ => {
-                for (key, value) in key_map.iter() {
+                for (key, value) in key_map {
                     let rgx = Regex::new(&format!("^{key}$"));
                     if let Ok(regex) = rgx
-                        && (regex.find(&start_path).is_some() || regex.is_match(&start_path))
-                        && let Ok(_) = start_path.parse::<JsonPath>()
+                        && (regex.find(start_path).is_some() || regex.is_match(start_path))
+                        && let Ok(_) = start_path.parse::<JSPath>()
                     {
                         *data = value.clone();
                     }
@@ -307,22 +302,14 @@ mod steps {
             }
         }
     }
-}
 
-pub fn generate(
-    template: ValidatedFile,
-    mut variables: Vec<ValidatedFile>,
-    flags: Vec<String>,
-) -> Result<(), Error> {
-    let flags = GenerateFlags::parse(flags);
-
-    let gen = |mut template: serde_json::Value,
-               variables: serde_json::Value|
-     -> Result<serde_json::Value, Error> {
+    pub fn gen(
+        mut template: serde_json::Value,
+        variables: &serde_json::Value,
+    ) -> Result<serde_json::Value, ProgramError> {
         // Step 2: Resolve recursive variables
-        let variables = steps::resolve_self_variables(&variables, &vec!["$"], MAX_RECURSION_DEPTH);
-        let variables =
-            steps::resolve_variables(&variables, &variables, &vec![], MAX_RECURSION_DEPTH);
+        let variables = resolve_self_variables(variables, &vec!["$"], MAX_RECURSION_DEPTH);
+        let variables = resolve_variables(&variables, &variables, &vec![], MAX_RECURSION_DEPTH);
 
         // Step 3: Apply Deletions
         if let Some(del_obj) = variables.get("deletions")
@@ -330,8 +317,8 @@ pub fn generate(
         {
             let deletions = deletions.as_array().unwrap();
             for key in deletions {
-                let path = key.as_str().unwrap().parse::<JsonPath>().map_err(|_| {
-                    Error::Processing(format!(
+                let path = key.as_str().unwrap().parse::<JSPath>().map_err(|_| {
+                    ProgramError::Processing(format!(
                         "Invalid path in deletions: {}",
                         key.as_str().unwrap()
                     ))
@@ -344,66 +331,79 @@ pub fn generate(
         }
 
         // Step 4: Match variables with template
-        let mut matches = steps::match_variables(&template, &variables);
+        let mut matches = match_variables(&template, &variables);
 
         // Step 5: Apply Overrides
         if let Some(regex_overrides) = variables.get("overrides-regex") {
             let regex_overrides = regex_overrides.as_object().unwrap();
-            steps::replace_regex(regex_overrides, &mut matches, String::new())
+            replace_regex(regex_overrides, &mut matches, "");
         }
 
         if let Some(overrides) = variables.get("overrides") {
             let overrides = overrides.as_object().unwrap();
-            for (key, value) in overrides.iter() {
-                let path = key.parse::<JsonPath>().map_err(|_| {
-                    Error::Processing(format!("Invalid path in overrides: {}", key))
+            for (key, value) in overrides {
+                let path = key.parse::<JSPath>().map_err(|_| {
+                    ProgramError::Processing(format!("Invalid path in overrides: {key}"))
                 })?;
                 path.pave(&mut matches, value.clone())?;
             }
         }
 
         Ok(matches)
-    };
+    }
+}
 
-    let write_to_file = |matches: &serde_json::Value, generate_names: bool| -> Result<(), Error> {
-        // Step 6: Generate the new theme file
-        let json_output = serde_json::to_string_pretty(&matches).unwrap();
-        let default_name = "/name".parse::<JsonPath>().unwrap().traverse(matches).ok();
+fn write_to_file(
+    matches: &serde_json::Value,
+    generate_names: bool,
+    flags: &Flags,
+) -> Result<(), ProgramError> {
+    // Step 6: Generate the new theme file
+    let json_output = serde_json::to_string_pretty(&matches).unwrap();
+    let default_name = "/name".parse::<JSPath>().unwrap().traverse(matches).ok();
 
-        let file_name = format!("{}.json", {
-            if flags.name == "generated-theme"
-                && let Some(default) = default_name
-            {
-                default.as_str().unwrap()
-            } else {
-                &flags.name
-            }
-        });
-
-        let out_dir = flags.output_directory.clone();
-        let mut out_file = out_dir.clone();
-
-        out_file.push(&file_name);
-        if generate_names {
-            let mut new_name = String::from("");
-            while out_file.exists() {
-                write!(new_name, "new-").unwrap();
-                let mut a = new_name.clone();
-                a.push_str(&file_name);
-                out_file.pop();
-                out_file.push(&a);
-            }
+    let file_name = format!("{}.json", {
+        if flags.name == "generated-theme"
+            && let Some(default) = default_name
+        {
+            default.as_str().unwrap()
+        } else {
+            &flags.name
         }
+    });
 
-        let mut file = File::create(out_file)
-            .map_err(|e| Error::Processing(format!("Could not create file: {}", e)))?;
-        file.write_all(json_output.as_bytes())
-            .map_err(|e| Error::Processing(format!("Could not write to file: {}", e)))?;
-        Ok(())
-    };
+    let out_dir = flags.output_directory.clone();
+    let mut out_file = out_dir;
 
-    let base: serde_json::Value = serde_json::from_reader(&template.file)
-        .map_err(|json_err| Error::Processing(format!("Invalid template json: {}", json_err)))?;
+    out_file.push(&file_name);
+    if generate_names {
+        let mut new_name = String::new();
+        while out_file.exists() {
+            write!(new_name, "new-").unwrap();
+            let mut a = new_name.clone();
+            a.push_str(&file_name);
+            out_file.pop();
+            out_file.push(&a);
+        }
+    }
+
+    let mut file = File::create(out_file)
+        .map_err(|e| ProgramError::Processing(format!("Could not create file: {e}")))?;
+    file.write_all(json_output.as_bytes())
+        .map_err(|e| ProgramError::Processing(format!("Could not write to file: {e}")))?;
+    Ok(())
+}
+
+pub fn generate(
+    template: &ValidatedFile,
+    mut variables: Vec<ValidatedFile>,
+    flags: &[String],
+) -> Result<(), ProgramError> {
+    let flags = FlagTypes::parse(flags);
+
+    let base: serde_json::Value = serde_json::from_reader(&template.file).map_err(|json_err| {
+        ProgramError::Processing(format!("Invalid template json: {json_err}"))
+    })?;
     let mut template: serde_json::Value = base.clone();
     let mut make_new_files_per_variable = true;
     let mut is_array = false;
@@ -413,7 +413,7 @@ pub fn generate(
     if let Some(ref starting_path) = flags.path {
         template = starting_path
             .traverse(&template)
-            .map_err(|_| Error::Processing(String::from("Invalid starting path.")))?
+            .map_err(|_| ProgramError::Processing(String::from("Invalid starting path.")))?
             .clone();
 
         match template {
@@ -426,7 +426,7 @@ pub fn generate(
                 template = a[0].clone();
             }
             _ => {
-                return Err(Error::Processing(String::from(
+                return Err(ProgramError::Processing(String::from(
                     "Starting path must be an object or array.",
                 )))
             }
@@ -444,36 +444,36 @@ pub fn generate(
                 .file
                 .read_to_string(&mut contents)
                 .map_err(|json_err| {
-                    Error::Processing(format!("Invalid variable toml: {}", json_err))
+                    ProgramError::Processing(format!("Invalid variable toml: {json_err}"))
                 })?;
             serde_json::to_value(
                 toml::from_str::<toml::Value>(&contents).map_err(|toml_err| {
-                    Error::Processing(format!("Invalid variable toml: {}", toml_err))
+                    ProgramError::Processing(format!("Invalid variable toml: {toml_err}"))
                 })?,
             )
         }
-        .map_err(|json_err| Error::Processing(format!("Invalid variable toml: {}", json_err)))?;
+        .map_err(|json_err| {
+            ProgramError::Processing(format!("Invalid variable toml: {json_err}"))
+        })?;
 
         // Step 2-5: Generate the variable matches
-        let matches = gen(template.clone(), vars)?;
+        let matches = steps::gen(template.clone(), &vars)?;
 
-        if !make_new_files_per_variable {
-            if is_array {
-                data.as_array_mut().unwrap().push(matches);
-            } else {
-                data[i] = matches;
-            }
-        } else {
+        if make_new_files_per_variable {
             // Step 6: Write the new theme file
-            write_to_file(&matches, !flags.replace_name)?;
+            write_to_file(&matches, !flags.replace_name, &flags)?;
+        } else if is_array {
+            data.as_array_mut().unwrap().push(matches);
+        } else {
+            data[i] = matches;
         }
     }
 
     // Step 6: Write the new theme file
     if !make_new_files_per_variable {
-        let mut full = base.clone();
+        let mut full = base;
         flags.path.clone().unwrap().pave(&mut full, data.clone())?;
-        write_to_file(&full, false)?;
+        write_to_file(&full, false, &flags)?;
     }
 
     println!("Generated {} files", variables.len());

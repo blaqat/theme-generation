@@ -34,7 +34,7 @@ macro_rules! error {
 #[macro_export]
 macro_rules! ahh {
     ( $($args:expr),+) => {
-        Err(Error::Processing(format!($($args),+)))
+        Err(ProgramError::Processing(format!($($args),+)))
     };
 }
 
