@@ -7,8 +7,7 @@
 			"name": "$name",
 			"appearance": "$theme",
 			"style": {
-				"background.appearance": "$window",
-		   	"accents": "$indent.multi",
+		      	"accents": "$indent.multi",
 				"border": "$border.primary",
 				"border.variant": "$border.secondary",
 				"border.focused": "$border.selected|$border.primary",
@@ -57,7 +56,7 @@
 				"scrollbar.track.background": "$background.bars.scrollbar",
 				"scrollbar.track.border": "$border.scrollbar",
 				"editor.foreground": "$foreground.primary",
-				"editor.background": "$background.editor|$background.primary",
+				"editor.background": "$background.primary",
 				"editor.gutter.background": "$background.gutter|$background.primary",
 				"editor.subheader.background": "$background.secondary",
 				"editor.indent_guide": "$indent.inactive|$indent..50",
@@ -126,7 +125,7 @@
 				"modified": "$git.modified.foreground|$scheme.yellow",
 				"modified.background": "$scheme.yellow2",
 				"modified.border": "$scheme.yellow3|$scheme.yellow2",
-				"predictive": "$background.code",
+				"predictive": "$foreground.code",
 				"predictive.border": "$border.code",
 				"renamed": "$scheme.pink",
 				"renamed.background": "$scheme.pink2",
@@ -261,10 +260,10 @@
 						"background_color": "$syntax.special.background|$syntax.function.background"
 					},
 					"function.builtin": {
-						"color": "$syntax.builtin.color|$syntax.function.color",
-						"font_style": "$syntax.builtin.style|$syntax.function.style",
-						"font_weight": "$syntax.builtin.weight|$syntax.function.weight",
-						"background_color": "$syntax.builtin.background|$syntax.function.background"
+						"color": "$syntax.function.builtin.color|$syntax.function.color",
+						"font_style": "$syntax.function.builtin.style|$syntax.function.style",
+						"font_weight": "$syntax.function.builtin.weight|$syntax.function.weight",
+						"background_color": "$syntax.function.builtin.background|$syntax.function.background"
 					},
 					"hint": {
 						"color": "$syntax.hint.color|$foreground.hint",
@@ -355,6 +354,12 @@
 						"font_style": "$syntax.punctuation.bracket.style|$syntax.punctuation.style",
 						"font_weight": "$syntax.punctuation.bracket.weight|$syntax.punctuation.weight",
 						"background_color": "$syntax.punctuation.bracket.background|$syntax.punctuation.background"
+					},
+          "punctuation.bracket.tag":
+          {
+						"color": "$syntax.punctuation.arrow.color|$syntax.punctuation.bracket.color|$syntax.punctuation.color",
+						"font_style": "$syntax.punctuation.arrow.style|$syntax.punctuation.bracket.style|$syntax.punctuation.style",
+						"font_weight": "$syntax.punctuation.arrow.weight|$syntax.punctuation.bracket.weight|$syntax.punctuation.weight"
 					},
 					"punctuation.delimiter": {
 						"color": "$syntax.punctuation.delimiter.color|$syntax.punctuation.color",
@@ -463,6 +468,13 @@
 						"font_style": "$syntax.variable.style",
 						"font_weight": "$syntax.variable.weight",
 						"background_color": "$syntax.variable.background"
+					},
+          "variable.builtin":
+          {
+						"color": "$syntax.builtin.color|$syntax.variable.color",
+						"font_style": "$syntax.builtin.style|$syntax.variable.style",
+						"font_weight": "$syntax.builtin.weight|$syntax.variable.weight",
+						"background_color": "$syntax.builtin.background|$syntax.variable.background"
 					},
 					"variable.member": {
 						"color": "$syntax.variable.color",
