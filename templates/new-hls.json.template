@@ -1,0 +1,524 @@
+{
+	"$schema": "https://zed.dev/schema/themes/v0.1.0.json",
+	"author": "blaqat",
+	"name": "$name",
+	"themes": [
+		{
+			"appearance": "$theme",
+			"name": "$name",
+			"style": {
+				"accents": "$editor.guides.indent.colors|$editor.guides.indents",
+				"background": "$ui.bg",
+				"background.appearance": "$ui.appearance",
+				"border": "$ui.border.primary",
+				"border.variant": "$ui.border.secondary|$ui.border.primary",
+				"conflict": "$file.conflict.fg|$scheme.red_br",
+				"conflict.background": "$file.conflict.bg|$ui.bg",
+				"conflict.border": "$file.conflict.border|$scheme.red_br",
+				"created": "$file.created.fg|$scheme.green",
+				"created.background": "$file.created.bg|$ui.bg",
+				"created.border": "$file.created.border|$scheme.green",
+				"deleted": "$file.deleted.fg|$scheme.red",
+				"deleted.background": "$file.deleted.bg|$ui.bg",
+				"deleted.border": "$file.deleted.border|$scheme.red",
+				"drop_target.background": "$ui.file_drop|$ui.bg..(value+10, alpha=80)",
+				"editor.active_line.background": "$editor.active.line|$ui.bg..(value+10, alpha=80)",
+				"editor.active_line_number": "$editor.active.number|$editor.number|$ui.text.active..50",
+				"editor.active_wrap_guide": "$editor.guides.wrap",
+				"editor.background": "$editor.bg|$ui.bg",
+				"editor.document_highlight.read_background": "$editor.active.matches",
+				"editor.document_highlight.write_background": "$editor.search.captures|$editor.search.text|$editor.search",
+				"editor.foreground": "$editor.text|$ui.text.active",
+				"editor.gutter.background": "$editor.gutter|$editor.bg|$ui.bg",
+				"editor.highlighted_line.background": "$editor.search.line|$editor.active.line|$editor.search.text|$editor.search",
+				"editor.indent_guide": "$editor.guides.indent.inactive|$editor.guides.indent.active|$editor.guides.indent",
+				"editor.indent_guide_active": "$editor.guides.indent.active|$editor.guides.indent.inactive|$editor.guides.indent",
+				"editor.invisible": "$editor.invisible|$editor.active.highlight|$player.highlight",
+				"editor.line_number": "$editor.number|$ui.text.active..50",
+				"editor.subheader.background": "$ui.header.primary|$ui.header|$ui.panel|$ui.bg",
+				"editor.wrap_guide": "$editor.guides.wrap",
+				"element.active": "$ui.button.pressed|$ui.button.primary..v+5",
+				"element.background": "$ui.button.primary|$ui.bg",
+				"element.disabled": "$ui.button.disabled|$ui.button.primary|$ui.bg",
+				"element.hover": "$ui.header.hover|$ui.header.primary..v+5|$ui.header..v+5|$ui.button.primary..v-5",
+				"element.selected": "$button.active|$ui.button.primary..v+5",
+				"elevated_surface.background": "$ui.popup|$ui.bg",
+				"error": "$code.error.fg|$scheme.red",
+				"error.background": "$code.error.bg|$ui.code_popup|$ui.popup|$scheme.red",
+				"error.border": "$code.error.border|$scheme.red|$ui.border.secondary",
+				"ghost_element.active": "$ui.element.pressed|$ui.bg..v+5",
+				"ghost_element.background": "$ui.element.bg",
+				"ghost_element.disabled": "$ui.element.disabled",
+				"ghost_element.hover": "$ui.element.hover|$ui.bg..v-5",
+				"ghost_element.selected": "$ui.element.active|$ui.bg..v+5",
+				"hidden": "$file.hidden.fg|$ui.text.muted",
+				"hidden.background": "$file.hidden.bg|$ui.bg",
+				"hidden.border": "$file.hidden.border|$ui.border.primary",
+				"hint": "$code.hint.fg|$editor.hint|$editor.text..(v-20,a=80)",
+				"hint.background": "$code.hint.bg|$code.info.bg|$ui.code_popup|$ui.popup|$ui.bg",
+				"hint.border": "$code.hint.border|$code.info.border|$ui.border.secondary",
+				"ignored": "$file.ignored.fg|$ui.text.muted",
+				"ignored.background": "$file.ignored.bg|$ui.bg",
+				"ignored.border": "$file.ignored.border|$ui.border.primary",
+				"info": "$code.info.fg|$scheme.blue",
+				"info.background": "$code.info.bg|$ui.code_popup|$ui.popup|$scheme.blue",
+				"info.border": "$code.info.border|$scheme.blue|$ui.border.secondary",
+				"link_text.hover": "$ui.link|$scheme.blue",
+				"modified": "$file.modified.fg|$scheme.yellow",
+				"modified.background": "$file.modified.bg|$ui.bg",
+				"modified.border": "$file.modified.border|$scheme.yellow",
+				"pane.focused_border": "$ui.border.primary",
+				"panel.background": "$ui.panel|$ui.bg",
+				"panel.focused_border": "$ui.border.primary",
+				"players": [
+					{
+						"background": "$player.z|$player.cursor..FF",
+						"cursor": "$player.cursor",
+						"selection": "$player.highlight"
+					}
+				],
+				"predictive": "$editor.auto_complete|$editor.hint|$editor.text..(v-20,a=80)",
+				"renamed": "$file.renamed.fg|$scheme.purple",
+				"renamed.background": "$file.renamed.bg|$ui.bg",
+				"renamed.border": "$file.renamed.border|$scheme.purple",
+				"scrollbar.thumb.background": "$ui.scrollbar.thumb|$ui.scrollbar.track|$ui.bg..(v+10)",
+				"scrollbar.thumb.border": "$ui.scrollbar.highlight|$ui.scrollbar.thumb",
+				"scrollbar.track.background": "$ui.scrollbar.track",
+				"scrollbar.track.border": "$ui.scrollbar.border|$ui.border.primary",
+				"search.match_background": "$editor.search.text|$editor.search",
+				"status_bar.background": "$ui.bars.bottom|$ui.bg",
+				"success": "$code.success.fg|$scheme.green",
+				"success.background": "$code.success.bg|$ui.code_popup|$ui.popup|$scheme.green",
+				"success.border": "$code.success.border|$scheme.green|$ui.border.secondary",
+				"tab.active_background": "$ui.bars.tab.active|$ui.bars.tab.bg|$ui.bg",
+				"tab.inactive_background": "$ui.bars.tab.inactive|$ui.bars.tab.bg|$ui.bg",
+				"tab_bar.background": "$ui.bars.tab.bg|$ui.bg",
+				"terminal.ansi.black": "$scheme.black|$terminal.black",
+				"terminal.ansi.blue": "$scheme.blue|$terminal.blue",
+				"terminal.ansi.bright_black": "$scheme.black_br|$terminal.bright_black|$scheme.black..(v+15)",
+				"terminal.ansi.bright_blue": "$scheme.blue_br|$terminal.bright_blue|$scheme.blue..(v+15)",
+				"terminal.ansi.bright_cyan": "$scheme.cyan_br|$terminal.bright_cyan|$scheme.cyan..(v+15)",
+				"terminal.ansi.bright_green": "$scheme.green_br|$terminal.bright_green|$scheme.green..(v+15)",
+				"terminal.ansi.bright_magenta": "$scheme.pink_br|$terminal.bright_magenta|$scheme.pink..(v+15)",
+				"terminal.ansi.bright_red": "$scheme.red_br|$terminal.bright_red|$scheme.red..(v+15)",
+				"terminal.ansi.bright_white": "$scheme.white_br|$terminal.bright_white|$scheme.white..(v+15)",
+				"terminal.ansi.bright_yellow": "$scheme.yellow_br|$terminal.bright_yellow|$scheme.yellow..(v+15)",
+				"terminal.ansi.cyan": "$scheme.cyan|$terminal.cyan",
+				"terminal.ansi.dim_black": "$scheme.black_dim|$terminal.dim_black|$scheme.black..(v-15)",
+				"terminal.ansi.dim_blue": "$scheme.blue_dim|$terminal.dim_blue|$scheme.blue..(v-15)",
+				"terminal.ansi.dim_cyan": "$scheme.cyan_dim|$terminal.dim_cyan|$scheme.cyan..(v-15)",
+				"terminal.ansi.dim_green": "$scheme.green_dim|$terminal.dim_green|$scheme.green..(v-15)",
+				"terminal.ansi.dim_magenta": "$scheme.pink_dim|$terminal.dim_magenta|$scheme.pink..(v-15)",
+				"terminal.ansi.dim_red": "$scheme.red_dim|$terminal.dim_red|$scheme.red..(v-15)",
+				"terminal.ansi.dim_white": "$scheme.white_dim|$terminal.dim_white|$scheme.white..(v-15)",
+				"terminal.ansi.dim_yellow": "$scheme.yellow_dim|$terminal.dim_yellow|$scheme.yellow..(v-15)",
+				"terminal.ansi.green": "$scheme.green|$terminal.green",
+				"terminal.ansi.magenta": "$scheme.pink|$terminal.magenta",
+				"terminal.ansi.red": "$scheme.red|$terminal.red",
+				"terminal.ansi.white": "$scheme.white|$terminal.white",
+				"terminal.ansi.yellow": "$scheme.yellow|$terminal.yellow",
+				"terminal.background": "$ui.terminal|$terminal.bg|$ui.bg",
+				"text": "$ui.text.active",
+				"text.accent": "$ui.text.accent|@primary",
+				"text.disabled": "$ui.text.muted",
+				"text.muted": "$ui.text.inactive",
+				"text.placeholder": "$ui.text.placeholder|$ui.text.muted",
+				"title_bar.background": "$ui.bars.top|$ui.bars.title.active|$ui.bg",
+				"title_bar.inactive_background": "$ui.bars.title.inactive|$ui.bars.top|$ui.bg",
+				"toolbar.background": "$ui.bars.tool|$ui.bg",
+				"unreachable": "$code.unreachable.fg|$scheme.red_dim",
+				"unreachable.background": "$code.unreachable.bg|$ui.code_popup|$ui.popup|$scheme.red_dim",
+				"unreachable.border": "$code.unreachable.border|$scheme.red_dim|$ui.border.secondary",
+				"warning": "$code.warning.fg|$scheme.yellow",
+				"warning.background": "$code.warning.bg|$ui.code_popup|$ui.popup|$scheme.yellow",
+				"warning.border": "$code.warning.border|$scheme.yellow|$ui.border.secondary",
+				"syntax": {
+					"attribute": {
+						"color": "$syntax.z.html_attribute.fg",
+						"font_style": "$syntax.z.html_attribute.style",
+						"font_weight": "$syntax.z.html_attribute.weight",
+						"background_color": "$syntax.z.html_attribute.bg"
+					},
+					"boolean": {
+						"color": "$syntax.boolean.fg",
+						"font_style": "$syntax.boolean.style",
+						"font_weight": "$syntax.boolean.weight",
+						"background_color": "$syntax.boolean.bg"
+					},
+					"comment": {
+						"color": "$syntax.comment.fg",
+						"font_style": "$syntax.comment.style",
+						"font_weight": "$syntax.comment.weight",
+						"background_color": "$syntax.comment.bg"
+					},
+					"comment.doc": {
+						"color": "$syntax.comment.doc.fg|$syntax.doc.fg|$syntax.comment.fg",
+						"font_style": "$syntax.comment.doc.style|$syntax.doc.style|$syntax.comment.style",
+						"font_weight": "$syntax.comment.doc.weight|$syntax.doc.weight|$syntax.comment.weight",
+						"background_color": "$syntax.comment.doc.bg|$syntax.doc.bg|$syntax.comment.bg"
+					},
+					"constant": {
+						"color": "$syntax.constant.fg",
+						"font_style": "$syntax.constant.style",
+						"font_weight": "$syntax.constant.weight",
+						"background_color": "$syntax.constant.bg"
+					},
+					"constant.builtin": {
+						"color": "$syntax.constant.builtin.color|$syntax.builtin.color|$syntax.constant.fg",
+						"font_style": "$syntax.constant.builtin.style|$syntax.builtin.style|$syntax.constant.style",
+						"font_weight": "$syntax.constant.builtin.weight|$syntax.builtin.weight|$syntax.constant.weight",
+						"background_color": "$syntax.constant.builtin.bg|$syntax.builtin.bg|$syntax.constant.bg"
+					},
+					"constant.character": {
+						"color": "$syntax.constant.fg",
+						"font_style": "$syntax.constant.style",
+						"font_weight": "$syntax.constant.weight",
+						"background_color": "$syntax.constant.bg"
+					},
+					"constructor": {
+						"color": "$syntax.punc.bracket.color|$syntax.punc.fg",
+						"font_style": "$syntax.punc.bracket.style|$syntax.punc.style",
+						"font_weight": "$syntax.punc.bracket.weight|$syntax.punc.weight",
+						"background_color": "$syntax.punc.bracket.bg|$syntax.punct.bg"
+					},
+					"enum": {
+						"color": "$syntax.enum.color",
+						"font_style": "$syntax.enum.style",
+						"font_weight": "$syntax.enum.weight",
+						"background_color": "$syntax.enum.bg"
+					},
+					"function": {
+						"color": "$syntax.func.fg",
+						"font_style": "$syntax.func.style",
+						"font_weight": "$syntax.func.weight",
+						"background_color": "$syntax.func.bg"
+					},
+					"function.method": {
+						"color": "$syntax.func.method.color|$syntax.func.fg",
+						"font_style": "$syntax.func.method.style|$syntax.func.style",
+						"font_weight": "$syntax.func.method.weight|$syntax.func.weight",
+						"background_color": "$syntax.func.method.bg|$syntax.func.bg"
+					},
+					"function.definition": {
+						"color": "$syntax.func.def.color|$syntax.function.fg",
+						"font_style": "$syntax.func.def.style|$syntax.function.style",
+						"font_weight": "$syntax.func.def.weight|$syntax.function.weight",
+						"background_color": "$syntax.func.def.bg|$syntax.function.bg"
+					},
+					"function.declaration": {
+						"color": "$syntax.func.decl.color|$syntax.function.fg",
+						"font_style": "$syntax.func.decl.style|$syntax.function.style",
+						"font_weight": "$syntax.func.decl.weight|$syntax.function.weight",
+						"background_color": "$syntax.func.decl.bg|$syntax.function.bg"
+					},
+					"function.special": {
+						"color": "$syntax.func.fg",
+						"font_style": "$syntax.func.style",
+						"font_weight": "$syntax.func.weight",
+						"background_color": "$syntax.func.bg"
+					},
+					"function.special.definition": {
+						"color": "$syntax.func.def.color|$syntax.function.fg",
+						"font_style": "$syntax.func.def.style|$syntax.function.style",
+						"font_weight": "$syntax.func.def.weight|$syntax.function.weight",
+						"background_color": "$syntax.func.def.bg|$syntax.function.bg"
+					},
+					"function.builtin": {
+						"color": "$syntax.func.builtin.color|$syntax.builtin.color|$syntax.function.fg",
+						"font_style": "$syntax.func.builtin.style|$syntax.builtin.style|$syntax.function.style",
+						"font_weight": "$syntax.func.builtin.weight|$syntax.builtin.weight|$syntax.function.weight",
+						"background_color": "$syntax.func.builtin.bg|$syntax.builtin.bg|$syntax.function.bg"
+					},
+					"keyword": {
+						"color": "$syntax.keyword.fg",
+						"font_style": "$syntax.keyword.style",
+						"font_weight": "$syntax.keyword.weight",
+						"background_color": "$syntax.keyword.bg"
+					},
+					"keyword.coroutine": {
+						"color": "$syntax.keyword.coroutine.fg|$syntax.keyword.fg",
+						"font_style": "$syntax.keyword.coroutine.style|$syntax.keyword.style",
+						"font_weight": "$syntax.keyword.coroutine.weight|$syntax.keyword.weight",
+						"background_color": "$syntax.keyword.coroutine.bg|$syntax.keyword.bg"
+					},
+					"keyword.function": {
+						"color": "$syntax.keyword.function.fg|$syntax.keyword.fg",
+						"font_style": "$syntax.keyword.function.style|$syntax.keyword.style",
+						"font_weight": "$syntax.keyword.function.weight|$syntax.keyword.weight",
+						"background_color": "$syntax.keyword.function.bg|$syntax.keyword.bg"
+					},
+					"keyword.operator": {
+						"color": "$syntax.keyword.operator.fg|$syntax.keyword.fg",
+						"font_style": "$syntax.keyword.operator.style|$syntax.keyword.style",
+						"font_weight": "$syntax.keyword.operator.weight|$syntax.keyword.weight",
+						"background_color": "$syntax.keyword.operator.bg|$syntax.keyword.bg"
+					},
+					"keyword.import": {
+						"color": "$syntax.keyword.import.fg|$syntax.keyword.fg",
+						"font_style": "$syntax.keyword.import.style|$syntax.keyword.style",
+						"font_weight": "$syntax.keyword.import.weight|$syntax.keyword.weight",
+						"background_color": "$syntax.keyword.import.bg|$syntax.keyword.bg"
+					},
+					"keyword.type": {
+						"color": "$syntax.keyword.type.fg|$syntax.keyword.fg",
+						"font_style": "$syntax.keyword.type.style|$syntax.keyword.style",
+						"font_weight": "$syntax.keyword.type.weight|$syntax.keyword.weight",
+						"background_color": "$syntax.keyword.type.bg|$syntax.keyword.bg"
+					},
+					"keyword.repeat": {
+						"color": "$syntax.keyword.repeat.fg|$syntax.keyword.fg",
+						"font_style": "$syntax.keyword.repeat.style|$syntax.keyword.style",
+						"font_weight": "$syntax.keyword.repeat.weight|$syntax.keyword.weight",
+						"background_color": "$syntax.keyword.repeat.bg|$syntax.keyword.bg"
+					},
+					"keyword.return": {
+						"color": "$syntax.keyword.return.fg|$syntax.keyword.fg",
+						"font_style": "$syntax.keyword.return.style|$syntax.keyword.style",
+						"font_weight": "$syntax.keyword.return.weight|$syntax.keyword.weight",
+						"background_color": "$syntax.keyword.return.bg|$syntax.keyword.bg"
+					},
+					"keyword.debug": {
+						"color": "$syntax.keyword.debug.fg|$syntax.keyword.fg",
+						"font_style": "$syntax.keyword.debug.style|$syntax.keyword.style",
+						"font_weight": "$syntax.keyword.debug.weight|$syntax.keyword.weight",
+						"background_color": "$syntax.keyword.debug.bg|$syntax.keyword.bg"
+					},
+					"keyword.exception": {
+						"color": "$syntax.keyword.exception.fg|$syntax.keyword.fg",
+						"font_style": "$syntax.keyword.exception.style|$syntax.keyword.style",
+						"font_weight": "$syntax.keyword.exception.weight|$syntax.keyword.weight",
+						"background_color": "$syntax.keyword.exception.bg|$syntax.keyword.bg"
+					},
+					"keyword.conditional": {
+						"color": "$syntax.keyword.conditional.fg|$syntax.keyword.fg",
+						"font_style": "$syntax.keyword.conditional.style|$syntax.keyword.style",
+						"font_weight": "$syntax.keyword.conditional.weight|$syntax.keyword.weight",
+						"background_color": "$syntax.keyword.conditional.bg|$syntax.keyword.bg"
+					},
+					"keyword.conditional.ternary": {
+						"color": "$syntax.keyword.conditional.ternary.fg|$syntax.keyword.conditional.fg|$syntax.keyword.fg",
+						"font_style": "$syntax.keyword.conditional.ternary.style|$syntax.keyword.conditional.style|$syntax.keyword.style",
+						"font_weight": "$syntax.keyword.conditional.ternary.weight|$syntax.keyword.conditional.weight|$syntax.keyword.weight",
+						"background_color": "$syntax.keyword.conditional.ternary.bg|$syntax.keyword.conditional.bg|$syntax.keyword.bg"
+					},
+					"keyword.directive": {
+						"color": "$syntax.keyword.directive.fg|$syntax.keyword.fg",
+						"font_style": "$syntax.keyword.directive.style|$syntax.keyword.style",
+						"font_weight": "$syntax.keyword.directive.weight|$syntax.keyword.weight",
+						"background_color": "$syntax.keyword.directive.bg|$syntax.keyword.bg"
+					},
+					"keyword.directive.define": {
+						"color": "$syntax.keyword.directive.define.fg|$syntax.keyword.directive.fg|$syntax.keyword.fg",
+						"font_style": "$syntax.keyword.directive.define.style|$syntax.keyword.directive.style|$syntax.keyword.style",
+						"font_weight": "$syntax.keyword.directive.define.weight|$syntax.keyword.directive.weight|$syntax.keyword.weight",
+						"background_color": "$syntax.keyword.directive.define.bg|$syntax.keyword.directive.bg|$syntax.keyword.bg"
+					},
+					"lifetime": {
+						"color": "$syntax.z.rs_lifetime.color",
+						"font_style": "$syntax.z.rs_lifetime.style",
+						"font_weight": "$syntax.z.rs_lifetime.weight",
+						"background_color": "$syntax.z.rs_lifetime.bg"
+					},
+					"link_text": {
+						"color": "$foreground.link"
+					},
+					"link_uri": {
+						"color": "$foreground.link"
+					},
+					"number": {
+						"color": "$syntax.number.fg",
+						"font_style": "$syntax.number.style",
+						"font_weight": "$syntax.number.weight",
+						"background_color": "$syntax.number.bg"
+					},
+					"operator": {
+						"color": "$syntax.op.fg",
+						"font_style": "$syntax.op.style",
+						"font_weight": "$syntax.op.weight",
+						"background_color": "$syntax.op.bg"
+					},
+					"operator.logical": {
+						"color": "$syntax.op.logical.color|$syntax.op.fg",
+						"font_style": "$syntax.op.logical.style|$syntax.op.style",
+						"font_weight": "$syntax.op.logical.weight|$syntax.op.weight",
+						"background_color": "$syntax.op.logical.bg|$syntax.op.bg"
+					},
+					"operator.bitwise": {
+						"color": "$syntax.op.bitwise.color|$syntax.op.fg",
+						"font_style": "$syntax.op.bitwise.style|$syntax.op.style",
+						"font_weight": "$syntax.op.bitwise.weight|$syntax.op.weight",
+						"background_color": "$syntax.op.bitwise.bg|$syntax.op.bg"
+					},
+					"operator.assignment": {
+						"color": "$syntax.op.setter.color|$syntax.op.fg",
+						"font_style": "$syntax.op.setter.style|$syntax.op.style",
+						"font_weight": "$syntax.op.setter.weight|$syntax.op.weight",
+						"background_color": "$syntax.op.setter.bg|$syntax.op.bg"
+					},
+					"operator.arithmetic": {
+						"color": "$syntax.op.math.color|$syntax.op.fg",
+						"font_style": "$syntax.op.math.style|$syntax.op.style",
+						"font_weight": "$syntax.op.math.weight|$syntax.op.weight",
+						"background_color": "$syntax.op.math.bg|$syntax.op.bg"
+					},
+					"operator.comparison": {
+						"color": "$syntax.op.compare.color|$syntax.op.fg",
+						"font_style": "$syntax.op.compare.style|$syntax.op.style",
+						"font_weight": "$syntax.op.compare.weight|$syntax.op.weight",
+						"background_color": "$syntax.op.compare.bg|$syntax.op.bg"
+					},
+					"property": {
+						"color": "$syntax.property.fg",
+						"font_style": "$syntax.property.style",
+						"font_weight": "$syntax.property.weight",
+						"background_color": "$syntax.property.bg"
+					},
+					"property.json_key": {
+						"color": "$syntax.z.json_key.color|$syntax.property.fg",
+						"font_style": "$syntax.z.json_key.style|$syntax.property.style",
+						"font_weight": "$syntax.z.json_key.weight|$syntax.property.weight",
+						"background_color": "$syntax.z.json_key.bg|$syntax.property.bg"
+					},
+					"punctuation": {
+						"color": "$syntax.punc.fg",
+						"font_style": "$syntax.punc.style",
+						"font_weight": "$syntax.punc.weight",
+						"background_color": "$syntax.punc.bg"
+					},
+					"punctuation.bracket": {
+						"color": "$syntax.punc.bracket.color|$syntax.punc.fg",
+						"font_style": "$syntax.punc.bracket.style|$syntax.punc.style",
+						"font_weight": "$syntax.punc.bracket.weight|$syntax.punc.weight",
+						"background_color": "$syntax.punc.bracket.bg|$syntax.punc.bg"
+					},
+					"punctuation.bracket.tag": {
+						"color": "$syntax.punc.tag.color|$syntax.punc.bracket.color|$syntax.punc.fg",
+						"font_style": "$syntax.punc.tag.style|$syntax.punc.bracket.style|$syntax.punc.style",
+						"font_weight": "$syntax.punc.tag.weight|$syntax.punc.bracket.weight|$syntax.punc.weight",
+						"background_color": "$syntax.punc.tag.bg|$syntax.punc.bracket.bg|$syntax.punc.bg"
+					},
+					"punctuation.delimiter": {
+						"color": "$syntax.punc.delimiter.color|$syntax.punc.fg",
+						"font_style": "$syntax.punc.delimiter.style|$syntax.punc.style",
+						"font_weight": "$syntax.punc.delimiter.weight|$syntax.punc.weight",
+						"background_color": "$syntax.punc.delimiter.bg|$syntax.punc.bg"
+					},
+					"punctuation.list_marker": {
+						"color": "$syntax.punc.delimiter.color|$syntax.punc.fg",
+						"font_style": "$syntax.punc.delimiter.style|$syntax.punc.style",
+						"font_weight": "$syntax.punc.delimiter.weight|$syntax.punc.weight",
+						"background_color": "$syntax.punc.delimiter.bg|$syntax.punc.bg"
+					},
+					"punctuation.special": {
+						"color": "$syntax.string.inter.color|$syntax.punc.fg",
+						"font_style": "$syntax.string.inter.style|$syntax.punc.style",
+						"font_weight": "$syntax.string.inter.weight|$syntax.punc.weight",
+						"background_color": "$syntax.string.inter.bg|$syntax.punc.bg"
+					},
+					"punctuation.special.symbol": {
+						"color": "$syntax.punc.symbol.color|$syntax.punc.fg",
+						"font_style": "$syntax.punc.symbol.style|$syntax.punc.style",
+						"font_weight": "$syntax.punc.symbol.weight|$syntax.punc.weight",
+						"background_color": "$syntax.punc.symbol.bg|$syntax.punc.bg"
+					},
+					"string": {
+						"color": "$syntax.string.fg",
+						"font_style": "$syntax.string.style",
+						"font_weight": "$syntax.string.weight",
+						"background_color": "$syntax.string.bg"
+					},
+					"string.doc": {
+						"color": "$syntax.comment.doc.fg|$syntax.doc.fg|$syntax.comment.fg",
+						"font_style": "$syntax.comment.doc.style|$syntax.doc.style|$syntax.comment.style",
+						"font_weight": "$syntax.comment.doc.weight|$syntax.doc.weight|$syntax.comment.weight",
+						"background_color": "$syntax.comment.doc.bg|$syntax.doc.bg|$syntax.comment.bg"
+					},
+					"string.escape": {
+						"color": "$syntax.string.escape.color|$syntax.string.fg",
+						"font_style": "$syntax.string.escape.style|$syntax.string.style",
+						"font_weight": "$syntax.string.escape.weight|$syntax.string.weight",
+						"background_color": "$syntax.string.escape.bg|$syntax.string.bg"
+					},
+					"string.regex": {
+						"color": "$syntax.string.regex.color|$syntax.string.fg",
+						"font_style": "$syntax.string.regex.style|$syntax.string.style",
+						"font_weight": "$syntax.string.regex.weight|$syntax.string.weight",
+						"background_color": "$syntax.string.regex.bg|$syntax.string.bg"
+					},
+					"string.special": {
+						"color": "$syntax.string.special.color|$syntax.string.fg",
+						"font_style": "$syntax.string.special.style|$syntax.string.style",
+						"font_weight": "$syntax.string.special.weight|$syntax.string.weight",
+						"background_color": "$syntax.string.special.bg|$syntax.string.bg"
+					},
+					"string.special.symbol": {
+						"color": "$syntax.string.special.color|$syntax.string.fg",
+						"font_style": "$syntax.string.special.style|$syntax.string.style",
+						"font_weight": "$syntax.string.special.weight|$syntax.string.weight",
+						"background_color": "$syntax.string.special.bg|$syntax.string.bg"
+					},
+					"tag": {
+						"color": "$syntax.z.html_tag.fg",
+						"font_style": "$syntax.z.html_tag.style",
+						"font_weight": "$syntax.z.html_tag.weight",
+						"background_color": "$syntax.z.html_tag.bg"
+					},
+					"type": {
+						"color": "$syntax.type.fg",
+						"font_style": "$syntax.type.style",
+						"font_weight": "$syntax.type.weight",
+						"background_color": "$syntax.type.bg"
+					},
+					"type.builtin": {
+						"color": "$syntax.type.builtin.color|$syntax.builtin.color|$syntax.type.fg",
+						"font_style": "$syntax.type.builtin.style|$syntax.builtin.style|$syntax.type.style",
+						"font_weight": "$syntax.type.builtin.weight|$syntax.builtin.weight|$syntax.type.weight",
+						"background_color": "$syntax.type.builtin.bg|$syntax.builtin.bg|$syntax.type.bg"
+					},
+					"type.builtin.primitive": {
+						"color": "$syntax.type.primitive.color|$syntax.type.builtin.color|$syntax.builtin.color|$syntax.type.fg",
+						"font_style": "$syntax.type.primitive.style|$syntax.type.builtin.style|$syntax.builtin.style|$syntax.type.style",
+						"font_weight": "$syntax.type.primitive.weight|$syntax.type.builtin.weight|$syntax.builtin.weight|$syntax.type.weight",
+						"background_color": "$syntax.type.primitive.bg|$syntax.type.builtin.bg|$syntax.builtin.bg|$syntax.type.bg"
+					},
+					"type.super": {
+						"color": "$syntax.var.builtin.color|$syntax.type.fg",
+						"font_style": "$syntax.var.builtin.style|$syntax.type.style",
+						"font_weight": "$syntax.var.builtin.weight|$syntax.type.weight",
+						"background_color": "$syntax.var.builtin.bg|$syntax.type.bg"
+					},
+					"variable": {
+						"color": "$syntax.var.fg",
+						"font_style": "$syntax.var.style",
+						"font_weight": "$syntax.var.weight",
+						"background_color": "$syntax.var.bg"
+					},
+					"variable.builtin": {
+						"color": "$syntax.var.builtin.color|$syntax.builtin.color|$syntax.var.fg",
+						"font_style": "$syntax.var.builtin.style|$syntax.builtin.style|$syntax.var.style",
+						"font_weight": "$syntax.var.builtin.weight|$syntax.builtin.weight|$syntax.var.weight",
+						"background_color": "$syntax.var.builtin.bg|$syntax.builtin.bg|$syntax.var.bg"
+					},
+					"variable.member": {
+						"color": "$syntax.property.color|$syntax.var.fg",
+						"font_style": "$syntax.property.style|$syntax.var.style",
+						"font_weight": "$syntax.property.weight|$syntax.var.weight",
+						"background_color": "$syntax.property.bg|$syntax.var.bg"
+					},
+					"variable.parameter": {
+						"color": "$syntax.param.color|$syntax.var.fg",
+						"font_style": "$syntax.param.style|$syntax.var.style",
+						"font_weight": "$syntax.param.weight|$syntax.var.weight",
+						"background_color": "$syntax.param.bg|$syntax.var.bg"
+					},
+					"variable.special": {
+						"color": "$syntax.namespace.color|$syntax.var.builtin.color|$syntax.builtin.color|$syntax.var.fg",
+						"font_style": "$syntax.namespace.style|$syntax.var.builtin.style|$syntax.builtin.style|$syntax.var.style",
+						"font_weight": "$syntax.namespace.weight|$syntax.var.builtin.weight|$syntax.builtin.weight|$syntax.var.weight",
+						"background_color": "$syntax.namespace.bg|$syntax.var.builtin.bg|$syntax.builtin.bg|$syntax.var.bg"
+					}
+				}
+			}
+		}
+	]
+}
