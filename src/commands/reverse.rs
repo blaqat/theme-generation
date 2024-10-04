@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use commands::check::{parse_special_array, SpecialKey};
 use itertools::Itertools;
 use steps::{generate_toml_string, key_diff, replace_color, resolve_variables, to_color_map};
 
@@ -332,8 +333,53 @@ mod steps {
             }
 
             (Value::Array(vec1), Value::Array(vec2)) => {
+                let (is_vec1_spec, match_all1, spec_keys_1) = parse_special_array(vec1);
+                let (is_vec2_spec, match_all2, spec_keys_2) = parse_special_array(vec2);
+                let is_special = is_vec1_spec || is_vec2_spec;
+                let match_all = match_all1 || match_all2;
+                let special_keys: Vec<SpecialKey> =
+                    spec_keys_1.into_iter().chain(spec_keys_2).collect();
+
+                let vec1 = if is_vec1_spec {
+                    dbg!(match_all);
+                    &vec1[1..].to_vec()
+                } else {
+                    vec1
+                };
+
+                let vec2 = if is_vec2_spec {
+                    dbg!(match_all);
+                    &vec2[1..].to_vec()
+                } else {
+                    vec2
+                };
+
                 for (key, val) in vec1.iter().enumerate() {
-                    match vec2.get(key) {
+                    let val2 = if is_special {
+                        if !val.is_object() {
+                            info.missing.push(format!("{prefix}/{key}"));
+                            continue;
+                        }
+                        let found = vec2.iter().find(|val2| {
+                            special_keys
+                                .iter()
+                                .map(|sp_key| {
+                                    let val1_key = val.get(&sp_key.0).unwrap_or(&Value::Null);
+                                    let val2_key = val2.get(&sp_key.0).unwrap_or(&Value::Null);
+                                    sp_key.matches(val1_key, val2_key)
+                                })
+                                .reduce(|a, b| if match_all { a && b } else { a || b })
+                                .unwrap_or_default()
+                        });
+                        if found.is_none() {
+                            info.missing.push(format!("{prefix}/{key}"));
+                            continue;
+                        }
+                        found
+                    } else {
+                        vec2.get(key)
+                    };
+                    match val2 {
                         Some(val2) => {
                             let next_diff =
                                 key_diff(val, val2, format!("{prefix}/{key}"), log_vars);
@@ -342,6 +388,16 @@ mod steps {
                         _ => info.missing.push(format!("{prefix}/{key}")),
                     }
                 }
+                // for (key, val) in vec1.iter().enumerate() {
+                //     match vec2.get(key) {
+                //         Some(val2) => {
+                //             let next_diff =
+                //                 key_diff(val, val2, format!("{prefix}/{key}"), log_vars);
+                //             info.extend(next_diff);
+                //         }
+                //         _ => info.missing.push(format!("{prefix}/{key}")),
+                //     }
+                // }
             }
 
             (val1, val2) if !log_vars && same_type(val1, val2) && val1 != val2 => {
