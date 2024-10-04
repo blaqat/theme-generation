@@ -40,6 +40,7 @@ struct Flags {
     generate_deletions: bool,
     generate_additions: bool,
     generate_colors: bool,
+    generate_manual: bool,
 }
 
 impl ReverseFlags {
@@ -56,6 +57,7 @@ impl ReverseFlags {
         let mut generate_deletions = true;
         let mut generate_additions = true;
         let mut generate_colors = true;
+        let mut generate_manual = true;
 
         for flag in flags {
             match flag {
@@ -67,6 +69,7 @@ impl ReverseFlags {
                     generate_deletions = !s.contains(&'d');
                     generate_additions = !s.contains(&'o');
                     generate_colors = !s.contains(&'c');
+                    generate_manual = !s.contains(&'p');
                 }
             }
         }
@@ -79,6 +82,7 @@ impl ReverseFlags {
             generate_deletions,
             generate_additions,
             generate_colors,
+            generate_manual,
         }
     }
 }
@@ -681,12 +685,14 @@ pub fn reverse(
             .missing
             .iter()
             .chain(override_diff.collisions.iter())
+            .filter(|key| !preproc_ignore_keys.contains(key))
             .map(|key| ResolvedVariable::from_path(key, &theme))
             .collect();
 
         let mut deletions: Set<_> = var_diff
             .missing
             .iter()
+            .filter(|key| !preproc_ignore_keys.contains(key))
             .map(|key| key.parse::<JSPath>().unwrap())
             .collect();
 
@@ -722,10 +728,6 @@ pub fn reverse(
             drop(color_map);
         }
 
-        // Step 7: Create Groupings
-        // e.g varname "a.b.c" = 1, "a.b.d" = 2 should be [a.b] = {c = 1, d = 2}
-        let mut grouped_json = json!({});
-        for (var_name, var) in variables.to_map() {
         let get_var_path = |var_name: String| -> JSPath {
             let split = var_name.rsplit_once('.');
 
@@ -749,6 +751,64 @@ pub fn reverse(
             get_var_path(var_name).pave(&mut grouped_json, var.value.into_value())?;
         }
 
+        if flags.generate_manual {
+            for (var_name, val) in preproc_overrides {
+                match var_name {
+                    "color" if flags.generate_colors => match val {
+                        Value::Object(ref obj) => {
+                            for (color, value) in obj {
+                                let var = ResolvedVariable::init(
+                                    color,
+                                    ParsedValue::String(value.to_string()),
+                                );
+                                variables.insert(color, var.clone());
+                            }
+                        }
+                        _ => {
+                            return Err(ProgramError::Processing(format!(
+                                "Invalid $::color value: {val:?}\nExpected an object with colors: {{color: Value}}\nAlternative run with flag -gc to ignore colors"
+                            )));
+                        }
+                    },
+                    "deletions" if flags.generate_deletions => match val {
+                        Value::Array(keys) => {
+                            deletions.extend(
+                                keys.iter()
+                                    .map(|v| v.as_str().unwrap().parse::<JSPath>().unwrap()),
+                            );
+                        }
+                        Value::Object(ref obj)
+                            if let Some(keys) = obj.get("keys")
+                                && let Value::Array(keys) = keys =>
+                        {
+                            deletions.extend(
+                                keys.iter()
+                                    .map(|v| v.as_str().unwrap().parse::<JSPath>().unwrap()),
+                            );
+                        }
+                        _ => {
+                            return Err(ProgramError::Processing(format!(
+                                "Invalid $::deletions value: {val:?}\nExpected an array of strings or an object with keys: []\nAlternative run with flag -gd to ignore deletions"
+                            )));
+                        }
+                    },
+                    "overrides" if flags.generate_additions => match val {
+                        Value::Object(map) => {
+                            for (k, v) in map {
+                                overrides.insert(&k, ResolvedVariable::init_override(&k, &v));
+                            }
+                        }
+                        _ => {
+                            return Err(ProgramError::Processing(format!(
+                                    "Invalid $::overrides value: {val:?}\nExpected an object\nAlternative run with flag -ga to ignore overrides"
+                                )));
+                        }
+                    },
+                    _ => {
+                        get_var_path(var_name.to_owned()).pave(&mut grouped_json, val)?;
+                    }
+                }
+            }
         }
 
         // Step 8: Build the Toml Output

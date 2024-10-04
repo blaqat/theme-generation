@@ -179,6 +179,17 @@ impl<'a> ResolvedVariable {
         }
     }
 
+    pub fn init_override(path: &str, value: &Value) -> Self {
+        let path = JSPath::from_str(path).unwrap();
+        let value = ParsedValue::from_value(value).unwrap();
+        Self {
+            path,
+            value,
+            variables: Vec::new(),
+            resolved_id: Some(0),
+        }
+    }
+
     fn new_pointer(var_name: &str, unresolved_paths: &[String]) -> Self {
         Self {
             path: JSPath::from_str(var_name).unwrap(),
