@@ -16,6 +16,7 @@ Reverse:
         -o directory    Set output directory of variable file
         -n              Name of the output file
         -p path         Json Path to start the reverse process at
+        -g[o|d]         Don't generate deletions or additions
 */
 
 pub const TOML_NULL: &str = "$none";
@@ -26,14 +27,19 @@ enum ReverseFlags {
     OutputDirectory(PathBuf),
     Name(String),
     InnerPath(JSPath),
+    DontGenerate(Vec<char>),
 }
 
+#[allow(clippy::struct_excessive_bools)]
 #[derive(PartialEq, Debug)]
 struct Flags {
     threshold: usize,          // Default to 3
     output_directory: PathBuf, // Default to current directory
     name: String,
     path: Option<JSPath>,
+    generate_deletions: bool,
+    generate_additions: bool,
+    generate_colors: bool,
 }
 
 impl ReverseFlags {
@@ -47,6 +53,9 @@ impl ReverseFlags {
         let mut output_directory = PathBuf::from(".");
         let mut name = String::from("reversed-theme");
         let mut path = None;
+        let mut generate_deletions = true;
+        let mut generate_additions = true;
+        let mut generate_colors = true;
 
         for flag in flags {
             match flag {
@@ -54,6 +63,11 @@ impl ReverseFlags {
                 Self::OutputDirectory(path) => output_directory = path,
                 Self::Name(n) => name = n,
                 Self::InnerPath(p) => path = Some(p),
+                Self::DontGenerate(s) => {
+                    generate_deletions = !s.contains(&'d');
+                    generate_additions = !s.contains(&'o');
+                    generate_colors = !s.contains(&'c');
+                }
             }
         }
 
@@ -62,6 +76,9 @@ impl ReverseFlags {
             output_directory,
             name,
             path,
+            generate_deletions,
+            generate_additions,
+            generate_colors,
         }
     }
 }
@@ -100,6 +117,10 @@ impl FromStr for ReverseFlags {
                     ProgramError::InvalidFlag("reverse".to_owned(), flag.to_owned())
                 })?;
                 Ok(Self::Threshold(threshold))
+            }
+            flag if flag.starts_with("-g") => {
+                let chars = flag[1..].chars().collect();
+                Ok(Self::DontGenerate(chars))
             }
             _ => Err(ProgramError::InvalidFlag(
                 "reverse".to_owned(),
@@ -476,6 +497,7 @@ mod steps {
         variables: Value,
         overrides: &VariableSet,
         deletions: &Set<JSPath>,
+        flags: &Flags,
     ) -> Result<String, ProgramError> {
         macro_rules! t {
             ($var_name:ident=$from:expr) => {
@@ -513,16 +535,18 @@ mod steps {
             w!("{} = {}", k, v);
         }
 
-        w!("\n# Theme Colors");
-        w!("[color]");
-        for (_, v) in data.iter().filter(|(k, _)| *k == "color") {
-            for (color, value) in v
-                .as_table()
-                .unwrap()
-                .iter()
-                .sorted_by(|(a, _), (b, _)| a.cmp(b))
-            {
-                w!("{} = {}", color, value);
+        if flags.generate_colors {
+            w!("\n# Theme Colors");
+            w!("[color]");
+            for (_, v) in data.iter().filter(|(k, _)| *k == "color") {
+                for (color, value) in v
+                    .as_table()
+                    .unwrap()
+                    .iter()
+                    .sorted_by(|(a, _), (b, _)| a.cmp(b))
+                {
+                    w!("{} = {}", color, value);
+                }
             }
         }
 
@@ -548,35 +572,39 @@ mod steps {
             }
         }
 
-        w!("\n# Overrides");
-        w!("[overrides]");
-        for (_, v) in overrides
-            .to_map()
-            .into_iter()
-            .sorted_by_key(|(k, _)| k.clone())
-        {
-            t!(val = v.value.into_value());
-            w!(r#""{}" = {}"#, v.path.join(), val);
-        }
-
-        w!("\n# Deletions");
-        w!("[deletions]");
-        w!("keys = [");
-        for (i, d) in deletions
-            .iter()
-            .sorted_by(|a, b| match (a.has_num_in_path(), b.has_num_in_path()) {
-                (true, true) => b.to_string().cmp(&a.to_string()),
-                _ => a.to_string().cmp(&b.to_string()),
-            })
-            .enumerate()
-        {
-            if i == deletions.len() - 1 {
-                w!("\t\"{}\"", d);
-            } else {
-                w!("\t\"{}\",", d);
+        if flags.generate_additions {
+            w!("\n# Overrides");
+            w!("[overrides]");
+            for (_, v) in overrides
+                .to_map()
+                .into_iter()
+                .sorted_by_key(|(k, _)| k.clone())
+            {
+                t!(val = v.value.into_value());
+                w!(r#""{}" = {}"#, v.path.join(), val);
             }
         }
-        w!("]");
+
+        if flags.generate_deletions {
+            w!("\n# Deletions");
+            w!("[deletions]");
+            w!("keys = [");
+            for (i, d) in deletions
+                .iter()
+                .sorted_by(|a, b| match (a.has_num_in_path(), b.has_num_in_path()) {
+                    (true, true) => b.to_string().cmp(&a.to_string()),
+                    _ => a.to_string().cmp(&b.to_string()),
+                })
+                .enumerate()
+            {
+                if i == deletions.len() - 1 {
+                    w!("\t\"{}\"", d);
+                } else {
+                    w!("\t\"{}\",", d);
+                }
+            }
+            w!("]");
+        }
 
         Ok(doc)
     }
@@ -599,7 +627,7 @@ pub fn reverse(
     })?;
 
     // Step 1.5: Traverse to the starting path if it exists.
-    if let Some(starting_path) = flags.path {
+    if let Some(starting_path) = &flags.path {
         theme = starting_path
             .traverse(&theme)
             .map_err(|_| ProgramError::Processing(String::from("Invalid starting path.")))?
@@ -617,7 +645,34 @@ pub fn reverse(
         }
     }
 
-    let reverse = |theme: Value, template: Value, file_name: String| -> Result<(), ProgramError> {
+    let reverse = |theme: Value,
+                   template: Value,
+                   file_name: &str,
+                   gen_color: bool|
+     -> Result<(), ProgramError> {
+        // Step 1.5: Preprocesser Overrides
+        // When a key starts with $::, it means variable should = the value
+        // e.g
+        // $::colors.red = "#FF0000"
+        // results in toml:
+        // [colors]
+        // red = "#FF0000"
+        let mut preproc_ignore_keys = Vec::new();
+        let preproc_overrides = match &template {
+            Value::Object(map) => map
+                .iter()
+                .filter_map(|(k, v)| {
+                    if k.starts_with("$::") {
+                        preproc_ignore_keys.push(format!("/{k}"));
+                        Some((k.strip_prefix("$::").unwrap(), v.clone()))
+                    } else {
+                        None
+                    }
+                })
+                .collect(),
+            _ => HashMap::new(),
+        };
+
         // Step 2: Built Data Structures (Deletions, Overrides, Variables, Colors)
         let var_diff = key_diff(&template, &theme, String::new(), true);
         let override_diff = key_diff(&theme, &template, String::new(), false);
@@ -629,7 +684,7 @@ pub fn reverse(
             .map(|key| ResolvedVariable::from_path(key, &theme))
             .collect();
 
-        let deletions: Set<_> = var_diff
+        let mut deletions: Set<_> = var_diff
             .missing
             .iter()
             .map(|key| key.parse::<JSPath>().unwrap())
@@ -643,50 +698,61 @@ pub fn reverse(
         let color_map = to_color_map(&variables, &overrides);
 
         // Step 5: Replace Colors In variables and overrides limited by threshold
-        for (var_name, mut var) in variables.to_map() {
-            let val = replace_color(&var.value, &color_map, flags.threshold);
-            var.value = val;
-            variables.insert(&var_name, var.clone());
-        }
-
-        for (var_name, mut var) in overrides.to_map() {
-            let val = replace_color(&var.value, &color_map, flags.threshold);
-            var.value = val;
-            overrides.insert(&var_name, var.clone());
-        }
-
-        // Step 6: Add Colors to VariablesSet
-        for (value, (color, v)) in &color_map {
-            if v.len() < flags.threshold {
-                continue;
+        if gen_color {
+            for (var_name, mut var) in variables.to_map() {
+                let val = replace_color(&var.value, &color_map, flags.threshold);
+                var.value = val;
+                variables.insert(&var_name, var.clone());
             }
-            let var = ResolvedVariable::init(color, ParsedValue::String(value.to_owned()));
-            variables.inc_insert(color, var);
+
+            for (var_name, mut var) in overrides.to_map() {
+                let val = replace_color(&var.value, &color_map, flags.threshold);
+                var.value = val;
+                overrides.insert(&var_name, var.clone());
+            }
+
+            // Step 6: Add Colors to VariablesSet
+            for (value, (color, v)) in &color_map {
+                if v.len() < flags.threshold {
+                    continue;
+                }
+                let var = ResolvedVariable::init(color, ParsedValue::String(value.to_owned()));
+                variables.inc_insert(color, var);
+            }
+            drop(color_map);
         }
-        drop(color_map);
 
         // Step 7: Create Groupings
         // e.g varname "a.b.c" = 1, "a.b.d" = 2 should be [a.b] = {c = 1, d = 2}
         let mut grouped_json = json!({});
         for (var_name, var) in variables.to_map() {
+        let get_var_path = |var_name: String| -> JSPath {
             let split = var_name.rsplit_once('.');
-            let path = if let Some((group, key)) = split {
+
+            if let Some((group, key)) = split {
                 format!("{group}/{key}")
             } else {
-                var_name.clone()
+                var_name
             }
             .parse::<JSPath>()
-            .unwrap();
+            .unwrap()
+        };
 
+        // Step 7: Create Groupings
+        // e.g varname "a.b.c" = 1, "a.b.d" = 2 should be [a.b] = {c = 1, d = 2}
+        let mut grouped_json = json!({});
+        for (var_name, var) in variables.to_map() {
             if var.value == ParsedValue::Null {
                 continue;
             }
 
-            path.pave(&mut grouped_json, var.value.into_value())?;
+            get_var_path(var_name).pave(&mut grouped_json, var.value.into_value())?;
+        }
+
         }
 
         // Step 8: Build the Toml Output
-        let toml_output = generate_toml_string(grouped_json, &overrides, &deletions)
+        let toml_output = generate_toml_string(grouped_json, &overrides, &deletions, &flags)
             .map_err(|e| ProgramError::Processing(format!("Could not generate toml output: {e:?}\nThis is probably indicative of needing to use the -p inner path")))?;
         let out_dir = flags.output_directory.clone();
 
@@ -704,7 +770,7 @@ pub fn reverse(
 
     match (&theme, &template) {
         (Value::Object(_), Value::Object(_)) => {
-            reverse(theme, template, flags.name)?;
+            reverse(theme, template, &flags.name, flags.generate_colors)?;
         }
         (Value::Array(theme), Value::Array(template)) => {
             let template = template.first().unwrap();
@@ -722,7 +788,12 @@ pub fn reverse(
                         format!("{}{}", flags.name, i)
                     }
                 };
-                reverse(theme.clone(), template.clone(), name)?;
+                reverse(
+                    theme.clone(),
+                    template.clone(),
+                    &name,
+                    flags.generate_colors,
+                )?;
             }
         }
         _ => {

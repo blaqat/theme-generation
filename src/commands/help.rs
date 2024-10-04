@@ -40,6 +40,7 @@ Flags:
     -c	Runs substitutor check on originalTheme and a generatedTheme of the generated variableFile
     -t int	Threshold for how many same colors to exist before adding to [colors] subgroup
     -o directory	Set output directory of variable file
+    -g[o|d]         Don't generate deletions or additions
         ",
         ValidCommands::Help => "Displays help information.",
         ValidCommands::Watch => "Description:
