@@ -119,7 +119,7 @@
 				"terminal.ansi.yellow": "$scheme.yellow|$terminal.yellow",
 				"terminal.background": "$ui.terminal|$terminal.bg|$ui.bg",
 				"text": "$ui.text.active",
-				"text.accent": "$ui.text.accent|@primary",
+				"text.accent": "$ui.text.accent|@primary|$ui.text.active",
 				"text.disabled": "$ui.text.muted",
 				"text.muted": "$ui.text.inactive",
 				"text.placeholder": "$ui.text.placeholder|$ui.text.muted",
@@ -164,7 +164,7 @@
 						"background_color": "$syntax.constant.bg"
 					},
 					"constant.builtin": {
-						"color": "$syntax.constant.builtin.color|$syntax.builtin.color|$syntax.constant.fg",
+						"color": "$syntax.constant.builtin.fg|$syntax.builtin.fg|$syntax.constant.fg",
 						"font_style": "$syntax.constant.builtin.style|$syntax.builtin.style|$syntax.constant.style",
 						"font_weight": "$syntax.constant.builtin.weight|$syntax.builtin.weight|$syntax.constant.weight",
 						"background_color": "$syntax.constant.builtin.bg|$syntax.builtin.bg|$syntax.constant.bg"
@@ -176,13 +176,13 @@
 						"background_color": "$syntax.constant.bg"
 					},
 					"constructor": {
-						"color": "$syntax.punc.bracket.color|$syntax.punc.fg",
+						"color": "$syntax.punc.bracket.fg|$syntax.punc.fg",
 						"font_style": "$syntax.punc.bracket.style|$syntax.punc.style",
 						"font_weight": "$syntax.punc.bracket.weight|$syntax.punc.weight",
 						"background_color": "$syntax.punc.bracket.bg|$syntax.punct.bg"
 					},
 					"enum": {
-						"color": "$syntax.enum.color",
+						"color": "$syntax.enum.fg",
 						"font_style": "$syntax.enum.style",
 						"font_weight": "$syntax.enum.weight",
 						"background_color": "$syntax.enum.bg"
@@ -194,22 +194,22 @@
 						"background_color": "$syntax.func.bg"
 					},
 					"function.method": {
-						"color": "$syntax.func.method.color|$syntax.func.fg",
+						"color": "$syntax.func.method.fg|$syntax.func.fg",
 						"font_style": "$syntax.func.method.style|$syntax.func.style",
 						"font_weight": "$syntax.func.method.weight|$syntax.func.weight",
 						"background_color": "$syntax.func.method.bg|$syntax.func.bg"
 					},
 					"function.definition": {
-						"color": "$syntax.func.def.color|$syntax.function.fg",
-						"font_style": "$syntax.func.def.style|$syntax.function.style",
-						"font_weight": "$syntax.func.def.weight|$syntax.function.weight",
-						"background_color": "$syntax.func.def.bg|$syntax.function.bg"
+						"color": "$syntax.func.def.fg|$syntax.func.fg",
+						"font_style": "$syntax.func.def.style|$syntax.func.style",
+						"font_weight": "$syntax.func.def.weight|$syntax.func.weight",
+						"background_color": "$syntax.func.def.bg|$syntax.func.bg"
 					},
 					"function.declaration": {
-						"color": "$syntax.func.decl.color|$syntax.function.fg",
-						"font_style": "$syntax.func.decl.style|$syntax.function.style",
-						"font_weight": "$syntax.func.decl.weight|$syntax.function.weight",
-						"background_color": "$syntax.func.decl.bg|$syntax.function.bg"
+						"color": "$syntax.func.decl.fg|$syntax.func.fg",
+						"font_style": "$syntax.func.decl.style|$syntax.func.style",
+						"font_weight": "$syntax.func.decl.weight|$syntax.func.weight",
+						"background_color": "$syntax.func.decl.bg|$syntax.func.bg"
 					},
 					"function.special": {
 						"color": "$syntax.func.fg",
@@ -218,16 +218,16 @@
 						"background_color": "$syntax.func.bg"
 					},
 					"function.special.definition": {
-						"color": "$syntax.func.def.color|$syntax.function.fg",
-						"font_style": "$syntax.func.def.style|$syntax.function.style",
-						"font_weight": "$syntax.func.def.weight|$syntax.function.weight",
-						"background_color": "$syntax.func.def.bg|$syntax.function.bg"
+						"color": "$syntax.func.def.fg|$syntax.func.fg",
+						"font_style": "$syntax.func.def.style|$syntax.func.style",
+						"font_weight": "$syntax.func.def.weight|$syntax.func.weight",
+						"background_color": "$syntax.func.def.bg|$syntax.func.bg"
 					},
 					"function.builtin": {
-						"color": "$syntax.func.builtin.color|$syntax.builtin.color|$syntax.function.fg",
-						"font_style": "$syntax.func.builtin.style|$syntax.builtin.style|$syntax.function.style",
-						"font_weight": "$syntax.func.builtin.weight|$syntax.builtin.weight|$syntax.function.weight",
-						"background_color": "$syntax.func.builtin.bg|$syntax.builtin.bg|$syntax.function.bg"
+						"color": "$syntax.func.builtin.fg|$syntax.builtin.fg|$syntax.func.fg",
+						"font_style": "$syntax.func.builtin.style|$syntax.builtin.style|$syntax.func.style",
+						"font_weight": "$syntax.func.builtin.weight|$syntax.builtin.weight|$syntax.func.weight",
+						"background_color": "$syntax.func.builtin.bg|$syntax.builtin.bg|$syntax.func.bg"
 					},
 					"keyword": {
 						"color": "$syntax.keyword.fg",
@@ -314,16 +314,16 @@
 						"background_color": "$syntax.keyword.directive.define.bg|$syntax.keyword.directive.bg|$syntax.keyword.bg"
 					},
 					"lifetime": {
-						"color": "$syntax.z.rs_lifetime.color",
+						"color": "$syntax.z.rs_lifetime.fg",
 						"font_style": "$syntax.z.rs_lifetime.style",
 						"font_weight": "$syntax.z.rs_lifetime.weight",
 						"background_color": "$syntax.z.rs_lifetime.bg"
 					},
 					"link_text": {
-						"color": "$foreground.link"
+						"color": "$ui.link"
 					},
 					"link_uri": {
-						"color": "$foreground.link"
+						"color": "$ui.link"
 					},
 					"number": {
 						"color": "$syntax.number.fg",
@@ -338,31 +338,31 @@
 						"background_color": "$syntax.op.bg"
 					},
 					"operator.logical": {
-						"color": "$syntax.op.logical.color|$syntax.op.fg",
+						"color": "$syntax.op.logical.fg|$syntax.op.fg",
 						"font_style": "$syntax.op.logical.style|$syntax.op.style",
 						"font_weight": "$syntax.op.logical.weight|$syntax.op.weight",
 						"background_color": "$syntax.op.logical.bg|$syntax.op.bg"
 					},
 					"operator.bitwise": {
-						"color": "$syntax.op.bitwise.color|$syntax.op.fg",
+						"color": "$syntax.op.bitwise.fg|$syntax.op.fg",
 						"font_style": "$syntax.op.bitwise.style|$syntax.op.style",
 						"font_weight": "$syntax.op.bitwise.weight|$syntax.op.weight",
 						"background_color": "$syntax.op.bitwise.bg|$syntax.op.bg"
 					},
 					"operator.assignment": {
-						"color": "$syntax.op.setter.color|$syntax.op.fg",
+						"color": "$syntax.op.setter.fg|$syntax.op.fg",
 						"font_style": "$syntax.op.setter.style|$syntax.op.style",
 						"font_weight": "$syntax.op.setter.weight|$syntax.op.weight",
 						"background_color": "$syntax.op.setter.bg|$syntax.op.bg"
 					},
 					"operator.arithmetic": {
-						"color": "$syntax.op.math.color|$syntax.op.fg",
+						"color": "$syntax.op.math.fg|$syntax.op.fg",
 						"font_style": "$syntax.op.math.style|$syntax.op.style",
 						"font_weight": "$syntax.op.math.weight|$syntax.op.weight",
 						"background_color": "$syntax.op.math.bg|$syntax.op.bg"
 					},
 					"operator.comparison": {
-						"color": "$syntax.op.compare.color|$syntax.op.fg",
+						"color": "$syntax.op.compare.fg|$syntax.op.fg",
 						"font_style": "$syntax.op.compare.style|$syntax.op.style",
 						"font_weight": "$syntax.op.compare.weight|$syntax.op.weight",
 						"background_color": "$syntax.op.compare.bg|$syntax.op.bg"
@@ -374,7 +374,7 @@
 						"background_color": "$syntax.property.bg"
 					},
 					"property.json_key": {
-						"color": "$syntax.z.json_key.color|$syntax.property.fg",
+						"color": "$syntax.z.json_key.fg|$syntax.property.fg",
 						"font_style": "$syntax.z.json_key.style|$syntax.property.style",
 						"font_weight": "$syntax.z.json_key.weight|$syntax.property.weight",
 						"background_color": "$syntax.z.json_key.bg|$syntax.property.bg"
@@ -386,37 +386,37 @@
 						"background_color": "$syntax.punc.bg"
 					},
 					"punctuation.bracket": {
-						"color": "$syntax.punc.bracket.color|$syntax.punc.fg",
+						"color": "$syntax.punc.bracket.fg|$syntax.punc.fg",
 						"font_style": "$syntax.punc.bracket.style|$syntax.punc.style",
 						"font_weight": "$syntax.punc.bracket.weight|$syntax.punc.weight",
 						"background_color": "$syntax.punc.bracket.bg|$syntax.punc.bg"
 					},
 					"punctuation.bracket.tag": {
-						"color": "$syntax.punc.tag.color|$syntax.punc.bracket.color|$syntax.punc.fg",
+						"color": "$syntax.punc.tag.fg|$syntax.punc.bracket.fg|$syntax.punc.fg",
 						"font_style": "$syntax.punc.tag.style|$syntax.punc.bracket.style|$syntax.punc.style",
 						"font_weight": "$syntax.punc.tag.weight|$syntax.punc.bracket.weight|$syntax.punc.weight",
 						"background_color": "$syntax.punc.tag.bg|$syntax.punc.bracket.bg|$syntax.punc.bg"
 					},
 					"punctuation.delimiter": {
-						"color": "$syntax.punc.delimiter.color|$syntax.punc.fg",
+						"color": "$syntax.punc.delimiter.fg|$syntax.punc.fg",
 						"font_style": "$syntax.punc.delimiter.style|$syntax.punc.style",
 						"font_weight": "$syntax.punc.delimiter.weight|$syntax.punc.weight",
 						"background_color": "$syntax.punc.delimiter.bg|$syntax.punc.bg"
 					},
 					"punctuation.list_marker": {
-						"color": "$syntax.punc.delimiter.color|$syntax.punc.fg",
+						"color": "$syntax.punc.delimiter.fg|$syntax.punc.fg",
 						"font_style": "$syntax.punc.delimiter.style|$syntax.punc.style",
 						"font_weight": "$syntax.punc.delimiter.weight|$syntax.punc.weight",
 						"background_color": "$syntax.punc.delimiter.bg|$syntax.punc.bg"
 					},
 					"punctuation.special": {
-						"color": "$syntax.string.inter.color|$syntax.punc.fg",
+						"color": "$syntax.string.inter.fg|$syntax.punc.fg",
 						"font_style": "$syntax.string.inter.style|$syntax.punc.style",
 						"font_weight": "$syntax.string.inter.weight|$syntax.punc.weight",
 						"background_color": "$syntax.string.inter.bg|$syntax.punc.bg"
 					},
 					"punctuation.special.symbol": {
-						"color": "$syntax.punc.symbol.color|$syntax.punc.fg",
+						"color": "$syntax.punc.symbol.fg|$syntax.punc.fg",
 						"font_style": "$syntax.punc.symbol.style|$syntax.punc.style",
 						"font_weight": "$syntax.punc.symbol.weight|$syntax.punc.weight",
 						"background_color": "$syntax.punc.symbol.bg|$syntax.punc.bg"
@@ -434,25 +434,25 @@
 						"background_color": "$syntax.comment.doc.bg|$syntax.doc.bg|$syntax.comment.bg"
 					},
 					"string.escape": {
-						"color": "$syntax.string.escape.color|$syntax.string.fg",
+						"color": "$syntax.string.escape.fg|$syntax.string.fg",
 						"font_style": "$syntax.string.escape.style|$syntax.string.style",
 						"font_weight": "$syntax.string.escape.weight|$syntax.string.weight",
 						"background_color": "$syntax.string.escape.bg|$syntax.string.bg"
 					},
 					"string.regex": {
-						"color": "$syntax.string.regex.color|$syntax.string.fg",
+						"color": "$syntax.string.regex.fg|$syntax.string.fg",
 						"font_style": "$syntax.string.regex.style|$syntax.string.style",
 						"font_weight": "$syntax.string.regex.weight|$syntax.string.weight",
 						"background_color": "$syntax.string.regex.bg|$syntax.string.bg"
 					},
 					"string.special": {
-						"color": "$syntax.string.special.color|$syntax.string.fg",
+						"color": "$syntax.string.special.fg|$syntax.string.fg",
 						"font_style": "$syntax.string.special.style|$syntax.string.style",
 						"font_weight": "$syntax.string.special.weight|$syntax.string.weight",
 						"background_color": "$syntax.string.special.bg|$syntax.string.bg"
 					},
 					"string.special.symbol": {
-						"color": "$syntax.string.special.color|$syntax.string.fg",
+						"color": "$syntax.string.special.fg|$syntax.string.fg",
 						"font_style": "$syntax.string.special.style|$syntax.string.style",
 						"font_weight": "$syntax.string.special.weight|$syntax.string.weight",
 						"background_color": "$syntax.string.special.bg|$syntax.string.bg"
@@ -470,19 +470,19 @@
 						"background_color": "$syntax.type.bg"
 					},
 					"type.builtin": {
-						"color": "$syntax.type.builtin.color|$syntax.builtin.color|$syntax.type.fg",
+						"color": "$syntax.type.builtin.fg|$syntax.builtin.fg|$syntax.type.fg",
 						"font_style": "$syntax.type.builtin.style|$syntax.builtin.style|$syntax.type.style",
 						"font_weight": "$syntax.type.builtin.weight|$syntax.builtin.weight|$syntax.type.weight",
 						"background_color": "$syntax.type.builtin.bg|$syntax.builtin.bg|$syntax.type.bg"
 					},
 					"type.builtin.primitive": {
-						"color": "$syntax.type.primitive.color|$syntax.type.builtin.color|$syntax.builtin.color|$syntax.type.fg",
+						"color": "$syntax.type.primitive.fg|$syntax.type.builtin.fg|$syntax.builtin.fg|$syntax.type.fg",
 						"font_style": "$syntax.type.primitive.style|$syntax.type.builtin.style|$syntax.builtin.style|$syntax.type.style",
 						"font_weight": "$syntax.type.primitive.weight|$syntax.type.builtin.weight|$syntax.builtin.weight|$syntax.type.weight",
 						"background_color": "$syntax.type.primitive.bg|$syntax.type.builtin.bg|$syntax.builtin.bg|$syntax.type.bg"
 					},
 					"type.super": {
-						"color": "$syntax.var.builtin.color|$syntax.type.fg",
+						"color": "$syntax.var.builtin.fg|$syntax.type.fg",
 						"font_style": "$syntax.var.builtin.style|$syntax.type.style",
 						"font_weight": "$syntax.var.builtin.weight|$syntax.type.weight",
 						"background_color": "$syntax.var.builtin.bg|$syntax.type.bg"
@@ -494,25 +494,25 @@
 						"background_color": "$syntax.var.bg"
 					},
 					"variable.builtin": {
-						"color": "$syntax.var.builtin.color|$syntax.builtin.color|$syntax.var.fg",
+						"color": "$syntax.var.builtin.fg|$syntax.builtin.fg|$syntax.var.fg",
 						"font_style": "$syntax.var.builtin.style|$syntax.builtin.style|$syntax.var.style",
 						"font_weight": "$syntax.var.builtin.weight|$syntax.builtin.weight|$syntax.var.weight",
 						"background_color": "$syntax.var.builtin.bg|$syntax.builtin.bg|$syntax.var.bg"
 					},
 					"variable.member": {
-						"color": "$syntax.property.color|$syntax.var.fg",
+						"color": "$syntax.property.fg|$syntax.var.fg",
 						"font_style": "$syntax.property.style|$syntax.var.style",
 						"font_weight": "$syntax.property.weight|$syntax.var.weight",
 						"background_color": "$syntax.property.bg|$syntax.var.bg"
 					},
 					"variable.parameter": {
-						"color": "$syntax.param.color|$syntax.var.fg",
+						"color": "$syntax.param.fg|$syntax.var.fg",
 						"font_style": "$syntax.param.style|$syntax.var.style",
 						"font_weight": "$syntax.param.weight|$syntax.var.weight",
 						"background_color": "$syntax.param.bg|$syntax.var.bg"
 					},
 					"variable.special": {
-						"color": "$syntax.namespace.color|$syntax.var.builtin.color|$syntax.builtin.color|$syntax.var.fg",
+						"color": "$syntax.namespace.fg|$syntax.var.builtin.fg|$syntax.builtin.fg|$syntax.var.fg",
 						"font_style": "$syntax.namespace.style|$syntax.var.builtin.style|$syntax.builtin.style|$syntax.var.style",
 						"font_weight": "$syntax.namespace.weight|$syntax.var.builtin.weight|$syntax.builtin.weight|$syntax.var.weight",
 						"background_color": "$syntax.namespace.bg|$syntax.var.builtin.bg|$syntax.builtin.bg|$syntax.var.bg"
