@@ -58,22 +58,28 @@ impl FromStr for MatchMode {
 
 impl MatchMode {
     fn matches(&self, checking: &Value, other_val: &Value) -> bool {
+        let check_str = checking.to_string().replace('\"', "");
         match (self, other_val) {
             (Self::Exact, val) => checking == val,
+            (Self::Contains | Self::StartsWith | Self::EndsWith | Self::NullMismatch, _)
+                if checking == other_val =>
+            {
+                false
+            }
 
-            (Self::Contains, Value::String(s)) => s.contains(&checking.to_string()),
+            (Self::Contains, Value::String(s)) => s.contains(&check_str),
             (Self::Contains, Value::Array(vec)) => vec.contains(checking),
-            (Self::Contains, Value::Object(map)) => map.contains_key(&checking.to_string()),
+            (Self::Contains, Value::Object(map)) => map.contains_key(&check_str),
 
             (Self::Regex, val) => {
-                let re = regex::Regex::new(&checking.to_string()).unwrap();
+                let re = regex::Regex::new(&check_str).unwrap();
                 re.is_match(&val.to_string())
             }
 
-            (Self::StartsWith, Value::String(s)) => s.starts_with(&checking.to_string()),
+            (Self::StartsWith, Value::String(s)) => s.starts_with(&check_str),
             (Self::StartsWith, Value::Array(vec)) => vec.first().is_some_and(|v| checking == v),
 
-            (Self::EndsWith, Value::String(s)) => s.ends_with(&checking.to_string()),
+            (Self::EndsWith, Value::String(s)) => s.ends_with(&check_str),
             (Self::EndsWith, Value::Array(vec)) => vec.last().is_some_and(|v| checking == v),
 
             (Self::NullMismatch, Value::Null) => !checking.is_null(),
