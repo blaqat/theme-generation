@@ -1,0 +1,89 @@
+# Reverse Generation Tool Version 3.0
+name = "All Hallow's Eve"
+og_author = "David Heinemeier Hansson"
+theme = "dark"
+
+# Theme Colors
+[color]
+black = "#000000"
+goldenrod = "#CCCC33"
+white = "#FFFFFF"
+
+[deletions]
+keys = [
+	"themes/0/style/accents"
+]
+
+[editor]
+bg = "#434242"
+invisible = "#404040"
+text = "@white"
+
+[editor.active]
+line = "#330"
+
+[player]
+cursor = "@white"
+highlight = "#73597EDE"
+
+[syntax.comment]
+fg = "#93C"
+
+[syntax.comment.doc]
+bg = "#9B9B9B"
+fg = "@white"
+
+[syntax.constant]
+fg = "#3387CC"
+
+[syntax.func]
+style = ""
+
+[syntax.func.builtin]
+fg = "#C83730"
+style = ""
+
+[syntax.keyword]
+fg = "#CC7833"
+style = ""
+
+[syntax.keyword.import]
+style = ""
+
+[syntax.param]
+style = "italic"
+
+[syntax.string]
+fg = "#6C3"
+
+[syntax.string.escape]
+fg = "#AAA"
+
+[syntax.string.inter]
+bg = "@goldenrod"
+fg = "@black"
+
+[syntax.string.regex]
+fg = "@goldenrod"
+
+[syntax.string.special]
+fg = "@goldenrod"
+
+[syntax.type]
+style = "underline"
+
+[syntax.z.html_attribute]
+style = ""
+
+[syntax.z.html_tag]
+style = "underline"
+
+[ui]
+bg = "@black"
+
+[ui.settings]
+bg = "@black"
+
+[ui.text]
+active = "@white"
+inactive = "@white"

@@ -1,0 +1,157 @@
+# Reverse Generation Tool Version 3.0
+name = "All Hallow's Eve"
+og_author = "David Heinemeier Hansson"
+theme = "dark"
+
+# Theme Colors
+[color]
+black = "#000000"
+goldenrod = "#CCCC33"
+white = "#FFFFFF"
+
+[editor]
+bg = "#434242"
+invisible = "#404040"
+text = "@white"
+
+[editor.active]
+line = "#330"
+
+[player]
+cursor = "@white"
+highlight = "#73597EDE"
+
+[syntax.comment]
+fg = "#93C"
+
+[syntax.comment.doc]
+bg = "#9B9B9B"
+fg = "@white"
+
+[syntax.constant]
+fg = "#3387CC"
+
+[syntax.func]
+style = ""
+
+[syntax.func.builtin]
+fg = "#C83730"
+style = ""
+
+[syntax.keyword]
+fg = "#CC7833"
+style = ""
+
+[syntax.keyword.import]
+style = ""
+
+[syntax.param]
+style = "italic"
+
+[syntax.string]
+fg = "#6C3"
+
+[syntax.string.escape]
+fg = "#AAA"
+
+[syntax.string.inter]
+bg = "@goldenrod"
+fg = "@black"
+
+[syntax.string.regex]
+fg = "@goldenrod"
+
+[syntax.string.special]
+fg = "@goldenrod"
+
+[syntax.type]
+style = "underline"
+
+[syntax.z.html_attribute]
+style = ""
+
+[syntax.z.html_tag]
+style = "underline"
+
+[ui]
+bg = "@black"
+
+[ui.settings]
+bg = "@black"
+
+[ui.text]
+active = "@white"
+inactive = "@white"
+
+# Overrides
+[overrides]
+"settings/1/scope" = "text"
+"settings/10/scope" = "source comment.block"
+"settings/11/scope" = "string"
+"settings/12/scope" = "string constant.character.escape"
+"settings/13/scope" = "string.interpolated"
+"settings/14/scope" = "string.regexp"
+"settings/15/scope" = "string.literal"
+"settings/16" = { name = "String escapes (executed)", scope = "string.interpolated constant.character.escape", settings = { foreground = "#555" } }
+"settings/17/scope" = "entity.name.type"
+"settings/18/scope" = "entity.other.inherited-class"
+"settings/19/scope" = "entity.name.tag"
+"settings/2/scope" = "source"
+"settings/20/scope" = "entity.other.attribute-name"
+"settings/21/scope" = "support.function"
+"settings/3/scope" = "comment"
+"settings/4/scope" = "constant"
+"settings/5/scope" = "keyword"
+"settings/6" = { name = "Pre-processor Line", scope = "meta.preprocessor.c", settings = { fontStyle = "", foreground = "#D0D0FF" } }
+"settings/7/scope" = "keyword.control.import"
+"settings/8/scope" = "entity.name.function"
+"settings/9/scope" = "variable.parameter"
+"uuid" = "37F22BDC-B2F4-11D9-850C-000A95A89C98"
+
+# Deletions
+[deletions]
+keys = [
+	"/themes/0/style/accents",
+	"/settings/9/settings/foreground",
+	"/settings/9/settings/background",
+	"/settings/8/settings/foreground",
+	"/settings/8/settings/background",
+	"/settings/7",
+	"/settings/6/settings/background",
+	"/settings/5",
+	"/settings/4/settings/fontStyle",
+	"/settings/4/settings/background",
+	"/settings/33",
+	"/settings/32",
+	"/settings/31",
+	"/settings/30",
+	"/settings/3/settings/fontStyle",
+	"/settings/3/settings/background",
+	"/settings/29",
+	"/settings/28",
+	"/settings/27",
+	"/settings/26",
+	"/settings/25",
+	"/settings/24",
+	"/settings/23/settings/background",
+	"/settings/22/settings/foreground",
+	"/settings/22/settings/background",
+	"/settings/21/settings/foreground",
+	"/settings/21/settings/background",
+	"/settings/19/settings/foreground",
+	"/settings/19/settings/background",
+	"/settings/18/settings/fontStyle",
+	"/settings/18/settings/background",
+	"/settings/17/settings/fontStyle",
+	"/settings/17/settings/background",
+	"/settings/16",
+	"/settings/15/settings/fontStyle",
+	"/settings/14/settings/fontStyle",
+	"/settings/14/settings/background",
+	"/settings/13/settings/fontStyle",
+	"/settings/13/settings/background",
+	"/settings/12/settings/fontStyle",
+	"/settings/11/settings/foreground",
+	"/settings/11/settings/background",
+	"/settings/10"
+]

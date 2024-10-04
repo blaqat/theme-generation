@@ -1,0 +1,183 @@
+{
+  "author": "$og_author",
+  "name": "$name",
+  "settings": [
+  	"$::name,scope",
+    {
+      "settings": {
+        "background": "$ui.bg",
+        "caret": "$player.cursor",
+        "foreground": "$ui.text.active",
+        "invisibles": "$editor.invisible",
+        "lineHighlight": "$editor.active.line",
+        "selection": "$player.highlight"
+      }
+    },
+    {
+      "name": "Source base",
+      "scope": "source",
+      "settings": {
+        "background": "$ui.text.inactive"
+      }
+    },
+    {
+      "name": "Text base",
+      "scope": "text",
+      "settings": {
+        "background": "$editor.bg",
+        "foreground": "$editor.text"
+      }
+    },
+    {
+      "name": "Comment",
+      "scope": "comment",
+      "settings": {
+        "foreground": "$syntax.comment.fg",
+        "fontStyle": "$syntax.comment.style",
+        "background": "$syntax.comment.bg"
+      }
+    },
+    {
+      "name": "Constant",
+      "scope": "constant",
+      "settings": {
+        "foreground": "$syntax.constant.fg",
+        "fontStyle": "$syntax.constant.style",
+        "background": "$syntax.constant.bg"
+      }
+    },
+    {
+      "name": "Keyword",
+      "scope": "keyword",
+      "settings": {
+        "foreground": "$syntax.keyword.fg",
+        "fontStyle": "$syntax.keyword.style",
+        "background": "$syntax.keyword.bg"
+      }
+    },
+    {
+      "name": "Pre-processor Directive",
+      "scope": "keyword.control.import",
+      "settings": {
+        "fontStyle": "$syntax.keyword.import.style",
+    	"foreground": "$syntax.keyword.import.fg",
+        "background": "$syntax.keyword.import.bg"
+      }
+    },
+    {
+      "name": "Function name",
+      "scope": "entity.name.function",
+      "settings": {
+        "fontStyle": "$syntax.func.style",
+        "foreground": "$syntax.func.fg",
+        "background": "$syntax.func.bg"
+      }
+    },
+    {
+      "name": "Function argument",
+      "scope": "variable.parameter",
+      "settings": {
+        "fontStyle": "$syntax.param.style",
+        "foreground": "$syntax.param.fg",
+        "background": "$syntax.param.bg"
+      }
+    },
+    {
+      "name": "Block comment",
+      "scope": "source comment.block",
+      "settings": {
+        "background": "$syntax.comment.bg",
+        "foreground": "$syntax.comment.fg",
+        "fontStyle": "$syntax.comment.style"
+      }
+    },
+    {
+      "name": "String",
+      "scope": "string",
+      "settings": {
+        "foreground": "$syntax.string.fg",
+        "fontStyle": "$syntax.string.style",
+        "background": "$syntax.string.bg"
+      }
+    },
+    {
+      "name": "String escapes",
+      "scope": "string constant.character.escape",
+      "settings": {
+        "foreground": "$syntax.string.escape.fg",
+        "fontStyle": "$syntax.string.escape.style",
+        "background": "$syntax.string.escape.bg"
+      }
+    },
+    {
+      "name": "String (executed)",
+      "scope": "string.interpolated",
+      "settings": {
+        "background": "$syntax.string.inter.bg",
+        "foreground": "$syntax.string.inter.fg",
+        "fontStyle": "$syntax.string.inter.style"
+      }
+    },
+    {
+      "name": "Regular expression",
+      "scope": "string.regexp",
+      "settings": {
+        "foreground": "$syntax.string.regex.fg",
+        "fontStyle": "$syntax.string.regex.style",
+        "background": "$syntax.string.regex.bg"
+      }
+    },
+    {
+      "name": "String (literal)",
+      "scope": "string.literal",
+      "settings": {
+        "foreground": "$syntax.string.special.fg",
+        "fontStyle": "$syntax.string.special.style",
+        "background": "$syntax.string.special.bg"
+      }
+    },
+    {
+      "name": "Type name",
+      "scope": "entity.name.type",
+      "settings": {
+        "fontStyle": "$syntax.type.style",
+        "foreground": "$syntax.type.fg",
+        "background": "$syntax.type.bg"
+      }
+    },
+    {
+      "name": "Class inheritance",
+      "scope": "entity.other.inherited-class",
+      "settings": {
+        "fontStyle": "italic underline"
+      }
+    },
+    {
+      "name": "Tag name",
+      "scope": "entity.name.tag",
+      "settings": {
+        "fontStyle": "$syntax.z.html_tag.style",
+        "foreground": "$syntax.z.html_tag.fg",
+        "background": "$syntax.z.html_tag.bg"
+      }
+    },
+    {
+      "name": "Tag attribute",
+      "scope": "entity.other.attribute-name",
+      "settings": {
+        "fontStyle": "$syntax.z.html_attribute.style",
+        "foreground": "$syntax.z.html_attribute.fg",
+        "background": "$syntax.z.html_attribute.bg"
+      }
+    },
+    {
+      "name": "Support function",
+      "scope": "support.function",
+      "settings": {
+        "fontStyle": "$syntax.func.builtin.style",
+        "foreground": "$syntax.func.builtin.fg",
+        "background": "$syntax.func.builtin.bg"
+      }
+    }
+  ]
+}

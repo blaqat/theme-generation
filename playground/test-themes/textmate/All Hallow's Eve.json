@@ -1,0 +1,524 @@
+{
+  "$schema": "https://zed.dev/schema/themes/v0.1.0.json",
+  "author": "blaqat",
+  "name": "All Hallow's Eve",
+  "themes": [
+    {
+      "appearance": null,
+      "name": "All Hallow's Eve",
+      "style": {
+        "accents": null,
+        "background": "#000",
+        "background.appearance": null,
+        "border": null,
+        "border.variant": null,
+        "conflict": null,
+        "conflict.background": "#000",
+        "conflict.border": null,
+        "created": null,
+        "created.background": "#000",
+        "created.border": null,
+        "deleted": null,
+        "deleted.background": "#000",
+        "deleted.border": null,
+        "drop_target.background": "#191919CC",
+        "editor.active_line.background": "#330",
+        "editor.active_line_number": "#FFFFFF50",
+        "editor.active_wrap_guide": null,
+        "editor.background": "#434242",
+        "editor.document_highlight.read_background": null,
+        "editor.document_highlight.write_background": null,
+        "editor.foreground": "#FFF",
+        "editor.gutter.background": "#434242",
+        "editor.highlighted_line.background": "#330",
+        "editor.indent_guide": null,
+        "editor.indent_guide_active": null,
+        "editor.invisible": "#404040",
+        "editor.line_number": "#FFFFFF50",
+        "editor.subheader.background": "#000",
+        "editor.wrap_guide": null,
+        "element.active": null,
+        "element.background": "#000",
+        "element.disabled": "#000",
+        "element.hover": null,
+        "element.selected": null,
+        "elevated_surface.background": "#000",
+        "error": null,
+        "error.background": null,
+        "error.border": null,
+        "ghost_element.active": "#0C0C0C",
+        "ghost_element.background": null,
+        "ghost_element.disabled": null,
+        "ghost_element.hover": "#000",
+        "ghost_element.selected": "#0C0C0C",
+        "hidden": null,
+        "hidden.background": "#000",
+        "hidden.border": null,
+        "hint": "#CCCC",
+        "hint.background": "#000",
+        "hint.border": null,
+        "ignored": null,
+        "ignored.background": "#000",
+        "ignored.border": null,
+        "info": null,
+        "info.background": null,
+        "info.border": null,
+        "link_text.hover": null,
+        "modified": null,
+        "modified.background": "#000",
+        "modified.border": null,
+        "pane.focused_border": null,
+        "panel.background": "#000",
+        "panel.focused_border": null,
+        "players": [
+          {
+            "background": "#FFF",
+            "cursor": "#FFF",
+            "selection": "#73597EDE"
+          }
+        ],
+        "predictive": "#CCCC",
+        "renamed": null,
+        "renamed.background": "#000",
+        "renamed.border": null,
+        "scrollbar.thumb.background": "#191919",
+        "scrollbar.thumb.border": null,
+        "scrollbar.track.background": null,
+        "scrollbar.track.border": null,
+        "search.match_background": null,
+        "status_bar.background": "#000",
+        "success": null,
+        "success.background": null,
+        "success.border": null,
+        "syntax": {
+          "attribute": {
+            "background_color": null,
+            "color": null,
+            "font_style": "",
+            "font_weight": null
+          },
+          "boolean": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "comment": {
+            "background_color": "#9B9B9B",
+            "color": "#93C",
+            "font_style": null,
+            "font_weight": null
+          },
+          "comment.doc": {
+            "background_color": "#9B9B9B",
+            "color": "#93C",
+            "font_style": null,
+            "font_weight": null
+          },
+          "constant": {
+            "background_color": null,
+            "color": "#3387CC",
+            "font_style": null,
+            "font_weight": null
+          },
+          "constant.builtin": {
+            "background_color": null,
+            "color": "#3387CC",
+            "font_style": null,
+            "font_weight": null
+          },
+          "constant.character": {
+            "background_color": null,
+            "color": "#3387CC",
+            "font_style": null,
+            "font_weight": null
+          },
+          "constructor": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "enum": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "function": {
+            "background_color": null,
+            "color": null,
+            "font_style": "",
+            "font_weight": null
+          },
+          "function.builtin": {
+            "background_color": null,
+            "color": "#C83730",
+            "font_style": "",
+            "font_weight": null
+          },
+          "function.declaration": {
+            "background_color": null,
+            "color": null,
+            "font_style": "",
+            "font_weight": null
+          },
+          "function.definition": {
+            "background_color": null,
+            "color": null,
+            "font_style": "",
+            "font_weight": null
+          },
+          "function.method": {
+            "background_color": null,
+            "color": null,
+            "font_style": "",
+            "font_weight": null
+          },
+          "function.special": {
+            "background_color": null,
+            "color": null,
+            "font_style": "",
+            "font_weight": null
+          },
+          "function.special.definition": {
+            "background_color": null,
+            "color": null,
+            "font_style": "",
+            "font_weight": null
+          },
+          "keyword": {
+            "background_color": null,
+            "color": "#CC7833",
+            "font_style": "",
+            "font_weight": null
+          },
+          "keyword.conditional": {
+            "background_color": null,
+            "color": "#CC7833",
+            "font_style": "",
+            "font_weight": null
+          },
+          "keyword.conditional.ternary": {
+            "background_color": null,
+            "color": "#CC7833",
+            "font_style": "",
+            "font_weight": null
+          },
+          "keyword.coroutine": {
+            "background_color": null,
+            "color": "#CC7833",
+            "font_style": "",
+            "font_weight": null
+          },
+          "keyword.debug": {
+            "background_color": null,
+            "color": "#CC7833",
+            "font_style": "",
+            "font_weight": null
+          },
+          "keyword.directive": {
+            "background_color": null,
+            "color": "#CC7833",
+            "font_style": "",
+            "font_weight": null
+          },
+          "keyword.directive.define": {
+            "background_color": null,
+            "color": "#CC7833",
+            "font_style": "",
+            "font_weight": null
+          },
+          "keyword.exception": {
+            "background_color": null,
+            "color": "#CC7833",
+            "font_style": "",
+            "font_weight": null
+          },
+          "keyword.function": {
+            "background_color": null,
+            "color": "#CC7833",
+            "font_style": "",
+            "font_weight": null
+          },
+          "keyword.import": {
+            "background_color": null,
+            "color": "#CC7833",
+            "font_style": "",
+            "font_weight": null
+          },
+          "keyword.operator": {
+            "background_color": null,
+            "color": "#CC7833",
+            "font_style": "",
+            "font_weight": null
+          },
+          "keyword.repeat": {
+            "background_color": null,
+            "color": "#CC7833",
+            "font_style": "",
+            "font_weight": null
+          },
+          "keyword.return": {
+            "background_color": null,
+            "color": "#CC7833",
+            "font_style": "",
+            "font_weight": null
+          },
+          "keyword.type": {
+            "background_color": null,
+            "color": "#CC7833",
+            "font_style": "",
+            "font_weight": null
+          },
+          "lifetime": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "link_text": {
+            "color": null
+          },
+          "link_uri": {
+            "color": null
+          },
+          "number": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "operator": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "operator.arithmetic": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "operator.assignment": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "operator.bitwise": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "operator.comparison": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "operator.logical": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "property": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "property.json_key": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "punctuation": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "punctuation.bracket": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "punctuation.bracket.tag": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "punctuation.delimiter": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "punctuation.list_marker": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "punctuation.special": {
+            "background_color": "#CC3",
+            "color": "#000",
+            "font_style": null,
+            "font_weight": null
+          },
+          "punctuation.special.symbol": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "string": {
+            "background_color": null,
+            "color": "#6C3",
+            "font_style": null,
+            "font_weight": null
+          },
+          "string.doc": {
+            "background_color": "#9B9B9B",
+            "color": "#93C",
+            "font_style": null,
+            "font_weight": null
+          },
+          "string.escape": {
+            "background_color": null,
+            "color": "#AAA",
+            "font_style": null,
+            "font_weight": null
+          },
+          "string.regex": {
+            "background_color": null,
+            "color": "#CC3",
+            "font_style": null,
+            "font_weight": null
+          },
+          "string.special": {
+            "background_color": null,
+            "color": "#CC3",
+            "font_style": null,
+            "font_weight": null
+          },
+          "string.special.symbol": {
+            "background_color": null,
+            "color": "#CC3",
+            "font_style": null,
+            "font_weight": null
+          },
+          "tag": {
+            "background_color": null,
+            "color": null,
+            "font_style": "underline",
+            "font_weight": null
+          },
+          "type": {
+            "background_color": null,
+            "color": null,
+            "font_style": "underline",
+            "font_weight": null
+          },
+          "type.builtin": {
+            "background_color": null,
+            "color": null,
+            "font_style": "underline",
+            "font_weight": null
+          },
+          "type.builtin.primitive": {
+            "background_color": null,
+            "color": null,
+            "font_style": "underline",
+            "font_weight": null
+          },
+          "type.super": {
+            "background_color": null,
+            "color": null,
+            "font_style": "underline",
+            "font_weight": null
+          },
+          "variable": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "variable.builtin": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "variable.member": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          },
+          "variable.parameter": {
+            "background_color": null,
+            "color": null,
+            "font_style": "italic",
+            "font_weight": null
+          },
+          "variable.special": {
+            "background_color": null,
+            "color": null,
+            "font_style": null,
+            "font_weight": null
+          }
+        },
+        "tab.active_background": "#000",
+        "tab.inactive_background": "#000",
+        "tab_bar.background": "#000",
+        "terminal.ansi.black": null,
+        "terminal.ansi.blue": null,
+        "terminal.ansi.bright_black": null,
+        "terminal.ansi.bright_blue": null,
+        "terminal.ansi.bright_cyan": null,
+        "terminal.ansi.bright_green": null,
+        "terminal.ansi.bright_magenta": null,
+        "terminal.ansi.bright_red": null,
+        "terminal.ansi.bright_white": null,
+        "terminal.ansi.bright_yellow": null,
+        "terminal.ansi.cyan": null,
+        "terminal.ansi.dim_black": null,
+        "terminal.ansi.dim_blue": null,
+        "terminal.ansi.dim_cyan": null,
+        "terminal.ansi.dim_green": null,
+        "terminal.ansi.dim_magenta": null,
+        "terminal.ansi.dim_red": null,
+        "terminal.ansi.dim_white": null,
+        "terminal.ansi.dim_yellow": null,
+        "terminal.ansi.green": null,
+        "terminal.ansi.magenta": null,
+        "terminal.ansi.red": null,
+        "terminal.ansi.white": null,
+        "terminal.ansi.yellow": null,
+        "terminal.background": "#000",
+        "text": "#FFF",
+        "text.accent": "#FFF",
+        "text.disabled": null,
+        "text.muted": "#F00",
+        "text.placeholder": null,
+        "title_bar.background": "#000",
+        "title_bar.inactive_background": "#000",
+        "toolbar.background": "#000",
+        "unreachable": null,
+        "unreachable.background": null,
+        "unreachable.border": null,
+        "warning": null,
+        "warning.background": null,
+        "warning.border": null
+      }
+    }
+  ]
+}
