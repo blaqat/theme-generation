@@ -5,40 +5,40 @@ theme = "dark"
 
 # Theme Colors
 [color]
-black = "#1C2228"
+black2 = "#1C2228"
 cornflowerblue = "#5C99D6"
-darkslategray2 = "#2E3842"
+darkslategray3 = "#2E3842"
 indianred = "#EC5F66"
 plum = "#C695C6"
 sandybrown = "#F9AE58"
 
 [background]
 drop_target = "#CFEBFD1F"
-gutter = "@darkslategray2"
-panel = "@black"
-primary = "@darkslategray2"
-secondary = "@black"
+gutter = "@darkslategray3"
+panel = "@black2"
+primary = "@darkslategray3"
+secondary = "@black2"
 surface = "#38424C"
-terminal = "@darkslategray2"
+terminal = "@darkslategray3"
 
 [background.bars]
 bottombar = "#171C22"
-scrollbar = "@darkslategray2"
+scrollbar = "@darkslategray3"
 scrollbar_thumb = "#59667361"
-toolbar = "@darkslategray2"
-topbar = "@black"
+toolbar = "@darkslategray3"
+topbar = "@black2"
 
 [background.bars.tabbar]
-active = "@darkslategray2"
-background = "@black"
-inactive = "@black"
+active = "@darkslategray3"
+background = "@black2"
+inactive = "@black2"
 
 [border]
-disabled = "@darkslategray2"
-primary = "@black"
-scrollbar = "@darkslategray2..00"
-secondary = "@darkslategray2"
-transparent = "@darkslategray2"
+disabled = "@darkslategray3"
+primary = "@black2"
+scrollbar = "@darkslategray3..00"
+secondary = "@darkslategray3"
+transparent = "@darkslategray3"
 
 [button]
 primary = "#27323B"
@@ -72,7 +72,7 @@ primary = "#0000"
 selected = "#3E4347"
 
 [foreground]
-hover = "@black"
+hover = "@black2"
 inactive = "#3E4347"
 link = "#69C"
 placeholder = "#CBCDCF"
@@ -97,13 +97,13 @@ black2 = "#E6E6E6"
 blue = "#69C"
 cyan = "#5FB4B4"
 cyan2 = "#5FB4B4"
+green = "#A3CE9E"
 green2 = "#A3CE9E"
 pink = "#C594C5"
-pink2 = "#C594C5"
-red = "#EE6A6F"
-red2 = "#EE6A6F"
+red = "@indianred"
 white = "#FFFFFFDC"
 yellow = "#FAB763"
+yellow2 = "#FAB763"
 
 [syntax.attribute]
 color = "@plum"
@@ -139,7 +139,7 @@ style = "italic"
 color = "@cornflowerblue"
 
 [syntax.number]
-color = "@sandybrown"
+color = "#A5ACBA"
 
 [syntax.operator]
 color = "#F97B58"
@@ -183,6 +183,8 @@ color = "@cornflowerblue"
 
 # Overrides
 [overrides]
+"style/border.selected" = "@darkslategray3"
+"style/deleted.background" = "$none"
 "style/hidden.background" = "$none"
 "style/predictive.background" = "$none"
 "style/syntax/@function.special.definition" = { color = "#0C99D6", font_style = "$none", font_weight = "$none" }
@@ -192,7 +194,8 @@ color = "@cornflowerblue"
 "style/editor.subheader.background" = "#293239"
 "style/editor.wrap_guide" = "#CFEBFD1F"
 "style/scrollbar.thumb.border" = "#09667300"
-"style/border.selected" = "@darkslategray2"
+"style/border.focused" = "@darkslategray3"
+"style/editor.foreground" = "#D8DEE9"
 "style/text" = "#F7F7F7"
 "style/created.background" = "$none"
 "style/created.border" = "$none"
@@ -200,18 +203,21 @@ color = "@cornflowerblue"
 "style/info" = "#A3CE9E"
 "style/terminal.ansi.bright_blue" = "#69C"
 "style/terminal.ansi.dim_cyan" = "$none"
-"style/terminal.ansi.green" = "#A3CE9E"
+"style/success" = "$none"
 "style/success.background" = "$none"
 "style/terminal.ansi.dim_green" = "$none"
+"style/success.border" = "$none"
 "style/renamed" = "$none"
-"style/renamed.background" = "$none"
-"style/terminal.ansi.dim_magenta" = "$none"
-"style/deleted" = "@indianred"
-"style/deleted.background" = "$none"
-"style/terminal.ansi.dim_red" = "$none"
-"style/terminal.ansi.bright_yellow" = "#FAB763"
+"style/terminal.ansi.bright_magenta" = "#C594C5"
+"style/terminal.ansi.red" = "#EE6A6F"
+"style/conflict" = "@plum"
+"style/terminal.ansi.bright_red" = "#EE6A6F"
+"style/modified.background" = "$none"
+"style/terminal.ansi.dim_yellow" = "$none"
+"style/modified.border" = "$none"
+"style/syntax/type.builtin/color" = "@plum"
 "style/syntax/constant.builtin/color" = "@indianred"
-"style/syntax/punctuation.list_marker/color" = "#A5ACBA"
+"style/syntax/number/color" = "@sandybrown"
 
 # Deletions
 [deletions]
@@ -221,61 +227,30 @@ keys = [
 	"/style/editor.indent_guide_active",
 	"/style/players/1",
 	"/style/scrollbar.thumb.background",
-	"/style/syntax/attribute/background_color",
-	"/style/syntax/boolean/background_color",
-	"/style/syntax/comment.doc/background_color",
-	"/style/syntax/comment/background_color",
-	"/style/syntax/constant.builtin/background_color",
 	"/style/syntax/constant.character",
-	"/style/syntax/constant/background_color",
-	"/style/syntax/constructor/background_color",
 	"/style/syntax/embedded",
 	"/style/syntax/emphasis",
 	"/style/syntax/emphasis.strong",
 	"/style/syntax/enum",
 	"/style/syntax/escape",
-	"/style/syntax/function.builtin/background_color",
 	"/style/syntax/function.definition",
-	"/style/syntax/function.method/background_color",
 	"/style/syntax/function.special",
 	"/style/syntax/function.special.definition",
-	"/style/syntax/function/background_color",
 	"/style/syntax/hint",
-	"/style/syntax/keyword/background_color",
 	"/style/syntax/label",
 	"/style/syntax/lifetime",
 	"/style/syntax/link_text",
 	"/style/syntax/link_uri",
-	"/style/syntax/number/background_color",
-	"/style/syntax/operator/background_color",
 	"/style/syntax/predictive",
 	"/style/syntax/preproc",
 	"/style/syntax/primary",
 	"/style/syntax/property.json_key",
-	"/style/syntax/property/background_color",
-	"/style/syntax/punctuation.bracket.tag",
-	"/style/syntax/punctuation.bracket/background_color",
-	"/style/syntax/punctuation.delimiter/background_color",
-	"/style/syntax/punctuation.list_marker/background_color",
 	"/style/syntax/punctuation.special.symbol",
-	"/style/syntax/punctuation.special/background_color",
-	"/style/syntax/punctuation/background_color",
 	"/style/syntax/string.doc",
-	"/style/syntax/string.escape/background_color",
-	"/style/syntax/string.regex/background_color",
-	"/style/syntax/string.special.symbol/background_color",
-	"/style/syntax/string.special/background_color",
-	"/style/syntax/string/background_color",
-	"/style/syntax/tag/background_color",
-	"/style/syntax/text.literal/background_color",
 	"/style/syntax/title",
-	"/style/syntax/type.builtin/background_color",
 	"/style/syntax/type.interface",
 	"/style/syntax/type.super",
-	"/style/syntax/type/background_color",
 	"/style/syntax/variable",
-	"/style/syntax/variable.builtin",
-	"/style/syntax/variable.member/background_color",
 	"/style/syntax/variable.parameter",
 	"/style/syntax/variable.special",
 	"/style/syntax/variant",
