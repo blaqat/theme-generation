@@ -2,6 +2,9 @@
   "author": "$og_author",
   "name": "$name",
   "$::theme": "dark",
+  "$::color": {
+  	"apple": "#F00"
+  },
   "$::deletions": {
 		"keys": [
 			"themes/0/style/accents"
@@ -10,7 +13,7 @@
   "settings": [
   	{
    		"$::mode": "strict",
-     	"name": "equals",
+     	"name": "equals|beginswith",
       	"scope": "exact|inner::exact|mismatch"
   	},
     {
@@ -101,6 +104,15 @@
 	      "foreground": "$syntax.func.def.fg",
 	      "background": "$syntax.func.def.bg"
 	    }
+    },
+    {
+    	"name": "Function",
+     	"scope": "entity.name.function",
+	    "settings": {
+		      "fontStyle": "$syntax.a.func.def.style",
+		      "foreground": "$syntax.a.func.def.fg",
+		      "background": "$syntax.a.func.def.bg"
+		}
     },
     {
       "name": "Function argument",

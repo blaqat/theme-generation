@@ -37,7 +37,7 @@
 				"editor.line_number": "$editor.number|$ui.text.active..50",
 				"editor.subheader.background": "$ui.header.primary|$ui.header|$ui.panel|$ui.bg",
 				"editor.wrap_guide": "$editor.guides.wrap",
-				"element.active": "$ui.button.pressed|$ui.button.primary..v+5",
+				"element.active": "$ui.button.pressed|$ui.button.primary..(v+5,h.50)",
 				"element.background": "$ui.button.primary|$ui.bg",
 				"element.disabled": "$ui.button.disabled|$ui.button.primary|$ui.bg",
 				"element.hover": "$ui.header.hover|$ui.header.primary..v+5|$ui.header..v+5|$ui.button.primary..v-5",

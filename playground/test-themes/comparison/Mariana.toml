@@ -1,0 +1,283 @@
+# Reverse Generation Tool Version 3.0
+name = "Mariana"
+primary = "@cornflowerblue"
+theme = "dark"
+
+# Theme Colors
+[color]
+black = "#1C2228"
+cornflowerblue = "#5C99D6"
+darkslategray2 = "#2E3842"
+indianred = "#EC5F66"
+plum = "#C695C6"
+sandybrown = "#F9AE58"
+
+[background]
+drop_target = "#CFEBFD1F"
+gutter = "@darkslategray2"
+panel = "@black"
+primary = "@darkslategray2"
+secondary = "@black"
+surface = "#38424C"
+terminal = "@darkslategray2"
+
+[background.bars]
+bottombar = "#171C22"
+scrollbar = "@darkslategray2"
+scrollbar_thumb = "#59667361"
+toolbar = "@darkslategray2"
+topbar = "@black"
+
+[background.bars.tabbar]
+active = "@darkslategray2"
+background = "@black"
+inactive = "@black"
+
+[border]
+disabled = "@darkslategray2"
+primary = "@black"
+scrollbar = "@darkslategray2..00"
+secondary = "@darkslategray2"
+transparent = "@darkslategray2"
+
+[button]
+primary = "#27323B"
+selected = "#3E4347"
+
+[code.error]
+background = "@indianred"
+border = "#0000"
+foreground = "@indianred"
+
+[code.info]
+foreground = "#A6ACB99F"
+
+[code.warning]
+background = "@cornflowerblue"
+border = "#0000"
+foreground = "@cornflowerblue"
+
+[cursor]
+background = "#647382"
+highlighted = "#59667352"
+line = "#4A586500"
+primary = "@sandybrown"
+search = "#FFC44A80"
+selection = "#596673B3"
+
+[element]
+active = "#3E4347"
+hover = "#292F35"
+primary = "#0000"
+selected = "#3E4347"
+
+[foreground]
+hover = "@black"
+inactive = "#3E4347"
+link = "#69C"
+placeholder = "#CBCDCF"
+secondary = "#CBCDCF"
+
+[foreground.linenumber]
+active = "#C9D2DF"
+inactive = "#848B95"
+
+[git.created]
+foreground = "#99C794"
+
+[git.modified]
+foreground = "@sandybrown"
+
+[guide]
+active = "#CFEBFD1F"
+
+[scheme]
+black = "#E6E6E6"
+black2 = "#E6E6E6"
+blue = "#69C"
+cyan = "#5FB4B4"
+cyan2 = "#5FB4B4"
+green2 = "#A3CE9E"
+pink = "#C594C5"
+pink2 = "#C594C5"
+red = "#EE6A6F"
+red2 = "#EE6A6F"
+white = "#FFFFFFDC"
+yellow = "#FAB763"
+
+[syntax.attribute]
+color = "@plum"
+
+[syntax.boolean]
+color = "@indianred"
+style = "italic"
+
+[syntax.builtin]
+color = "@cornflowerblue"
+style = "italic"
+
+[syntax.comment]
+color = "#A6ACB9"
+
+[syntax.constant]
+color = "@sandybrown"
+
+[syntax.constructor]
+color = "@indianred"
+
+[syntax.escape]
+color = "@plum"
+
+[syntax.function]
+color = "#5FB4B4"
+
+[syntax.keyword]
+color = "@plum"
+style = "italic"
+
+[syntax.method]
+color = "@cornflowerblue"
+
+[syntax.number]
+color = "@sandybrown"
+
+[syntax.operator]
+color = "#F97B58"
+
+[syntax.property]
+color = "@sandybrown"
+
+[syntax.punctuation]
+color = "#FFF"
+
+[syntax.punctuation.bracket]
+color = "#FFF"
+
+[syntax.punctuation.delimiter]
+color = "#A5ACBA"
+
+[syntax.punctuation.special]
+color = "#5FB4B4"
+
+[syntax.string]
+color = "#99C794"
+
+[syntax.string.regex]
+color = "@plum"
+
+[syntax.string.special]
+color = "@plum"
+
+[syntax.tag]
+color = "@indianred"
+
+[syntax.text]
+color = "#8CC98F"
+
+[syntax.type]
+color = "@cornflowerblue"
+style = "italic"
+
+[syntax.variable]
+color = "@cornflowerblue"
+
+# Overrides
+[overrides]
+"style/hidden.background" = "$none"
+"style/predictive.background" = "$none"
+"style/syntax/@function.special.definition" = { color = "#0C99D6", font_style = "$none", font_weight = "$none" }
+"style/unreachable.background" = "$none"
+"style/scrollbar.thumb.hover_background" = "#596673B3"
+"style/hidden" = "#CBCDCF"
+"style/editor.subheader.background" = "#293239"
+"style/editor.wrap_guide" = "#CFEBFD1F"
+"style/scrollbar.thumb.border" = "#09667300"
+"style/border.selected" = "@darkslategray2"
+"style/text" = "#F7F7F7"
+"style/created.background" = "$none"
+"style/created.border" = "$none"
+"style/terminal.ansi.dim_black" = "$none"
+"style/info" = "#A3CE9E"
+"style/terminal.ansi.bright_blue" = "#69C"
+"style/terminal.ansi.dim_cyan" = "$none"
+"style/terminal.ansi.green" = "#A3CE9E"
+"style/success.background" = "$none"
+"style/terminal.ansi.dim_green" = "$none"
+"style/renamed" = "$none"
+"style/renamed.background" = "$none"
+"style/terminal.ansi.dim_magenta" = "$none"
+"style/deleted" = "@indianred"
+"style/deleted.background" = "$none"
+"style/terminal.ansi.dim_red" = "$none"
+"style/terminal.ansi.bright_yellow" = "#FAB763"
+"style/syntax/constant.builtin/color" = "@indianred"
+"style/syntax/punctuation.list_marker/color" = "#A5ACBA"
+
+# Deletions
+[deletions]
+keys = [
+	"/style/accents",
+	"/style/editor.indent_guide",
+	"/style/editor.indent_guide_active",
+	"/style/players/1",
+	"/style/scrollbar.thumb.background",
+	"/style/syntax/attribute/background_color",
+	"/style/syntax/boolean/background_color",
+	"/style/syntax/comment.doc/background_color",
+	"/style/syntax/comment/background_color",
+	"/style/syntax/constant.builtin/background_color",
+	"/style/syntax/constant.character",
+	"/style/syntax/constant/background_color",
+	"/style/syntax/constructor/background_color",
+	"/style/syntax/embedded",
+	"/style/syntax/emphasis",
+	"/style/syntax/emphasis.strong",
+	"/style/syntax/enum",
+	"/style/syntax/escape",
+	"/style/syntax/function.builtin/background_color",
+	"/style/syntax/function.definition",
+	"/style/syntax/function.method/background_color",
+	"/style/syntax/function.special",
+	"/style/syntax/function.special.definition",
+	"/style/syntax/function/background_color",
+	"/style/syntax/hint",
+	"/style/syntax/keyword/background_color",
+	"/style/syntax/label",
+	"/style/syntax/lifetime",
+	"/style/syntax/link_text",
+	"/style/syntax/link_uri",
+	"/style/syntax/number/background_color",
+	"/style/syntax/operator/background_color",
+	"/style/syntax/predictive",
+	"/style/syntax/preproc",
+	"/style/syntax/primary",
+	"/style/syntax/property.json_key",
+	"/style/syntax/property/background_color",
+	"/style/syntax/punctuation.bracket.tag",
+	"/style/syntax/punctuation.bracket/background_color",
+	"/style/syntax/punctuation.delimiter/background_color",
+	"/style/syntax/punctuation.list_marker/background_color",
+	"/style/syntax/punctuation.special.symbol",
+	"/style/syntax/punctuation.special/background_color",
+	"/style/syntax/punctuation/background_color",
+	"/style/syntax/string.doc",
+	"/style/syntax/string.escape/background_color",
+	"/style/syntax/string.regex/background_color",
+	"/style/syntax/string.special.symbol/background_color",
+	"/style/syntax/string.special/background_color",
+	"/style/syntax/string/background_color",
+	"/style/syntax/tag/background_color",
+	"/style/syntax/text.literal/background_color",
+	"/style/syntax/title",
+	"/style/syntax/type.builtin/background_color",
+	"/style/syntax/type.interface",
+	"/style/syntax/type.super",
+	"/style/syntax/type/background_color",
+	"/style/syntax/variable",
+	"/style/syntax/variable.builtin",
+	"/style/syntax/variable.member/background_color",
+	"/style/syntax/variable.parameter",
+	"/style/syntax/variable.special",
+	"/style/syntax/variant",
+	"/style/title_bar.inactive_background"
+]

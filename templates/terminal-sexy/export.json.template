@@ -53,7 +53,7 @@
         "editor.line_number": "@c08",
         "editor.subheader.background": "@cbg..v+5",
         "editor.wrap_guide": null,
-        "element.active": "@cbg..(v+10,v-5)",
+        "element.active": "@cbg..(v+20,a.50)",
         "element.background": "@cbg..v+10",
         "element.disabled": "@cbg..v+10",
         "element.hover": "@cfg..20",
@@ -97,41 +97,6 @@
             "cursor": "@cfg",
             "selection": "@c08..50"
           },
-          {
-            "background": null,
-            "cursor": null,
-            "selection": null
-          },
-          {
-            "background": null,
-            "cursor": null,
-            "selection": null
-          },
-          {
-            "background": null,
-            "cursor": null,
-            "selection": null
-          },
-          {
-            "background": null,
-            "cursor": null,
-            "selection": null
-          },
-          {
-            "background": null,
-            "cursor": null,
-            "selection": null
-          },
-          {
-            "background": null,
-            "cursor": null,
-            "selection": null
-          },
-          {
-            "background": null,
-            "cursor": null,
-            "selection": null
-          }
         ],
         "predictive": "@c15",
         "predictive.background": "@cbg..v+5",

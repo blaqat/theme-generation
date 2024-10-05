@@ -4,6 +4,7 @@ theme = "dark"
 
 # Theme Colors
 [color]
+apple = "#F00"
 gainsboro = "#E6E1DC"
 
 [code.error]
@@ -33,6 +34,9 @@ fg = "@gainsboro"
 cursor = "#FFF"
 highlight = "#5A647EDE"
 
+[syntax.a.func.def]
+style = "apple"
+
 [syntax.comment]
 fg = "#AD2EA4"
 style = "italic"
@@ -49,7 +53,7 @@ style = ""
 style = ""
 
 [syntax.func.def]
-style = ""
+style = "apple"
 
 [syntax.keyword]
 fg = "#FC6F09"

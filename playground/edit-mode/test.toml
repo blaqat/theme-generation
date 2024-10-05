@@ -1,0 +1,388 @@
+# Reverse Generation Tool Version 3.0
+name = "tailwind-syntax"
+theme = "dark"
+
+# Theme Colors
+[color]
+burlywood = "#F7CA71"
+darkgray = "#94A3B8"
+darkslategray = "#1D283A"
+darkslategray3 = "#324053"
+darkslategray4 = "#1E293B"
+hotpink = "#F472B6"
+indianred = "#D16060"
+indianred2 = "#B75454"
+lightgray = "#CBD5E1"
+lightgreen = "#7CF9A4"
+lightskyblue = "#7DD3FC"
+paleturquoise = "#99F6E4"
+salmon = "#F87171"
+silver = "#BFBFBF"
+slategray = "#64748B"
+steelblue = "#437187"
+white = "#FFFFFF"
+
+[button]
+active = "#7FD6FF50"
+
+[code.error]
+bg = "@darkslategray4"
+border = "@salmon"
+fg = "@salmon"
+
+[code.hint]
+bg = "#69B2D3"
+border = "#5D9CBA"
+fg = "@slategray"
+
+[code.info]
+bg = "@darkslategray4"
+border = "@lightskyblue"
+fg = "@lightskyblue"
+
+[code.success]
+bg = "#69D38B"
+border = "#5DBA7A"
+fg = "@lightgreen"
+
+[code.unreachable]
+border = "@darkslategray3..50"
+fg = "@darkslategray4"
+
+[code.warning]
+bg = "@darkslategray4"
+border = "@burlywood"
+fg = "@burlywood"
+
+[editor]
+auto_complete = "#5170A0"
+bg = "@darkslategray4"
+gutter = "@darkslategray4"
+invisible = "#0000"
+number = "@slategray"
+text = "@white"
+
+[editor.active]
+line = "#0000"
+matches = "#28374F"
+number = "@darkgray"
+
+[editor.guides]
+wrap = "@darkslategray3..50"
+
+[editor.guides.indent]
+active = "@slategray"
+colors = [
+	"@salmon..50",
+	"@burlywood..50",
+	"@lightgreen..50",
+	"@lightskyblue..50",
+	"@paleturquoise..50",
+	"@hotpink..50",
+	"#6366F150",
+	"@lightgray..50"
+]
+inactive = "@slategray..80"
+
+[editor.search]
+captures = "#28374F"
+line = "#314360"
+text = "@burlywood..5F"
+
+[file.conflict]
+bg = "@indianred"
+border = "@indianred2"
+fg = "@salmon"
+
+[file.created]
+bg = "@lightgreen"
+border = "@darkslategray3..50"
+fg = "@lightgreen"
+
+[file.deleted]
+bg = "@indianred"
+border = "@indianred2"
+fg = "@salmon"
+
+[file.hidden]
+border = "@silver"
+fg = "@darkslategray4"
+
+[file.ignored]
+bg = "@darkslategray4"
+border = "@darkslategray3..50"
+fg = "@steelblue"
+
+[file.modified]
+bg = "#D1AB60"
+border = "#B79654"
+fg = "@burlywood"
+
+[file.renamed]
+bg = "#CC5F99"
+border = "#B25386"
+fg = "@hotpink"
+
+[player]
+cursor = "#E5E7EB"
+highlight = "#35486880"
+z = "#314360"
+
+[scheme]
+black = "@white"
+black_br = "#D8D8D8"
+black_dim = "@silver"
+blue = "@lightskyblue"
+blue_br = "#69B2D3"
+blue_dim = "#5D9CBA"
+cyan = "@paleturquoise"
+cyan_br = "#82CEBF"
+cyan_dim = "#72B5A7"
+green = "@lightgreen"
+green_br = "#69D38B"
+green_dim = "#5DBA7A"
+pink = "@hotpink"
+pink_br = "#CC5F99"
+pink_dim = "#B25386"
+red = "@salmon"
+red_br = "@indianred"
+red_dim = "@indianred2"
+white = "@white"
+white_br = "#D8D8D8"
+white_dim = "@silver"
+yellow = "@burlywood"
+yellow_br = "#D1AB60"
+yellow_dim = "#B79654"
+
+[syntax.boolean]
+fg = "@salmon"
+
+[syntax.comment]
+fg = "@slategray"
+
+[syntax.comment.doc]
+fg = "@slategray"
+
+[syntax.constant]
+fg = "@lightskyblue"
+
+[syntax.constant.builtin]
+fg = "@lightgray"
+
+[syntax.enum]
+fg = "@lightskyblue"
+
+[syntax.func]
+fg = "@hotpink"
+
+[syntax.func.builtin]
+fg = "@paleturquoise"
+
+[syntax.func.def]
+fg = "@lightskyblue"
+
+[syntax.func.method]
+fg = "@hotpink"
+
+[syntax.keyword]
+fg = "@lightgray"
+
+[syntax.namespace]
+fg = "@lightskyblue"
+
+[syntax.number]
+fg = "@salmon"
+
+[syntax.op]
+fg = "@slategray"
+
+[syntax.param]
+fg = "@white"
+
+[syntax.property]
+fg = "@white"
+
+[syntax.punc]
+fg = "@slategray"
+
+[syntax.punc.bracket]
+fg = "@slategray"
+
+[syntax.punc.delimiter]
+fg = "@slategray"
+
+[syntax.punc.symbol]
+fg = "@darkgray"
+
+[syntax.punc.tag]
+fg = "@slategray"
+
+[syntax.string]
+fg = "@lightskyblue"
+
+[syntax.string.escape]
+fg = "@lightskyblue"
+
+[syntax.string.inter]
+fg = "@darkgray"
+
+[syntax.string.regex]
+fg = "@lightskyblue"
+
+[syntax.string.special]
+fg = "@lightskyblue"
+
+[syntax.type]
+fg = "@hotpink"
+
+[syntax.type.builtin]
+fg = "@lightgray"
+
+[syntax.var]
+fg = "@white"
+
+[syntax.var.builtin]
+fg = "@lightskyblue"
+
+[syntax.z.html_attribute]
+fg = "@lightgray"
+
+[syntax.z.html_tag]
+fg = "@hotpink"
+
+[syntax.z.json_key]
+fg = "@lightgray"
+
+[syntax.z.rs_lifetime]
+fg = "@lightskyblue"
+
+[ui]
+bg = "@darkslategray4"
+file_drop = "@darkslategray"
+link = "@lightskyblue"
+panel = "@darkslategray"
+popup = "@darkslategray4"
+terminal = "@darkslategray4"
+
+[ui.bars]
+bottom = "@darkslategray"
+tool = "@darkslategray4"
+top = "@darkslategray"
+
+[ui.bars.tab]
+active = "@darkslategray4"
+bg = "#29344900"
+inactive = "@darkslategray4"
+
+[ui.bars.title]
+inactive = "@darkslategray"
+
+[ui.border]
+primary = "@darkslategray3..50"
+secondary = "@darkslategray3..50"
+
+[ui.button]
+disabled = "@steelblue"
+pressed = "@lightskyblue..50"
+primary = "@lightskyblue..50"
+
+[ui.element]
+active = "#243147"
+bg = "element.primary"
+disabled = "element.disabled"
+hover = "#2A3A54"
+pressed = "@darkslategray"
+
+[ui.header]
+hover = "@white..1F"
+primary = "@darkslategray4"
+
+[ui.scrollbar]
+border = "@darkslategray3..50"
+highlight = "@darkslategray3..50"
+thumb = "@slategray..50"
+
+[ui.text]
+accent = "@lightskyblue"
+active = "@white"
+inactive = "#CCCED1"
+muted = "@steelblue"
+placeholder = "@darkgray"
+
+# Overrides
+[overrides]
+"themes/0/style/border.disabled" = "@darkslategray3..50"
+"themes/0/style/border.focused" = "@darkslategray3..50"
+"themes/0/style/border.selected" = "@darkslategray3..50"
+"themes/0/style/border.transparent" = "@darkslategray3..50"
+"themes/0/style/icon" = "$none"
+"themes/0/style/icon.accent" = "$none"
+"themes/0/style/icon.disabled" = "$none"
+"themes/0/style/icon.muted" = "$none"
+"themes/0/style/icon.placeholder" = "$none"
+"themes/0/style/players/1" = { background = "$none", cursor = "$none", selection = "$none" }
+"themes/0/style/predictive.border" = "@darkslategray3..50"
+"themes/0/style/scrollbar.thumb.hover_background" = "$none"
+"themes/0/style/scrollbar_thumb.background" = "@slategray..50"
+"themes/0/style/surface.background" = "@darkslategray4"
+"themes/0/style/syntax/embedded" = { background_color = "$none", color = "$none", font_style = "$none", font_weight = "$none" }
+"themes/0/style/syntax/emphasis" = { background_color = "$none", color = "$none", font_style = "$none", font_weight = "$none" }
+"themes/0/style/syntax/emphasis.strong" = { background_color = "$none", color = "$none", font_style = "$none", font_weight = "$none" }
+"themes/0/style/syntax/escape" = { background_color = "$none", color = "$none", font_style = "$none", font_weight = "$none" }
+"themes/0/style/syntax/hint" = { background_color = "$none", color = "@darkgray", font_style = "$none", font_weight = "$none" }
+"themes/0/style/syntax/label" = { background_color = "$none", color = "$none", font_style = "$none", font_weight = "$none" }
+"themes/0/style/syntax/link_text/background_color" = "$none"
+"themes/0/style/syntax/link_text/font_style" = "$none"
+"themes/0/style/syntax/link_text/font_weight" = "$none"
+"themes/0/style/syntax/link_uri/background_color" = "$none"
+"themes/0/style/syntax/link_uri/font_style" = "$none"
+"themes/0/style/syntax/link_uri/font_weight" = "$none"
+"themes/0/style/syntax/predictive" = { background_color = "$none", color = "$none", font_style = "$none", font_weight = "$none" }
+"themes/0/style/syntax/preproc" = { background_color = "$none", color = "$none", font_style = "$none", font_weight = "$none" }
+"themes/0/style/syntax/primary" = { background_color = "$none", color = "@lightskyblue", font_style = "$none", font_weight = "$none" }
+"themes/0/style/syntax/text.literal" = { background_color = "$none", color = "@white", font_style = "$none", font_weight = "$none" }
+"themes/0/style/syntax/title" = { background_color = "$none", color = "@lightgray", font_style = "$none", font_weight = "$none" }
+"themes/0/style/syntax/type.interface" = { background_color = "$none", color = "@hotpink", font_style = "$none", font_weight = "$none" }
+"themes/0/style/syntax/variant" = { background_color = "$none", color = "$none", font_style = "$none", font_weight = "$none" }
+"themes/0/style/terminal.bright_foreground" = "@white"
+"themes/0/style/terminal.dim_foreground" = "@white"
+"themes/0/style/terminal.foreground" = "@white"
+"themes/0/style/editor.active_wrap_guide" = "$none"
+"themes/0/name" = "Tailwind Syntax"
+"themes/0/style/syntax/variable.builtin/color" = "@lightgray"
+"themes/0/style/syntax/constant/color" = "@salmon"
+"themes/0/style/syntax/string.doc/color" = "@darkgray"
+"themes/0/style/syntax/function.special/color" = "@lightskyblue"
+"themes/0/style/syntax/function.definition/color" = "@hotpink"
+"themes/0/style/syntax/property/color" = "@lightgray"
+"themes/0/style/syntax/constructor/color" = "$none"
+"themes/0/style/syntax/punctuation.list_marker/color" = "@salmon"
+
+# Deletions
+[deletions]
+keys = [
+	"/themes/0/style/unreachable.background",
+	"/themes/0/style/syntax/type.builtin.primitive",
+	"/themes/0/style/syntax/punctuation.bracket.tag/background_color",
+	"/themes/0/style/syntax/operator.logical",
+	"/themes/0/style/syntax/operator.comparison",
+	"/themes/0/style/syntax/operator.bitwise",
+	"/themes/0/style/syntax/operator.assignment",
+	"/themes/0/style/syntax/operator.arithmetic",
+	"/themes/0/style/syntax/keyword.type",
+	"/themes/0/style/syntax/keyword.return",
+	"/themes/0/style/syntax/keyword.repeat",
+	"/themes/0/style/syntax/keyword.operator",
+	"/themes/0/style/syntax/keyword.import",
+	"/themes/0/style/syntax/keyword.function",
+	"/themes/0/style/syntax/keyword.exception",
+	"/themes/0/style/syntax/keyword.directive.define",
+	"/themes/0/style/syntax/keyword.directive",
+	"/themes/0/style/syntax/keyword.debug",
+	"/themes/0/style/syntax/keyword.coroutine",
+	"/themes/0/style/syntax/keyword.conditional.ternary",
+	"/themes/0/style/syntax/keyword.conditional",
+	"/themes/0/style/syntax/function.declaration",
+	"/themes/0/style/hidden.background",
+	"/themes/0/style/background.appearance"
+]
