@@ -1,7 +1,7 @@
 use crate::prelude::*;
-use commands::check::{parse_special_array, SpecialKey};
 use itertools::Itertools;
 use steps::{generate_toml_string, key_diff, replace_color, resolve_variables, to_color_map};
+use utils::parsing::special_array::{parse_special_keys, SpecialKey};
 
 /**
 Reverse:
@@ -346,8 +346,8 @@ mod steps {
             }
 
             (Value::Array(vec1), Value::Array(vec2)) => {
-                let (is_vec1_spec, match_all1, spec_keys_1) = parse_special_array(vec1);
-                let (is_vec2_spec, match_all2, spec_keys_2) = parse_special_array(vec2);
+                let (is_vec1_spec, match_all1, spec_keys_1) = parse_special_keys(vec1);
+                let (is_vec2_spec, match_all2, spec_keys_2) = parse_special_keys(vec2);
                 let is_special = is_vec1_spec || is_vec2_spec;
                 let match_all = match_all1 || match_all2;
                 let special_keys: Vec<SpecialKey> =

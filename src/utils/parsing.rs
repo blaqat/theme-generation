@@ -517,3 +517,157 @@ impl VariableSet {
         *vars = resolved;
     }
 }
+
+pub mod special_array {
+    use super::*;
+
+    #[derive(Debug)]
+    enum MatchMode {
+        Exact,
+        Contains,
+        Regex,
+        StartsWith,
+        EndsWith,
+        NullMismatch,
+    }
+
+    impl FromStr for MatchMode {
+        type Err = String;
+        fn from_str(s: &str) -> Result<Self, Self::Err> {
+            match s {
+                "equals" | "match" | "is" | "sameas" | "identical" | "exact" | "=" => {
+                    Ok(Self::Exact)
+                }
+                "includes" | "has" | "within" | "partof" | "contains" | "~" => Ok(Self::Contains),
+                "pattern" | "expr" | "dyn" | "regex" | "*" => Ok(Self::Regex),
+                "prefix" | "beginswith" | "startswith" | "<" => Ok(Self::StartsWith),
+                "suffix" | "trailing" | "endswith" | ">" => Ok(Self::EndsWith),
+                "mismatch" | "oneof" | "single" | "xor" | "^" | "!" => Ok(Self::NullMismatch),
+                _ => Err("Invalid Match Mode".into()),
+            }
+        }
+    }
+
+    impl MatchMode {
+        fn matches(&self, checking: &Value, other_val: &Value) -> bool {
+            let check_str = value_to_string(checking);
+            match (self, other_val) {
+                (Self::Exact, val) => checking == val,
+                (Self::Contains | Self::StartsWith | Self::EndsWith | Self::NullMismatch, _)
+                    if checking == other_val =>
+                {
+                    false
+                }
+
+                (Self::Contains, Value::String(s)) => s.contains(&check_str),
+                (Self::Contains, Value::Array(vec)) => vec.contains(checking),
+                (Self::Contains, Value::Object(map)) => map.contains_key(&check_str),
+
+                (Self::Regex, val) => {
+                    let re = regex::Regex::new(&check_str).unwrap();
+                    // re.is_match(&val.to_string())
+                    re.is_match(&value_to_string(val))
+                }
+
+                (Self::StartsWith, Value::String(s)) => s.starts_with(&check_str),
+                (Self::StartsWith, Value::Array(vec)) => vec.first().is_some_and(|v| checking == v),
+
+                (Self::EndsWith, Value::String(s)) => s.ends_with(&check_str),
+                (Self::EndsWith, Value::Array(vec)) => vec.last().is_some_and(|v| checking == v),
+
+                (Self::NullMismatch, Value::Null) => !checking.is_null(),
+                (Self::NullMismatch, val) if checking.is_null() => !val.is_null(),
+
+                (Self::StartsWith | Self::EndsWith | Self::Contains | Self::NullMismatch, _) => {
+                    false
+                }
+            }
+        }
+    }
+
+    #[derive(Debug)]
+    enum SpecialMode {
+        Single(MatchMode),
+        Inside(MatchMode),
+    }
+
+    impl FromStr for SpecialMode {
+        type Err = String;
+
+        fn from_str(s: &str) -> Result<Self, Self::Err> {
+            if let Some((sp_mode, m)) = s.replace('.', "i::").split_once("::") {
+                match sp_mode.chars().next().unwrap() {
+                    'i' => Ok(Self::Inside(m.parse()?)),
+                    's' => Ok(Self::Single(m.parse()?)),
+                    _ => Err("Invalid Special Mode".into()),
+                }
+            } else {
+                Ok(Self::Single(s.parse()?))
+            }
+        }
+    }
+
+    impl SpecialMode {
+        fn parse_modes(s: &str) -> Result<Vec<Self>, String> {
+            s.split('|').map(str::parse).collect()
+        }
+    }
+
+    #[derive(Debug)]
+    pub struct SpecialKey(pub String, Vec<SpecialMode>);
+
+    impl SpecialKey {
+        pub fn matches(&self, val1: &Value, other_val: &Value) -> bool {
+            self.1
+                .iter()
+                .map(|mode| match mode {
+                    SpecialMode::Single(match_mode) => match_mode.matches(val1, other_val),
+                    SpecialMode::Inside(match_mode) => match other_val {
+                        Value::Array(vec) => vec.iter().any(|val| match_mode.matches(val1, val)),
+                        Value::Object(map) => map.values().any(|val| match_mode.matches(val1, val)),
+                        _ => false,
+                    },
+                })
+                .any(|x| x)
+        }
+    }
+
+    const SPECIAL_ARRAY_KEY: &str = "$::mode";
+
+    pub fn parse_special_keys(vec: &[Value]) -> (bool, bool, Vec<SpecialKey>) {
+        let special = vec.first().and_then(|val1| match val1 {
+            Value::Object(spobj) if spobj.contains_key(SPECIAL_ARRAY_KEY) => {
+                let match_mode = spobj[SPECIAL_ARRAY_KEY].as_str().unwrap_or_default() == "strict";
+                let keys = spobj
+                    .iter()
+                    .filter(|(key, _)| *key != SPECIAL_ARRAY_KEY)
+                    .map(|(key, val)| {
+                        SpecialKey(
+                            key.to_owned(),
+                            SpecialMode::parse_modes(val.as_str().unwrap_or_default())
+                                .unwrap_or_default(),
+                        )
+                    })
+                    .collect();
+                Some((match_mode, keys))
+            }
+
+            Value::String(str1) if str1.starts_with("$matches::") => {
+                let keys = str1
+                    .strip_prefix("$matches::")
+                    .unwrap()
+                    .split(',')
+                    .map(|key| {
+                        SpecialKey(key.to_string(), vec![SpecialMode::Single(MatchMode::Exact)])
+                    })
+                    .collect();
+
+                Some((true, keys))
+            }
+
+            _ => None,
+        });
+
+        special.map_or_else(Default::default, |val| (true, val.0, val.1))
+    }
+}
