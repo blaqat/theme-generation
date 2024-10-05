@@ -359,12 +359,12 @@ fn write_to_file(
     matches: &serde_json::Value,
     generate_names: bool,
     flags: &Flags,
-) -> Result<(), ProgramError> {
+) -> Result<String, ProgramError> {
     // Step 6: Generate the new theme file
     let json_output = serde_json::to_string_pretty(&matches).unwrap();
     let default_name = "/name".parse::<JSPath>().unwrap().traverse(matches).ok();
 
-    let file_name = format!("{}.json", {
+    let mut file_name = format!("{}.json", {
         if flags.name == "generated-theme"
             && let Some(default) = default_name
         {
@@ -387,13 +387,14 @@ fn write_to_file(
             out_file.pop();
             out_file.push(&a);
         }
+        file_name = new_name;
     }
 
     let mut file = File::create(out_file)
         .map_err(|e| ProgramError::Processing(format!("Could not create file: {e}")))?;
     file.write_all(json_output.as_bytes())
         .map_err(|e| ProgramError::Processing(format!("Could not write to file: {e}")))?;
-    Ok(())
+    Ok(file_name)
 }
 
 pub fn generate(
@@ -410,6 +411,7 @@ pub fn generate(
     let mut make_new_files_per_variable = true;
     let mut is_array = false;
     let mut data: serde_json::Value = serde_json::Value::Null;
+    let mut generated_files = vec![];
 
     // Step 0: Traverse to the starting path if it exists
     if let Some(ref starting_path) = flags.path {
@@ -463,7 +465,7 @@ pub fn generate(
 
         if make_new_files_per_variable {
             // Step 6: Write the new theme file
-            write_to_file(&matches, !flags.replace_name, &flags)?;
+            generated_files.push(write_to_file(&matches, !flags.replace_name, &flags)?);
         } else if is_array {
             data.as_array_mut().unwrap().push(matches);
         } else {
@@ -475,9 +477,13 @@ pub fn generate(
     if !make_new_files_per_variable {
         let mut full = base;
         flags.path.clone().unwrap().pave(&mut full, data.clone())?;
-        write_to_file(&full, false, &flags)?;
+        generated_files.push(write_to_file(&full, false, &flags)?);
     }
 
-    println!("Generated {} files", variables.len());
+    println!(
+        "Generated ({}) themes: {:?}",
+        variables.len(),
+        generated_files
+    );
     Ok(())
 }

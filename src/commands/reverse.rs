@@ -670,6 +670,7 @@ pub fn reverse(
     flags: &[String],
 ) -> Result<(), ProgramError> {
     let flags = ReverseFlags::parse(flags);
+    let mut generated_files = Vec::new();
 
     // Step 1: Deserialize the template and theme files into Objects.
     let mut theme: Value = serde_json::from_reader(&theme.file).map_err(|json_err| {
@@ -702,7 +703,7 @@ pub fn reverse(
                    template: Value,
                    file_name: &str,
                    gen_color: bool|
-     -> Result<(), ProgramError> {
+     -> Result<String, ProgramError> {
         // Step 1.5: Preprocesser Overrides
         // When a key starts with $::, it means variable should = the value
         // e.g
@@ -864,19 +865,24 @@ pub fn reverse(
 
         let mut out_file = out_dir;
         let file_name = format!("{file_name}.toml");
-        out_file.push(file_name);
+        out_file.push(file_name.clone());
 
         let mut file = File::create(out_file)
             .map_err(|e| ProgramError::Processing(format!("Could not create file: {e}")))?;
         file.write_all(toml_output.as_bytes())
             .map_err(|e| ProgramError::Processing(format!("Could not write to file: {e}")))?;
 
-        Ok(())
+        Ok(file_name)
     };
 
     match (&theme, &template) {
         (Value::Object(_), Value::Object(_)) => {
-            reverse(theme, template, &flags.name, flags.generate_colors)?;
+            generated_files.push(reverse(
+                theme,
+                template,
+                &flags.name,
+                flags.generate_colors,
+            )?);
         }
         (Value::Array(theme), Value::Array(template)) => {
             let template = template.first().unwrap();
@@ -896,12 +902,12 @@ pub fn reverse(
                         format!("{}{}", flags.name, i)
                     }
                 };
-                reverse(
+                generated_files.push(reverse(
                     theme.clone(),
                     template.clone(),
                     &name,
                     flags.generate_colors,
-                )?;
+                )?);
             }
         }
         _ => {
@@ -910,6 +916,12 @@ pub fn reverse(
             )))
         }
     }
+
+    println!(
+        "Reversed into ({}) files: {:?}",
+        generated_files.len(),
+        generated_files,
+    );
 
     Ok(())
 }
