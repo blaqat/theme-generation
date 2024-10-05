@@ -175,19 +175,22 @@ mod steps {
         for pointer in pointers {
             if let (var_name, ParsedValue::Variables(paths)) = (pointer.path, pointer.value) {
                 for path in paths {
-                    let unresolved_var = unresolved_vars
+                    if let Some(unresolved_var) =
+                        unresolved_vars.iter().find(|v| v.path.to_string() == path)
+                    {
+                        let identity = unresolved_var.identity();
+                        unresolved_set
+                            .entry(var_name.clone())
+                            .or_default()
+                            .entry(identity)
+                            .or_default()
+                            .push((path, unresolved_var));
+                    } else if let Some(sib) = unresolved_vars
                         .iter()
-                        .find(|v| v.path.to_string() == path)
-                        .unwrap();
-
-                    let identity = unresolved_var.identity();
-
-                    unresolved_set
-                        .entry(var_name.clone())
-                        .or_default()
-                        .entry(identity)
-                        .or_default()
-                        .push((path, unresolved_var));
+                        .find_map(|v| v.siblings.iter().find(|s| s.path.to_string() == path))
+                    {
+                        unvar_set.inc_insert(&path, sib.clone());
+                    }
                 }
             }
         }
@@ -274,19 +277,19 @@ mod steps {
                     new.next();
                     match new_new.next() {
                         Some(next) if !var_set.has_variable(&next.name) => {
-                            unvar_set.insert(&next.name, new);
+                            unvar_set.inc_insert(&next.name, new);
                             inserted = true;
                         }
                         Some(_) => current = new.clone(),
                         None => {
-                            unvar_set.insert(&var_name.join(), new);
+                            unvar_set.inc_insert(&var_name.join(), new);
                             inserted = true;
                         }
                     }
                 }
 
                 if !inserted {
-                    unvar_set.insert(&var_name.join(), (*u).clone());
+                    unvar_set.inc_insert(&var_name.join(), (*u).clone());
                 }
             }
         }
@@ -294,15 +297,24 @@ mod steps {
         var_set.resolve();
 
         // Unresolve Null Mismatches
-        for (var, val) in var_set
-            .to_map()
-            .iter_mut()
+        let map = var_set.to_map();
+
+        let siblings = map
+            .iter()
+            .flat_map(|(k, v)| v.siblings.iter().map(move |s| (k, s)))
+            .filter(|(_, v)| v.value == ParsedValue::Null && v.variables.len() > 1);
+
+        let filter = map
+            .iter()
             .filter(|(_, v)| v.value == ParsedValue::Null && v.variables.len() > 1)
-        {
+            .chain(siblings.clone())
+            .map(|(k, v)| (k, v.to_owned()));
+
+        for (var, mut val) in filter {
             let og = val.clone();
             while let Some(v) = val.next() {
                 if !var_set.is_null(&v.name) {
-                    unvar_set.insert(var, og);
+                    unvar_set.inc_insert(var, og);
                     break;
                 }
             }
@@ -386,16 +398,6 @@ mod steps {
                         _ => info.missing.push(format!("{prefix}/{key}")),
                     }
                 }
-                // for (key, val) in vec1.iter().enumerate() {
-                //     match vec2.get(key) {
-                //         Some(val2) => {
-                //             let next_diff =
-                //                 key_diff(val, val2, format!("{prefix}/{key}"), log_vars);
-                //             info.extend(next_diff);
-                //         }
-                //         _ => info.missing.push(format!("{prefix}/{key}")),
-                //     }
-                // }
             }
 
             (val1, val2) if !log_vars && same_type(val1, val2) && val1 != val2 => {
@@ -561,20 +563,12 @@ mod steps {
             ($var_name:ident=$from:expr) => {
                 let $var_name: toml::Value = {
                     match $from {
-                        // Value::Null => toml::Value::String(String::from(TOML_NULL)),
-                        // a => {
-                        //     serde_json::from_value(a).map_err(|json_err| {
-                        //         Error::Processing(format!("Unhandeled theme json: {}", json_err))
-                        //     })?
-                        // }
                         a => into_toml(a)?,
                     }
                 };
             };
         }
 
-        // let grouped_toml: toml::Value = serde_json::from_value(grouped_json.clone())
-        //     .map_err(|json_err| Error::Processing(format!("Invalid theme json: {}", json_err)))?;
         t!(grouped_toml = variables);
 
         let data = grouped_toml.as_table().unwrap();
@@ -638,7 +632,7 @@ mod steps {
                 .into_iter()
                 .sorted_by_key(|(k, _)| k.clone())
             {
-                t!(val = v.value.into_value());
+                t!(val = v.value.clone().into_value());
                 w!(r#""{}" = {}"#, v.path.join(), val);
             }
         }

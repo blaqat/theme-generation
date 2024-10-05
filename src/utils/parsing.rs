@@ -162,6 +162,7 @@ pub struct ResolvedVariable {
     pub value: ParsedValue,
     pub variables: Vec<ParsedVariable>,
     pub resolved_id: Option<usize>,
+    pub siblings: Vec<ResolvedVariable>,
 }
 
 impl<'a> ResolvedVariable {
@@ -176,6 +177,7 @@ impl<'a> ResolvedVariable {
             variables: vec![variable],
             path: JSPath::new(),
             resolved_id: Some(0),
+            siblings: Vec::new(),
         }
     }
 
@@ -187,6 +189,7 @@ impl<'a> ResolvedVariable {
             value,
             variables: Vec::new(),
             resolved_id: Some(0),
+            siblings: Vec::new(),
         }
     }
 
@@ -196,6 +199,7 @@ impl<'a> ResolvedVariable {
             value: ParsedValue::Variables(unresolved_paths.to_vec()),
             variables: Vec::new(),
             resolved_id: Some(UNRESOLVED_POINTER_CONST),
+            siblings: Vec::new(),
         }
     }
 
@@ -215,6 +219,7 @@ impl<'a> ResolvedVariable {
             value: src.value.clone(),
             variables,
             resolved_id: Some(0),
+            siblings: Vec::new(),
         }
     }
 
@@ -230,10 +235,11 @@ impl<'a> ResolvedVariable {
             value,
             variables: Vec::new(),
             resolved_id: None,
+            siblings: Vec::new(),
         }
     }
 
-    fn is_resolvable(&self) -> bool {
+    pub fn is_resolvable(&self) -> bool {
         self.resolved_id.map_or(false, |i| i < self.variables.len())
     }
 
@@ -408,11 +414,25 @@ impl VariableSet {
         self.variables
             .borrow()
             .get(name)
+            .and_then(|var| {
+                var.variables
+                    .iter()
+                    .skip(1)
+                    .all(|v| self.is_null(&v.name))
+                    .then_some(var)
+            })
             .map_or(true, |v| v.value == ParsedValue::Null)
     }
 
     pub fn insert(&self, name: &str, var: ResolvedVariable) {
         self.variables.borrow_mut().insert(name.to_string(), var);
+    }
+
+    pub fn insert_sibling(&self, name: &str, var: ResolvedVariable) {
+        let mut vars = self.variables.borrow_mut();
+        if let Some(og) = vars.get_mut(name) {
+            og.siblings.push(var);
+        }
     }
 
     pub fn inc_insert(&self, name: &str, var: ResolvedVariable) {
@@ -434,8 +454,10 @@ impl VariableSet {
     }
 
     pub fn safe_insert(&self, name: &str, mut var: ResolvedVariable) {
-        if !self.has_variable(name) || var.identity_eq(&self.variables.borrow()[name]) {
+        if !self.has_variable(name) {
             self.insert(name, var);
+        } else if var.identity_eq(&self.variables.borrow()[name]) {
+            self.insert_sibling(name, var);
         } else {
             let mut vars = self.variables.borrow_mut();
             let mut existing = vars.get(name).unwrap().clone();
@@ -446,7 +468,11 @@ impl VariableSet {
                 existing.unresolve();
 
                 // Insert variables as paths
-                let paths = [var.path.to_string(), existing.path.to_string()];
+                let paths: Vec<String> = [var.path.to_string(), existing.path.to_string()]
+                    .into_iter()
+                    .chain(existing.siblings.iter().map(|s| s.path.to_string()))
+                    .collect();
+
                 vars.insert(paths[0].clone(), var);
                 vars.insert(paths[1].clone(), existing);
 
