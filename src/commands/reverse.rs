@@ -21,6 +21,7 @@ Reverse:
 */
 
 pub const TOML_NULL: &str = "$none";
+pub const VALID_FLAGS: &[&str] = &["-t", "-o", "-n", "-p", "-g"];
 
 #[derive(PartialEq, Debug)]
 enum ReverseFlags {

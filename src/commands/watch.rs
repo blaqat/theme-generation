@@ -39,7 +39,7 @@ pub fn watch(
         match rx.try_recv() {
             Ok(ref event) if let Ok(_) = event => {
                 let variable_files = variable_files.to_vec();
-                if let Err(e) = commands::generate(template_file, variable_files, flags) {
+                if let Err(e) = commands::generate(&template_file.clone(), variable_files, flags) {
                     error!("Error Generating Theme: {:?}", e);
                 }
             }

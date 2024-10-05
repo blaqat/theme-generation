@@ -233,9 +233,15 @@ pub fn run_command(args: Vec<String>) -> Result<(), ProgramError> {
         ValidCommands::Edit => {
             let template_file = ValidatedFile::from_str(&command_args[0])?;
             let theme_file = ValidatedFile::from_str(&command_args[1])?;
-            let watch_flags = flags.clone();
-            let reverse_flags: Vec<String> =
-                flags.into_iter().filter(|x| !x.starts_with("-o")).collect();
+            let watch_flags: Vec<_> = flags
+                .clone()
+                .into_iter()
+                .filter(|x| commands::generate::VALID_FLAGS.contains(&&x[0..2]))
+                .collect();
+            let reverse_flags: Vec<_> = flags
+                .into_iter()
+                .filter(|x| commands::reverse::VALID_FLAGS.contains(&&x[0..2]))
+                .collect();
             let watch_command = |name| {
                 vec!["", "watch", name, "all"]
                     .into_iter()

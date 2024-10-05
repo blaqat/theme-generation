@@ -1,7 +1,7 @@
 mod check;
 pub mod generate;
 mod help;
-mod reverse;
+pub mod reverse;
 mod watch;
 
 pub use check::check;

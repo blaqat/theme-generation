@@ -19,6 +19,8 @@ Generate:
         -r              Overwrite the output file of the same name if it exists
 */
 
+pub const VALID_FLAGS: [&str; 5] = ["-o", "-i", "-p", "-n", "-r"];
+
 #[derive(PartialEq, Eq, Debug)]
 pub enum FlagTypes {
     OutputDirectory(PathBuf),
