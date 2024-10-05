@@ -132,10 +132,10 @@ pub struct Operation(pub Component, pub String);
 #[macro_export]
 macro_rules! operation {
     ($setting: ident . $val: expr) => {
-        Operation(Component::$setting($val), ".".to_string())
+        Operation(Component::$setting($val), String::from("."))
     };
     ($setting: ident=$val: expr) => {
-        Operation(Component::$setting($val), "=".to_string())
+        Operation(Component::$setting($val), String::from("="))
     };
     ($setting: ident $op: expr; $val: expr) => {
         Operation(Component::$setting($val), $op.to_string())
@@ -313,7 +313,7 @@ impl Default for Color {
             hue: 0,
             saturation: 0,
             value: 0,
-            hex: "#000000".to_string(),
+            hex: String::from("#000"),
         }
     }
 }
@@ -328,17 +328,6 @@ impl FromStr for Color {
 
 #[allow(clippy::cast_sign_loss, clippy::cast_possible_truncation)]
 impl Color {
-    fn update_from(&mut self, other: &Self) {
-        self.alpha = other.alpha;
-        self.red = other.red;
-        self.green = other.green;
-        self.blue = other.blue;
-        self.hue = other.hue;
-        self.saturation = other.saturation;
-        self.value = other.value;
-        self.hex = other.hex.to_string();
-    }
-
     pub fn from_change(hex: &str, ops: &[Operation]) -> Result<Self, Error> {
         let mut color = Self::from_hex(hex)?;
         color.update(ops.to_vec())?;
@@ -523,7 +512,7 @@ impl Color {
                 }
 
                 Component::Alpha(_) => self.update_hex(),
-                Component::Hex(ref hex) => self.update_from(&Self::from_hex(hex)?),
+                Component::Hex(ref hex) => self.clone_from(&Self::from_hex(hex)?),
             }
         }
 

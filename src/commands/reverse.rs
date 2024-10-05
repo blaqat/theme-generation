@@ -157,12 +157,12 @@ mod steps {
         let unvar_set = VariableSet::new();
 
         for var in res_var_diff {
-            let name = var.name().to_string();
+            let name = var.name();
             var_set.safe_insert(&name, var);
         }
 
         for o in overrides {
-            let name = o.name().to_string();
+            let name = o.name();
             unvar_set.safe_insert(&name, o);
         }
 
@@ -341,14 +341,12 @@ mod steps {
                     spec_keys_1.into_iter().chain(spec_keys_2).collect();
 
                 let vec1 = if is_vec1_spec {
-                    dbg!(match_all);
                     &vec1[1..].to_vec()
                 } else {
                     vec1
                 };
 
                 let vec2 = if is_vec2_spec {
-                    dbg!(match_all);
                     &vec2[1..].to_vec()
                 } else {
                     vec2
@@ -813,11 +811,8 @@ pub fn reverse(
                     "color" if flags.generate_colors => match val {
                         Value::Object(ref obj) => {
                             for (color, value) in obj {
-                                let var = ResolvedVariable::init(
-                                    color,
-                                    ParsedValue::String(value.to_string()),
-                                );
-                                variables.insert(color, var.clone());
+                                let color = format!("color/{color}");
+                                get_var_path(color).pave(&mut grouped_json, value.clone())?;
                             }
                         }
                         _ => {
@@ -898,8 +893,10 @@ pub fn reverse(
                 }
                 let default_name = "/name".parse::<JSPath>().unwrap().traverse(theme).ok();
                 let name = {
-                    if let Some(name) = default_name {
-                        name.as_str().unwrap().to_string()
+                    if let Some(name) = default_name
+                        && let Some(name) = name.as_str()
+                    {
+                        name.to_string()
                     } else {
                         format!("{}{}", flags.name, i)
                     }

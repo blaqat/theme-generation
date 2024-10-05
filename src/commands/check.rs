@@ -58,7 +58,7 @@ impl FromStr for MatchMode {
 
 impl MatchMode {
     fn matches(&self, checking: &Value, other_val: &Value) -> bool {
-        let check_str = checking.to_string().replace('\"', "");
+        let check_str = value_to_string(checking);
         match (self, other_val) {
             (Self::Exact, val) => checking == val,
             (Self::Contains | Self::StartsWith | Self::EndsWith | Self::NullMismatch, _)
@@ -73,7 +73,8 @@ impl MatchMode {
 
             (Self::Regex, val) => {
                 let re = regex::Regex::new(&check_str).unwrap();
-                re.is_match(&val.to_string())
+                // re.is_match(&val.to_string())
+                re.is_match(&value_to_string(val))
             }
 
             (Self::StartsWith, Value::String(s)) => s.starts_with(&check_str),
@@ -148,7 +149,7 @@ pub fn parse_special_array(vec: &[Value]) -> (bool, bool, Vec<SpecialKey>) {
                 .filter(|(key, _)| *key != SPECIAL_ARRAY_KEY)
                 .map(|(key, val)| {
                     SpecialKey(
-                        key.to_string(),
+                        key.to_owned(),
                         SpecialMode::parse_modes(val.as_str().unwrap_or_default())
                             .unwrap_or_default(),
                     )

@@ -29,7 +29,8 @@ impl FromStr for ParsedValue {
     type Err = ProgramError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if s.starts_with('$') || s.starts_with('@') {
+        // if s.starts_with('$') || s.starts_with('@') {
+        if potential_var(s) {
             s.chars().nth(0);
             let vars = s
                 .split('|')
@@ -92,8 +93,6 @@ pub struct ParsedVariable {
     pub operations: Operations,
 }
 
-impl ParsedVariable {}
-
 impl Display for ParsedVariable {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, r#""{}":{:?}"#, self.name, self.operations)
@@ -104,7 +103,8 @@ impl FromStr for ParsedVariable {
     type Err = prelude::ProgramError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s.split_once("..") {
+        // split can eithe rbe .. or ::, so we need to check for both
+        match s.split_once("..").or_else(|| s.split_once("::")) {
             Some((name, operations)) => {
                 let mut chars = operations.chars();
                 let operations: Operations = match chars.next().ok_or_else(|| {

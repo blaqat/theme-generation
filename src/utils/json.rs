@@ -4,6 +4,13 @@ pub mod serde_value {
     use super::{ProgramError, Value};
     use toml::Value as t_Value;
 
+    pub fn value_to_string(val: &Value) -> String {
+        match val {
+            Value::String(s) => s.to_owned(),
+            _ => val.to_string(),
+        }
+    }
+
     pub fn into_toml(val: Value) -> Result<t_Value, ProgramError> {
         match val {
             Value::Null => Ok(t_Value::String(crate::commands::TOML_NULL.to_string())),
