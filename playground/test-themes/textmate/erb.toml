@@ -1,0 +1,94 @@
+# Reverse Generation Tool Version 3.0
+name = "Merbivore"
+theme = "dark"
+
+# Theme Colors
+[color]
+apple = "#F00"
+gainsboro = "#E6E1DC"
+
+[code.error]
+bg = "#900"
+fg = "#FFF"
+
+[deletions]
+keys = [
+	"themes/0/style/accents"
+]
+
+[editor]
+invisible = "#404040"
+
+[editor.active]
+line = "#333435"
+
+[file.created]
+bg = "#144212"
+fg = "@gainsboro"
+
+[file.deleted]
+bg = "#600"
+fg = "@gainsboro"
+
+[player]
+cursor = "#FFF"
+highlight = "#5A647EDE"
+
+[syntax.a.func.def]
+style = "apple"
+
+[syntax.comment]
+fg = "#AD2EA4"
+style = "italic"
+
+[syntax.constant]
+fg = "#1EDAFB"
+style = ""
+
+[syntax.constant.builtin]
+fg = "#FDC251"
+style = ""
+
+[syntax.func.builtin]
+style = ""
+
+[syntax.func.def]
+style = "apple"
+
+[syntax.keyword]
+fg = "#FC6F09"
+style = ""
+
+[syntax.number]
+fg = "#58C554"
+style = ""
+
+[syntax.string]
+fg = "#8DFF0A"
+style = ""
+
+[syntax.string.inter]
+fg = "#519F50"
+style = ""
+
+[syntax.type.builtin]
+fg = "#1EDAFB"
+
+[syntax.var]
+style = ""
+
+[syntax.z.html_attribute]
+fg = "#FFFF89"
+
+[syntax.z.html_tag]
+fg = "#FC6F09"
+style = ""
+
+[ui]
+header = "#2F33AB"
+
+[ui.settings]
+bg = "#161616"
+
+[ui.text]
+active = "@gainsboro"

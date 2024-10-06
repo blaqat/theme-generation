@@ -1,0 +1,34 @@
+# Reverse Generation Tool Version 3.0
+name = "pgadmin dark"
+theme = "dark"
+
+# Theme Colors
+[color]
+c00 = "#282A2E"
+c01 = "#A54242"
+c02 = "#8C9440"
+c03 = "@skyblue"
+c04 = "#C4716A"
+c05 = "#85678F"
+c06 = "#5E8D87"
+c07 = "#7EC95B"
+c08 = "#373B41"
+c09 = "@skyblue"
+c10 = "#E3E386"
+c11 = "#F0C674"
+c12 = "#D57971"
+c13 = "#B294BB"
+c14 = "@skyblue"
+c15 = "#C5C8C6"
+cbg = "#212121"
+cfg = "#D4D4D4"
+skyblue = "#7BC8F0"
+
+# Overrides
+[overrides]
+"author" = "blaqat"
+
+# Deletions
+[deletions]
+keys = [
+]

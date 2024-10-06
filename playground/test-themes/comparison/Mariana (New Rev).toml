@@ -1,0 +1,260 @@
+# Reverse Generation Tool Version 3.0
+name = "Mariana"
+primary = "@cornflowerblue"
+theme = "dark"
+
+# Theme Colors
+[color]
+black2 = "#1C2228"
+cornflowerblue = "#5C99D6"
+darkslategray = "#2E3842"
+indianred = "#EC5F66"
+plum2 = "#C695C6"
+sandybrown2 = "#F9AE58"
+
+[background]
+drop_target = "#CFEBFD1F"
+gutter = "@darkslategray"
+panel = "@black2"
+primary = "@darkslategray"
+secondary = "@black2"
+surface = "#38424C"
+terminal = "@darkslategray"
+
+[background.bars]
+bottombar = "#171C22"
+scrollbar = "#596673B3"
+scrollbar_thumb = "#59667361"
+toolbar = "@darkslategray"
+topbar = "@black2"
+
+[background.bars.tabbar]
+active = "@darkslategray"
+background = "@black2"
+inactive = "@black2"
+
+[border]
+disabled = "@darkslategray"
+primary = "#CFEBFD1F"
+scrollbar = "@darkslategray..00"
+secondary = "@darkslategray"
+transparent = "@darkslategray"
+
+[button]
+primary = "#27323B"
+selected = "#3E4347"
+
+[code.error]
+background = "@indianred"
+border = "#0000"
+foreground = "@indianred"
+
+[code.info]
+foreground = "#A6ACB99F"
+
+[code.warning]
+background = "@cornflowerblue"
+border = "#0000"
+foreground = "@cornflowerblue"
+
+[cursor]
+background = "#647382"
+highlighted = "#59667352"
+line = "#4A586500"
+primary = "@sandybrown2"
+search = "#FFC44A80"
+selection = "#596673B3"
+
+[element]
+active = "#3E4347"
+hover = "#292F35"
+primary = "#0000"
+selected = "#3E4347"
+
+[foreground]
+hover = "@black2"
+inactive = "#3E4347"
+link = "#69C"
+placeholder = "#CBCDCF"
+secondary = "#CBCDCF"
+
+[foreground.linenumber]
+active = "#C9D2DF"
+inactive = "#848B95"
+
+[git.created]
+foreground = "#99C794"
+
+[git.modified]
+foreground = "@sandybrown2"
+
+[guide]
+active = "#CFEBFD1F"
+
+[scheme]
+black = "#E6E6E6"
+black2 = "#E6E6E6"
+blue = "#A3CE9E"
+blue2 = "#69C"
+cyan = "#5FB4B4"
+cyan2 = "#5FB4B4"
+pink2 = "#C594C5"
+red = "@indianred"
+white = "#FFFFFFDC"
+yellow = "#FAB763"
+yellow2 = "#FAB763"
+
+[syntax.attribute]
+color = "@plum2"
+
+[syntax.boolean]
+color = "@indianred"
+style = "italic"
+
+[syntax.builtin]
+color = "@cornflowerblue"
+style = "italic"
+
+[syntax.comment]
+color = "#A6ACB9"
+
+[syntax.constant]
+color = "@sandybrown2"
+
+[syntax.constructor]
+color = "@indianred"
+
+[syntax.escape]
+color = "@plum2"
+
+[syntax.function]
+color = "#5FB4B4"
+
+[syntax.keyword]
+color = "@plum2"
+style = "italic"
+
+[syntax.method]
+color = "@cornflowerblue"
+
+[syntax.number]
+color = "#A5ACBA"
+
+[syntax.operator]
+color = "#F97B58"
+
+[syntax.property]
+color = "@sandybrown2"
+
+[syntax.punctuation]
+color = "#FFF"
+
+[syntax.punctuation.bracket]
+color = "#FFF"
+
+[syntax.punctuation.delimiter]
+color = "#A5ACBA"
+
+[syntax.punctuation.special]
+color = "#5FB4B4"
+
+[syntax.string]
+color = "#99C794"
+
+[syntax.string.regex]
+color = "@plum2"
+
+[syntax.string.special]
+color = "@plum2"
+
+[syntax.tag]
+color = "@indianred"
+
+[syntax.text]
+color = "#8CC98F"
+
+[syntax.type]
+color = "@cornflowerblue"
+style = "italic"
+
+[syntax.variable]
+color = "@cornflowerblue"
+
+# Overrides
+[overrides]
+"name" = "mariana"
+"themes/0/style/border.selected" = "@darkslategray"
+"themes/0/style/deleted.background" = "$none"
+"themes/0/style/hidden.background" = "$none"
+"themes/0/style/predictive.background" = "$none"
+"themes/0/style/syntax/@function.special.definition" = { color = "#0C99D6", font_style = "$none", font_weight = "$none" }
+"themes/0/style/unreachable.background" = "$none"
+"themes/0/style/scrollbar.track.background" = "@darkslategray"
+"themes/0/style/hidden" = "#CBCDCF"
+"themes/0/style/editor.subheader.background" = "#293239"
+"themes/0/style/border" = "@black2"
+"themes/0/style/scrollbar.thumb.border" = "#09667300"
+"themes/0/style/border.focused" = "@darkslategray"
+"themes/0/style/info.background" = "$none"
+"themes/0/style/info.border" = "$none"
+"themes/0/style/text" = "#F7F7F7"
+"themes/0/style/editor.foreground" = "#D8DEE9"
+"themes/0/style/terminal.ansi.dim_black" = "$none"
+"themes/0/style/terminal.ansi.blue" = "#69C"
+"themes/0/style/hint.background" = "$none"
+"themes/0/style/terminal.ansi.dim_blue" = "$none"
+"themes/0/style/hint.border" = "$none"
+"themes/0/style/terminal.ansi.dim_cyan" = "$none"
+"themes/0/style/terminal.ansi.green" = "#A3CE9E"
+"themes/0/style/terminal.ansi.bright_green" = "#A3CE9E"
+"themes/0/style/terminal.ansi.magenta" = "#C594C5"
+"themes/0/style/renamed.background" = "$none"
+"themes/0/style/terminal.ansi.dim_magenta" = "$none"
+"themes/0/style/renamed.border" = "$none"
+"themes/0/style/conflict" = "@plum2"
+"themes/0/style/terminal.ansi.red" = "#EE6A6F"
+"themes/0/style/terminal.ansi.bright_red" = "#EE6A6F"
+"themes/0/style/modified.background" = "$none"
+"themes/0/style/terminal.ansi.dim_yellow" = "$none"
+"themes/0/style/modified.border" = "$none"
+"themes/0/style/syntax/type.builtin/color" = "@plum2"
+"themes/0/style/syntax/constant.builtin/color" = "@indianred"
+"themes/0/style/syntax/number/color" = "@sandybrown2"
+
+# Deletions
+[deletions]
+keys = [
+	"/themes/0/style/title_bar.inactive_background",
+	"/themes/0/style/syntax/variant",
+	"/themes/0/style/syntax/variable.special",
+	"/themes/0/style/syntax/variable.parameter",
+	"/themes/0/style/syntax/variable",
+	"/themes/0/style/syntax/type.super",
+	"/themes/0/style/syntax/type.interface",
+	"/themes/0/style/syntax/title",
+	"/themes/0/style/syntax/string.doc",
+	"/themes/0/style/syntax/punctuation.special.symbol",
+	"/themes/0/style/syntax/property.json_key",
+	"/themes/0/style/syntax/primary",
+	"/themes/0/style/syntax/preproc",
+	"/themes/0/style/syntax/predictive",
+	"/themes/0/style/syntax/link_uri",
+	"/themes/0/style/syntax/link_text",
+	"/themes/0/style/syntax/lifetime",
+	"/themes/0/style/syntax/label",
+	"/themes/0/style/syntax/hint",
+	"/themes/0/style/syntax/function.special.definition",
+	"/themes/0/style/syntax/function.special",
+	"/themes/0/style/syntax/function.definition",
+	"/themes/0/style/syntax/escape",
+	"/themes/0/style/syntax/enum",
+	"/themes/0/style/syntax/emphasis.strong",
+	"/themes/0/style/syntax/emphasis",
+	"/themes/0/style/syntax/embedded",
+	"/themes/0/style/syntax/constant.character",
+	"/themes/0/style/scrollbar.thumb.background",
+	"/themes/0/style/players/1",
+	"/themes/0/style/editor.indent_guide_active",
+	"/themes/0/style/editor.indent_guide",
+	"/themes/0/style/accents"
+]

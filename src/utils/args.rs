@@ -16,8 +16,8 @@ pub struct ValidatedFile {
     file_type: FileType,
 }
 
-impl ValidatedFile {
-    pub fn clone(&self) -> Self {
+impl Clone for ValidatedFile {
+    fn clone(&self) -> Self {
         let new_file = File::open(&self.name).unwrap();
         Self {
             format: self.format.clone(),
@@ -26,23 +26,25 @@ impl ValidatedFile {
             file_type: self.file_type.clone(),
         }
     }
+}
 
-    fn from_str(file_path: &str) -> Result<Self, Error> {
+impl ValidatedFile {
+    fn from_str(file_path: &str) -> Result<Self, ProgramError> {
         let format = Path::new(&file_path)
             .extension()
             .and_then(|e| e.to_str())
-            .ok_or(Error::InvalidFile(String::from(file_path)))?
+            .ok_or_else(|| ProgramError::InvalidFile(String::from(file_path)))?
             .to_owned();
 
         let file_type = match format.as_str() {
             "json" => FileType::Theme,
             "toml" => FileType::Variable,
             "template" => FileType::Template,
-            _ => return Err(Error::InvalidIOFormat(format)),
+            _ => return Err(ProgramError::InvalidIOFormat(format)),
         };
 
-        let file =
-            File::open(file_path).map_err(|_| Error::InvalidFile(String::from(file_path)))?;
+        let file = File::open(file_path)
+            .map_err(|_| ProgramError::InvalidFile(String::from(file_path)))?;
 
         let name = file_path.to_owned();
 
@@ -54,23 +56,26 @@ impl ValidatedFile {
         })
     }
 
-    fn all_variable_files(source_directory: &Path) -> Result<Vec<Self>, Error> {
+    fn all_variable_files(source_directory: &Path) -> Result<Vec<Self>, ProgramError> {
         // Variable files are toml files.
         let mut files = Vec::new();
 
-        for entry in source_directory
-            .read_dir()
-            .map_err(|_| Error::InvalidFile(String::from(source_directory.to_str().unwrap())))?
-        {
+        for entry in source_directory.read_dir().map_err(|_| {
+            ProgramError::InvalidFile(String::from(source_directory.to_str().unwrap()))
+        })? {
             let entry = entry.map_err(|_| {
-                Error::InvalidFile(String::from(source_directory.to_str().unwrap()))
+                ProgramError::InvalidFile(String::from(source_directory.to_str().unwrap()))
             })?;
             let path = entry.path();
             let path_str = path
                 .to_str()
-                .ok_or(Error::InvalidFile(String::from(path.to_str().unwrap())))?;
-            if path.is_file() && path_str.ends_with(".toml") {
-                files.push(ValidatedFile::from_str(path_str)?);
+                .ok_or_else(|| ProgramError::InvalidFile(String::from(path.to_str().unwrap())))?;
+            if path.is_file()
+                && path
+                    .extension()
+                    .map_or(false, |ext| ext.eq_ignore_ascii_case("toml"))
+            {
+                files.push(Self::from_str(path_str)?);
             }
         }
 
@@ -89,7 +94,7 @@ pub enum ValidCommands {
 }
 
 #[derive(Debug, PartialEq, Eq)]
-pub enum Error {
+pub enum ProgramError {
     NoCommand,
     InvalidCommand,
     NotEnoughArguments(ValidCommands),
@@ -102,7 +107,7 @@ pub enum Error {
 }
 
 impl ValidCommands {
-    fn from_str(command: &str) -> Result<Self, Error> {
+    fn from_str(command: &str) -> Result<Self, ProgramError> {
         match command {
             "check" => Ok(Self::Check),
             "gen" => Ok(Self::Generate),
@@ -110,7 +115,7 @@ impl ValidCommands {
             "help" => Ok(Self::Help),
             "watch" => Ok(Self::Watch),
             "edit" => Ok(Self::Edit),
-            _ => Err(Error::InvalidCommand),
+            _ => Err(ProgramError::InvalidCommand),
         }
     }
 
@@ -119,17 +124,57 @@ impl ValidCommands {
     }
 }
 
-pub fn run_command(args: Vec<String>) -> Result<(), Error> {
+fn get_generation_files(
+    flags: &[String],
+    command_args: &[String],
+    call_dir: PathBuf,
+) -> Result<(PathBuf, ValidatedFile, Vec<ValidatedFile>), ProgramError> {
+    let directory = if flags.iter().any(|flag| flag.starts_with("-i")) {
+        let flags = commands::generate::FlagTypes::parse(flags);
+        flags.directory()
+    } else {
+        call_dir
+    };
+
+    let (template_file, variable_files) = match (command_args[0].as_str(), command_args[1].as_str())
+    {
+        ("all", template_file) | (template_file, "all") => {
+            let template_file = ValidatedFile::from_str(template_file)?;
+            if matches!(template_file.file_type, FileType::Template) {
+                let variable_files = ValidatedFile::all_variable_files(&directory)?;
+                (template_file, variable_files)
+            } else {
+                return Err(ProgramError::InvalidFileType);
+            }
+        }
+        (template_file, variable_file) => {
+            let files = (
+                ValidatedFile::from_str(template_file)?,
+                ValidatedFile::from_str(variable_file)?,
+            );
+
+            match (&files.0.file_type, &files.1.file_type) {
+                (FileType::Template, FileType::Variable) => (files.0, vec![files.1]),
+                (FileType::Variable, FileType::Template) => (files.1, vec![files.0]),
+                _ => return Err(ProgramError::InvalidFileType),
+            }
+        }
+    };
+
+    Ok((directory, template_file, variable_files))
+}
+
+pub fn run_command(args: Vec<String>) -> Result<(), ProgramError> {
     if args.len() < 2 {
-        return Err(Error::NoCommand);
+        return Err(ProgramError::NoCommand);
     }
 
     let call_dir = std::env::current_dir().unwrap();
 
     let mut flags: Vec<_> = args
         .iter()
-        .filter(|&x| x.starts_with("-"))
-        .map(|x| x.to_string())
+        .filter(|&x| x.starts_with('-'))
+        .map(std::string::ToString::to_string)
         .collect();
 
     flags.sort();
@@ -140,57 +185,22 @@ pub fn run_command(args: Vec<String>) -> Result<(), Error> {
     let command_args: Vec<_> = args
         .into_iter()
         .skip(2)
-        .filter(|x| !x.starts_with("-"))
+        .filter(|x| !x.starts_with('-'))
         .collect();
 
-    let get_generation_files = || -> Result<(PathBuf, ValidatedFile, Vec<ValidatedFile>), Error> {
-        let mut directory = call_dir.clone();
-        if flags.iter().any(|flag| flag.starts_with("-i")) {
-            let flags = commands::generate::GenerateFlags::parse(flags.clone());
-            directory = flags.directory();
-        }
-
-        let (template_file, variable_files) =
-            match (command_args[0].as_str(), command_args[1].as_str()) {
-                ("all", template_file) | (template_file, "all") => {
-                    let template_file = ValidatedFile::from_str(template_file)?;
-                    if let FileType::Template = template_file.file_type {
-                        let variable_files = ValidatedFile::all_variable_files(&directory)?;
-                        (template_file, variable_files)
-                    } else {
-                        return Err(Error::InvalidFileType);
-                    }
-                }
-                (template_file, variable_file) => {
-                    let files = (
-                        ValidatedFile::from_str(template_file)?,
-                        ValidatedFile::from_str(variable_file)?,
-                    );
-
-                    match (&files.0.file_type, &files.1.file_type) {
-                        (FileType::Template, FileType::Variable) => (files.0, vec![files.1]),
-                        (FileType::Variable, FileType::Template) => (files.1, vec![files.0]),
-                        _ => return Err(Error::InvalidFileType),
-                    }
-                }
-            };
-
-        Ok((directory, template_file, variable_files))
-    };
-
     match command {
-        ValidCommands::Help if command_args.is_empty() => Err(Error::NoCommand),
+        ValidCommands::Help if command_args.is_empty() => Err(ProgramError::NoCommand),
         ValidCommands::Help => {
-            let help_command =
-                ValidCommands::from_str(&command_args[0]).map_err(|_| Error::HelpInvalidCommand)?;
-            commands::help(help_command);
+            let help_command = ValidCommands::from_str(&command_args[0])
+                .map_err(|_| ProgramError::HelpInvalidCommand)?;
+            commands::help(&help_command);
             Ok(())
         }
-        command if command_args.len() < 2 => Err(Error::NotEnoughArguments(command)),
+        command if command_args.len() < 2 => Err(ProgramError::NotEnoughArguments(command)),
         ValidCommands::Check => {
             let file1 = ValidatedFile::from_str(&command_args[0])?;
             let file2 = ValidatedFile::from_str(&command_args[1])?;
-            commands::check(file1, file2)
+            commands::check(&file1, &file2)
         }
         ValidCommands::Reverse => {
             let template_file = ValidatedFile::from_str(&command_args[0])?;
@@ -198,31 +208,40 @@ pub fn run_command(args: Vec<String>) -> Result<(), Error> {
 
             match (&template_file.file_type, &theme_file.file_type) {
                 (FileType::Template, FileType::Theme) => {
-                    commands::reverse(template_file, theme_file, flags)
+                    commands::reverse(&template_file, &theme_file, &flags)
                 }
                 (FileType::Theme, FileType::Template) => {
-                    commands::reverse(theme_file, template_file, flags)
+                    commands::reverse(&theme_file, &template_file, &flags)
                 }
-                _ => Err(Error::InvalidFileType),
+                _ => Err(ProgramError::InvalidFileType),
             }
         }
         ValidCommands::Generate => {
-            let (_, template_file, variable_files) = get_generation_files()?;
+            let (_, template_file, variable_files) =
+                get_generation_files(&flags, &command_args, call_dir)?;
 
-            commands::generate(template_file, variable_files, flags)
+            commands::generate(&template_file, variable_files, &flags)
         }
 
         ValidCommands::Watch => {
-            let (directory, template_file, variable_files) = get_generation_files()?;
+            let (directory, template_file, variable_files) =
+                get_generation_files(&flags, &command_args, call_dir)?;
 
-            commands::watch(directory, template_file, variable_files, flags)
+            commands::watch(&directory, &template_file, &variable_files, &flags)
         }
 
         ValidCommands::Edit => {
             let template_file = ValidatedFile::from_str(&command_args[0])?;
             let theme_file = ValidatedFile::from_str(&command_args[1])?;
-            let watch_flags = flags.clone();
-            let reverse_flags = flags.into_iter().filter(|x| !x.starts_with("-o")).collect();
+            let watch_flags: Vec<_> = flags
+                .clone()
+                .into_iter()
+                .filter(|x| commands::generate::VALID_FLAGS.contains(&&x[0..2]))
+                .collect();
+            let reverse_flags: Vec<_> = flags
+                .into_iter()
+                .filter(|x| commands::reverse::VALID_FLAGS.contains(&&x[0..2]))
+                .collect();
             let watch_command = |name| {
                 vec!["", "watch", name, "all"]
                     .into_iter()
@@ -233,14 +252,14 @@ pub fn run_command(args: Vec<String>) -> Result<(), Error> {
 
             match (&template_file.file_type, &theme_file.file_type) {
                 (FileType::Template, FileType::Theme) => {
-                    commands::reverse(template_file.clone(), theme_file, reverse_flags)?;
+                    commands::reverse(&template_file, &theme_file, &reverse_flags)?;
                     run_command(watch_command(&template_file.name))
                 }
                 (FileType::Theme, FileType::Template) => {
-                    commands::reverse(theme_file.clone(), template_file, reverse_flags)?;
+                    commands::reverse(&theme_file, &template_file, &reverse_flags)?;
                     run_command(watch_command(&theme_file.name))
                 }
-                _ => Err(Error::InvalidFileType),
+                _ => Err(ProgramError::InvalidFileType),
             }
         }
     }

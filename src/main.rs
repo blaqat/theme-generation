@@ -1,5 +1,6 @@
 #![feature(let_chains)]
 #![feature(if_let_guard)]
+#![warn(clippy::all, clippy::pedantic, clippy::nursery)]
 use crate::prelude::*;
 
 mod commands;
@@ -71,43 +72,43 @@ fn main() {
     let args: Vec<String> = args().collect();
 
     match run_command(args) {
-        Ok(_) => (),
-        Err(Error::NoCommand) => error!("{}", DEFAULT_ERROR_MESSAGE),
-        Err(Error::InvalidCommand) => {
+        Ok(()) => (),
+        Err(ProgramError::NoCommand) => error!("{}", DEFAULT_ERROR_MESSAGE),
+        Err(ProgramError::InvalidCommand) => {
             error!(
                 "Invalid command. Please use one of the following: {:?}",
                 ValidCommands::list_commands()
-            )
+            );
         }
-        Err(Error::InvalidFile(file_name)) => {
-            error!(r#""{file_name}" is not a file. Please check the file path and try again."#)
+        Err(ProgramError::InvalidFile(file_name)) => {
+            error!(r#""{file_name}" is not a file. Please check the file path and try again."#);
         }
-        Err(Error::InvalidFileType) => {
-            error!(r#"Invalid types for files provided. Please check the usage."#)
+        Err(ProgramError::InvalidFileType) => {
+            error!(r#"Invalid types for files provided. Please check the usage."#);
         }
-        Err(Error::InvalidFlag(command, flag)) => {
-            error!(r#"Invalid flag "{flag}" for the "{command}" command. Please check the usage."#)
+        Err(ProgramError::InvalidFlag(command, flag)) => {
+            error!(r#"Invalid flag "{flag}" for the "{command}" command. Please check the usage."#);
         }
-        Err(Error::HelpInvalidCommand) => {
+        Err(ProgramError::HelpInvalidCommand) => {
             error!(
                 "Invalid command argument for help. Please use one of the following: {:?}",
                 ValidCommands::list_commands()
-            )
+            );
         }
-        Err(Error::NotEnoughArguments(command)) => {
+        Err(ProgramError::NotEnoughArguments(command)) => {
             error!(
                 "Not enough arguments for the {:?} command. Please check the usage:",
                 command
             );
-            commands::help(command)
+            commands::help(&command);
         }
-        Err(Error::InvalidIOFormat(format)) => {
+        Err(ProgramError::InvalidIOFormat(format)) => {
             error!(
                 r#"Unhandeled file format "{format}". Please make an issue to start future support"#
-            )
+            );
         }
-        Err(Error::Processing(message)) => {
-            error!(r#"An error occured while processing: "{}""#, message)
+        Err(ProgramError::Processing(message)) => {
+            error!(r#"An error occured while processing: "{}""#, message);
         }
     }
 }

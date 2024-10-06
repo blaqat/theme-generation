@@ -1,0 +1,270 @@
+name = "Mariana"
+theme = "dark"
+primary = "$colors.color3"
+
+
+[colors]
+color1 = "#2E3842"
+color2 = "#C695C6"
+color3 = "#5C99D6"
+color4 = "#EC5F66"
+color5 = "#1C2228"
+
+[background]
+drop_target = "#cfebfd21"
+gutter = "$colors.color1"
+panel = "$colors.color5"
+primary = "$colors.color1"
+secondary = "$colors.color5"
+surface = "#38424c"
+terminal = "$colors.color1"
+
+[background.bars]
+bottombar = "#171c22"
+topbar = "$colors.color5"
+toolbar = "$colors.color1"
+scrollbar_thumb = "#59667363"
+scrollbar = "#596673B3"
+
+[background.bars.tabbar]
+background = "$colors.color5"
+inactive = "$colors.color5"
+active = "$colors.color1"
+
+[border]
+primary = "$colors.color5"
+secondary = "$colors.color1"
+selected = "$colors.color1"
+transparent = "$colors.color1"
+disabled = "$colors.color1"
+scrollbar = "#09667300"
+
+[button]
+primary = "#27323B"
+selected = "#3e4347"
+
+[code.error]
+foreground = "$colors.color4"
+background = "$colors.color4"
+border = "#00000000"
+
+[code.info]
+foreground = "#A6ACB9a0"
+
+[code.warning]
+foreground = "$colors.color3"
+background = "$colors.color3"
+border = "#00000000"
+
+[cursor]
+search = "#ffc44a80"
+line = "#4a586500"
+highlighted = "#59667353"
+primary = "#F9AE58"
+selection = "#596673B3"
+background = "#647382"
+
+[element]
+primary = "#00000000"
+hover = "#292f35"
+active = "#3e4347"
+selected = "#3e4347"
+
+[foreground]
+hover = "$colors.color5"
+primary = "#F7F7F7"
+secondary = "#CBCDCF"
+placeholder = "#CBCDCF"
+inactive = "#3e4347"
+link = "#6699cc"
+
+[foreground.linenumber]
+inactive = "#848b95"
+active = "#C9D2DF"
+
+[git.created]
+foreground = "#99C794"
+
+[git.modified]
+foreground = "#F9AE58"
+
+[guide]
+active = "#cfebfd21"
+
+[scheme]
+black = "#e6e6e6"
+black2 = "#e6e6e6"
+red = "#ee6a6f"
+red2 = "#ee6a6f"
+green = "#a3ce9e"
+green2 = "#a3ce9e"
+yellow = "#fab763"
+yellow2 = "#fab763"
+blue = "#6699cc"
+blue2 = "#6699cc"
+pink = "#c594c5"
+pink2 = "#c594c5"
+cyan = "#5FB4B4"
+cyan2 = "#5FB4B4"
+white = "#ffffffdd"
+
+[syntax.attribute]
+color = "$colors.color2"
+
+[syntax.boolean]
+color = "$colors.color4"
+style = "italic"
+
+[syntax.builtin]
+color = "$colors.color4"
+style = "italic"
+
+[syntax.comment]
+color = "#A6ACB9"
+
+[syntax.constant]
+color = "#F9AE58"
+
+[syntax.constructor]
+color = "$colors.color4"
+
+[syntax.escape]
+color = "$colors.color2"
+
+[syntax.function]
+color = "#5FB4B4"
+
+[syntax.keyword]
+color = "$colors.color2"
+style = "italic"
+
+[syntax.method]
+color = "$colors.color3"
+
+[syntax.number]
+color = "#F9AE58"
+
+[syntax.operator]
+color = "#F97B58"
+
+[syntax.property]
+color = "#F9AE58"
+
+[syntax.punctuation]
+color = "#FFFFFF"
+
+[syntax.punctuation.bracket]
+color = "#FFFFFF"
+
+[syntax.punctuation.delimiter]
+color = "#A5ACBA"
+
+[syntax.punctuation.special]
+color = "#5FB4B4"
+
+[syntax.string]
+color = "#99C794"
+
+[syntax.string.regex]
+color = "$colors.color2"
+
+[syntax.string.special]
+color = "$colors.color2"
+
+[syntax.tag]
+color = "$colors.color4"
+
+[syntax.text]
+color = "#8CC98F"
+
+[syntax.type]
+color = "$colors.color3"
+style = "italic"
+
+[syntax.variable]
+color = "$colors.color3"
+
+[overrides]
+"style.[panel.focused_border]" = false
+"style.[pane.focused_border]" = false
+"style.[terminal.foreground]" = false
+"style.[terminal.bright_foreground]" = false
+"style.[terminal.dim_foreground]" = false
+"style.[conflict.background]" = false
+"style.[deleted.background]" = false
+"style.[hint.background]" = false
+"style.[modified.background]" = false
+"style.predictive" = false
+"style.renamed" = false
+"style.[renamed.background]" = false
+"style.success" = false
+"style.[success.background]" = false
+"style.unreachable" = false
+"style.syntax.[@function.special.definition].color" = "#0C99D6"
+"style.players.1.cursor" = "$players.2.cursor"
+"style.players.1.background" = "$players.2.background"
+"style.players.1.selection" = "$players.2.selection"
+"style.syntax.[function.builtin].color" = "$colors.color3"
+"style.syntax.[type.builtin].color" = "$colors.color2"
+"style.syntax.[punctuation.list_marker].color" = "#A5ACBA"
+"style.[editor.wrap_guide]" = "#CFEBFD21"
+"style.[editor.subheader.background]" = "#293239"
+"style.[editor.foreground]" = "#D8DEE9"
+"style.[scrollbar.track.background]" = "$colors.color1"
+"style.[scrollbar.track.border]" = "$colors.color1..00"
+"style.[terminal.ansi.dim_black]" = false
+"style.conflict" = "$colors.color2"
+"style.deleted" = "$colors.color4"
+"style.[terminal.ansi.dim_red]" = false
+"style.[conflict.border]" = false
+"style.[deleted.border]" = false
+"style.[terminal.ansi.dim_green]" = false
+"style.[created.background]" = false
+"style.[created.border]" = false
+"style.[success.border]" = false
+"style.[terminal.ansi.dim_yellow]" = false
+"style.[modified.border]" = false
+"style.info" = "#A3CE9E"
+"style.[terminal.ansi.dim_blue]" = false
+"style.[hint.border]" = false
+"style.[info.border]" = false
+"style.[terminal.ansi.dim_magenta]" = false
+"style.[renamed.border]" = false
+"style.[terminal.ansi.dim_cyan]" = false
+"style.[info.background]" = false
+
+[deletions]
+keys = [
+	"style.accents",
+	"style.[title_bar.inactive_background]",
+	"style.[scrollbar.thumb.background]",
+	"style.[editor.indent_guide]",
+	"style.[editor.indent_guide_active]",
+	"style.syntax.[constant.character]",
+	"style.syntax.embedded",
+	"style.syntax.emphasis",
+	"style.syntax.[emphasis.strong]",
+	"style.syntax.enum",
+	"style.syntax.escape",
+	"style.syntax.[function.definition]",
+	"style.syntax.[function.special]",
+	"style.syntax.[function.special.definition]",
+	"style.syntax.hint",
+	"style.syntax.label",
+	"style.syntax.lifetime",
+	"style.syntax.link_text",
+	"style.syntax.link_uri",
+	"style.syntax.predictive",
+	"style.syntax.preproc",
+	"style.syntax.primary",
+	"style.syntax.[property.json_key]",
+	"style.syntax.[punctuation.special.symbol]",
+	"style.syntax.[string.doc]",
+	"style.syntax.title",
+	"style.syntax.[type.super]",
+	"style.syntax.[type.interface]",
+	"style.syntax.variable",
+	"style.syntax.[variable.parameter]",
+	"style.syntax.[variable.special]",
+	"style.syntax.variant"
+]

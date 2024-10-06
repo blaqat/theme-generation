@@ -16,23 +16,24 @@ pub enum ParsedValue {
 impl Display for ParsedValue {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Color(color) => write!(f, "{}", color),
-            Self::Variables(vars) => write!(f, "V{:?}", vars),
-            Self::Value(value) => write!(f, "{}", value),
-            Self::String(str) => write!(f, "'{}'", str),
+            Self::Color(color) => write!(f, "{color}"),
+            Self::Variables(vars) => write!(f, "V{vars:?}"),
+            Self::Value(value) => write!(f, "{value}"),
+            Self::String(str) => write!(f, "'{str}'"),
             Self::Null => write!(f, "NULL"),
         }
     }
 }
 
 impl FromStr for ParsedValue {
-    type Err = Error;
+    type Err = ProgramError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if s.starts_with("$") || s.starts_with("@") {
+        // if s.starts_with('$') || s.starts_with('@') {
+        if potential_var(s) {
             s.chars().nth(0);
             let vars = s
-                .split("|")
+                .split('|')
                 .filter_map(|var| match var.trim().chars().next() {
                     Some('$') => Some(var[1..].to_string()),
                     Some('@') => Some(format!("color.{}", &var[1..])),
@@ -64,7 +65,7 @@ impl ParsedValue {
         }
     }
 
-    pub fn from_value(v: &Value) -> Result<Self, Error> {
+    pub fn from_value(v: &Value) -> Result<Self, ProgramError> {
         match v {
             Value::Null => Ok(Self::Null),
             Value::String(str) => str.parse(),
@@ -72,14 +73,14 @@ impl ParsedValue {
         }
     }
 
-    fn identity_ops(&self, ops: Vec<&ColorOperations>) -> Self {
-        let iden_ops = ColorChange::identity_ops(ops);
+    fn identity_ops(&self, ops: &[&Operations]) -> Self {
+        let iden_ops = Operation::identity_ops(ops);
         match self {
-            ParsedValue::Color(c) => {
+            Self::Color(c) => {
                 let mut color = c.clone();
                 _ = color.update_ops(&iden_ops);
                 let color_str = color.to_string();
-                ParsedValue::String(color_str)
+                Self::String(color_str)
             }
             v => v.clone(),
         }
@@ -89,10 +90,8 @@ impl ParsedValue {
 #[derive(Debug, Clone, PartialEq, Hash, Eq)]
 pub struct ParsedVariable {
     pub name: String,
-    pub operations: ColorOperations,
+    pub operations: Operations,
 }
-
-impl ParsedVariable {}
 
 impl Display for ParsedVariable {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
@@ -101,19 +100,19 @@ impl Display for ParsedVariable {
 }
 
 impl FromStr for ParsedVariable {
-    type Err = prelude::Error;
+    type Err = prelude::ProgramError;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s.split_once("..") {
+        // split can eithe rbe .. or ::, so we need to check for both
+        match s.split_once("..").or_else(|| s.split_once("::")) {
             Some((name, operations)) => {
                 let mut chars = operations.chars();
-                let operations: ColorOperations = match chars
-                    .next()
-                    .ok_or_else(|| Error::Processing(format!("Resolving Next Variable: {}", s)))?
-                {
+                let operations: Operations = match chars.next().ok_or_else(|| {
+                    ProgramError::Processing(format!("Resolving Next Variable: {s}"))
+                })? {
                     // name..(component op val, component op val, ...)
-                    '(' if operations.ends_with(")") => operations[1..operations.len() - 1]
-                        .split(",")
+                    '(' if operations.ends_with(')') => operations[1..operations.len() - 1]
+                        .split(',')
                         .filter_map(|op| op.parse().ok())
                         .collect(),
 
@@ -126,14 +125,14 @@ impl FromStr for ParsedVariable {
 
                     // name..val (short hand for alpha = val)
                     val if val.is_ascii_hexdigit() => {
-                        vec![format!("a.{}", operations).parse().map_err(|e| {
-                            Error::Processing(format!("Resolving Hex Variable: {:?}", e))
+                        vec![format!("a.{operations}").parse().map_err(|e| {
+                            ProgramError::Processing(format!("Resolving Hex Variable: {e:?}"))
                         })?]
                     }
 
                     // name..op val (short hand for alpha op val)
-                    _ => vec![format!("a{}", operations).parse().map_err(|e| {
-                        Error::Processing(format!("Resolving Alpha Variable: {:?}", e))
+                    _ => vec![format!("a{operations}").parse().map_err(|e| {
+                        ProgramError::Processing(format!("Resolving Alpha Variable: {e:?}"))
                     })?],
                 };
 
@@ -159,10 +158,11 @@ pub struct SourcedVariable {
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash)]
 pub struct ResolvedVariable {
-    pub path: JsonPath,
+    pub path: JSPath,
     pub value: ParsedValue,
     pub variables: Vec<ParsedVariable>,
     pub resolved_id: Option<usize>,
+    pub siblings: Vec<ResolvedVariable>,
 }
 
 impl<'a> ResolvedVariable {
@@ -175,17 +175,31 @@ impl<'a> ResolvedVariable {
         Self {
             value,
             variables: vec![variable],
-            path: JsonPath::new(),
+            path: JSPath::new(),
             resolved_id: Some(0),
+            siblings: Vec::new(),
+        }
+    }
+
+    pub fn init_override(path: &str, value: &Value) -> Self {
+        let path = JSPath::from_str(path).unwrap();
+        let value = ParsedValue::from_value(value).unwrap();
+        Self {
+            path,
+            value,
+            variables: Vec::new(),
+            resolved_id: Some(0),
+            siblings: Vec::new(),
         }
     }
 
     fn new_pointer(var_name: &str, unresolved_paths: &[String]) -> Self {
         Self {
-            path: JsonPath::from_str(var_name).unwrap(),
-            value: ParsedValue::Variables(Vec::from_iter(unresolved_paths.iter().cloned())),
+            path: JSPath::from_str(var_name).unwrap(),
+            value: ParsedValue::Variables(unresolved_paths.to_vec()),
             variables: Vec::new(),
             resolved_id: Some(UNRESOLVED_POINTER_CONST),
+            siblings: Vec::new(),
         }
     }
 
@@ -195,42 +209,38 @@ impl<'a> ResolvedVariable {
             .iter()
             .filter_map(|v| match v {
                 Either::Right(var) => Some(var),
-                _ => None,
+                Either::Left(_) => None,
             })
             .cloned()
             .collect();
 
         Self {
             path: src.path.parse().unwrap(),
-            value: src.value.to_owned(),
+            value: src.value.clone(),
             variables,
             resolved_id: Some(0),
+            siblings: Vec::new(),
         }
     }
 
     pub fn from_path(path: &str, json: &Value) -> Self {
-        let path: JsonPath = path.parse().unwrap();
+        let path: JSPath = path.parse().unwrap();
 
-        let value = {
-            match path.traverse(json) {
-                Ok(val) => ParsedValue::from_value(val).unwrap(),
-                _ => ParsedValue::Null,
-            }
-        };
+        let value = path.traverse(json).map_or(ParsedValue::Null, |val| {
+            ParsedValue::from_value(val).unwrap()
+        });
 
         Self {
             path,
             value,
             variables: Vec::new(),
             resolved_id: None,
+            siblings: Vec::new(),
         }
     }
 
-    fn is_resolvable(&self) -> bool {
-        match self.resolved_id {
-            Some(i) => i < self.variables.len(),
-            None => false,
-        }
+    pub fn is_resolvable(&self) -> bool {
+        self.resolved_id.map_or(false, |i| i < self.variables.len())
     }
 
     pub fn could_resolve(&self) -> bool {
@@ -238,10 +248,7 @@ impl<'a> ResolvedVariable {
     }
 
     fn resolved(&self) -> Option<&ParsedVariable> {
-        match self.resolved_id {
-            Some(id) => self.variables.get(id),
-            None => None,
-        }
+        self.resolved_id.and_then(|id| self.variables.get(id))
     }
 
     pub fn is_pointer(&self) -> bool {
@@ -249,10 +256,12 @@ impl<'a> ResolvedVariable {
     }
 
     pub fn name(&self) -> String {
-        match self.is_resolvable() {
-            true => self.resolved().unwrap().name.clone(),
-            false if self.is_pointer() => format!("*{}", self.path.join()),
-            false => self.path.to_string(),
+        if self.is_resolvable() {
+            self.resolved().unwrap().name.clone()
+        } else if self.is_pointer() {
+            format!("*{}", self.path.join())
+        } else {
+            self.path.to_string()
         }
     }
 
@@ -261,7 +270,7 @@ impl<'a> ResolvedVariable {
     }
 
     pub fn next(&mut self) -> Option<&ParsedVariable> {
-        let i = self.resolved_id.map(|i| i + 1).unwrap_or(0);
+        let i = self.resolved_id.map_or(0, |i| i + 1);
 
         if i < self.variables.len() {
             self.resolved_id.replace(i);
@@ -273,8 +282,8 @@ impl<'a> ResolvedVariable {
     }
 
     pub fn identity(&self) -> ParsedValue {
-        let ops = self.variables.iter().map(|v| &v.operations).collect();
-        self.value.identity_ops(ops)
+        let ops: Vec<_> = self.variables.iter().map(|v| &v.operations).collect();
+        self.value.identity_ops(&ops)
     }
 
     pub fn results_from(&self, identity: &ParsedValue) -> bool {
@@ -312,28 +321,28 @@ impl std::fmt::Display for SourcedVariable {
         let mut output = String::new();
 
         let var = self.variables.iter().fold(String::new(), |acc, v| match v {
-            Either::Left(var) => format!("{}{} ", acc, var),
-            Either::Right(var) => format!("{}{} ", acc, var),
+            Either::Left(var) => format!("{acc}{var} "),
+            Either::Right(var) => format!("{acc}{var} "),
         });
 
         output.push_str(&format!("{} -> [{}] {}", self.path, var, self.value,));
-        write!(f, "{}", output)
+        write!(f, "{output}")
     }
 }
 
 impl SourcedVariable {
-    pub fn new(path: String, var: &str, value: &Value) -> SourcedVariable {
+    pub fn new(path: String, var: &str, value: &Value) -> Self {
         let value = ParsedValue::from_value(value).unwrap();
         let variables = var
-            .split("|")
+            .split('|')
             .filter_map(|var| match var.trim().chars().next() {
                 Some('$') => Some(var[1..].to_string()),
                 Some('@') => Some(format!("color.{}", &var[1..])),
                 _ => None,
             })
-            .map(|v| match v.parse::<ParsedVariable>() {
-                Ok(var) => Either::Right(var),
-                _ => Either::Left(v.to_string()),
+            .map(|v| {
+                v.parse::<ParsedVariable>()
+                    .map_or_else(|_| Either::Left(v.to_string()), Either::Right)
             })
             .collect();
 
@@ -358,22 +367,22 @@ impl std::fmt::Display for KeyDiffInfo {
         if !self.missing.is_empty() {
             output.push_str("Missing keys:\n");
             for key in &self.missing {
-                output.push_str(&format!("  {}\n", key));
+                output.push_str(&format!("  {key}\n"));
             }
         }
         if !self.collisions.is_empty() {
             output.push_str("Collisions:\n");
             for key in &self.collisions {
-                output.push_str(&format!("  {}\n", key));
+                output.push_str(&format!("  {key}\n"));
             }
         }
         if !self.parsed_vars.is_empty() {
             output.push_str("Variables:\n");
             for var in &self.parsed_vars {
-                output.push_str(&format!("{}\n", var));
+                output.push_str(&format!("{var}\n"));
             }
         }
-        write!(f, "{}", output)
+        write!(f, "{output}")
     }
 }
 
@@ -402,37 +411,53 @@ impl VariableSet {
     }
 
     pub fn is_null(&self, name: &str) -> bool {
-        match self.variables.borrow().get(name) {
-            Some(v) => v.value == ParsedValue::Null,
-            None => true,
-        }
+        self.variables
+            .borrow()
+            .get(name)
+            .and_then(|var| {
+                var.variables
+                    .iter()
+                    .skip(1)
+                    .all(|v| self.is_null(&v.name))
+                    .then_some(var)
+            })
+            .map_or(true, |v| v.value == ParsedValue::Null)
     }
 
     pub fn insert(&self, name: &str, var: ResolvedVariable) {
         self.variables.borrow_mut().insert(name.to_string(), var);
     }
 
+    pub fn insert_sibling(&self, name: &str, var: ResolvedVariable) {
+        let mut vars = self.variables.borrow_mut();
+        if let Some(og) = vars.get_mut(name) {
+            og.siblings.push(var);
+        }
+    }
+
     pub fn inc_insert(&self, name: &str, var: ResolvedVariable) {
-        if !self.has_variable(name) {
-            self.insert(name, var);
-        } else {
+        if self.has_variable(name) {
             let mut vars = self.variables.borrow_mut();
             let existing = vars.get(name).unwrap().clone();
 
             let mut count = 1;
-            while vars.contains_key(&format!("{}{}", name, count)) {
+            while vars.contains_key(&format!("{name}{count}")) {
                 count += 1;
             }
 
-            let existing_name = format!("{}{}", name, count);
+            let existing_name = format!("{name}{count}");
             vars.insert(existing_name, existing);
             vars.insert(name.to_owned(), var);
+        } else {
+            self.insert(name, var);
         }
     }
 
     pub fn safe_insert(&self, name: &str, mut var: ResolvedVariable) {
-        if !self.has_variable(name) || var.identity_eq(&self.variables.borrow()[name]) {
+        if !self.has_variable(name) {
             self.insert(name, var);
+        } else if var.identity_eq(&self.variables.borrow()[name]) {
+            self.insert_sibling(name, var);
         } else {
             let mut vars = self.variables.borrow_mut();
             let mut existing = vars.get(name).unwrap().clone();
@@ -443,7 +468,11 @@ impl VariableSet {
                 existing.unresolve();
 
                 // Insert variables as paths
-                let paths = [var.path.to_string(), existing.path.to_string()];
+                let paths: Vec<String> = [var.path.to_string(), existing.path.to_string()]
+                    .into_iter()
+                    .chain(existing.siblings.iter().map(|s| s.path.to_string()))
+                    .collect();
+
                 vars.insert(paths[0].clone(), var);
                 vars.insert(paths[1].clone(), existing);
 
@@ -486,5 +515,159 @@ impl VariableSet {
             .collect::<HashMap<_, _>>();
 
         *vars = resolved;
+    }
+}
+
+pub mod special_array {
+    use super::*;
+
+    #[derive(Debug)]
+    enum MatchMode {
+        Exact,
+        Contains,
+        Regex,
+        StartsWith,
+        EndsWith,
+        NullMismatch,
+    }
+
+    impl FromStr for MatchMode {
+        type Err = String;
+        fn from_str(s: &str) -> Result<Self, Self::Err> {
+            match s {
+                "equals" | "match" | "is" | "sameas" | "identical" | "exact" | "=" => {
+                    Ok(Self::Exact)
+                }
+                "includes" | "has" | "within" | "partof" | "contains" | "~" => Ok(Self::Contains),
+                "pattern" | "expr" | "dyn" | "regex" | "*" => Ok(Self::Regex),
+                "prefix" | "beginswith" | "startswith" | "<" => Ok(Self::StartsWith),
+                "suffix" | "trailing" | "endswith" | ">" => Ok(Self::EndsWith),
+                "mismatch" | "oneof" | "single" | "xor" | "^" | "!" => Ok(Self::NullMismatch),
+                _ => Err("Invalid Match Mode".into()),
+            }
+        }
+    }
+
+    impl MatchMode {
+        fn matches(&self, checking: &Value, other_val: &Value) -> bool {
+            let check_str = value_to_string(checking);
+            match (self, other_val) {
+                (Self::Exact, val) => checking == val,
+                (Self::Contains | Self::StartsWith | Self::EndsWith | Self::NullMismatch, _)
+                    if checking == other_val =>
+                {
+                    false
+                }
+
+                (Self::Contains, Value::String(s)) => s.contains(&check_str),
+                (Self::Contains, Value::Array(vec)) => vec.contains(checking),
+                (Self::Contains, Value::Object(map)) => map.contains_key(&check_str),
+
+                (Self::Regex, val) => {
+                    let re = regex::Regex::new(&check_str).unwrap();
+                    // re.is_match(&val.to_string())
+                    re.is_match(&value_to_string(val))
+                }
+
+                (Self::StartsWith, Value::String(s)) => s.starts_with(&check_str),
+                (Self::StartsWith, Value::Array(vec)) => vec.first().is_some_and(|v| checking == v),
+
+                (Self::EndsWith, Value::String(s)) => s.ends_with(&check_str),
+                (Self::EndsWith, Value::Array(vec)) => vec.last().is_some_and(|v| checking == v),
+
+                (Self::NullMismatch, Value::Null) => !checking.is_null(),
+                (Self::NullMismatch, val) if checking.is_null() => !val.is_null(),
+
+                (Self::StartsWith | Self::EndsWith | Self::Contains | Self::NullMismatch, _) => {
+                    false
+                }
+            }
+        }
+    }
+
+    #[derive(Debug)]
+    enum SpecialMode {
+        Single(MatchMode),
+        Inside(MatchMode),
+    }
+
+    impl FromStr for SpecialMode {
+        type Err = String;
+
+        fn from_str(s: &str) -> Result<Self, Self::Err> {
+            if let Some((sp_mode, m)) = s.replace('.', "i::").split_once("::") {
+                match sp_mode.chars().next().unwrap() {
+                    'i' => Ok(Self::Inside(m.parse()?)),
+                    's' => Ok(Self::Single(m.parse()?)),
+                    _ => Err("Invalid Special Mode".into()),
+                }
+            } else {
+                Ok(Self::Single(s.parse()?))
+            }
+        }
+    }
+
+    impl SpecialMode {
+        fn parse_modes(s: &str) -> Result<Vec<Self>, String> {
+            s.split('|').map(str::parse).collect()
+        }
+    }
+
+    #[derive(Debug)]
+    pub struct SpecialKey(pub String, Vec<SpecialMode>);
+
+    impl SpecialKey {
+        pub fn matches(&self, val1: &Value, other_val: &Value) -> bool {
+            self.1
+                .iter()
+                .map(|mode| match mode {
+                    SpecialMode::Single(match_mode) => match_mode.matches(val1, other_val),
+                    SpecialMode::Inside(match_mode) => match other_val {
+                        Value::Array(vec) => vec.iter().any(|val| match_mode.matches(val1, val)),
+                        Value::Object(map) => map.values().any(|val| match_mode.matches(val1, val)),
+                        _ => false,
+                    },
+                })
+                .any(|x| x)
+        }
+    }
+
+    const SPECIAL_ARRAY_KEY: &str = "$::mode";
+
+    pub fn parse_special_keys(vec: &[Value]) -> (bool, bool, Vec<SpecialKey>) {
+        let special = vec.first().and_then(|val1| match val1 {
+            Value::Object(spobj) if spobj.contains_key(SPECIAL_ARRAY_KEY) => {
+                let match_mode = spobj[SPECIAL_ARRAY_KEY].as_str().unwrap_or_default() == "strict";
+                let keys = spobj
+                    .iter()
+                    .filter(|(key, _)| *key != SPECIAL_ARRAY_KEY)
+                    .map(|(key, val)| {
+                        SpecialKey(
+                            key.to_owned(),
+                            SpecialMode::parse_modes(val.as_str().unwrap_or_default())
+                                .unwrap_or_default(),
+                        )
+                    })
+                    .collect();
+                Some((match_mode, keys))
+            }
+
+            Value::String(str1) if str1.starts_with("$matches::") => {
+                let keys = str1
+                    .strip_prefix("$matches::")
+                    .unwrap()
+                    .split(',')
+                    .map(|key| {
+                        SpecialKey(key.to_string(), vec![SpecialMode::Single(MatchMode::Exact)])
+                    })
+                    .collect();
+
+                Some((true, keys))
+            }
+
+            _ => None,
+        });
+
+        special.map_or_else(Default::default, |val| (true, val.0, val.1))
     }
 }

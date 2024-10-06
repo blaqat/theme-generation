@@ -125,7 +125,7 @@
 				"modified": "$git.modified.foreground|$scheme.yellow",
 				"modified.background": "$scheme.yellow2",
 				"modified.border": "$scheme.yellow3|$scheme.yellow2",
-				"predictive": "$background.code",
+				"predictive": "$foreground.code",
 				"predictive.border": "$border.code",
 				"renamed": "$scheme.pink",
 				"renamed.background": "$scheme.pink2",
@@ -260,10 +260,10 @@
 						"background_color": "$syntax.special.background|$syntax.function.background"
 					},
 					"function.builtin": {
-						"color": "$syntax.builtin.color|$syntax.function.color",
-						"font_style": "$syntax.builtin.style|$syntax.function.style",
-						"font_weight": "$syntax.builtin.weight|$syntax.function.weight",
-						"background_color": "$syntax.builtin.background|$syntax.function.background"
+						"color": "$syntax.function.builtin.color|$syntax.function.color",
+						"font_style": "$syntax.function.builtin.style|$syntax.function.style",
+						"font_weight": "$syntax.function.builtin.weight|$syntax.function.weight",
+						"background_color": "$syntax.function.builtin.background|$syntax.function.background"
 					},
 					"hint": {
 						"color": "$syntax.hint.color|$foreground.hint",

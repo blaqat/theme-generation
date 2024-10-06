@@ -7,8 +7,7 @@
 			"name": "$name",
 			"appearance": "$theme",
 			"style": {
-				"background.appearance": "$window",
-		   	"accents": "$indent.multi",
+      	"accents": "$indent.multi",
 				"border": "$border.primary",
 				"border.variant": "$border.secondary",
 				"border.focused": "$border.selected|$border.primary",
@@ -57,7 +56,7 @@
 				"scrollbar.track.background": "$background.bars.scrollbar",
 				"scrollbar.track.border": "$border.scrollbar",
 				"editor.foreground": "$foreground.primary",
-				"editor.background": "$background.editor|$background.primary",
+				"editor.background": "$background.primary",
 				"editor.gutter.background": "$background.gutter|$background.primary",
 				"editor.subheader.background": "$background.secondary",
 				"editor.indent_guide": "$indent.inactive|$indent..50",
@@ -155,338 +154,282 @@
 					"attribute": {
 						"color": "$syntax.attribute.color",
 						"font_style": "$syntax.attribute.style",
-						"font_weight": "$syntax.attribute.weight",
-						"background_color": "$syntax.attribute.background"
+						"font_weight": "$syntax.attribute.weight"
 					},
 					"boolean": {
 						"color": "$syntax.boolean.color",
 						"font_style": "$syntax.boolean.style",
-						"font_weight": "$syntax.boolean.weight",
-						"background_color": "$syntax.boolean.background"
+						"font_weight": "$syntax.boolean.weight"
 					},
 					"comment": {
 						"color": "$syntax.comment.color",
 						"font_style": "$syntax.comment.style",
-						"font_weight": "$syntax.comment.weight",
-						"background_color": "$syntax.comment.background"
+						"font_weight": "$syntax.comment.weight"
 					},
 					"comment.doc": {
 						"color": "$syntax.comment.color",
 						"font_style": "$syntax.comment.style",
-						"font_weight": "$syntax.comment.weight",
-						"background_color": "$syntax.comment.background"
+						"font_weight": "$syntax.comment.weight"
 					},
 					"constant": {
 						"color": "$syntax.constant.color",
 						"font_style": "$syntax.constant.style",
-						"font_weight": "$syntax.constant.weight",
-						"background_color": "$syntax.constant.background"
+						"font_weight": "$syntax.constant.weight"
 					},
 					"constant.builtin": {
 						"color": "$syntax.builtin.color|$syntax.constant.color",
 						"font_style": "$syntax.builtin.style|$syntax.constant.style",
-						"font_weight": "$syntax.builtin.weight|$syntax.constant.weight",
-						"background_color": "$syntax.builtin.background|$syntax.constant.background"
+						"font_weight": "$syntax.builtin.weight|$syntax.constant.weight"
 					},
 					"constant.character": {
 						"color": "$syntax.special.color|$syntax.constant.color",
 						"font_style": "$syntax.special.style|$syntax.constant.style",
-						"font_weight": "$syntax.special.weight|$syntax.constant.weight",
-						"background_color": "$syntax.special.background|$syntax.constant.background"
+						"font_weight": "$syntax.special.weight|$syntax.constant.weight"
 					},
 					"constructor": {
 						"color": "$syntax.constructor.color",
 						"font_style": "$syntax.constructor.style",
-						"font_weight": "$syntax.constructor.weight",
-						"background_color": "$syntax.constructor.background"
+						"font_weight": "$syntax.constructor.weight"
 					},
 					"embedded": {
 						"color": "$syntax.embedded.color",
 						"font_style": "$syntax.embedded.style",
-						"font_weight": "$syntax.embedded.weight",
-						"background_color": "$syntax.embedded.background"
+						"font_weight": "$syntax.embedded.weight"
 					},
 					"emphasis": {
 						"color": "$syntax.emphasis.color",
 						"font_style": "$syntax.emphasis.style",
-						"font_weight": "$syntax.emphasis.weight",
-						"background_color": "$syntax.emphasis.background"
+						"font_weight": "$syntax.emphasis.weight"
 					},
 					"emphasis.strong": {
 						"color": "$syntax.emphasis.color",
 						"font_style": "$syntax.emphasis.style",
-						"font_weight": "$syntax.emphasis.weight",
-						"background_color": "$syntax.emphasis.background"
+						"font_weight": "$syntax.emphasis.weight"
 					},
 					"enum": {
 						"color": "$syntax.enum.color|$syntax.special.color",
 						"font_style": "$syntax.enum.style|$syntax.special.style",
-						"font_weight": "$syntax.enum.weight|$syntax.special.weight",
-						"background_color": "$syntax.enum.background|$syntax.special.background"
+						"font_weight": "$syntax.enum.weight|$syntax.special.weight"
 					},
 					"escape": {
 						"color": "$syntax.escape.color",
 						"font_style": "$syntax.escape.style",
-						"font_weight": "$syntax.escape.weight",
-						"background_color": "$syntax.escape.background"
+						"font_weight": "$syntax.escape.weight"
 					},
 					"function": {
 						"color": "$syntax.function.color",
 						"font_style": "$syntax.function.style",
-						"font_weight": "$syntax.function.weight",
-						"background_color": "$syntax.function.background"
+						"font_weight": "$syntax.function.weight"
 					},
 					"function.method": {
 						"color": "$syntax.method.color|$syntax.function.color",
 						"font_style": "$syntax.method.style|$syntax.function.style",
-						"font_weight": "$syntax.method.weight|$syntax.function.weight",
-						"background_color": "$syntax.method.background|$syntax.function.background"
+						"font_weight": "$syntax.method.weight|$syntax.function.weight"
 					},
 					"function.definition": {
 						"color": "$syntax.function.color",
 						"font_style": "$syntax.function.style",
-						"font_weight": "$syntax.function.weight",
-						"background_color": "$syntax.function.background"
+						"font_weight": "$syntax.function.weight"
 					},
 					"function.special": {
 						"color": "$syntax.special.color|$syntax.function.color",
 						"font_style": "$syntax.special.style|$syntax.function.style",
-						"font_weight": "$syntax.special.weight|$syntax.function.weight",
-						"background_color": "$syntax.special.background|$syntax.function.background"
+						"font_weight": "$syntax.special.weight|$syntax.function.weight"
 					},
 					"function.special.definition": {
 						"color": "$syntax.special.color|$syntax.function.color",
 						"font_style": "$syntax.special.style|$syntax.function.style",
-						"font_weight": "$syntax.special.weight|$syntax.function.weight",
-						"background_color": "$syntax.special.background|$syntax.function.background"
+						"font_weight": "$syntax.special.weight|$syntax.function.weight"
 					},
 					"function.builtin": {
 						"color": "$syntax.builtin.color|$syntax.function.color",
 						"font_style": "$syntax.builtin.style|$syntax.function.style",
-						"font_weight": "$syntax.builtin.weight|$syntax.function.weight",
-						"background_color": "$syntax.builtin.background|$syntax.function.background"
+						"font_weight": "$syntax.builtin.weight|$syntax.function.weight"
 					},
 					"hint": {
 						"color": "$syntax.hint.color|$foreground.hint",
 						"font_style": "$syntax.hint.style",
-						"font_weight": "$syntax.hint.weight",
-						"background_color": "$syntax.hint.background"
+						"font_weight": "$syntax.hint.weight"
 					},
 					"keyword": {
 						"color": "$syntax.keyword.color",
 						"font_style": "$syntax.keyword.style",
-						"font_weight": "$syntax.keyword.weight",
-						"background_color": "$syntax.keyword.background"
+						"font_weight": "$syntax.keyword.weight"
 					},
 					"label": {
 						"color": "$syntax.label.color",
 						"font_style": "$syntax.label.style",
-						"font_weight": "$syntax.label.weight",
-						"background_color": "$syntax.label.background"
+						"font_weight": "$syntax.label.weight"
 					},
 					"lifetime": {
 						"color": "$syntax.lifetime.color|$syntax.special.color",
 						"font_style": "$syntax.lifetime.style|$syntax.special.style",
-						"font_weight": "$syntax.lifetime.weight |$syntax.special.weight",
-						"background_color": "$syntax.lifetime.background|$syntax.special.background"
+						"font_weight": "$syntax.lifetime.weight |$syntax.special.weight"
 					},
 					"link_text": {
 						"color": "$foreground.link|$primary",
 						"font_style": "$syntax.link.style",
-						"font_weight": "$syntax.link.weight",
-						"background_color": "$syntax.link.background"
+						"font_weight": "$syntax.link.weight"
 					},
 					"link_uri": {
 						"color": "$foreground.link|$primary",
 						"font_style": "$syntax.link.style",
-						"font_weight": "$syntax.link.weight",
-						"background_color": "$syntax.link.background"
+						"font_weight": "$syntax.link.weight"
 					},
 					"number": {
 						"color": "$syntax.number.color",
 						"font_style": "$syntax.number.style",
-						"font_weight": "$syntax.number.weight",
-						"background_color": "$syntax.number.background"
+						"font_weight": "$syntax.number.weight"
 					},
 					"operator": {
 						"color": "$syntax.operator.color",
 						"font_style": "$syntax.operator.style",
-						"font_weight": "$syntax.operator.weight",
-						"background_color": "$syntax.operator.background"
+						"font_weight": "$syntax.operator.weight"
 					},
 					"predictive": {
 						"color": "$syntax.predictive.color",
 						"font_style": "$syntax.predictive.style",
-						"font_weight": "$syntax.predictive.weight",
-						"background_color": "$syntax.predictive.background"
+						"font_weight": "$syntax.predictive.weight"
 					},
 					"preproc": {
 						"color": "$syntax.macro.color",
 						"font_style": "$syntax.macro.style",
-						"font_weight": "$syntax.macro.weight",
-						"background_color": "$syntax.macro.background"
+						"font_weight": "$syntax.macro.weight"
 					},
 					"primary": {
 						"color": "$syntax.primary.color|$primary",
 						"font_style": "$syntax.primary.style",
-						"font_weight": "$syntax.primary.weight",
-						"background_color": "$syntax.primary.background"
+						"font_weight": "$syntax.primary.weight"
 					},
 					"property": {
 						"color": "$syntax.property.color",
 						"font_style": "$syntax.property.style",
-						"font_weight": "$syntax.property.weight",
-						"background_color": "$syntax.property.background"
+						"font_weight": "$syntax.property.weight"
 					},
 					"property.json_key": {
 						"color": "$syntax.property.color",
 						"font_style": "$syntax.property.style",
-						"font_weight": "$syntax.property.weight",
-						"background_color": "$syntax.property.background"
+						"font_weight": "$syntax.property.weight"
 					},
 					"punctuation": {
 						"color": "$syntax.punctuation.color",
 						"font_style": "$syntax.punctuation.style",
-						"font_weight": "$syntax.punctuation.weight",
-						"background_color": "$syntax.punctuation.background"
+						"font_weight": "$syntax.punctuation.weight"
 					},
 					"punctuation.bracket": {
 						"color": "$syntax.punctuation.bracket.color|$syntax.punctuation.color",
 						"font_style": "$syntax.punctuation.bracket.style|$syntax.punctuation.style",
-						"font_weight": "$syntax.punctuation.bracket.weight|$syntax.punctuation.weight",
-						"background_color": "$syntax.punctuation.bracket.background|$syntax.punctuation.background"
+						"font_weight": "$syntax.punctuation.bracket.weight|$syntax.punctuation.weight"
 					},
 					"punctuation.delimiter": {
 						"color": "$syntax.punctuation.delimiter.color|$syntax.punctuation.color",
 						"font_style": "$syntax.punctuation.delimiter.style|$syntax.punctuation.style",
-						"font_weight": "$syntax.punctuation.delimiter.weight|$syntax.punctuation.weight",
-						"background_color": "$syntax.punctuation.delimiter.background|$syntax.punctuation.background"
+						"font_weight": "$syntax.punctuation.delimiter.weight|$syntax.punctuation.weight"
 					},
 					"punctuation.list_marker": {
 						"color": "$syntax.number.color|$syntax.punctuation.color",
 						"font_style": "$syntax.number.style|$syntax.punctuation.style",
-						"font_weight": "$syntax.number.weight|$syntax.punctuation.weight",
-						"background_color": "$syntax.number.background|$syntax.punctuation.background"
+						"font_weight": "$syntax.number.weight|$syntax.punctuation.weight"
 					},
 					"punctuation.special": {
 						"color": "$syntax.punctuation.special.color|$syntax.punctuation.color",
 						"font_style": "$syntax.punctuation.special.style|$syntax.punctuation.style",
-						"font_weight": "$syntax.punctuation.special.weight|$syntax.punctuation.weight",
-						"background_color": "$syntax.punctuation.special.background|$syntax.punctuation.background"
+						"font_weight": "$syntax.punctuation.special.weight|$syntax.punctuation.weight"
 					},
 					"punctuation.special.symbol": {
 						"color": "$syntax.punctuation.symbol.color|$syntax.punctuation.special.color|$syntax.punctuation.color",
 						"font_style": "$syntax.punctuation.symbol.style|$syntax.punctuation.special.style|$syntax.punctuation.style",
-						"font_weight": "$syntax.punctuation.symbol.weight|$syntax.punctuation.special.weight|$syntax.punctuation.weight",
-						"background_color": "$syntax.punctuation.symbol.background|$syntax.punctuation.special.background|$syntax.punctuation.background"
+						"font_weight": "$syntax.punctuation.symbol.weight|$syntax.punctuation.special.weight|$syntax.punctuation.weight"
 					},
 					"string": {
 						"color": "$syntax.string.color",
 						"font_style": "$syntax.string.style",
-						"font_weight": "$syntax.string.weight",
-						"background_color": "$syntax.string.background"
+						"font_weight": "$syntax.string.weight"
 					},
 					"string.doc": {
 						"color": "$syntax.doc.color|$syntax.string.color",
 						"font_style": "$syntax.doc.style|$syntax.string.style",
-						"font_weight": "$syntax.doc.weight|$syntax.string.weight",
-						"background_color": "$syntax.doc.background|$syntax.string.background"
+						"font_weight": "$syntax.doc.weight|$syntax.string.weight"
 					},
 					"string.escape": {
 						"color": "$syntax.escape.color|$syntax.string.color",
 						"font_style": "$syntax.escape.style|$syntax.string.style",
-						"font_weight": "$syntax.escape.weight|$syntax.string.weight",
-						"background_color": "$syntax.escape.background|$syntax.string.background"
+						"font_weight": "$syntax.escape.weight|$syntax.string.weight"
 					},
 					"string.regex": {
 						"color": "$syntax.string.regex.color|$syntax.string.color",
 						"font_style": "$syntax.string.regex.style|$syntax.string.style",
-						"font_weight": "$syntax.string.regex.weight|$syntax.string.weight",
-						"background_color": "$syntax.string.regex.background|$syntax.string.background"
+						"font_weight": "$syntax.string.regex.weight|$syntax.string.weight"
 					},
 					"string.special": {
 						"color": "$syntax.string.special.color|$syntax.string.color",
 						"font_style": "$syntax.string.special.style|$syntax.string.style",
-						"font_weight": "$syntax.string.special.weight|$syntax.string.weight",
-						"background_color": "$syntax.string.special.background|$syntax.string.background"
+						"font_weight": "$syntax.string.special.weight|$syntax.string.weight"
 					},
 					"string.special.symbol": {
 						"color": "$syntax.string.special.color|$syntax.string.color",
 						"font_style": "$syntax.string.special.style|$syntax.string.style",
-						"font_weight": "$syntax.string.special.weight|$syntax.string.weight",
-						"background_color": "$syntax.string.special.background|$syntax.string.background"
+						"font_weight": "$syntax.string.special.weight|$syntax.string.weight"
 					},
 					"tag": {
 						"color": "$syntax.tag.color",
 						"font_style": "$syntax.tag.style",
-						"font_weight": "$syntax.tag.weight",
-						"background_color": "$syntax.tag.background"
+						"font_weight": "$syntax.tag.weight"
 					},
 					"text.literal": {
 						"color": "$syntax.text.color",
 						"font_style": "$syntax.text.style",
-						"font_weight": "$syntax.text.weight",
-						"background_color": "$syntax.text.background"
+						"font_weight": "$syntax.text.weight"
 					},
 					"title":  {
 						"color": "$syntax.keyword.color",
 						"font_style": "$syntax.keyword.style",
-						"font_weight": "$syntax.keyword.weight",
-						"background_color": "$syntax.keyword.background"
+						"font_weight": "$syntax.keyword.weight"
 					},
 					"type": {
 						"color": "$syntax.type.color",
 						"font_style": "$syntax.type.style",
-						"font_weight": "$syntax.type.weight",
-						"background_color": "$syntax.type.background"
+						"font_weight": "$syntax.type.weight"
 					},
 					"type.builtin": {
 						"color": "$syntax.builtin.color|$syntax.type.color",
 						"font_style": "$syntax.builtin.style|$syntax.type.style",
-						"font_weight": "$syntax.builtin.weight|$syntax.type.weight",
-						"background_color": "$syntax.builtin.background|$syntax.type.background"
+						"font_weight": "$syntax.builtin.weight|$syntax.type.weight"
 					},
 					"type.super": {
 						"color": "$syntax.special.color|$syntax.type.color",
 						"font_style": "$syntax.special.style|$syntax.type.style",
-						"font_weight": "$syntax.special.weight|$syntax.type.weight",
-						"background_color": "$syntax.special.background|$syntax.type.background"
+						"font_weight": "$syntax.special.weight|$syntax.type.weight"
 					},
 					"type.interface": {
 						"color": "$syntax.type.color",
 						"font_style": "$syntax.type.style",
-						"font_weight": "$syntax.type.weight",
-						"background_color": "$syntax.type.background"
+						"font_weight": "$syntax.type.weight"
 					},
 					"variable": {
 						"color": "$syntax.variable.color",
 						"font_style": "$syntax.variable.style",
-						"font_weight": "$syntax.variable.weight",
-						"background_color": "$syntax.variable.background"
+						"font_weight": "$syntax.variable.weight"
 					},
 					"variable.member": {
 						"color": "$syntax.variable.color",
 						"font_style": "$syntax.variable.style",
-						"font_weight": "$syntax.variable.weight",
-						"background_color": "$syntax.variable.background"
+						"font_weight": "$syntax.variable.weight"
 					},
 					"variable.parameter": {
 						"color": "$syntax.variable.parameter.color|$syntax.parameter.color|$syntax.variable.color",
 						"font_style": "$syntax.variable.parameter.style|$syntax.parameter.style|$syntax.variable.style",
-						"font_weight": "$syntax.variable.parameter.weight|$syntax.parameter.weight|$syntax.variable.weight",
-						"background_color": "$syntax.variable.parameter.background|$syntax.parameter.background|$syntax.variable.background"
+						"font_weight": "$syntax.variable.parameter.weight|$syntax.parameter.weight|$syntax.variable.weight"
 					},
 					"variable.special": {
 						"color": "$syntax.variable.special.color|$syntax.special.color|$syntax.variable.color",
 						"font_style": "$syntax.variable.special.style|$syntax.special.style|$syntax.variable.style",
-						"font_weight": "$syntax.variable.special.weight|$syntax.special.weight|$syntax.variable.weight",
-						"background_color": "$syntax.variable.special.background|$syntax.special.background|$syntax.variable.background"
+						"font_weight": "$syntax.variable.special.weight|$syntax.special.weight|$syntax.variable.weight"
 					},
 					"variant": {
 						"color": "$syntax.variant.color",
 						"font_style": "$syntax.variant.style",
-						"font_weight": "$syntax.variant.weight",
-						"background_color": "$syntax.variant.background"
+						"font_weight": "$syntax.variant.weight"
 					}
 				}
 			}
