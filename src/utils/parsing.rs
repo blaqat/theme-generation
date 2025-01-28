@@ -622,9 +622,13 @@ pub mod special_array {
                 .iter()
                 .map(|mode| match mode {
                     SpecialMode::Single(match_mode) => match_mode.matches(val1, other_val),
-                    SpecialMode::Inside(match_mode) => match other_val {
-                        Value::Array(vec) => vec.iter().any(|val| match_mode.matches(val1, val)),
-                        Value::Object(map) => map.values().any(|val| match_mode.matches(val1, val)),
+                    SpecialMode::Inside(match_mode) => match val1 {
+                        Value::Array(vec) => {
+                            vec.iter().any(|val| match_mode.matches(val, other_val))
+                        }
+                        Value::Object(map) => {
+                            map.values().any(|val| match_mode.matches(val, other_val))
+                        }
                         _ => false,
                     },
                 })
@@ -652,16 +656,13 @@ pub mod special_array {
                 Some((match_mode, keys))
             }
 
-            Value::String(str1) if str1.starts_with("$matches::") => {
-                let keys = str1
-                    .strip_prefix("$matches::")
-                    .unwrap()
+            Value::String(str1) if let Some(matches) = str1.strip_prefix("$matches::") => {
+                let keys = matches
                     .split(',')
                     .map(|key| {
                         SpecialKey(key.to_string(), vec![SpecialMode::Single(MatchMode::Exact)])
                     })
                     .collect();
-
                 Some((true, keys))
             }
 

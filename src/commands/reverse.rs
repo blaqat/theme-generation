@@ -631,7 +631,8 @@ mod steps {
             for (_, v) in overrides
                 .to_map()
                 .into_iter()
-                .sorted_by_key(|(k, _)| k.clone())
+                .sorted_by_key(|(_, j)| j.path.join())
+                .dedup_by(|(_, a), (_, b)| a.value == b.value && a.path == b.path)
             {
                 t!(val = v.value.clone().into_value());
                 w!(r#""{}" = {}"#, v.path.join(), val);

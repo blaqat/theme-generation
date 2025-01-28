@@ -97,6 +97,7 @@ pub enum ValidCommands {
 pub enum ProgramError {
     NoCommand,
     InvalidCommand,
+    HelpAll,
     NotEnoughArguments(ValidCommands),
     InvalidFile(String),
     InvalidFileType,
@@ -189,7 +190,7 @@ pub fn run_command(args: Vec<String>) -> Result<(), ProgramError> {
         .collect();
 
     match command {
-        ValidCommands::Help if command_args.is_empty() => Err(ProgramError::NoCommand),
+        ValidCommands::Help if command_args.is_empty() => Err(ProgramError::HelpAll),
         ValidCommands::Help => {
             let help_command = ValidCommands::from_str(&command_args[0])
                 .map_err(|_| ProgramError::HelpInvalidCommand)?;
@@ -241,6 +242,7 @@ pub fn run_command(args: Vec<String>) -> Result<(), ProgramError> {
             let reverse_flags: Vec<_> = flags
                 .into_iter()
                 .filter(|x| commands::reverse::VALID_FLAGS.contains(&&x[0..2]))
+                .filter(|x| &x[0..2] != "-o") // Edit should reverse to the currend directory
                 .collect();
             let watch_command = |name| {
                 vec!["", "watch", name, "all"]

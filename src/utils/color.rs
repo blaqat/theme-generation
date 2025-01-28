@@ -375,7 +375,7 @@ impl Color {
 
     pub fn get_name(&self) -> String {
         let rgb: [u8; 3] = [self.red as u8, self.green as u8, self.blue as u8];
-        "color.".to_owned() + &ColorName::similar(rgb).to_lowercase()
+        format!("color.{}", ColorName::similar(rgb).to_lowercase())
     }
 
     pub fn from_hex(hex: &str) -> Result<Self, Error> {
