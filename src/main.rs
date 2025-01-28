@@ -110,5 +110,17 @@ fn main() {
         Err(ProgramError::Processing(message)) => {
             error!(r#"An error occured while processing: "{}""#, message);
         }
+        Err(ProgramError::HelpAll) => {
+            println!("---- WATCH ----");
+            commands::help(&ValidCommands::Watch);
+            println!("---- REVERSE ----");
+            commands::help(&ValidCommands::Reverse);
+            println!("---- CHECK ----");
+            commands::help(&ValidCommands::Check);
+            println!("---- GENERATE ----");
+            commands::help(&ValidCommands::Generate);
+            println!("---- EDIT ----");
+            commands::help(&ValidCommands::Edit);
+        }
     }
 }
