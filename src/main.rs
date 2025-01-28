@@ -7,9 +7,6 @@ mod commands;
 mod prelude;
 mod utils;
 
-const DEFAULT_ERROR_MESSAGE: &str =
-    "Usage: substitutor [check|gen|rev] or substitutor help to get more information.";
-
 /**
 # Substitutor Program:
 # Check:
@@ -73,7 +70,12 @@ fn main() {
 
     match run_command(args) {
         Ok(()) => (),
-        Err(ProgramError::NoCommand) => error!("{}", DEFAULT_ERROR_MESSAGE),
+        Err(ProgramError::NoCommand) => {
+            error!(
+                "Usage: substitutor [{}] or substitutor help to get more information.",
+                ValidCommands::list_commands().join("|")
+            )
+        }
         Err(ProgramError::InvalidCommand) => {
             error!(
                 "Invalid command. Please use one of the following: {:?}",
