@@ -165,7 +165,7 @@ pub struct ResolvedVariable {
     pub siblings: Vec<ResolvedVariable>,
 }
 
-impl<'a> ResolvedVariable {
+impl ResolvedVariable {
     pub fn init(name: &str, value: ParsedValue) -> Self {
         let variable = ParsedVariable {
             name: name.to_string(),
@@ -203,7 +203,7 @@ impl<'a> ResolvedVariable {
         }
     }
 
-    pub fn from_src(src: &'a SourcedVariable) -> Self {
+    pub fn from_src(src: &SourcedVariable) -> Self {
         let variables = src
             .variables
             .iter()
@@ -240,7 +240,8 @@ impl<'a> ResolvedVariable {
     }
 
     pub fn is_resolvable(&self) -> bool {
-        self.resolved_id.map_or(false, |i| i < self.variables.len())
+        self.resolved_id
+            .map_or_else(|| false, |i| i < self.variables.len())
     }
 
     pub fn could_resolve(&self) -> bool {
@@ -421,7 +422,7 @@ impl VariableSet {
                     .all(|v| self.is_null(&v.name))
                     .then_some(var)
             })
-            .map_or(true, |v| v.value == ParsedValue::Null)
+            .is_none_or(|v| v.value == ParsedValue::Null)
     }
 
     pub fn insert(&self, name: &str, var: ResolvedVariable) {
@@ -618,21 +619,16 @@ pub mod special_array {
 
     impl SpecialKey {
         pub fn matches(&self, val1: &Value, other_val: &Value) -> bool {
-            self.1
-                .iter()
-                .map(|mode| match mode {
-                    SpecialMode::Single(match_mode) => match_mode.matches(val1, other_val),
-                    SpecialMode::Inside(match_mode) => match val1 {
-                        Value::Array(vec) => {
-                            vec.iter().any(|val| match_mode.matches(val, other_val))
-                        }
-                        Value::Object(map) => {
-                            map.values().any(|val| match_mode.matches(val, other_val))
-                        }
-                        _ => false,
-                    },
-                })
-                .any(|x| x)
+            self.1.iter().any(|mode| match mode {
+                SpecialMode::Single(match_mode) => match_mode.matches(val1, other_val),
+                SpecialMode::Inside(match_mode) => match val1 {
+                    Value::Array(vec) => vec.iter().any(|val| match_mode.matches(val, other_val)),
+                    Value::Object(map) => {
+                        map.values().any(|val| match_mode.matches(val, other_val))
+                    }
+                    _ => false,
+                },
+            })
         }
     }
 

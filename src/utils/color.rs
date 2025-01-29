@@ -1,10 +1,3 @@
-use color_name::Color as ColorName;
-use palette::{Hsv, IntoColor, Srgb};
-use std::fmt;
-use std::hash::Hash;
-use std::ops::{Add, BitAnd, Div, Mul, Sub};
-use std::str::FromStr;
-
 /**
 Colors are hex strings that have easy access to their hue, saturation, value, and lightness.
 Valid Color Strings Include:
@@ -17,6 +10,12 @@ When color is modified, all properties are updated.
 e.g if hsv is modified rgb are updated
 if rgb is modified hsvl are updated
 */
+use color_name::Color as ColorName;
+use palette::{Hsl, Hsv, IntoColor, Srgb};
+use std::fmt;
+use std::hash::Hash;
+use std::ops::{Add, BitAnd, Div, Mul, Sub};
+use std::str::FromStr;
 
 const MAX_RGB: i16 = 255;
 const MAX_SVA: i16 = 100;
@@ -35,6 +34,7 @@ pub enum Error {
     Component,
     Change,
     Operator,
+    InvalidColorString,
 }
 
 #[derive(Debug, PartialEq, Clone, Hash, Eq)]
@@ -45,6 +45,7 @@ pub enum Component {
     Red(i16),
     Green(i16),
     Blue(i16),
+    Lightness(i16),
     Alpha(i16),
     Hex(String),
 }
@@ -65,6 +66,7 @@ macro_rules! impl_color_components_op {
                     Component::Green(val) => Component::Green(self.green $op val),
                     Component::Blue(val) => Component::Blue(self.blue $op val),
                     Component::Alpha(val) => Component::Alpha(self.alpha $op val),
+                    Component::Lightness(val) => Component::Lightness(self.lightness $op val),
                     Component::Hex(_) => unreachable!(),
                 }
             }
@@ -98,7 +100,7 @@ impl Component {
                 }
             }
 
-            Self::Saturation(val) | Self::Value(val) | Self::Alpha(val) => {
+            Self::Saturation(val) | Self::Value(val) | Self::Alpha(val) | Self::Lightness(val) => {
                 *val = (*val).clamp(0, MAX_SVA);
             }
 
@@ -252,6 +254,7 @@ impl FromStr for Operation {
             Some('h') => Component::Hue(val),
             Some('s') => Component::Saturation(val),
             Some('v') => Component::Value(val),
+            Some('l') => Component::Lightness(val),
             Some('r') => Component::Red(val),
             Some('g') => Component::Green(val),
             Some('b') => Component::Blue(val),
@@ -271,16 +274,24 @@ pub struct Color {
     blue: i16,
     hue: i16,
     saturation: i16,
+    lightness: i16,
     value: i16,
     pub hex: String,
 }
 
+const fn in_range(a: i16, b: i16, r: i16) -> bool {
+    (a - b).abs() <= r
+}
+
 impl PartialEq for Color {
     fn eq(&self, other: &Self) -> bool {
-        ((self.hue == other.hue
-            && self.saturation == other.saturation
-            && self.value == other.value)
-            || (self.red == other.red && self.green == other.green && self.blue == other.blue))
+        let max_distance = 1;
+        ((in_range(self.hue, other.hue, max_distance)
+            && in_range(self.saturation, other.saturation, max_distance)
+            && in_range(self.value, other.value, max_distance))
+            || (in_range(self.red, other.red, max_distance)
+                && in_range(self.green, other.green, max_distance)
+                && in_range(self.blue, other.blue, max_distance)))
             && self.alpha == other.alpha
     }
 }
@@ -292,6 +303,7 @@ impl Hash for Color {
         self.green.hash(state);
         self.blue.hash(state);
         self.hue.hash(state);
+        self.lightness.hash(state);
         self.saturation.hash(state);
         self.value.hash(state);
     }
@@ -312,6 +324,7 @@ impl Default for Color {
             blue: 0,
             hue: 0,
             saturation: 0,
+            lightness: 0,
             value: 0,
             hex: String::from("#000"),
         }
@@ -322,14 +335,14 @@ impl FromStr for Color {
     type Err = Error;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        Self::from_hex(s)
+        Self::try_from(ColorType::from_str(s)?)
     }
 }
 
 #[allow(clippy::cast_sign_loss, clippy::cast_possible_truncation)]
 impl Color {
-    pub fn from_change(hex: &str, ops: &[Operation]) -> Result<Self, Error> {
-        let mut color = Self::from_hex(hex)?;
+    pub fn from_change(col_str: &str, ops: &[Operation]) -> Result<Self, Error> {
+        let mut color = col_str.parse::<Self>()?;
         color.update(ops.to_vec())?;
         Ok(color)
     }
@@ -405,24 +418,49 @@ impl Color {
             ..Default::default()
         };
 
-        color.update_hsv();
+        color.update_hsvl();
         color.update_hex();
 
         Ok(color)
     }
 
-    fn update_hsv(&mut self) {
+    fn update_value(&mut self) {
+        let hs_light = Hsl::new(
+            f32::from(self.hue),
+            f32::from(self.saturation) / 100.0,
+            f32::from(self.lightness) / 100.0,
+        );
+        let hs_val: Hsv = hs_light.into_color();
+
+        self.saturation = (hs_val.saturation * 100.0) as i16;
+        self.value = (hs_val.value * 100.0) as i16;
+    }
+
+    fn update_lightness(&mut self) {
+        let hs_val = Hsv::new(
+            f32::from(self.hue),
+            f32::from(self.saturation) / 100.0,
+            f32::from(self.value) / 100.0,
+        );
+        let hs_light: Hsl = hs_val.into_color();
+
+        self.lightness = (hs_light.lightness * 100.0) as i16;
+    }
+
+    fn update_hsvl(&mut self) {
         let rgb = Srgb::new(
             f32::from(self.red) / 255.0,
             f32::from(self.green) / 255.0,
             f32::from(self.blue) / 255.0,
         );
 
-        let hsv: Hsv = rgb.into_color();
+        let hs_val: Hsv = rgb.into_color();
+        let hs_light: Hsl = rgb.into_color();
 
-        self.hue = hsv.hue.into_positive_degrees() as i16;
-        self.saturation = (hsv.saturation * 100.0) as i16;
-        self.value = (hsv.value * 100.0) as i16;
+        self.hue = hs_val.hue.into_positive_degrees() as i16;
+        self.saturation = (hs_val.saturation * 100.0) as i16;
+        self.value = (hs_val.value * 100.0) as i16;
+        self.lightness = (hs_light.lightness * 100.0) as i16;
     }
 
     fn update_rgb(&mut self) {
@@ -491,6 +529,7 @@ impl Color {
                 Component::Hue(h) => self.hue = h,
                 Component::Saturation(s) => self.saturation = s,
                 Component::Value(v) => self.value = v,
+                Component::Lightness(l) => self.lightness = l,
 
                 Component::Red(r) => self.red = r,
                 Component::Green(g) => self.green = g,
@@ -502,12 +541,19 @@ impl Color {
 
             match setting {
                 Component::Hue(_) | Component::Saturation(_) | Component::Value(_) => {
+                    self.update_lightness();
+                    self.update_rgb();
+                    self.update_hex();
+                }
+
+                Component::Lightness(_) => {
+                    self.update_value();
                     self.update_rgb();
                     self.update_hex();
                 }
 
                 Component::Red(_) | Component::Green(_) | Component::Blue(_) => {
-                    self.update_hsv();
+                    self.update_hsvl();
                     self.update_hex();
                 }
 
@@ -517,5 +563,119 @@ impl Color {
         }
 
         Ok(())
+    }
+}
+
+#[derive(Debug)]
+enum ColorType {
+    Hex(String),
+    Hsl(i16, i16, i16, i16),
+    Hsv(i16, i16, i16, i16),
+    Rgb(i16, i16, i16, i16),
+}
+
+impl FromStr for ColorType {
+    type Err = Error;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let s = s.trim();
+        let s = s.to_lowercase();
+
+        if s.starts_with('#') {
+            return Ok(Self::Hex(s));
+        }
+
+        if !s.ends_with(')') {
+            return Err(Error::InvalidColorString);
+        }
+
+        let splits: Vec<_> = s.split_terminator(&['(', ',', ')']).collect();
+        if splits.len() < 2 {
+            return Err(Error::InvalidColorString);
+        }
+
+        let color_values = &splits[1..];
+        if color_values.len() < 3 {
+            return Err(Error::InvalidColorString);
+        }
+
+        let mut color_type = splits[0].to_string();
+        color_type.truncate(3);
+
+        let color_values = color_values
+            .iter()
+            .map(|c| c.trim().parse::<i16>().unwrap())
+            .collect::<Vec<_>>();
+
+        let alpha = color_values.get(3).unwrap_or(&100);
+
+        match color_type.as_str() {
+            "rgb" => Ok(Self::Rgb(
+                color_values[0],
+                color_values[1],
+                color_values[2],
+                *alpha,
+            )),
+            "hsl" => Ok(Self::Hsl(
+                color_values[0],
+                color_values[1],
+                color_values[2],
+                *alpha,
+            )),
+            "hsv" => Ok(Self::Hsv(
+                color_values[0],
+                color_values[1],
+                color_values[2],
+                *alpha,
+            )),
+            _ => Err(Error::InvalidColorString),
+        }
+    }
+}
+
+impl TryFrom<ColorType> for Color {
+    type Error = Error;
+    fn try_from(value: ColorType) -> Result<Self, Self::Error> {
+        match value {
+            ColorType::Hex(hex) => Self::from_hex(&hex),
+            ColorType::Hsl(h, s, l, a) => {
+                let mut color = Self {
+                    hue: h,
+                    saturation: s,
+                    lightness: l,
+                    alpha: a,
+                    ..Default::default()
+                };
+                color.update_value();
+                color.update_rgb();
+                color.update_hex();
+                Ok(color)
+            }
+            ColorType::Hsv(h, s, v, a) => {
+                let mut color = Self {
+                    hue: h,
+                    saturation: s,
+                    value: v,
+                    alpha: a,
+                    ..Default::default()
+                };
+                color.update_lightness();
+                color.update_rgb();
+                color.update_hex();
+                Ok(color)
+            }
+            ColorType::Rgb(r, g, b, a) => {
+                let mut color = Self {
+                    red: r,
+                    green: g,
+                    blue: b,
+                    alpha: a,
+                    ..Default::default()
+                };
+                color.update_hsvl();
+                color.update_hex();
+                Ok(color)
+            }
+        }
     }
 }
