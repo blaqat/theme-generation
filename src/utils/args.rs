@@ -73,7 +73,7 @@ impl ValidatedFile {
             if path.is_file()
                 && path
                     .extension()
-                    .map_or(false, |ext| ext.eq_ignore_ascii_case("toml"))
+                    .is_some_and(|ext| ext.eq_ignore_ascii_case("toml"))
             {
                 files.push(Self::from_str(path_str)?);
             }

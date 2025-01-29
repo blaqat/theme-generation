@@ -1,7 +1,3 @@
-use crate::prelude::*;
-use regex::Regex;
-use std::{io::Read, path::PathBuf};
-
 /**
 Generate:
     Description:
@@ -18,6 +14,9 @@ Generate:
         -n              Name of the output file
         -r              Overwrite the output file of the same name if it exists
 */
+use crate::prelude::*;
+use regex::Regex;
+use std::{io::Read, path::PathBuf};
 
 pub const VALID_FLAGS: [&str; 5] = ["-o", "-i", "-p", "-n", "-r"];
 
@@ -96,22 +95,22 @@ impl FromStr for FlagTypes {
         match flag {
             "-r" => Ok(Self::ReplaceName),
             flag if flag.starts_with("-n") => {
-                let name = flag.split('=').last().unwrap();
+                let name = flag.split('=').next_back().unwrap();
                 Ok(Self::Name(name.to_owned()))
             }
             flag if flag.starts_with("-p") => {
-                let path = flag.split('=').last().unwrap();
+                let path = flag.split('=').next_back().unwrap();
                 let path = JSPath::from_str(path).map_err(|_| {
                     ProgramError::InvalidFlag("reverse".to_owned(), flag.to_owned())
                 })?;
                 Ok(Self::InnerPath(path))
             }
             flag if flag.starts_with("-i") => {
-                let path = flag.split('=').last().unwrap();
+                let path = flag.split('=').next_back().unwrap();
                 get_directory(path).map(Self::InputDirectory)
             }
             flag if flag.starts_with("-o") => {
-                let path = flag.split('=').last().unwrap();
+                let path = flag.split('=').next_back().unwrap();
                 get_directory(path).map(Self::OutputDirectory)
             }
             _ => Err(ProgramError::InvalidFlag(

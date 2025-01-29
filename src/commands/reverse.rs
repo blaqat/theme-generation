@@ -1,8 +1,3 @@
-use crate::prelude::*;
-use itertools::Itertools;
-use steps::{generate_toml_string, key_diff, replace_color, resolve_variables, to_color_map};
-use utils::parsing::special_array::{parse_special_keys, SpecialKey};
-
 /**
 Reverse:
     Description:
@@ -19,6 +14,10 @@ Reverse:
         -p path         Json Path to start the reverse process at
         -g[o|d]         Don't generate deletions or additions
 */
+use crate::prelude::*;
+use itertools::Itertools;
+use steps::{generate_toml_string, key_diff, replace_color, resolve_variables, to_color_map};
+use utils::parsing::special_array::{parse_special_keys, SpecialKey};
 
 pub const TOML_NULL: &str = "$none";
 pub const VALID_FLAGS: &[&str] = &["-t", "-o", "-n", "-p", "-g"];
@@ -95,18 +94,18 @@ impl FromStr for ReverseFlags {
     fn from_str(flag: &str) -> Result<Self, ProgramError> {
         match flag {
             flag if flag.starts_with("-p") => {
-                let path = flag.split('=').last().unwrap();
+                let path = flag.split('=').next_back().unwrap();
                 let path = JSPath::from_str(path).map_err(|_| {
                     ProgramError::InvalidFlag("reverse".to_owned(), flag.to_owned())
                 })?;
                 Ok(Self::InnerPath(path))
             }
             flag if flag.starts_with("-n") => {
-                let name = flag.split('=').last().unwrap();
+                let name = flag.split('=').next_back().unwrap();
                 Ok(Self::Name(name.to_owned()))
             }
             flag if flag.starts_with("-o") => {
-                let path = flag.split('=').last().unwrap();
+                let path = flag.split('=').next_back().unwrap();
                 let path = path.replace('~', std::env::var("HOME").unwrap().as_str());
                 let path = Path::new(&path);
                 if !path.exists() {
@@ -118,7 +117,7 @@ impl FromStr for ReverseFlags {
                 Ok(Self::OutputDirectory(path.to_path_buf()))
             }
             flag if flag.starts_with("-t") => {
-                let threshold = flag.split('=').last().unwrap();
+                let threshold = flag.split('=').next_back().unwrap();
                 let threshold = threshold.parse().map_err(|_| {
                     ProgramError::InvalidFlag("reverse".to_owned(), flag.to_owned())
                 })?;

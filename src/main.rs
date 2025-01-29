@@ -74,7 +74,7 @@ fn main() {
             error!(
                 "Usage: substitutor [{}] or substitutor help to get more information.",
                 ValidCommands::list_commands().join("|")
-            )
+            );
         }
         Err(ProgramError::InvalidCommand) => {
             error!(
@@ -86,7 +86,7 @@ fn main() {
             error!(r#""{file_name}" is not a file. Please check the file path and try again."#);
         }
         Err(ProgramError::InvalidFileType) => {
-            error!(r#"Invalid types for files provided. Please check the usage."#);
+            error!(r"Invalid types for files provided. Please check the usage.");
         }
         Err(ProgramError::InvalidFlag(command, flag)) => {
             error!(r#"Invalid flag "{flag}" for the "{command}" command. Please check the usage."#);
