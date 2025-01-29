@@ -1,5 +1,3 @@
-use crate::prelude::*;
-
 /**
 Watch Mode:
     Description:
@@ -13,6 +11,7 @@ Watch Mode:
         -n name         Set name of output theme file
         -i directory    Set directory where the .toml files are located
 */
+use crate::prelude::*;
 
 pub fn watch(
     directory: &Path,

@@ -1,9 +1,3 @@
-use core::str;
-
-use crate::prelude::*;
-use serde_json::{json, Value};
-use special_array::{parse_special_keys, SpecialKey};
-
 /**
 Check:
     Description:
@@ -14,6 +8,11 @@ Check:
     Usage:
         substitutor check originalFile newFile
 */
+use core::str;
+
+use crate::prelude::*;
+use serde_json::{json, Value};
+use special_array::{parse_special_keys, SpecialKey};
 
 const DNE: &str = "DNE";
 

@@ -7,9 +7,6 @@ mod commands;
 mod prelude;
 mod utils;
 
-const DEFAULT_ERROR_MESSAGE: &str =
-    "Usage: substitutor [check|gen|rev] or substitutor help to get more information.";
-
 /**
 # Substitutor Program:
 # Check:
@@ -73,7 +70,12 @@ fn main() {
 
     match run_command(args) {
         Ok(()) => (),
-        Err(ProgramError::NoCommand) => error!("{}", DEFAULT_ERROR_MESSAGE),
+        Err(ProgramError::NoCommand) => {
+            error!(
+                "Usage: substitutor [{}] or substitutor help to get more information.",
+                ValidCommands::list_commands().join("|")
+            );
+        }
         Err(ProgramError::InvalidCommand) => {
             error!(
                 "Invalid command. Please use one of the following: {:?}",
@@ -84,7 +86,7 @@ fn main() {
             error!(r#""{file_name}" is not a file. Please check the file path and try again."#);
         }
         Err(ProgramError::InvalidFileType) => {
-            error!(r#"Invalid types for files provided. Please check the usage."#);
+            error!(r"Invalid types for files provided. Please check the usage.");
         }
         Err(ProgramError::InvalidFlag(command, flag)) => {
             error!(r#"Invalid flag "{flag}" for the "{command}" command. Please check the usage."#);
@@ -109,6 +111,18 @@ fn main() {
         }
         Err(ProgramError::Processing(message)) => {
             error!(r#"An error occured while processing: "{}""#, message);
+        }
+        Err(ProgramError::HelpAll) => {
+            println!("---- WATCH ----");
+            commands::help(&ValidCommands::Watch);
+            println!("---- REVERSE ----");
+            commands::help(&ValidCommands::Reverse);
+            println!("---- CHECK ----");
+            commands::help(&ValidCommands::Check);
+            println!("---- GENERATE ----");
+            commands::help(&ValidCommands::Generate);
+            println!("---- EDIT ----");
+            commands::help(&ValidCommands::Edit);
         }
     }
 }
