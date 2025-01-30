@@ -40,7 +40,8 @@ pub enum Error {
 #[derive(Debug, PartialEq, Clone, Hash, Eq)]
 pub enum Component {
     Hue(i16),
-    Saturation(i16),
+    HsvSaturation(i16),
+    HslSaturation(i16),
     Value(i16),
     Red(i16),
     Green(i16),
@@ -58,8 +59,11 @@ macro_rules! impl_color_components_op {
             fn $func_name(self, rhs: Component) -> Self::Output {
                 match rhs {
                     Component::Hue(val) => Component::Hue(self.hue $op val),
-                    Component::Saturation(val) => {
-                        Component::Saturation(self.saturation $op val)
+                    Component::HsvSaturation(val) => {
+                        Component::HsvSaturation(self.saturation $op val)
+                    }
+                    Component::HslSaturation(val) => {
+                        Component::HslSaturation(self.saturation $op val)
                     }
                     Component::Value(val) => Component::Value(self.value $op val),
                     Component::Red(val) => Component::Red(self.red $op val),
@@ -100,7 +104,11 @@ impl Component {
                 }
             }
 
-            Self::Saturation(val) | Self::Value(val) | Self::Alpha(val) | Self::Lightness(val) => {
+            Self::HsvSaturation(val)
+            | Self::HslSaturation(val)
+            | Self::Value(val)
+            | Self::Alpha(val)
+            | Self::Lightness(val) => {
                 *val = (*val).clamp(0, MAX_SVA);
             }
 
@@ -252,7 +260,8 @@ impl FromStr for Operation {
 
         let component = match component_char {
             Some('h') => Component::Hue(val),
-            Some('s') => Component::Saturation(val),
+            Some('s') => Component::HsvSaturation(val),
+            Some('S') => Component::HslSaturation(val),
             Some('v') => Component::Value(val),
             Some('l') => Component::Lightness(val),
             Some('r') => Component::Red(val),
@@ -424,6 +433,24 @@ impl Color {
         Ok(color)
     }
 
+    fn update_saturation(&mut self) {
+        let x = f32::from((200 - self.saturation) * self.value) / 100.0;
+        let saturation = if x == 0.0 || x == 200.0 {
+            0.0
+        } else {
+            f32::from(self.saturation * self.value) / {
+                if x <= 100.0 {
+                    x
+                } else {
+                    200.0 - x
+                }
+            }
+            .round()
+        };
+
+        self.saturation = saturation as i16;
+    }
+
     fn update_value(&mut self) {
         let hs_light = Hsl::new(
             f32::from(self.hue),
@@ -519,7 +546,22 @@ impl Color {
         Ok(())
     }
 
-    pub fn update(&mut self, changes: Operations) -> Result<(), Error> {
+    pub fn update(&mut self, mut changes: Operations) -> Result<(), Error> {
+        if changes
+            .iter()
+            .any(|setting| matches!(setting.0, Component::Lightness(_)))
+        {
+            changes = changes
+                .into_iter()
+                .map(|setting| match setting.0 {
+                    Component::HsvSaturation(s) => {
+                        Operation(Component::HslSaturation(s), setting.1)
+                    }
+                    _ => setting,
+                })
+                .collect();
+        }
+
         for change in changes {
             let mut setting = change.apply(self)?;
 
@@ -527,7 +569,7 @@ impl Color {
 
             match setting {
                 Component::Hue(h) => self.hue = h,
-                Component::Saturation(s) => self.saturation = s,
+                Component::HsvSaturation(s) | Component::HslSaturation(s) => self.saturation = s,
                 Component::Value(v) => self.value = v,
                 Component::Lightness(l) => self.lightness = l,
 
@@ -540,13 +582,20 @@ impl Color {
             }
 
             match setting {
-                Component::Hue(_) | Component::Saturation(_) | Component::Value(_) => {
+                Component::Hue(_) | Component::HsvSaturation(_) | Component::Value(_) => {
                     self.update_lightness();
                     self.update_rgb();
                     self.update_hex();
                 }
 
+                Component::HslSaturation(_) => {
+                    self.update_value();
+                    self.update_rgb();
+                    self.update_hex();
+                }
+
                 Component::Lightness(_) => {
+                    self.update_saturation();
                     self.update_value();
                     self.update_rgb();
                     self.update_hex();
