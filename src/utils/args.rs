@@ -18,7 +18,9 @@ pub struct ValidatedFile {
 
 impl Clone for ValidatedFile {
     fn clone(&self) -> Self {
-        let new_file = File::open(&self.name).unwrap();
+        let new_file = File::open(&self.name).unwrap_or_else(|_| {
+            panic!("Error opening file (File Moved or Deleted): {}", &self.name);
+        });
         Self {
             format: self.format.clone(),
             file: new_file,
