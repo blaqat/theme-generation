@@ -43,7 +43,7 @@
 				"element.background": "$ui.button.primary|$ui.bg",
 				"element.disabled": "$ui.button.disabled|$ui.button.primary|$ui.bg",
 				"element.hover": "$ui.header.hover|$ui.header.primary..v+5|$ui.button.primary..v-5",
-				"element.selected": "$button.active|$ui.button.primary..v+5",
+				"element.selected": "$ui.button.active|$ui.button.primary..v+5",
 				"elevated_surface.background": "$ui.popup|$ui.bg",
 				"error": "$code.error.fg|$scheme.red",
 				"error.background": "$code.error.bg|$ui.code_popup|$ui.popup|$scheme.red",
@@ -214,10 +214,10 @@
 						"background_color": "$syntax.func.decl.bg|$syntax.func.bg"
 					},
 					"function.special": {
-						"color": "$syntax.func.fg",
-						"font_style": "$syntax.func.style",
-						"font_weight": "$syntax.func.weight",
-						"background_color": "$syntax.func.bg"
+						"color": "$syntax.func.macro.fg|$syntax.func.fg",
+						"font_style": "$syntax.func.macro.style|$syntax.func.style",
+						"font_weight": "$syntax.func.macro.weight|$syntax.func.weight",
+						"background_color": "$syntax.func.macro.bg|$syntax.func.bg"
 					},
 					"function.special.definition": {
 						"color": "$syntax.func.def.fg|$syntax.func.fg",

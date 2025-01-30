@@ -48,8 +48,11 @@ text = "editor.text|ui.text.active"
 
 [editor.active]
 line = "editor.active.line|ui.bg..(value+10, alpha=80)"
-matches = "editor.active.matches"
 number = "editor.active.number|editor.number|ui.text.active..50"
+
+[editor.matches]
+text = "editor.matches.text|editor.search.text|editor.search"
+brackets = "editor.matches.brackets|editor.search.brackets|editor.search"
 
 [editor.guides]
 wrap = "editor.guides.wrap"
@@ -192,6 +195,12 @@ bg = "syntax.func.def.bg|syntax.function.bg"
 color = "syntax.func.def.color|syntax.function.fg"
 style = "syntax.func.def.style|syntax.function.style"
 weight = "syntax.func.def.weight|syntax.function.weight"
+
+[syntax.func.macro]
+bg = "syntax.func.macro.bg|syntax.func.bg"
+color = "syntax.func.macro.color|syntax.func.fg"
+style = "syntax.func.macro.style|syntax.func.style"
+weight = "syntax.func.macro.weight|syntax.func.weight"
 
 [syntax.func.method]
 bg = "syntax.func.method.bg|syntax.func.bg"
