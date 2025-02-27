@@ -20,7 +20,7 @@ use std::{io::Read, path::PathBuf};
 
 pub const VALID_FLAGS: [&str; 5] = ["-o", "-i", "-p", "-n", "-r"];
 
-#[derive(PartialEq, Eq, Debug)]
+#[derive(Debug)]
 pub enum FlagTypes {
     OutputDirectory(PathBuf),
     InputDirectory(PathBuf),
@@ -29,7 +29,7 @@ pub enum FlagTypes {
     ReplaceName,
 }
 
-#[derive(PartialEq, Eq, Debug)]
+#[derive(Debug)]
 pub struct Flags {
     replace_name: bool,
     output_directory: PathBuf, // Default to current directory
@@ -49,8 +49,8 @@ impl FlagTypes {
         flags.iter().map(|flag| Self::from_str(flag)).collect()
     }
 
-    pub fn parse(flags: &[String]) -> Flags {
-        let flags = Self::into_vec(flags).unwrap();
+    pub fn parse(flags: &[String]) -> Result<Flags, ProgramError> {
+        let flags = Self::into_vec(flags)?;
         let mut output_directory = PathBuf::from(".");
         let mut input_directory = PathBuf::from(".");
         let mut name = String::from("generated-theme");
@@ -67,13 +67,13 @@ impl FlagTypes {
             }
         }
 
-        Flags {
+        Ok(Flags {
             replace_name,
             output_directory,
             input_directory,
             name,
             path,
-        }
+        })
     }
 }
 
@@ -85,10 +85,10 @@ impl FromStr for FlagTypes {
             let path = path.replace('~', std::env::var("HOME").unwrap().as_str());
             let path = Path::new(&path);
             if !path.exists() {
-                return Err(ProgramError::InvalidFlag(
-                    "generate".to_owned(),
-                    path.to_str().unwrap().to_owned(),
-                ));
+                return Err(ProgramError::Processing(format!(
+                    "Directory does not exist: {}",
+                    path.to_str().unwrap()
+                )));
             }
             Ok(path.to_path_buf())
         };
@@ -401,7 +401,7 @@ pub fn generate(
     mut variables: Vec<ValidatedFile>,
     flags: &[String],
 ) -> Result<(), ProgramError> {
-    let flags = FlagTypes::parse(flags);
+    let flags = FlagTypes::parse(flags)?;
 
     let base: serde_json::Value = serde_json::from_reader(&template.file).map_err(|json_err| {
         ProgramError::Processing(format!("Invalid template json: {json_err}"))

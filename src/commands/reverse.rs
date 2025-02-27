@@ -49,8 +49,8 @@ impl ReverseFlags {
         flags.iter().map(|flag| Self::from_str(flag)).collect()
     }
 
-    fn parse(flags: &[String]) -> Flags {
-        let flags = Self::into_vec(flags).unwrap();
+    fn parse(flags: &[String]) -> Result<Flags, ProgramError> {
+        let flags = Self::into_vec(flags)?;
         let mut threshold = 3;
         let mut output_directory = PathBuf::from(".");
         let mut name = String::from("reversed-theme");
@@ -75,7 +75,7 @@ impl ReverseFlags {
             }
         }
 
-        Flags {
+        Ok(Flags {
             threshold,
             output_directory,
             name,
@@ -84,7 +84,7 @@ impl ReverseFlags {
             generate_additions,
             generate_colors,
             generate_manual,
-        }
+        })
     }
 }
 
@@ -109,10 +109,10 @@ impl FromStr for ReverseFlags {
                 let path = path.replace('~', std::env::var("HOME").unwrap().as_str());
                 let path = Path::new(&path);
                 if !path.exists() {
-                    return Err(ProgramError::InvalidFlag(
-                        "reverse".to_owned(),
-                        flag.to_owned(),
-                    ));
+                    return Err(ProgramError::Processing(format!(
+                        "Directory does not exist: {}",
+                        path.to_str().unwrap()
+                    )));
                 }
                 Ok(Self::OutputDirectory(path.to_path_buf()))
             }
@@ -669,7 +669,7 @@ pub fn reverse(
     theme: &ValidatedFile,
     flags: &[String],
 ) -> Result<(), ProgramError> {
-    let flags = ReverseFlags::parse(flags);
+    let flags = ReverseFlags::parse(flags)?;
     let mut generated_files = Vec::new();
 
     // Step 1: Deserialize the template and theme files into Objects.

@@ -32,11 +32,16 @@ impl Clone for ValidatedFile {
 
 impl ValidatedFile {
     fn from_str(file_path: &str) -> Result<Self, ProgramError> {
-        let format = Path::new(&file_path)
-            .extension()
-            .and_then(|e| e.to_str())
-            .ok_or_else(|| ProgramError::InvalidFile(String::from(file_path)))?
-            .to_owned();
+        let path = Path::new(&file_path);
+
+        let format = if path.ends_with("template.json") {
+            String::from("template")
+        } else {
+            path.extension()
+                .and_then(|e| e.to_str())
+                .ok_or_else(|| ProgramError::InvalidFile(String::from(file_path)))?
+                .to_owned()
+        };
 
         let file_type = match format.as_str() {
             "json" => FileType::Theme,
@@ -93,6 +98,7 @@ pub enum ValidCommands {
     Help,
     Watch,
     Edit,
+    New,
 }
 
 #[derive(Debug, PartialEq, Eq)]
@@ -118,12 +124,13 @@ impl ValidCommands {
             "help" => Ok(Self::Help),
             "watch" => Ok(Self::Watch),
             "edit" => Ok(Self::Edit),
+            "new" => Ok(Self::New),
             _ => Err(ProgramError::InvalidCommand),
         }
     }
 
     pub fn list_commands() -> Vec<&'static str> {
-        vec!["check", "gen", "rev", "help", "watch", "edit"]
+        vec!["check", "gen", "rev", "help", "watch", "edit", "new"]
     }
 }
 
@@ -133,7 +140,7 @@ fn get_generation_files(
     call_dir: PathBuf,
 ) -> Result<(PathBuf, ValidatedFile, Vec<ValidatedFile>), ProgramError> {
     let directory = if flags.iter().any(|flag| flag.starts_with("-i")) {
-        let flags = commands::generate::FlagTypes::parse(flags);
+        let flags = commands::generate::FlagTypes::parse(flags)?;
         flags.directory()
     } else {
         call_dir
@@ -198,6 +205,10 @@ pub fn run_command(args: Vec<String>) -> Result<(), ProgramError> {
                 .map_err(|_| ProgramError::HelpInvalidCommand)?;
             commands::help(&help_command);
             Ok(())
+        }
+        ValidCommands::New => {
+            let theme_name = &command_args[0];
+            commands::new(theme_name, &flags)
         }
         command if command_args.len() < 2 => Err(ProgramError::NotEnoughArguments(command)),
         ValidCommands::Check => {
