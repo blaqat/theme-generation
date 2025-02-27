@@ -435,7 +435,7 @@ impl Color {
 
     fn update_saturation(&mut self) {
         let x = f32::from((200 - self.saturation) * self.value) / 100.0;
-        let saturation = if x == 0.0 || x == 200.0 {
+        let saturation = if x == 0.0 || x as i32 == 200 {
             0.0
         } else {
             f32::from(self.saturation * self.value) / {
@@ -653,32 +653,25 @@ impl FromStr for ColorType {
 
         let color_values = color_values
             .iter()
-            .map(|c| c.trim().parse::<i16>().unwrap())
-            .collect::<Vec<_>>();
+            .map(|c| c.trim().parse::<i16>())
+            .collect::<Result<Vec<_>, _>>()
+            .map_err(|_| Error::InvalidColorString)?;
 
         let alpha = color_values.get(3).unwrap_or(&100);
 
-        match color_type.as_str() {
-            "rgb" => Ok(Self::Rgb(
-                color_values[0],
-                color_values[1],
-                color_values[2],
-                *alpha,
-            )),
-            "hsl" => Ok(Self::Hsl(
-                color_values[0],
-                color_values[1],
-                color_values[2],
-                *alpha,
-            )),
-            "hsv" => Ok(Self::Hsv(
-                color_values[0],
-                color_values[1],
-                color_values[2],
-                *alpha,
-            )),
-            _ => Err(Error::InvalidColorString),
-        }
+        let variant = match color_type.as_str() {
+            "rgb" => Self::Rgb,
+            "hsl" => Self::Hsl,
+            "hsv" => Self::Hsv,
+            _ => return Err(Error::InvalidColorString),
+        };
+
+        Ok(variant(
+            color_values[0],
+            color_values[1],
+            color_values[2],
+            *alpha,
+        ))
     }
 }
 

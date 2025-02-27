@@ -536,14 +536,12 @@ pub mod special_array {
         type Err = String;
         fn from_str(s: &str) -> Result<Self, Self::Err> {
             match s {
-                "equals" | "match" | "is" | "sameas" | "identical" | "exact" | "=" => {
-                    Ok(Self::Exact)
-                }
-                "includes" | "has" | "within" | "partof" | "contains" | "~" => Ok(Self::Contains),
-                "pattern" | "expr" | "dyn" | "regex" | "*" => Ok(Self::Regex),
+                "equals" | "match" | "is" | "exact" | "=" => Ok(Self::Exact),
+                "includes" | "has" | "partof" | "contains" | "~" => Ok(Self::Contains),
+                "pattern" | "expr" | "regex" | "*" => Ok(Self::Regex),
                 "prefix" | "beginswith" | "startswith" | "<" => Ok(Self::StartsWith),
-                "suffix" | "trailing" | "endswith" | ">" => Ok(Self::EndsWith),
-                "mismatch" | "oneof" | "single" | "xor" | "^" | "!" => Ok(Self::NullMismatch),
+                "suffix" | "endswith" | ">" => Ok(Self::EndsWith),
+                "mismatch" | "single" | "xor" | "^" | "!" => Ok(Self::NullMismatch),
                 _ => Err("Invalid Match Mode".into()),
             }
         }
@@ -553,32 +551,41 @@ pub mod special_array {
         fn matches(&self, checking: &Value, other_val: &Value) -> bool {
             let check_str = value_to_string(checking);
             match (self, other_val) {
+                // Exact Matching
                 (Self::Exact, val) => checking == val,
+
+                // Short-circuit if values are equal for these match modes (they require inequality as  match modes are mutually exclusive)
                 (Self::Contains | Self::StartsWith | Self::EndsWith | Self::NullMismatch, _)
                     if checking == other_val =>
                 {
                     false
                 }
 
+                // Data structure contains matching
                 (Self::Contains, Value::String(s)) => s.contains(&check_str),
                 (Self::Contains, Value::Array(vec)) => vec.contains(checking),
                 (Self::Contains, Value::Object(map)) => map.contains_key(&check_str),
 
+                // Regex pattern matching
                 (Self::Regex, val) => {
                     let re = regex::Regex::new(&check_str).unwrap();
                     // re.is_match(&val.to_string())
                     re.is_match(&value_to_string(val))
                 }
 
+                // StartsWith matching for strings and arrays (first element)
                 (Self::StartsWith, Value::String(s)) => s.starts_with(&check_str),
                 (Self::StartsWith, Value::Array(vec)) => vec.first().is_some_and(|v| checking == v),
 
+                // EndsWith matching for strings and arrays (last element)
                 (Self::EndsWith, Value::String(s)) => s.ends_with(&check_str),
                 (Self::EndsWith, Value::Array(vec)) => vec.last().is_some_and(|v| checking == v),
 
+                // Special null mismatch logic - true if exactly one value is null
                 (Self::NullMismatch, Value::Null) => !checking.is_null(),
                 (Self::NullMismatch, val) if checking.is_null() => !val.is_null(),
 
+                // Default false for unhandled combinations
                 (Self::StartsWith | Self::EndsWith | Self::Contains | Self::NullMismatch, _) => {
                     false
                 }

@@ -53,6 +53,7 @@ pub mod serde_value {
         matches!(a.as_bytes(), [b'$' | b'@', ..])
     }
 
+    #[allow(clippy::missing_const_for_fn)]
     pub fn potential_set(a: &Value, b: &Value) -> bool {
         match (a, b) {
             (Value::String(a), b) | (b, Value::String(a)) => match (potential_var(a), b) {
