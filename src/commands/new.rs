@@ -410,7 +410,11 @@ pub fn new(name: &str, flags: &[String]) -> Result<(), ProgramError> {
     let new_template_path = output_directory
         .join("templates")
         .join(template_path.file_name().unwrap());
-
+    if !new_template_path.exists() {
+        fs::create_dir_all(new_template_path.parent().unwrap()).map_err(|e| {
+            ProgramError::Processing(format!("Error creating directory for template file: {e}"))
+        })?;
+    }
     fs::copy(&template_path, &new_template_path).map_err(|e| {
         ProgramError::Processing(format!(
             "Error copying template file to output directory: {e}"
