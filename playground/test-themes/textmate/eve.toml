@@ -10,9 +10,7 @@ goldenrod = "#CCCC33"
 white = "#FFFFFF"
 
 [deletions]
-keys = [
-	"themes/0/style/accents"
-]
+keys = ["themes/0/style/accents"]
 
 [editor]
 bg = "#434242"

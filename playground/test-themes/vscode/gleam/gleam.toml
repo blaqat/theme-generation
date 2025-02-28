@@ -1,0 +1,169 @@
+# Reverse Generation Tool Version 3.0
+name = "Gleam"
+theme = "dark"
+
+# Theme Colors
+[color]
+black = "#000000"
+black2 = "#101010"
+darkslategray = "#32374D"
+darkslategray2 = "#222533"
+darkslategray4 = "#434A66"
+darkslategray5 = "#252938"
+darkslategray6 = "#292D3E"
+darkslategray7 = "#393F57"
+darkslategray9 = "#31354A"
+dimgray = "#6E6E6E"
+gainsboro2 = "#DEDEDE"
+hotpink = "#FE7AB2"
+lavenderblush = "#FFDDFA"
+lightslategray = "#717AAB"
+mediumpurple = "#B181EC"
+navajowhite = "#FFD596"
+oldlace = "#FFFBE8"
+palegoldenrod = "#C8FFA7"
+palegoldenrod2 = "#FDFFAB"
+paleturquoise = "#9CE7FF"
+plum = "#FFAFF3"
+red = "#FF0000"
+silver = "#C4C4C4"
+silver3 = "#BFBCAE"
+thistle = "#D9BAFF"
+white = "#FFFFFF"
+
+[code.error]
+bg = "@darkslategray2"
+fg = "#E21515"
+
+[code.info]
+fg = "@oldlace"
+
+[code.warning]
+fg = "#FFC501"
+
+[editor]
+bg = "@darkslategray6"
+number = "#747478"
+text = "@white..D7"
+
+[editor.active]
+line = "@dimgray..80"
+line_border = "#1E212E"
+matches = "@dimgray..80"
+
+[editor.guides]
+wrap = "@oldlace"
+
+[editor.guides.indent]
+colors = [
+]
+
+[editor.search]
+text = "@dimgray..80"
+
+[file.created]
+fg = "#4DBF57"
+
+[file.deleted]
+fg = "#E21515"
+
+[file.modified]
+fg = "@oldlace"
+
+[player]
+highlight = "#4A527080"
+
+[scheme]
+black = "@black"
+black_br = "@silver"
+blue = "#6796E6"
+blue_br = "@paleturquoise"
+cyan = "@mediumpurple"
+cyan_br = "@thistle"
+green = "#AADD8B"
+green_br = "@palegoldenrod"
+pink = "@hotpink"
+pink_br = "@plum"
+red = "#F44747"
+red_br = "#FF4A4A"
+white = "#F7F7F7"
+white_br = "@white"
+yellow = "@navajowhite"
+yellow_br = "@palegoldenrod2"
+
+[syntax.comment]
+fg = "@silver"
+
+[syntax.constant]
+fg = "@palegoldenrod2"
+
+[syntax.func]
+fg = "@paleturquoise"
+
+[syntax.keyword]
+fg = "@navajowhite"
+
+[syntax.markup.heading]
+fg = "@lavenderblush"
+style = ""
+
+[syntax.op]
+fg = "@plum..D9"
+
+[syntax.param]
+fg = "@white..D9"
+
+[syntax.string]
+fg = "@palegoldenrod"
+
+[syntax.type]
+fg = "@lavenderblush"
+
+[syntax.type.class]
+fg = "@lavenderblush"
+
+[syntax.z.html_attribute]
+fg = "@mediumpurple"
+
+[syntax.z.html_tag]
+fg = "@hotpink"
+
+[ui]
+bg = "@oldlace"
+file_drop = "@darkslategray4"
+link = "@oldlace"
+panel = "@darkslategray7"
+popup = "@darkslategray2"
+shadow = "@black..80"
+
+[ui.bars]
+bottom = "@darkslategray"
+tool = "@darkslategray"
+top = "@darkslategray2"
+
+[ui.bars.tab]
+active = "@darkslategray"
+bg = "@darkslategray6"
+inactive = "@darkslategray6"
+
+[ui.bars.title]
+inactive = "@darkslategray2"
+
+[ui.border]
+primary = "@oldlace"
+secondary = "@oldlace"
+
+[ui.button]
+primary = "@oldlace"
+
+[ui.button.secondary]
+bg = "@oldlace"
+hover = "#E6E2D1"
+
+[ui.element]
+active = "#262A3A"
+hover = "@darkslategray5"
+
+[ui.text]
+active = "@black"
+muted = "#ACACAB"

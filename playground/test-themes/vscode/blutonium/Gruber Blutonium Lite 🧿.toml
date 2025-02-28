@@ -1,0 +1,296 @@
+# Reverse Generation Tool Version 3.0
+name = "Gruber Blutonium Lite 🧿"
+theme = "light"
+
+# Theme Colors
+[color]
+black = "#242323"
+black2 = "#000000"
+crimson = "#CC2B46"
+darkkhaki = "#B3A76E"
+darkorchid = "#B12BCC"
+darkseagreen = "#7CB371"
+darkslategray3 = "#383A3B"
+goldenrod = "#D9A816"
+goldenrod2 = "#BFA628"
+mediumpurple = "#7B89CC"
+plum = "#CC8AD9"
+rosybrown = "#CC818D"
+royalblue = "#2B46CC"
+royalblue2 = "#0A51CC"
+royalblue3 = "#2A46CC"
+silver = "#BFBFBF"
+snow = "#FAFAFA"
+steelblue = "#3D81CC"
+whitesmoke = "#F0F0F0"
+
+[button]
+active = "@steelblue..1F"
+
+[code.error]
+bg = "#CC2C4610"
+border = "#CC2C46"
+fg = "@crimson..C0"
+
+[code.hint]
+bg = "@whitesmoke"
+border = "@royalblue..9F"
+fg = "#7373738F"
+
+[code.info]
+bg = "@royalblue..10"
+border = "@royalblue"
+fg = "@royalblue3"
+
+[code.success]
+bg = "@whitesmoke"
+border = "@darkseagreen"
+fg = "@darkorchid"
+
+[code.unreachable]
+bg = "@whitesmoke"
+
+[code.warning]
+bg = "#BFA60610"
+border = "#BFA606"
+fg = "@goldenrod2"
+
+[editor]
+bg = "@snow"
+gutter = "@snow"
+invisible = "@black..50"
+number = "@silver"
+text = "@black"
+
+[editor.active]
+line = "@whitesmoke"
+matches = "#DEE7EA"
+number = "@royalblue2"
+
+[editor.guides.indent]
+active = "@royalblue2..80"
+colors = [
+	"@royalblue3",
+	"@darkorchid",
+	"#3DB326",
+	"null",
+	"@crimson",
+	"@goldenrod2",
+	"#209985",
+	"#212121",
+	"@rosybrown",
+	"@mediumpurple",
+	"@plum",
+	"@darkseagreen",
+	"null",
+	"@darkkhaki"
+]
+inactive = "@silver"
+
+[editor.search]
+captures = "#4D8DBF40"
+line = "@steelblue..1F"
+text = "@goldenrod..6E"
+
+[file.conflict]
+bg = "@rosybrown"
+border = "@rosybrown"
+fg = "@crimson"
+
+[file.created]
+bg = "@darkseagreen"
+border = "@darkseagreen"
+
+[file.deleted]
+bg = "@rosybrown..5F"
+border = "@rosybrown"
+fg = "@crimson..C0"
+
+[file.hidden]
+bg = "@whitesmoke"
+
+[file.ignored]
+fg = "@silver"
+
+[file.modified]
+bg = "@darkkhaki"
+border = "@darkkhaki"
+fg = "@goldenrod2..C0"
+
+[file.renamed]
+bg = "@plum"
+border = "@plum"
+fg = "@darkorchid"
+
+[player]
+cursor = "@royalblue2"
+highlight = "@steelblue..1F"
+z = "#86694C40"
+
+[scheme]
+black = "@black2"
+black_br = "#373237"
+black_dim = "#373237"
+blue = "@royalblue3"
+blue_br = "@mediumpurple"
+blue_dim = "@mediumpurple"
+cyan = "#209985"
+cyan_br = "#70B3A7"
+cyan_dim = "#70B3A7"
+green = "#3DB326"
+green_br = "@darkseagreen"
+green_dim = "@darkseagreen"
+pink = "@darkorchid"
+pink_br = "@plum"
+pink_dim = "@plum"
+red = "@crimson"
+red_br = "@rosybrown"
+red_dim = "@rosybrown"
+white = "#212121"
+white_br = "#3B3B3B"
+white_dim = "#3B3B3B"
+yellow = "@goldenrod2"
+yellow_br = "@darkkhaki"
+yellow_dim = "@darkkhaki"
+
+[syntax.boolean]
+fg = "@darkslategray3"
+
+[syntax.comment]
+fg = "#3E40B3"
+
+[syntax.comment.doc]
+fg = "@goldenrod"
+
+[syntax.constant]
+fg = "@darkslategray3"
+
+[syntax.constant.builtin]
+fg = "@darkslategray3"
+
+[syntax.func]
+fg = "@steelblue"
+
+[syntax.func.builtin]
+fg = "@darkslategray3"
+
+[syntax.func.def]
+fg = "@steelblue"
+
+[syntax.func.method]
+fg = "@black"
+
+[syntax.keyword]
+fg = "@royalblue2"
+weight = 800
+
+[syntax.namespace]
+fg = "@black"
+
+[syntax.number]
+fg = "#434459"
+
+[syntax.op]
+fg = "@black"
+
+[syntax.param]
+fg = "@black"
+
+[syntax.property]
+fg = "@black"
+
+[syntax.punc]
+fg = "@black"
+
+[syntax.punc.bracket]
+fg = "@black"
+
+[syntax.punc.delimiter]
+fg = "@black"
+
+[syntax.punc.symbol]
+fg = "@black"
+
+[syntax.string]
+fg = "@goldenrod"
+
+[syntax.string.escape]
+fg = "@goldenrod"
+
+[syntax.string.inter]
+fg = "@black"
+
+[syntax.string.regex]
+fg = "@goldenrod"
+
+[syntax.string.special]
+fg = "@goldenrod"
+
+[syntax.type]
+fg = "@darkslategray3"
+
+[syntax.type.builtin]
+fg = "@darkslategray3"
+
+[syntax.var]
+fg = "@black"
+
+[syntax.z.html_attribute]
+fg = "@black"
+
+[syntax.z.html_tag]
+fg = "@steelblue"
+
+[ui]
+bg = "@snow"
+file_drop = "#B5C3C7"
+link = "@royalblue2"
+panel = "@whitesmoke"
+popup = "@whitesmoke"
+terminal = "@snow"
+
+[ui.bars]
+bottom = "@whitesmoke"
+tool = "@whitesmoke"
+top = "@whitesmoke"
+
+[ui.bars.tab]
+active = "@royalblue2..2E"
+bg = "@whitesmoke"
+inactive = "@snow..6E"
+
+[ui.bars.title]
+inactive = "@whitesmoke"
+
+[ui.border]
+primary = "@whitesmoke"
+secondary = "@royalblue2..9F"
+
+[ui.button]
+disabled = "#757E8F"
+pressed = "#B8B8B1"
+primary = "#D1D1C9"
+
+[ui.element]
+active = "@royalblue2..40"
+bg = "@black2..00"
+disabled = "@steelblue"
+hover = "@steelblue..1F"
+pressed = "#D6D6D6"
+
+[ui.header]
+hover = "#F0DFB2"
+primary = "@whitesmoke"
+
+[ui.scrollbar]
+border = "@black2..00"
+highlight = "@black2..00"
+thumb = "@steelblue..2E"
+track = "@black2..00"
+
+[ui.text]
+accent = "@royalblue2"
+active = "@black"
+inactive = "@black..C0"
+muted = "@silver"
+placeholder = "@black..50"

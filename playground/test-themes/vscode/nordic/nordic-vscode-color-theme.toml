@@ -1,0 +1,322 @@
+# Reverse Generation Tool Version 3.0
+name = "Nordic"
+theme = "dark"
+
+# Theme Colors
+[color]
+burlywood = "#EBCB8B"
+darkgray = "#B48EAD"
+darkseagreen = "#A3BE8C"
+darkslategray = "#242933"
+darkslategray2 = "#3C4454"
+lightsteelblue = "#C0C8D8"
+white2 = "#FFFFFF"
+whitesmoke = "#ECEFF4"
+orange = "#D08770"
+
+[button]
+active = "#333B4B"
+
+[code.error]
+bg = "#B73A3400"
+border = "$self.fg"
+fg = "#F48771"
+
+[code.hint]
+border = "$self.fg"
+fg = "#969696"
+
+[code.info]
+bg = "#4490BF00"
+border = "$self.fg"
+fg = "#75BEFF"
+
+[code.warning]
+bg = "#A9904000"
+border = "$self.fg"
+fg = "@burlywood"
+
+[editor]
+bg = "@darkslategray"
+gutter = "@darkslategray"
+number = "#60728A"
+text = "@whitesmoke"
+search = "#58667ff0"
+
+[editor.active]
+line = "#F7F7F708"
+number = "@whitesmoke"
+matches = "#58667f50"
+
+[editor.guides]
+wrap = "@darkslategray2"
+
+[editor.guides.indent]
+active = "#707070"
+inactive = "#404040"
+
+[file.conflict]
+fg = "#6C6CC4"
+
+[file.created]
+fg = "#74c991"
+
+[file.deleted]
+fg = "#E77B84"
+
+[file.hidden]
+fg = "@white2..80"
+
+[file.ignored]
+fg = "#8c8c8cf0"
+
+[file.modified]
+fg = "#e2c08d"
+
+[scheme]
+black = "#000"
+black_br = "#666"
+blue = "#2472C8"
+blue_br = "#3B8EEA"
+cyan = "#11A8CD"
+cyan_br = "#29B8DB"
+green = "#0DBC79"
+green_br = "#23D18B"
+pink = "#BC3FBC"
+pink_br = "#D670D6"
+red = "#CD3131"
+red_br = "#F14C4C"
+white = "#E5E5E5"
+white_br = "#E5E5E5"
+yellow = "#E5E510"
+yellow_br = "#F5F543"
+
+[syntax.boolean]
+fg = "@darkgray"
+
+[syntax.comment]
+fg = "#444e61"
+style = "italic"
+
+[syntax.constant]
+fg = "@burlywood"
+
+[syntax.constant.builtin]
+fg = "@darkgray"
+
+[syntax.func]
+fg = "#88C0D0"
+
+[syntax.keyword]
+fg = "#D08770"
+
+[syntax.namespace]
+fg = "@burlywood"
+
+[syntax.number]
+fg = "@darkgray"
+
+[syntax.op]
+fg = "@whitesmoke"
+
+[syntax.property]
+fg = "@whitesmoke"
+
+[syntax.punc.bracket]
+fg = "@lightsteelblue"
+
+[syntax.punc.tag]
+fg = "@white2"
+
+[syntax.string]
+fg = "@darkseagreen"
+
+[syntax.string.escape]
+fg = "@darkseagreen"
+
+[syntax.string.regex]
+fg = "@darkseagreen"
+
+[syntax.string.special]
+fg = "#D8DEE9"
+
+[syntax.string.inter]
+fg = "@orange"
+
+[syntax.type]
+fg = "@burlywood"
+
+[syntax.type.builtin]
+fg = "@burlywood"
+
+[syntax.type.primitive]
+fg = "@burlywood"
+
+[syntax.var]
+fg = "@lightsteelblue"
+
+[syntax.var.builtin]
+fg = "@burlywood"
+
+[syntax.param]
+style = "italic"
+
+[syntax.z.html_attribute]
+fg = "@darkgray"
+
+[syntax.z.html_tag]
+fg = "@lightsteelblue"
+
+[player]
+cursor = "#aeafad"
+highlight = "#3e455580"
+
+[ui]
+bg = "@darkslategray"
+file_drop = "@darkslategray"
+panel = "@darkslategray"
+popup = "@darkslategray"
+
+[ui.bars]
+bottom = "@darkslategray"
+tool = "@darkslategray"
+top = "@darkslategray"
+
+[ui.bars.tab]
+active = "#2C313F"
+bg = "@darkslategray"
+inactive = "@darkslategray"
+
+[ui.border]
+secondary = "@darkslategray2"
+
+[ui.button]
+primary = "#D06F79"
+
+[ui.element]
+active = "#333B4B"
+hover = "#2D3341"
+
+[ui.header]
+hover = "#2D3341"
+
+[ui.scrollbar]
+border = "#7F7F7F4D"
+highlight = "#353D4C"
+track = "@darkslategray"
+
+[ui.text]
+active = "#CCC"
+inactive = "@white2..a0"
+
+# Overrides
+[overrides]
+"themes/0/style/border" = "@darkslategray2"
+"themes/0/style/border.disabled" = "@darkslategray2"
+"themes/0/style/border.focused" = "#D8DEE9"
+"themes/0/style/border.selected" = "@darkslategray2"
+"themes/0/style/border.transparent" = "@darkslategray2"
+"themes/0/style/conflict.background" = "$none"
+"themes/0/style/created.background" = "$none"
+"themes/0/style/created.border" = "$none"
+"themes/0/style/deleted.background" = "$none"
+"themes/0/style/deleted.border" = "$none"
+"themes/0/style/editor.subheader.background" = "$none"
+"themes/0/style/element.disabled" = "$none"
+"themes/0/style/ghost_element.active" = "$none"
+"themes/0/style/hidden.background" = "$none"
+"themes/0/style/hint.background" = "$none"
+"themes/0/style/hint.border" = "$none"
+"themes/0/style/icon" = "$none"
+"themes/0/style/icon.accent" = "$none"
+"themes/0/style/icon.disabled" = "$none"
+"themes/0/style/icon.muted" = "$none"
+"themes/0/style/icon.placeholder" = "$none"
+"themes/0/style/ignored.background" = "$none"
+"themes/0/style/link_text.hover" = "$none"
+"themes/0/style/modified.background" = "$none"
+"themes/0/style/modified.border" = "$none"
+"themes/0/style/predictive.background" = "$none"
+"themes/0/style/predictive.border" = "$none"
+"themes/0/style/renamed.background" = "$none"
+"themes/0/style/scrollbar.thumb.hover_background" = "#646464B3"
+"themes/0/style/scrollbar_thumb.background" = "#353D4C"
+"themes/0/style/success" = "$none"
+"themes/0/style/success.background" = "$none"
+"themes/0/style/success.border" = "$none"
+"themes/0/style/surface.background" = "@darkslategray"
+"themes/0/style/syntax/text.literal" = { color = "@darkseagreen", font_style = "$none", font_weight = "$none" }
+"themes/0/style/terminal.ansi.dim_black" = "$none"
+"themes/0/style/terminal.ansi.dim_blue" = "$none"
+"themes/0/style/terminal.ansi.dim_cyan" = "$none"
+"themes/0/style/terminal.ansi.dim_green" = "$none"
+"themes/0/style/terminal.ansi.dim_magenta" = "$none"
+"themes/0/style/terminal.ansi.dim_red" = "$none"
+"themes/0/style/terminal.ansi.dim_white" = "$none"
+"themes/0/style/terminal.ansi.dim_yellow" = "$none"
+"themes/0/style/terminal.bright_foreground" = "$none"
+"themes/0/style/terminal.dim_foreground" = "$none"
+"themes/0/style/terminal.foreground" = "$none"
+"themes/0/style/text.accent" = "$none"
+"themes/0/style/unreachable.border" = "$none"
+
+# Deletions
+[deletions]
+keys = [
+	"/$schema",
+	"/themes/0/style/title_bar.inactive_background",
+	"/themes/0/style/syntax/variable.member",
+	"/themes/0/style/syntax/type/background_color",
+	"/themes/0/style/syntax/type.super",
+	"/themes/0/style/syntax/tag/background_color",
+	"/themes/0/style/syntax/string/background_color",
+	"/themes/0/style/syntax/string.special/background_color",
+	"/themes/0/style/syntax/string.special.symbol/background_color",
+	"/themes/0/style/syntax/string.regex/background_color",
+	"/themes/0/style/syntax/string.doc",
+	"/themes/0/style/syntax/punctuation.special.symbol",
+	"/themes/0/style/syntax/punctuation.list_marker",
+	"/themes/0/style/syntax/punctuation.delimiter",
+	"/themes/0/style/syntax/punctuation.bracket",
+	"/themes/0/style/syntax/punctuation",
+	"/themes/0/style/syntax/property/background_color",
+	"/themes/0/style/syntax/property.json_key",
+	"/themes/0/style/syntax/operator.logical",
+	"/themes/0/style/syntax/operator.comparison",
+	"/themes/0/style/syntax/operator.bitwise",
+	"/themes/0/style/syntax/operator.assignment",
+	"/themes/0/style/syntax/operator.arithmetic",
+	"/themes/0/style/syntax/number/background_color",
+	"/themes/0/style/syntax/link_uri",
+	"/themes/0/style/syntax/link_text",
+	"/themes/0/style/syntax/lifetime",
+	"/themes/0/style/syntax/keyword/background_color",
+	"/themes/0/style/syntax/keyword.type",
+	"/themes/0/style/syntax/keyword.return",
+	"/themes/0/style/syntax/keyword.repeat",
+	"/themes/0/style/syntax/keyword.operator",
+	"/themes/0/style/syntax/keyword.import",
+	"/themes/0/style/syntax/keyword.function",
+	"/themes/0/style/syntax/keyword.exception",
+	"/themes/0/style/syntax/keyword.directive.define",
+	"/themes/0/style/syntax/keyword.directive",
+	"/themes/0/style/syntax/keyword.debug",
+	"/themes/0/style/syntax/keyword.coroutine",
+	"/themes/0/style/syntax/keyword.conditional.ternary",
+	"/themes/0/style/syntax/keyword.conditional",
+	"/themes/0/style/syntax/function/background_color",
+	"/themes/0/style/syntax/function.special.definition",
+	"/themes/0/style/syntax/function.special",
+	"/themes/0/style/syntax/function.method",
+	"/themes/0/style/syntax/function.definition",
+	"/themes/0/style/syntax/function.declaration",
+	"/themes/0/style/syntax/function.builtin",
+	"/themes/0/style/syntax/enum",
+	"/themes/0/style/syntax/constructor/background_color",
+	"/themes/0/style/syntax/constant/background_color",
+	"/themes/0/style/syntax/constant.character",
+	"/themes/0/style/syntax/attribute/background_color",
+	"/themes/0/style/scrollbar.thumb.background",
+	"/themes/0/style/background.appearance",
+	"/themes/0/style/accents",
+]
