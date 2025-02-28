@@ -197,8 +197,22 @@ mod steps {
                 path.to_str().unwrap()
             )));
         }
+
         if cfg!(windows) {
-            todo!("Get a better OS. I'm not coddling you Windows users. /j");
+            Command::new("Copy-Item")
+                .args([
+                    "-Path",
+                    templates_path.join("project").to_str().unwrap(),
+                    "-Destination",
+                    path.to_str().unwrap(),
+                    "-Recurse",
+                ])
+                .output()
+                .map_err(|e| {
+                    ProgramError::Processing(format!(
+                        "Error copying project template to output directory: {e}"
+                    ))
+                })?;
         } else {
             Command::new("cp")
                 .args([
