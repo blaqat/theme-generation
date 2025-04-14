@@ -34,7 +34,11 @@ impl ValidatedFile {
     fn from_str(file_path: &str) -> Result<Self, ProgramError> {
         let path = Path::new(&file_path);
 
-        let format = if path.ends_with("template.json") {
+        let format = if path
+            .file_name()
+            .and_then(|f| f.to_str())
+            .is_some_and(|s| s.ends_with("template.json"))
+        {
             String::from("template")
         } else {
             path.extension()
