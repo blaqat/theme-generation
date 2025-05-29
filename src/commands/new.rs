@@ -7,6 +7,7 @@ New:
     Flags:
         -o directory: path      Set output directory of variable file
         -t template: path       Set template file to use
+        -T themes: path[]       Set paths of custom light and dark themes with trailing :d/:l to differentiaate
         -s style: str           Set style of template to use (dark or light)
         -v variants: str[]      Names of theme variants to auto fill
                                 - Optionally end string with :d or :l to use dark or light style
@@ -16,6 +17,33 @@ use crate::prelude::*;
 use std::{fs, path::PathBuf, process::Command};
 
 static DEFAULT_TEMPLATE: &str = "templates/new-hls.json.template";
+
+#[derive(Debug)]
+struct ThemeFile(PathBuf, ThemeStyle);
+
+impl FromStr for ThemeFile {
+    type Err = ProgramError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let parts: Vec<&str> = s.split(':').collect();
+        let path = PathBuf::from(parts[0]);
+
+        if !path.exists() {
+            return Err(ProgramError::Processing(format!(
+                "Theme file does not exist: {}",
+                path.to_str().unwrap()
+            )));
+        }
+
+        let style = if parts.len() < 2 {
+            ThemeStyle::Dark
+        } else {
+            parts[1].parse()?
+        };
+
+        Ok(Self(path, style))
+    }
+}
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq)]
 enum ThemeStyle {
@@ -47,6 +75,11 @@ struct Variant {
 impl FromStr for Variant {
     type Err = ProgramError;
 
+    /*
+     * Parses a string in the format "name:style" where:
+     * - `name` is the name of the theme variant
+     * - `style` is optional and can be either 'd' for dark or 'l' for light.
+     */
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let parts: Vec<&str> = s.split(':').collect();
         let name = parts[0].parse()?;
@@ -65,6 +98,7 @@ struct Flags {
     style: ThemeStyle,
     variants: Vec<Variant>,
     description: String,
+    themes: Vec<ThemeFile>,
 }
 
 #[derive(Debug)]
@@ -74,6 +108,7 @@ enum FlagTypes {
     Style(ThemeStyle),
     Variants(Vec<Variant>),
     Description(String),
+    Themes(Vec<ThemeFile>),
 }
 
 impl FromStr for FlagTypes {
@@ -99,6 +134,16 @@ impl FromStr for FlagTypes {
             flag if flag.starts_with("-t") => {
                 let path = flag.split('=').next_back().unwrap();
                 Ok(Self::Template(get_directory(path)?))
+            }
+            flag if flag.starts_with("-T") => {
+                let paths = flag.split('=').next_back().unwrap();
+                let themes = paths
+                    .split(',')
+                    .map(str::trim)
+                    .filter(|s| !s.is_empty())
+                    .map(|s| s.parse().unwrap())
+                    .collect();
+                Ok(Self::Themes(themes))
             }
             flag if flag.starts_with("-s") => {
                 let style = flag.split('=').next_back().unwrap();
@@ -138,7 +183,7 @@ impl FlagTypes {
         let mut style = ThemeStyle::Dark;
         let mut variants = Vec::new();
         let mut description = String::from("This is a theme made for zed.");
-
+        let mut themes = Vec::new();
         for flag in flags {
             match flag {
                 Self::OutputDirectory(path) => output_directory = path,
@@ -146,6 +191,7 @@ impl FlagTypes {
                 Self::Style(style_name) => style = style_name,
                 Self::Variants(variants_list) => variants = variants_list,
                 Self::Description(desc) => description = desc,
+                Self::Themes(theme_files) => themes = theme_files,
             }
         }
 
@@ -155,12 +201,26 @@ impl FlagTypes {
             template = Some(default_template);
         }
 
+        if themes.is_empty() {
+            themes.push(ThemeFile(
+                PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+                    .join(PathBuf::from("themes/theme-dark.json")),
+                ThemeStyle::Dark,
+            ));
+            themes.push(ThemeFile(
+                PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+                    .join(PathBuf::from("themes/theme-light.json")),
+                ThemeStyle::Light,
+            ));
+        }
+
         Ok(Flags {
             output_directory,
             template: template.unwrap(),
             style,
             variants,
             description,
+            themes,
         })
     }
 }
@@ -184,7 +244,9 @@ impl FromStr for ThemeNames {
 }
 
 mod steps {
-    use super::{fs, Command, HashMap, Path, ProgramError, ThemeNames, ThemeStyle, Variant};
+    use super::{
+        fs, Command, HashMap, Path, ProgramError, ThemeFile, ThemeNames, ThemeStyle, Variant,
+    };
     use tera::{Context, Tera};
 
     pub fn create_project_directory(
@@ -313,21 +375,25 @@ mod steps {
         Ok(())
     }
 
-    fn generate_variants_json(path: &Path, variants: &[Variant]) -> Result<String, ProgramError> {
+    fn generate_variants_json(
+        theme_files: &[ThemeFile],
+        variants: &[Variant],
+    ) -> Result<String, ProgramError> {
         let mut cache: HashMap<ThemeStyle, String> = HashMap::new();
         let mut get_theme = |style: &ThemeStyle| -> Result<String, ProgramError> {
             if let Some(json) = cache.get(style) {
                 return Ok(json.clone());
             }
-            let json_path_str = match style {
-                ThemeStyle::Dark => "themes/theme-dark.json",
-                ThemeStyle::Light => "themes/theme-light.json",
-            };
 
-            let json_path = path.join(json_path_str);
+            let json_path = theme_files
+                .iter()
+                .find(|f| &f.1 == style)
+                .unwrap()
+                .0
+                .clone();
 
-            let json = fs::read_to_string(json_path).map_err(|e| {
-                ProgramError::Processing(format!("error reading {json_path_str}: {e}"))
+            let json = fs::read_to_string(&json_path).map_err(|e| {
+                ProgramError::Processing(format!("error reading {}: {e}", json_path.display()))
             })?;
 
             cache.insert(style.clone(), json.clone());
@@ -348,12 +414,12 @@ mod steps {
 
     pub fn update_theme_json(
         path: &Path,
-        templates_path: &Path,
+        theme_files: &[ThemeFile],
         names: &ThemeNames,
         variants: &[Variant],
     ) -> Result<(), ProgramError> {
         let theme_json_path = path.join("themes/theme.json");
-        let themes = generate_variants_json(templates_path, variants)?;
+        let themes = generate_variants_json(theme_files, variants)?;
 
         let mut theme_ctx = Context::new();
         theme_ctx.insert("theme_name", &names.dash_case);
@@ -414,7 +480,7 @@ pub fn new(name: &str, flags: &[String]) -> Result<(), ProgramError> {
 
     steps::update_theme_json(
         &output_directory,
-        &templates_directory,
+        &flags.themes,
         &theme_name,
         &flags.variants,
     )?;

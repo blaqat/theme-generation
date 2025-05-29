@@ -288,8 +288,8 @@ pub struct Color {
     pub hex: String,
 }
 
-const fn in_range(a: i16, b: i16, r: i16) -> bool {
-    (a - b).abs() <= r
+const fn in_range(x: i16, a: i16, b: i16) -> bool {
+    (x - a).abs() <= b
 }
 
 impl PartialEq for Color {
