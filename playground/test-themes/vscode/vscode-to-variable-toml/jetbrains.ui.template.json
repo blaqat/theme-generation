@@ -1,0 +1,477 @@
+{
+  "name": "$name",
+  "dark": "$theme == 'dark'",
+  "author": "$author",
+  "editorScheme": "$name.xml",
+  "ui": {
+    "*": {
+      "acceleratorForeground": "$ui.text.accent|$scheme.blue",
+      "acceleratorSelectionForeground": "$ui.text.accent|$scheme.blue",
+      "background": "$ui.bg",
+      "borderColor": "$ui.border.primary",
+      "disabledBackground": "$ui.bg",
+      "disabledBorderColor": "$ui.border.secondary",
+      "disabledForeground": "$ui.text.muted",
+      "disabledText": "$ui.text.muted",
+      "errorForeground": "$code.error.fg|$scheme.red",
+      "focusColor": "$ui.text.accent|$scheme.blue",
+      "focusedBorderColor": "$ui.text.accent|$scheme.blue",
+      "foreground": "$ui.text.active",
+      "inactiveBackground": "$ui.border.secondary",
+      "inactiveForeground": "$ui.text.inactive",
+      "infoForeground": "$ui.text.inactive",
+      "lightSelectionBackground": "$ui.element.active|$ui.bg..v+5",
+      "lightSelectionForeground": "$ui.text.active",
+      "lightSelectionInactiveBackground": "$ui.element.hover|$ui.bg..v-5",
+      "lightSelectionInactiveForeground": "$ui.text.inactive",
+      "lineSeparatorColor": "$ui.element.active|$ui.bg..v+5",
+      "modifiedItemForeground": "$file.modified.fg|$scheme.yellow",
+      "selectionBackground": "$ui.element.active|$ui.bg..v+5",
+      "selectionBackgroundInactive": "$ui.element.hover|$ui.bg..v-5",
+      "selectionForeground": "$ui.text.active",
+      "selectionInactiveBackground": "$ui.element.hover|$ui.bg..v-5",
+      "separatorColor": "$ui.element.active|$ui.bg..v+5",
+      "separatorForeground": "$ui.text.muted"
+    },
+    "ActionButton": {
+      "hoverBackground": "$ui.element.hover|$ui.bg..v-5",
+      "hoverBorderColor": "$ui.element.hover|$ui.bg..v-5",
+      "pressedBackground": "$ui.element.active|$ui.bg..v+5",
+      "pressedBorderColor": "$ui.element.active|$ui.bg..v+5"
+    },
+    "Borders": {
+      "ContrastBorderColor": "$ui.border.secondary"
+    },
+    "Button": {
+      "endBackground": "$ui.element.active|$ui.bg..v+5",
+      "endBorderColor": "$ui.element.active|$ui.bg..v+5",
+      "focusedBorderColor": "$ui.element.active|$ui.bg..v+5",
+      "shadowColor": "$ui.bg",
+      "startBackground": "$ui.element.active|$ui.bg..v+5",
+      "startBorderColor": "$ui.element.active|$ui.bg..v+5",
+      "default": {
+        "endBackground": "$ui.text.accent|$scheme.blue",
+        "endBorderColor": "$ui.text.accent|$scheme.blue",
+        "focusColor": "$ui.text.active",
+        "focusedBorderColor": "$ui.text.active",
+        "foreground": "$ui.bg",
+        "shadowColor": "$ui.bg",
+        "startBackground": "$ui.text.accent|$scheme.blue",
+        "startBorderColor": "$ui.text.accent|$scheme.blue"
+      }
+    },
+    "ColorChooser": {
+      "swatchesDefaultRecentColor": "$ui.text.accent|$scheme.blue"
+    },
+    "ComboBox": {
+      "nonEditableBackground": "$ui.border.secondary",
+      "selectionBackground": "$ui.text.accent|$scheme.blue",
+      "selectionForeground": "$ui.bg",
+      "ArrowButton": {
+        "disabledIconColor": "$ui.element.active|$ui.bg..v+5",
+        "iconColor": "$ui.text.muted",
+        "nonEditableBackground": "$ui.border.secondary"
+      }
+    },
+    "ComboBoxButton": {
+      "background": "$ui.border.secondary"
+    },
+    "ComboPopup": {
+      "border": "$ui.border.secondary"
+    },
+    "CompletionPopup": {
+      "background": "$ui.popup|$ui.bg",
+      "matchForeground": "$ui.text.accent|$scheme.blue",
+      "matchSelectionForeground": "$ui.text.accent|$scheme.blue",
+      "nonFocusedState": "$ui.bg",
+      "selectionBackground": "$ui.element.active|$ui.bg..v+5",
+      "selectionInactiveBackground": "$ui.element.active|$ui.bg..v+5",
+      "selectionInactiveInfoForeground": "$ui.element.active|$ui.bg..v+5",
+      "selectionInfoForeground": "$ui.text.active"
+    },
+    "Component": {
+      "errorFocusColor": "$code.error.fg|$scheme.red",
+      "focusColor": "$ui.text.accent|$scheme.blue",
+      "focusedBorderColor": "$ui.bg",
+      "focusWidth": 1,
+      "inactiveErrorFocusColor": "$code.error.fg|$scheme.red",
+      "inactiveWarningFocusColor": "$code.warning.fg|$scheme.yellow",
+      "infoForeground": "$ui.text.accent|$scheme.blue",
+      "warningFocusColor": "$code.warning.fg|$scheme.yellow"
+    },
+    "Counter": {
+      "background": "$ui.text.accent|$scheme.blue",
+      "foreground": "$ui.bg"
+    },
+    "DebuggerTabs": {
+      "selectedBackground": "$ui.border.secondary",
+      "underlinedTabBackground": "$ui.border.secondary"
+    },
+    "DefaultTabs": {
+      "background": "$ui.bg",
+      "borderColor": "$ui.border.secondary",
+      "hoverBackground": "$ui.border.secondary",
+      "inactiveUnderlineColor": "$ui.text.muted",
+      "underlineColor": "$ui.text.accent|$scheme.blue"
+    },
+    "DragAndDrop": {
+      "areaBackground": "$ui.bg",
+      "areaBorderColor": "$ui.element.active|$ui.bg..v+5",
+      "areaForeground": "$ui.text.active"
+    },
+    "Editor": {
+      "shortcutForeground": "$ui.text.accent|$scheme.blue"
+    },
+    "EditorPane": {
+      "caretForeground": "$ui.text.active"
+    },
+    "EditorTabs": {
+      "borderColor": "$ui.bg",
+      "hoverBackground": "$ui.element.active|$ui.bg..v+5",
+      "inactiveColoredFileBackground": "$ui.bg",
+      "underlinedTabBackground": "$ui.element.active|$ui.bg..v+5"
+    },
+    "FileColor": {
+      "Blue": "$scheme.blue..1A",
+      "Green": "$scheme.green..1A",
+      "Orange": "$scheme.yellow..1A",
+      "Rose": "$code.error.fg|$scheme.red..1A",
+      "Violet": "$scheme.pink|$syntax.keyword.fg..1A",
+      "Yellow": "$scheme.yellow..1A"
+    },
+    "Group": {
+      "disabledSeparatorColor": "$ui.border.secondary"
+    },
+    "GutterTooltip": {
+      "infoForeground": "$ui.text.accent|$scheme.blue"
+    },
+    "HelpTooltip": {
+      "background": "$ui.border.secondary",
+      "shortcutForeground": "$ui.text.accent|$scheme.blue"
+    },
+    "Label": {
+      "foreground": "$ui.text.active",
+      "selectedForeground": "$ui.border.secondary"
+    },
+    "Link": {
+      "activeForeground": "$ui.text.accent|$scheme.blue",
+      "hoverForeground": "$ui.text.accent|$scheme.blue",
+      "pressedForeground": "$ui.text.accent|$scheme.blue",
+      "secondaryForeground": "$scheme.blue",
+      "visitedForeground": "$ui.text.accent|$scheme.blue"
+    },
+    "List": {
+      "background": "$ui.popup|$ui.bg",
+      "selectionInactiveForeground": "$ui.text.active"
+    },
+    "MemoryIndicator": {
+      "allocatedBackground": "$scheme.blue",
+      "usedBackground": "$scheme.blue"
+    },
+    "Menu": {
+      "background": "$ui.popup|$ui.bg",
+      "borderColor": "$ui.border.secondary",
+      "selectionForeground": "$ui.text.inactive"
+    },
+    "MenuItem": {
+      "selectionForeground": "$ui.text.inactive"
+    },
+    "Notification": {
+      "background": "$ui.border.secondary",
+      "errorBackground": "$code.error.fg|$scheme.red",
+      "errorBorderColor": "$code.error.fg|$scheme.red",
+      "errorForeground": "$ui.text.inactive",
+      "MoreButton": {
+        "background": "$ui.element.hover|$ui.bg..v-5",
+        "foreground": "$ui.text.active",
+        "innerBorderColor": "$ui.element.hover|$ui.bg..v-5"
+      },
+      "ToolWindow": {
+        "errorBackground": "$code.error.fg|$scheme.red",
+        "errorBorderColor": "$code.error.fg|$scheme.red",
+        "errorForeground": "$ui.text.active",
+        "informativeBackground": "$ui.border.secondary",
+        "informativeBorderColor": "$ui.border.secondary",
+        "informativeForeground": "$ui.text.inactive",
+        "warningBackground": "$code.warning.fg|$scheme.yellow",
+        "warningBorderColor": "$code.warning.fg|$scheme.yellow",
+        "warningForeground": "$ui.bg"
+      }
+    },
+    "OptionPane": {
+      "messageForeground": "$ui.text.accent|$scheme.blue"
+    },
+    "Plugins": {
+      "eapTagBackground": "$scheme.cyan",
+      "tagBackground": "$ui.element.active|$ui.bg..v+5",
+      "tagForeground": "$ui.text.inactive",
+      "Button": {
+        "installBackground": "$ui.text.accent|$scheme.blue",
+        "installBorderColor": "$ui.text.accent|$scheme.blue",
+        "installFillBackground": "$ui.text.accent|$scheme.blue",
+        "installFillForeground": "$ui.bg",
+        "installFocusedBackground": "$ui.text.accent|$scheme.blue",
+        "installForeground": "$ui.bg",
+        "updateBackground": "$scheme.blue",
+        "updateBorderColor": "$scheme.blue",
+        "updateForeground": "$ui.bg"
+      },
+      "SearchField": {
+        "borderColor": "$ui.border.secondary"
+      },
+      "SectionHeader": {
+        "background": "$ui.border.secondary"
+      },
+      "Tab": {
+        "hoverBackground": "$ui.border.secondary",
+        "selectedBackground": "$ui.border.secondary",
+        "selectedForeground": "$ui.text.inactive"
+      }
+    },
+    "Popup": {
+      "inactiveBorderColor": "$ui.popup|$ui.bg",
+      "innerBorderColor": "$ui.popup|$ui.bg",
+      "Header": {
+        "activeBackground": "$ui.element.hover|$ui.bg..v-5"
+      }
+    },
+    "PopupMenu": {
+      "background": "$ui.popup|$ui.bg"
+    },
+    "ProgressBar": {
+      "background": "$ui.text.accent|$scheme.blue",
+      "failedColor": "$code.error.fg|$scheme.red",
+      "failedEndColor": "$code.error.fg|$scheme.red",
+      "indeterminateEndColor": "$ui.text.accent|$scheme.blue",
+      "indeterminateStartColor": "$ui.text.accent|$scheme.blue",
+      "passedColor": "$scheme.green",
+      "passedEndColor": "$scheme.green",
+      "progressColor": "$ui.text.accent|$scheme.blue",
+      "selectionBackground": "$ui.border.secondary",
+      "selectionForeground": "$ui.text.inactive",
+      "trackColor": "$ui.element.active|$ui.bg..v+5"
+    },
+    "RadioButtonMenuItem": {
+      "selectionBackground": "$ui.border.secondary"
+    },
+    "ScrollBar": {
+      "hoverThumbBorderColor": "$ui.element.active|$ui.bg..v+5",
+      "hoverThumbColor": "$ui.element.active|$ui.bg..v+5",
+      "hoverTrackColor": "$ui.bg",
+      "thumb": "$ui.element.hover|$ui.bg..v-5",
+      "thumbBorderColor": "$ui.element.hover|$ui.bg..v-5",
+      "thumbColor": "$ui.element.hover|$ui.bg..v-5",
+      "thumbDarkShadow": "$ui.bg",
+      "thumbHighlight": "$ui.bg",
+      "thumbShadow": "$ui.bg",
+      "track": "$ui.bg",
+      "trackColor": "$ui.bg",
+      "trackHighlight": "$ui.element.active|$ui.bg..v+5",
+      "Mac": {
+        "hoverThumbBorderColor": "$ui.element.active|$ui.bg..v+5",
+        "hoverThumbColor": "$ui.element.active|$ui.bg..v+5",
+        "hoverTrackColor": "$ui.bg",
+        "thumbBorderColor": "$ui.element.hover|$ui.bg..v-5",
+        "thumbColor": "$ui.element.hover|$ui.bg..v-5",
+        "trackColor": "$ui.bg",
+        "Transparent": {
+          "hoverThumbColor": "$ui.element.active|$ui.bg..v+5",
+          "hoverTrackColor": "$ui.bg",
+          "thumbBorderColor": "$ui.element.hover|$ui.bg..v-5",
+          "thumbColor": "$ui.element.hover|$ui.bg..v-5",
+          "trackColor": "$ui.bg"
+        }
+      },
+      "Transparent": {
+        "hoverThumbBorderColor": "$ui.element.active|$ui.bg..v+5",
+        "hoverThumbColor": "$ui.element.active|$ui.bg..v+5",
+        "hoverTrackColor": "$ui.bg",
+        "thumbBorderColor": "$ui.element.hover|$ui.bg..v-5",
+        "thumbColor": "$ui.element.hover|$ui.bg..v-5",
+        "trackColor": "$ui.bg"
+      }
+    },
+    "SearchEverywhere": {
+      "Advertiser": {
+        "background": "$ui.border.secondary",
+        "foreground": "$ui.text.inactive"
+      },
+      "SearchField": {
+        "borderColor": "$ui.border.secondary",
+        "infoForeground": "$scheme.blue"
+      },
+      "Tab": {
+        "selectedBackground": "$ui.border.secondary",
+        "selectedForeground": "$ui.text.inactive"
+      }
+    },
+    "SearchMatch": {
+      "endBackground": "$ui.text.accent|$scheme.blue",
+      "startBackground": "$ui.text.accent|$scheme.blue"
+    },
+    "SidePanel": {
+      "background": "$ui.popup|$ui.bg"
+    },
+    "SpeedSearch": {
+      "background": "$ui.border.secondary",
+      "borderColor": "$ui.border.secondary",
+      "foreground": "$ui.text.accent|$scheme.blue"
+    },
+    "StatusBar": {
+      "hoverBackground": "$ui.element.active|$ui.bg..v+5",
+      "borderColor": "$ui.border.secondary"
+    },
+    "TabbedPane": {
+      "contentAreaColor": "$ui.element.active|$ui.bg..v+5",
+      "disabledUnderlineColor": "$ui.element.active|$ui.bg..v+5",
+      "focus": "$ui.border.secondary",
+      "focusColor": "$ui.border.secondary",
+      "hoverColor": "$ui.border.secondary",
+      "underlineColor": "$ui.text.accent|$scheme.blue"
+    },
+    "Table": {
+      "background": "$ui.popup|$ui.bg",
+      "gridColor": "$ui.bg",
+      "selectionInactiveForeground": "$ui.text.active",
+      "stripeColor": "$ui.border.secondary"
+    },
+    "TableHeader": {
+      "background": "$ui.element.hover|$ui.bg..v-5",
+      "cellBorder": "$ui.element.hover|$ui.bg..v-5",
+      "foreground": "$ui.text.accent|$scheme.blue"
+    },
+    "TextArea": {
+      "background": "$ui.border.secondary",
+      "caretForeground": "$ui.text.active",
+      "selectionForeground": "$ui.text.inactive"
+    },
+    "TextField": {
+      "background": "$ui.border.secondary",
+      "caretForeground": "$ui.text.active",
+      "darkShadow": "$ui.border.secondary"
+    },
+    "ToggleButton": {
+      "background": "$ui.border.secondary",
+      "buttonColor": "$ui.bg",
+      "offBackground": "$ui.element.active|$ui.bg..v+5",
+      "offForeground": "$ui.text.inactive",
+      "onBackground": "$ui.text.accent|$scheme.blue",
+      "onForeground": "$ui.bg"
+    },
+    "ToolTip": {
+      "background": "$ui.border.secondary",
+      "infoForeground": "$ui.text.accent|$scheme.blue",
+      "Actions": {
+        "background": "$ui.border.secondary",
+        "infoForeground": "$ui.text.accent|$scheme.blue"
+      }
+    },
+    "ToolWindow": {
+      "Button": {
+        "hoverBackground": "$ui.border.secondary",
+        "selectedBackground": "$ui.element.active|$ui.bg..v+5",
+        "selectedForeground": "$ui.text.active"
+      },
+      "Header": {
+        "background": "$ui.element.active|$ui.bg..v+5",
+        "inactiveBackground": "$ui.element.hover|$ui.bg..v-5"
+      },
+      "HeaderCloseButton": {
+        "background": "$ui.element.active|$ui.bg..v+5"
+      },
+      "HeaderTab": {
+        "hoverBackground": "$ui.text.muted"
+      }
+    },
+    "Tree": {
+      "background": "$ui.popup|$ui.bg",
+      "selectionBackground": "$ui.text.accent|$scheme.blue",
+      "selectionForeground": "$ui.bg"
+    },
+    "ValidationTooltip": {
+      "errorBackground": "$code.error.fg|$scheme.red",
+      "errorBorderColor": "$code.error.fg|$scheme.red",
+      "warningBackground": "$code.warning.fg|$scheme.yellow",
+      "warningBorderColor": "$code.warning.fg|$scheme.yellow"
+    },
+    "VersionControl": {
+      "FileHistory": {
+        "Commit": {
+          "selectedBranchBackground": "$ui.element.active|$ui.bg..v+5"
+        }
+      },
+      "GitLog": {
+        "headIconColor": "$scheme.green",
+        "localBranchIconColor": "$scheme.blue",
+        "otherIconColor": "$scheme.pink|$syntax.keyword.fg",
+        "remoteBranchIconColor": "$scheme.cyan",
+        "tagIconColor": "$ui.text.accent|$scheme.blue"
+      },
+      "HgLog": {
+        "bookmarkIconColor": "$scheme.yellow",
+        "branchIconColor": "$ui.text.accent|$scheme.blue",
+        "closedBranchIconColor": "$ui.text.muted",
+        "headIconColor": "$scheme.green",
+        "localTagIconColor": "$scheme.blue",
+        "mqTagIconColor": "$scheme.cyan",
+        "tagIconColor": "$ui.text.accent|$scheme.blue",
+        "tipIconColor": "$scheme.blue"
+      },
+      "Log": {
+        "Commit": {
+          "currentBranchBackground": "$ui.bg",
+          "unmatchedForeground": "$ui.text.inactive"
+        }
+      },
+      "RefLabel": {
+        "backgroundBase": "$ui.element.active|$ui.bg..v+5",
+        "foreground": "$scheme.blue"
+      }
+    },
+    "WelcomeScreen": {
+      "separatorColor": "$ui.bg",
+      "captionBackground": "$ui.bg",
+      "captionForeground": "$ui.text.accent|$scheme.blue",
+      "footerBackground": "$ui.border.secondary",
+      "footerForeground": "$ui.text.active",
+      "groupIconBorderColor": "$ui.text.accent|$scheme.blue",
+      "headerBackground": "$ui.border.secondary",
+      "headerForeground": "$ui.text.inactive",
+      "Projects": {
+        "background": "$ui.border.secondary"
+      }
+    }
+  },
+  "icons": {
+    "ColorPalette": {
+      "Actions.Blue": "$ui.text.accent|$scheme.blue",
+      "Actions.Green": "$scheme.green",
+      "Actions.Grey": "$ui.text.muted",
+      "Actions.GreyInline": "$ui.text.muted",
+      "Actions.GreyInline.Dark": "$ui.text.muted",
+      "Actions.Red": "$code.error.fg|$scheme.red",
+      "Actions.Yellow": "$code.warning.fg|$scheme.yellow",
+      "Checkbox.Background.Default.Dark": "$ui.element.active|$ui.bg..v+5",
+      "Checkbox.Background.Disabled.Dark": "$ui.bg",
+      "Checkbox.Background.Selected.Dark": "$ui.element.active|$ui.bg..v+5",
+      "Checkbox.Border.Default.Dark": "$ui.element.active|$ui.bg..v+5",
+      "Checkbox.Border.Disabled.Dark": "$ui.border.secondary",
+      "Checkbox.Border.Selected.Dark": "$ui.element.active|$ui.bg..v+5",
+      "Checkbox.Focus.Thin.Default.Dark": "$ui.text.accent|$scheme.blue",
+      "Checkbox.Focus.Thin.Selected.Dark": "$ui.element.active|$ui.bg..v+5",
+      "Checkbox.Focus.Wide.Dark": "$ui.text.accent|$scheme.blue",
+      "Checkbox.Foreground.Disabled.Dark": "$ui.element.active|$ui.bg..v+5",
+      "Checkbox.Foreground.Selected.Dark": "$ui.text.accent|$scheme.blue",
+      "Objects.BlackText": "$ui.bg",
+      "Objects.Blue": "$ui.text.accent|$scheme.blue",
+      "Objects.Green": "$scheme.green",
+      "Objects.GreenAndroid": "$scheme.green",
+      "Objects.Grey": "$ui.text.muted",
+      "Objects.Purple": "$scheme.pink|$syntax.keyword.fg",
+      "Objects.Red": "$code.error.fg|$scheme.red",
+      "Objects.RedStatus": "$code.error.fg|$scheme.red",
+      "Objects.Yellow": "$code.warning.fg|$scheme.yellow",
+      "Objects.YellowDark": "$code.warning.fg|$scheme.yellow"
+    }
+  }
+}

@@ -1,0 +1,221 @@
+# Reverse Generation Tool Version 3.0
+name = "Dracula 2"
+theme = "dark"
+
+# Theme Colors
+[color]
+black = "#191A21"
+darkslategray = "#282A36"
+darkslategray2 = "#21222C"
+darkslategray3 = "#44475A"
+darkslategray4 = "#343746"
+darkslategray5 = "#424450"
+hotpink = "#FF79C6"
+khaki = "#F1FA8C"
+khaki2 = "#E9F284"
+lightgreen = "#50FA7B"
+lightskyblue = "#8BE9FD"
+plum2 = "#BD93F9"
+sandybrown = "#FFB86C"
+slategray = "#6272A4"
+tomato = "#FF5555"
+white = "#FFFFFF"
+whitesmoke = "#F8F8F2"
+
+[code.error]
+bg = "@tomato"
+border = "@tomato"
+fg = "@tomato"
+style = "italic"
+
+[code.info]
+border = "@hotpink"
+fg = "@lightskyblue..80"
+
+[code.warning]
+bg = "@sandybrown"
+border = "@sandybrown"
+fg = "@sandybrown"
+
+[editor]
+bg = "@darkslategray"
+invisible = "@white..1A"
+number = "@slategray"
+text = "@whitesmoke"
+
+[editor.active]
+line = "@plum2..15"
+line_border = "@darkslategray3"
+matches = "@lightskyblue..50"
+
+[editor.guides]
+wrap = "@white..1A"
+
+[editor.guides.indent]
+active = "@white..45"
+colors = "$editor.guides.indent.colors | []"
+inactive = "@white..1A"
+
+[editor.search]
+line = "@darkslategray3..73"
+matches = "@white..40"
+text = "@khaki..80"
+
+[file.conflict]
+fg = "@sandybrown"
+
+[file.created]
+bg = "@lightgreen..1F"
+fg = "@lightgreen"
+
+[file.deleted]
+bg = "@tomato..50"
+fg = "@tomato"
+
+[file.ignored]
+fg = "@slategray"
+
+[file.modified]
+bg = "@plum2..8F"
+fg = "@sandybrown"
+
+[player]
+highlight = "@darkslategray3"
+
+[scheme]
+black = "@darkslategray2"
+black_br = "@slategray"
+blue = "@plum2"
+blue_br = "#D6ACFF"
+cyan = "@lightskyblue"
+cyan_br = "#A4FFFF"
+green = "@lightgreen"
+green_br = "#69FF94"
+pink = "@hotpink"
+pink_br = "#FF92DF"
+red = "@tomato"
+red_br = "#FF6E6E"
+white = "@whitesmoke"
+white_br = "@white"
+yellow = "@sandybrown"
+yellow_br = "#FFFFA5"
+
+[syntax.comment]
+fg = "@khaki"
+
+[syntax.comment.doc]
+fg = "@slategray"
+
+[syntax.constant]
+fg = "@plum2"
+
+[syntax.constant.builtin]
+fg = "@plum2"
+style = "normal"
+
+[syntax.func]
+fg = "@lightgreen"
+
+[syntax.keyword]
+fg = "@hotpink"
+style = "regular"
+
+[syntax.markup.bold]
+fg = "@sandybrown"
+style = "bold"
+
+[syntax.markup.heading]
+fg = "@plum2"
+style = "bold"
+
+[syntax.markup.italic]
+fg = "@khaki"
+style = "italic"
+
+[syntax.markup.link]
+fg = "@lightskyblue"
+
+[syntax.param]
+fg = "@sandybrown"
+style = "italic"
+
+[syntax.punc]
+fg = "@khaki2"
+
+[syntax.punc.delimiter]
+fg = "@hotpink"
+
+[syntax.string]
+fg = "@khaki"
+
+[syntax.string.escape]
+fg = "@hotpink"
+
+[syntax.string.regex]
+fg = "@khaki"
+
+[syntax.type]
+fg = "@lightskyblue"
+style = "normal"
+
+[syntax.var]
+fg = "@whitesmoke"
+
+[syntax.var.builtin]
+fg = "@plum2"
+style = "italic"
+
+[syntax.z.html_attribute]
+fg = "@lightgreen"
+style = "italic"
+
+[syntax.z.html_tag]
+fg = "@hotpink"
+
+[ui]
+bg = "@darkslategray"
+file_drop = "@darkslategray3..6E"
+link = "@lightskyblue"
+panel = "@darkslategray2"
+popup = "@darkslategray2"
+terminal = "@darkslategray"
+
+[ui.bars]
+bottom = "@black"
+tool = "@darkslategray4"
+top = "@darkslategray2"
+
+[ui.bars.tab]
+active = "@darkslategray"
+bg = "@black"
+inactive = "@darkslategray2"
+
+[ui.bars.title]
+inactive = "@black"
+
+[ui.border]
+primary = "@black"
+secondary = "@plum2"
+
+[ui.button]
+hover = "@lightgreen..5F"
+primary = "@lightgreen..8F"
+
+[ui.button.secondary]
+bg = "@darkslategray"
+hover = "@darkslategray4"
+
+[ui.element]
+active = "#4D5166"
+hover = "@darkslategray3..73"
+
+[ui.text]
+accent = "@lightskyblue"
+active = "@whitesmoke"
+muted = "@slategray"
+placeholder = "@slategray"
+
+[deletions]
+keys = [
+"themes/0/style/accents",
+]

@@ -1,0 +1,321 @@
+# Reverse Generation Tool Version 3.0
+name = "Kitty Macchiato"
+theme = "dark"
+
+# Theme Colors
+[color]
+antiquewhite = "#F4DBD6"
+black = "#181926"
+black2 = "#000000"
+darkgray = "#939AB7"
+darksalmon = "#EE99A0"
+darkslategray2 = "#1E2030"
+darkslategray4 = "#24273A"
+darkslategray5 = "#494D64"
+darkslategray6 = "#363A4F"
+dimgray = "#5B6078"
+gainsboro = "#CAD3F5"
+lightcoral = "#ED8796"
+lightgreen = "#A6DA95"
+lightsalmon = "#F5A97F"
+lightskyblue = "#8AADF4"
+lightsteelblue = "#B7BDF8"
+lightsteelblue2 = "#A5ADCB"
+lightsteelblue3 = "#B8C0E0"
+palegoldenrod = "#EED49F"
+pink = "#F5BDE6"
+pink2 = "#F0C6C6"
+plum = "#C6A0F6"
+skyblue = "#8BD5CA"
+skyblue3 = "#91D7E3"
+slategray2 = "#6E738D"
+
+[code.error]
+bg = "@lightcoral"
+border = "@black..33"
+fg = "@lightcoral"
+
+[code.info]
+bg = "@lightskyblue"
+border = "@black..33"
+fg = "@lightskyblue"
+
+[code.warning]
+bg = "@lightsalmon"
+border = "@black..33"
+fg = "@lightsalmon"
+
+[editor]
+bg = "@darkslategray4"
+gutter = "@darkslategray4"
+invisible = "@darkgray..66"
+number = "#8087A2"
+text = "@gainsboro"
+
+[editor.active]
+line = "#D3DDFF"
+line_border = "@black2..00"
+matches = "@darkgray..33"
+number = "@plum"
+
+[editor.bracket]
+color1 = "@lightcoral"
+color2 = "@lightsalmon"
+color3 = "@palegoldenrod"
+color4 = "@lightgreen"
+color5 = "#7DC4E4"
+color6 = "@plum"
+unexpected = "@darksalmon"
+
+[editor.guides]
+wrap = "@dimgray"
+
+[editor.guides.indent]
+active = "@dimgray"
+colors = "$editor.guides.indent.colors | []"
+inactive = "@darkgray"
+
+[editor.link]
+active = "@plum"
+
+[editor.search]
+line = "#455C6D"
+matches = "#455C6D"
+text = "@skyblue3..4D"
+
+[file.conflict]
+fg = "@plum"
+
+[file.created]
+bg = "@lightgreen..24"
+fg = "@lightgreen..CC"
+
+[file.deleted]
+bg = "@lightcoral..24"
+fg = "@lightcoral..CC"
+
+[file.ignored]
+fg = "@slategray2"
+
+[file.modified]
+bg = "@lightskyblue..33"
+fg = "@palegoldenrod"
+
+[player]
+cursor = "@antiquewhite"
+highlight = "@darkgray..40"
+
+[scheme]
+black = "@darkslategray5"
+black_br = "@dimgray"
+blue = "@lightskyblue"
+blue_br = "#78A1F6"
+cyan = "@skyblue"
+cyan_br = "#63CBC0"
+green = "@lightgreen"
+green_br = "#8CCF7F"
+pink = "@pink"
+pink_br = "#FFC6F0"
+red = "@lightcoral"
+red_br = "#F9A2A9"
+white = "@lightsteelblue2"
+white_br = "@lightsteelblue3"
+yellow = "@palegoldenrod"
+yellow_br = "@lightsalmon"
+
+[syntax.boolean]
+fg = "@lightsalmon"
+
+[syntax.comment]
+fg = "@darkgray"
+style = "italic"
+
+[syntax.comment.doc]
+fg = "@gainsboro"
+
+[syntax.constant]
+fg = "@pink"
+
+[syntax.constant.builtin]
+fg = "@lightcoral"
+
+[syntax.func]
+fg = "@lightskyblue"
+style = "italic"
+
+[syntax.func.builtin]
+fg = "@lightcoral"
+
+[syntax.func.method]
+fg = "@lightskyblue"
+style = "italic"
+
+[syntax.keyword]
+fg = "@plum"
+style = ""
+
+[syntax.markup.bold]
+fg = "@lightcoral"
+
+[syntax.markup.heading]
+style = "bold"
+
+[syntax.markup.italic]
+fg = "@lightcoral"
+
+[syntax.markup.link]
+fg = "@lightskyblue"
+
+[syntax.namespace]
+fg = "@palegoldenrod"
+
+[syntax.number]
+fg = "@lightsalmon"
+
+[syntax.op]
+fg = "@skyblue"
+
+[syntax.param]
+fg = "@darksalmon"
+style = "italic"
+
+[syntax.punc]
+fg = "@skyblue"
+
+[syntax.punc.delimiter]
+fg = "@skyblue"
+
+[syntax.punc.symbol]
+fg = "@darksalmon"
+
+[syntax.punc.tag]
+fg = "@skyblue"
+
+[syntax.string]
+fg = "@lightgreen"
+
+[syntax.string.escape]
+fg = "@pink"
+
+[syntax.string.inter]
+fg = "@lightsteelblue"
+style = ""
+
+[syntax.string.regex]
+fg = "@gainsboro"
+
+[syntax.type]
+fg = "@palegoldenrod"
+style = "italic"
+
+[syntax.type.builtin]
+fg = "@plum"
+style = ""
+
+[syntax.type.primitive]
+fg = "@plum"
+style = ""
+
+[syntax.var]
+fg = "@gainsboro"
+
+[syntax.var.builtin]
+fg = "@lightcoral"
+
+[syntax.z.decorator]
+fg = "@lightsalmon"
+
+[syntax.z.html_attribute]
+fg = "@lightcoral"
+
+[syntax.z.html_tag]
+fg = "@plum"
+
+[syntax.z.json_key]
+fg = "@lightskyblue"
+style = ""
+
+[syntax.z.rs_lifetime]
+fg = "@lightskyblue"
+style = "italic"
+
+[ui]
+bg = "@darkslategray4"
+file_drop = "@plum..33"
+panel = "@darkslategray2"
+popup = "@darkslategray2"
+shadow = "@darkslategray2..80"
+
+[ui.bars]
+bottom = "@black"
+tool = "@black"
+top = "@black"
+
+[ui.bars.tab]
+active = "@darkslategray4"
+bg = "@black"
+inactive = "@darkslategray2"
+
+[ui.bars.title]
+inactive = "@black"
+
+[ui.border]
+primary = "@black2"
+secondary = "@plum"
+
+[ui.button]
+hover = "#DAC1F9"
+primary = "@plum"
+
+[ui.button.secondary]
+bg = "@dimgray"
+hover = "#6A708C"
+
+[ui.debug.continue]
+fg = "@lightgreen"
+
+[ui.debug.expr]
+boolean = "@plum"
+error = "@lightcoral"
+number = "@lightsalmon"
+string = "@lightgreen"
+
+[ui.debug.pause]
+fg = "@lightskyblue"
+
+[ui.debug.start]
+fg = "@lightgreen"
+
+[ui.debug.stop]
+fg = "@lightcoral"
+
+[ui.element]
+active = "#3D4259"
+hover = "#2B2F3F"
+
+[ui.extension.remote]
+bg = "@lightskyblue"
+
+[ui.extension.sponsor]
+fg = "@pink"
+
+[ui.extension.star]
+fg = "@palegoldenrod"
+
+[ui.notification]
+link = "@lightskyblue"
+
+# [ui.terminal.cmd]
+# error = "@lightcoral"
+# success = "@lightgreen"
+
+[ui.text]
+accent = "@plum"
+active = "@gainsboro"
+muted = "@lightsteelblue2"
+placeholder = "@gainsboro..73"
+
+[deletions]
+keys = [
+"themes/0/style/accents",
+]

@@ -1,0 +1,361 @@
+# Reverse Generation Tool Version 3.0
+name = "Catppuccin Mocha"
+theme = "dark"
+
+# Theme Colors
+[color]
+black = "#181825"
+black3 = "#11111B"
+burlywood = "#F1BA9D"
+darkgray = "#9399B2"
+darkgray2 = "#A6ADC8"
+darkslategray = "#45475A"
+darkslategray2 = "#1E1E2E"
+darkslategray3 = "#313244"
+dimgray = "#585B70"
+gainsboro = "#CDD6F4"
+hotpink = "#F38BA8"
+lightblue = "#94E2D5"
+lightpink = "#EB9AB7"
+lightpink2 = "#EBA0AC"
+lightsalmon = "#FAB387"
+lightskyblue = "#89B4FA"
+lightslategray = "#7F849C"
+lightsteelblue = "#BAC2DE"
+lightsteelblue2 = "#B9C3FC"
+lightsteelblue3 = "#B4BEFE"
+mistyrose = "#F5E0DC"
+palegreen = "#A6E3A1"
+pink = "#F5C2E7"
+pink2 = "#F2CDCD"
+plum = "#CBA6F7"
+plum2 = "#CBB0F7"
+silver = "#AEE1B2"
+skyblue = "#74C7EC"
+skyblue2 = "#86CAEE"
+skyblue3 = "#89DCEB"
+slategray = "#6C7086"
+wheat = "#F9E2AF"
+wheat2 = "#F0E0BD"
+
+[code.error]
+bg = "@hotpink..1F"
+border = "@hotpink"
+fg = "@hotpink"
+
+[code.hint]
+bg = "@black"
+border = "@dimgray"
+fg = "#7C7F98"
+
+[code.info]
+bg = "@darkgray..33"
+border = "@lightblue"
+fg = "@lightblue"
+
+[code.success]
+bg = "@palegreen..1F"
+border = "@palegreen"
+fg = "@palegreen"
+
+[code.unreachable]
+bg = "@hotpink..1F"
+border = "@hotpink"
+fg = "@hotpink"
+
+[code.warning]
+bg = "@wheat..1F"
+border = "@wheat"
+fg = "@wheat"
+
+[editor]
+auto_complete = "@slategray"
+bg = "@darkslategray2"
+gutter = "@darkslategray2"
+invisible = "@darkgray..66"
+number = "@lightslategray"
+text = "@gainsboro"
+
+[editor.active]
+line = "@gainsboro..0D"
+number = "@plum"
+
+[editor.guides]
+wrap = "@dimgray"
+
+[editor.guides.indent]
+active = "@dimgray"
+colors = [
+	"@plum2..66",
+	"@lightsteelblue2..66",
+	"@skyblue2..66",
+	"@silver..66",
+	"@wheat2..66",
+	"@burlywood..66",
+	"@lightpink..66"
+]
+inactive = "@darkslategray3..99"
+
+[editor.matches]
+brackets = "@plum..17"
+text = "@darkgray2..29"
+
+[editor.search]
+captures = "@darkgray2..29"
+text = "@lightblue..33"
+
+[file.conflict]
+bg = "@lightsalmon..24"
+border = "@lightsalmon"
+fg = "@lightsalmon"
+
+[file.created]
+bg = "@palegreen..24"
+border = "@palegreen"
+fg = "@palegreen"
+
+[file.deleted]
+bg = "@hotpink..24"
+border = "@hotpink"
+fg = "@hotpink"
+
+[file.hidden]
+bg = "@black"
+border = "@slategray"
+fg = "@slategray"
+
+[file.ignored]
+bg = "@slategray..24"
+border = "@slategray"
+fg = "@slategray"
+
+[file.modified]
+bg = "@wheat..24"
+border = "@wheat"
+fg = "@wheat"
+
+[file.renamed]
+bg = "@skyblue..24"
+border = "@skyblue"
+fg = "@skyblue"
+
+[player]
+cursor = "@mistyrose"
+highlight = "@dimgray..80"
+z = "@mistyrose"
+
+[scheme]
+black = "@darkslategray"
+black_br = "@dimgray"
+black_dim = "@darkslategray"
+blue = "@lightskyblue"
+blue_br = "@lightskyblue"
+blue_dim = "@lightskyblue"
+cyan = "@lightblue"
+cyan_br = "@lightblue"
+cyan_dim = "@lightblue"
+green = "@palegreen"
+green_br = "@palegreen"
+green_dim = "@palegreen"
+pink = "@pink"
+pink_br = "@pink"
+pink_dim = "@pink"
+red = "@hotpink"
+red_br = "@hotpink"
+red_dim = "@hotpink"
+white = "@lightsteelblue"
+white_br = "@darkgray2"
+white_dim = "@lightsteelblue"
+yellow = "@wheat"
+yellow_br = "@wheat"
+yellow_dim = "@wheat"
+
+[syntax.boolean]
+fg = "@lightsalmon"
+
+[syntax.comment]
+fg = "@darkgray"
+style = "italic"
+
+[syntax.comment.doc]
+fg = "@lightblue"
+style = "italic"
+
+[syntax.constant]
+fg = "@lightsalmon"
+
+[syntax.constant.builtin]
+fg = "@lightsalmon"
+
+[syntax.enum]
+fg = "@lightblue"
+weight = 700
+
+[syntax.func]
+fg = "@lightskyblue"
+
+[syntax.func.builtin]
+fg = "@lightsalmon"
+
+[syntax.func.method]
+fg = "@lightskyblue"
+
+[syntax.keyword]
+fg = "@plum"
+
+[syntax.keyword.conditional]
+fg = "@plum"
+
+[syntax.keyword.conditional.ternary]
+fg = "@plum"
+
+[syntax.keyword.coroutine]
+fg = "@plum"
+
+[syntax.keyword.debug]
+fg = "@plum"
+
+[syntax.keyword.directive]
+fg = "@pink"
+
+[syntax.keyword.directive.define]
+fg = "@pink"
+
+[syntax.keyword.exception]
+fg = "@plum"
+
+[syntax.keyword.function]
+fg = "@plum"
+
+[syntax.keyword.import]
+fg = "@plum"
+
+[syntax.keyword.operator]
+fg = "@plum"
+
+[syntax.keyword.repeat]
+fg = "@plum"
+
+[syntax.keyword.return]
+fg = "@plum"
+
+[syntax.keyword.type]
+fg = "@plum"
+
+[syntax.namespace]
+fg = "@hotpink"
+style = "italic"
+
+[syntax.number]
+fg = "@lightsalmon"
+
+[syntax.op]
+fg = "@skyblue3"
+
+[syntax.param]
+fg = "@lightpink2"
+
+[syntax.property]
+fg = "@lightskyblue"
+
+[syntax.punc]
+fg = "@darkgray"
+
+[syntax.punc.bracket]
+fg = "@darkgray"
+
+[syntax.punc.delimiter]
+fg = "@lightblue"
+
+[syntax.punc.symbol]
+fg = "@pink2"
+
+[syntax.string]
+fg = "@palegreen"
+
+[syntax.string.escape]
+fg = "@pink"
+
+[syntax.string.inter]
+fg = "@pink"
+
+[syntax.string.regex]
+fg = "@lightsalmon"
+
+[syntax.string.special]
+fg = "@pink2"
+
+[syntax.type]
+fg = "@wheat"
+
+[syntax.type.builtin]
+fg = "@plum"
+style = "italic"
+
+[syntax.var]
+fg = "@gainsboro"
+
+[syntax.var.builtin]
+fg = "@hotpink"
+
+[syntax.z.html_attribute]
+fg = "@lightsalmon"
+
+[syntax.z.html_tag]
+fg = "@lightskyblue"
+
+[ui]
+appearance = "opaque"
+bg = "#27273B"
+file_drop = "@darkslategray3..66"
+link = "@lightsteelblue3"
+panel = "@black"
+popup = "@black"
+terminal = "@darkslategray2"
+
+[ui.bars]
+bottom = "@black3"
+tool = "@darkslategray2"
+top = "@black3"
+
+[ui.bars.tab]
+active = "@darkslategray2"
+bg = "@black3"
+inactive = "#0B0B11"
+
+[ui.bars.title]
+inactive = "@black3..D9"
+
+[ui.border]
+active = "@plum"
+primary = "@gainsboro"
+secondary = "#AC8FD4"
+
+[ui.button]
+active = "@darkslategray3..4D"
+disabled = "@slategray"
+pressed = "@dimgray..4D"
+primary = "@black3"
+
+[ui.element]
+active = "#6F728D66"
+bg = "#0000"
+disabled = "@slategray"
+hover = "@darkslategray..4D"
+pressed = "@dimgray..99"
+
+[ui.header]
+hover = "@darkslategray..4D"
+primary = "@black"
+
+[ui.scrollbar]
+border = "@gainsboro..12"
+highlight = "@plum"
+thumb = "@plum..33"
+
+[ui.text]
+accent = "@plum"
+active = "@gainsboro"
+inactive = "@lightsteelblue"
+muted = "@darkslategray"
+placeholder = "@dimgray"

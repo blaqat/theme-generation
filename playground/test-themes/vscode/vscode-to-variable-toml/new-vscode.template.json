@@ -1,0 +1,1233 @@
+{
+	"$schema": "vscode://schemas/color-theme",
+	"name": "$name",
+	"author": "Theme Generator",
+	"$::theme": "$theme",
+	"$::editor.guides.indent.colors": "[]",
+	"semanticHighlighting": true,
+	"colors": {
+		"terminal.background": "$ui.terminal|$terminal.bg|$ui.bg",
+		"terminal.foreground": "$ui.text.active",
+		"terminal.ansiBrightBlack": "$scheme.black_br|$terminal.bright_black",
+		"terminal.ansiBrightRed": "$scheme.red_br|$terminal.bright_red",
+		"terminal.ansiBrightGreen": "$scheme.green_br|$terminal.bright_green",
+		"terminal.ansiBrightYellow": "$scheme.yellow_br|$terminal.bright_yellow",
+		"terminal.ansiBrightBlue": "$scheme.blue_br|$terminal.bright_blue",
+		"terminal.ansiBrightMagenta": "$scheme.pink_br|$terminal.bright_magenta",
+		"terminal.ansiBrightCyan": "$scheme.cyan_br|$terminal.bright_cyan",
+		"terminal.ansiBrightWhite": "$scheme.white_br|$terminal.bright_white",
+		"terminal.ansiBlack": "$scheme.black|$terminal.black",
+		"terminal.ansiRed": "$scheme.red|$terminal.red",
+		"terminal.ansiGreen": "$scheme.green|$terminal.green",
+		"terminal.ansiYellow": "$scheme.yellow|$terminal.yellow",
+		"terminal.ansiBlue": "$scheme.blue|$terminal.blue",
+		"terminal.ansiMagenta": "$scheme.pink|$terminal.magenta",
+		"terminal.ansiCyan": "$scheme.cyan|$terminal.cyan",
+		"terminal.ansiWhite": "$scheme.white|$terminal.white",
+		"focusBorder": "$ui.border.primary",
+		"foreground": "$ui.text.active",
+		"widget.shadow": "$ui.shadow",
+		"selection.background": "$editor.active.matches|$player.highlight",
+		"descriptionForeground": "$ui.text.active",
+		"errorForeground": "$code.error.fg|$scheme.red",
+		"icon.foreground": "$ui.text.active",
+		"sash.hoverBorder": "$ui.border.primary",
+		"window.activeBorder": "$ui.border.primary..00",
+		"window.inactiveBorder": "$ui.border.primary..00",
+
+		"button.background": "$ui.button.primary|$ui.bg",
+		"button.foreground": "$ui.text.active",
+		"button.border": "$ui.border.primary..00",
+		"button.separator": "$ui.border.primary..00",
+		"button.hoverBackground": "$ui.button.hover|$ui.button.primary",
+		"button.secondaryBackground": "$ui.button.secondary.bg|$ui.bg",
+		"button.secondaryForeground": "$ui.text.active",
+		"button.secondaryHoverBackground": "$ui.button.secondary.hover|$ui.button.secondary.bg",
+		"button.secondaryBorder": "$ui.border.secondary|$ui.border.primary",
+
+		"checkbox.background": "$ui.popup|$ui.bg",
+		"checkbox.border": "$ui.border.primary",
+		"checkbox.foreground": "$ui.text.active",
+
+		"dropdown.background": "$ui.popup|$ui.bg",
+		"dropdown.listBackground": "$ui.popup|$ui.bg",
+		"dropdown.border": "$ui.border.primary",
+		"dropdown.foreground": "$ui.text.active",
+
+		"input.background": "$ui.bg",
+		"input.foreground": "$ui.text.active",
+		"input.border": "$ui.border.primary",
+		"input.placeholderForeground": "$ui.text.placeholder|$ui.text.muted",
+		"inputOption.activeBackground": "$ui.element.active|$ui.bg..v+5",
+		"inputOption.activeBorder": "$ui.border.secondary",
+		"inputOption.activeForeground": "$ui.text.active",
+		"inputValidation.infoBorder": "$code.info.border|$scheme.blue|$ui.border.secondary",
+		"inputValidation.warningBorder": "$code.warning.border|$scheme.yellow|$ui.border.secondary",
+		"inputValidation.errorBorder": "$code.error.border|$scheme.red|$ui.border.secondary",
+		"inputValidation.infoBackground": "$code.info.bg|$scheme.blue",
+		"inputValidation.warningBackground": "$code.warning.bg|$scheme.yellow",
+		"inputValidation.errorBackground": "$code.error.bg|$scheme.red",
+		"inputValidation.infoForeground": "$code.info.fg|$scheme.blue",
+		"inputValidation.warningForeground": "$code.warning.fg|$scheme.yellow",
+		"inputValidation.errorForeground": "$code.error.fg|$scheme.red",
+
+		"badge.foreground": "$ui.text.active",
+		"badge.background": "$ui.bg",
+
+		"progressBar.background": "$ui.bg",
+
+		"list.activeSelectionBackground": "$ui.element.active|$ui.bg..v+5",
+		"list.activeSelectionForeground": "$ui.text.active",
+		"list.dropBackground": "$ui.file_drop|$ui.bg..(value+10, alpha=80)",
+		"list.focusBackground": "$ui.element.hover|$ui.bg..v-5",
+		"list.focusForeground": "$ui.text.active",
+		"list.focusOutline": "$ui.border.primary..00",
+		"list.highlightForeground": "$ui.text.accent|@primary|$ui.text.active",
+		"list.hoverBackground": "$ui.element.hover|$ui.bg..v-5",
+		"list.hoverForeground": "$ui.text.active",
+		"list.inactiveSelectionBackground": "$ui.element.hover|$ui.bg..v-5",
+		"list.inactiveSelectionForeground": "$ui.text.active",
+		"list.warningForeground": "$code.warning.fg|$scheme.yellow",
+		"list.errorForeground": "$code.error.fg|$scheme.red",
+		"listFilterWidget.background": "$ui.popup|$ui.bg",
+		"listFilterWidget.outline": "$ui.border.primary",
+		"listFilterWidget.noMatchesOutline": "$code.error.fg|$scheme.red",
+		"tree.indentGuidesStroke": "$editor.guides.indent.inactive|$editor.guides.indent.active|$editor.guides.indent",
+		"tree.inactiveIndentGuidesStroke": "$editor.guides.indent.inactive",
+
+		"activityBar.background": "$ui.bars.tool|$ui.bg",
+		"activityBar.foreground": "$ui.text.active",
+		"activityBar.inactiveForeground": "$ui.text.muted",
+		"activityBar.activeBorder": "$ui.border.primary",
+		"activityBar.activeBackground": "$ui.element.active|$ui.bg..v+5",
+		"activityBar.border": "$ui.border.primary..00",
+		"activityBar.dropBorder": "$ui.border.primary..33",
+		"activityBarBadge.background": "$ui.bg",
+		"activityBarBadge.foreground": "$ui.text.active",
+		"activityBarTop.foreground": "$ui.text.active",
+		"activityBarTop.activeBorder": "$ui.border.primary..00",
+		"activityBarTop.inactiveForeground": "$ui.text.muted",
+		"activityBarTop.dropBorder": "$ui.border.primary..33",
+
+		"sideBar.background": "$ui.panel|$ui.bg",
+		"sideBar.foreground": "$ui.text.active",
+		"sideBar.border": "$ui.border.primary",
+		"sideBar.dropBackground": "$ui.file_drop|$ui.bg..(value+10, alpha=80)",
+		"sideBarTitle.foreground": "$ui.text.active",
+		"sideBarSectionHeader.background": "$ui.bg",
+		"sideBarSectionHeader.foreground": "$ui.text.active",
+		"sideBarSectionHeader.border": "$ui.border.primary",
+
+		"editorGroup.border": "$ui.border.primary",
+		"editorGroup.dropBackground": "$ui.file_drop|$ui.bg..(value+10, alpha=80)",
+		"editorGroup.emptyBackground": "$ui.bg|$editor.bg",
+		"editorGroupHeader.tabsBackground": "$ui.bars.tab.bg|$ui.bg",
+
+		"tab.activeBackground": "$ui.bars.tab.active|$ui.bars.tab.bg|$ui.bg",
+		"tab.activeForeground": "$ui.text.active",
+		"tab.activeBorder": "$ui.border.primary",
+		"tab.activeBorderTop": "$ui.border.primary",
+		"tab.border": "$ui.border.primary",
+		"tab.inactiveBackground": "$ui.bars.tab.inactive|$ui.bars.tab.bg|$ui.bg",
+		"tab.inactiveForeground": "$ui.text.muted",
+		"tab.activeModifiedBorder": "$file.modified.fg|$scheme.yellow",
+		"tab.inactiveModifiedBorder": "$file.modified.fg|$scheme.yellow..4D",
+		"tab.hoverBackground": "$ui.element.hover|$ui.bg..v-5",
+		"tab.hoverBorder": "$ui.border.primary..00",
+		"tab.hoverForeground": "$ui.text.active",
+		"tab.unfocusedActiveBackground": "$ui.bars.tab.bg|$ui.bg",
+		"tab.unfocusedActiveBorder": "$ui.border.primary..00",
+		"tab.unfocusedActiveBorderTop": "$ui.border.primary..4D",
+		"tab.unfocusedInactiveBackground": "$ui.bars.tab.inactive|$ui.bars.tab.bg|$ui.bg..C0",
+		"tab.lastPinnedBorder": "$ui.border.primary",
+
+		"editor.foreground": "$editor.text|$ui.text.active",
+		"editor.background": "$editor.bg|$ui.bg",
+		"editor.lineHighlightBackground": "$editor.active.line|$ui.bg..(value+10, alpha=80)",
+		"editor.lineHighlightBorder": "$editor.active.line_border|$editor.active.line",
+		"editorLineNumber.foreground": "$editor.number|$ui.text.active..50",
+		"editorLineNumber.activeForeground": "$editor.active.number|$editor.number|$ui.text.active..50",
+		"editorCursor.foreground": "$player.cursor",
+		"editorCursor.background": "$editor.bg|$ui.bg",
+
+		"editor.selectionBackground": "$player.highlight|$editor.active.line",
+		"editor.selectionHighlightBackground": "$editor.active.matches",
+		"editor.selectionHighlightBorder": "$editor.active.matches",
+		"editor.inactiveSelectionBackground": "$player.highlight|$editor.active.line..73",
+		"editor.wordHighlightBackground": "$editor.active.matches",
+		"editor.wordHighlightStrongBackground": "$editor.active.matches",
+		"editor.wordHighlightBorder": "$editor.active.matches",
+		"editor.wordHighlightStrongBorder": "$editor.active.matches",
+		"editor.findMatchBackground": "$editor.search.text",
+		"editor.findMatchHighlightBackground": "$editor.search.matches|$editor.search.text",
+		"editor.findRangeHighlightBackground": "$editor.search.line|$editor.active.line|$editor.search.text|$editor.search",
+		"editor.findMatchBorder": "$editor.search.text..33",
+		"editor.findMatchHighlightBorder": "$editor.search.matches|$editor.search.text..33",
+		"editor.hoverHighlightBackground": "$editor.active.matches",
+
+		"editor.foldBackground": "$editor.bg|$ui.bg",
+		"editorLink.activeForeground": "$ui.link|$scheme.blue",
+		"editor.rangeHighlightBackground": "$editor.active.line|$ui.bg..(value+10, alpha=80)",
+		"editor.rangeHighlightBorder": "$ui.border.primary..00",
+		"editor.snippetTabstopHighlightBackground": "$ui.bg",
+		"editor.snippetTabstopHighlightBorder": "$ui.border.primary",
+		"editor.snippetFinalTabstopHighlightBackground": "$ui.bg",
+		"editor.snippetFinalTabstopHighlightBorder": "$ui.border.primary",
+
+		"editorWhitespace.foreground": "$editor.invisible|$editor.active.highlight|$player.highlight",
+		"editorIndentGuide.background": "$editor.guides.indent.inactive|$editor.guides.indent.active|$editor.guides.indent",
+		"editorIndentGuide.activeBackground": "$editor.guides.indent.active|$editor.guides.indent.inactive|$editor.guides.indent",
+		"editorRuler.foreground": "$editor.guides.wrap",
+		"editorCodeLens.foreground": "$ui.text.muted",
+		"editorLightBulb.foreground": "$code.warning.fg|$scheme.yellow",
+
+		"editorBracketMatch.background": "$editor.active.matches",
+		"editorBracketMatch.border": "$ui.border.primary",
+		"editorBracketHighlight.foreground1": "$editor.text|$ui.text.active",
+		"editorBracketHighlight.foreground2": "$scheme.pink|$syntax.keyword.fg",
+		"editorBracketHighlight.foreground3": "$scheme.cyan|$syntax.type.fg",
+		"editorBracketHighlight.foreground4": "$scheme.green|$syntax.func.fg",
+		"editorBracketHighlight.foreground5": "$scheme.blue|$syntax.param.fg",
+		"editorBracketHighlight.foreground6": "$scheme.yellow|$syntax.string.fg",
+		"editorBracketHighlight.unexpectedBracket.foreground": "$scheme.red|$code.error.fg",
+
+		"editorOverviewRuler.border": "$ui.border.primary",
+		"editorOverviewRuler.findMatchForeground": "$editor.search.text",
+		"editorOverviewRuler.rangeHighlightForeground": "$editor.active.line|$ui.bg..(value+10, alpha=80)",
+		"editorOverviewRuler.selectionHighlightForeground": "$editor.active.matches",
+		"editorOverviewRuler.wordHighlightForeground": "$editor.active.matches",
+		"editorOverviewRuler.wordHighlightStrongForeground": "$editor.active.matches",
+		"editorOverviewRuler.modifiedForeground": "$file.modified.fg|$scheme.yellow",
+		"editorOverviewRuler.addedForeground": "$file.created.fg|$scheme.green",
+		"editorOverviewRuler.deletedForeground": "$file.deleted.fg|$scheme.red",
+		"editorOverviewRuler.errorForeground": "$code.error.fg|$scheme.red",
+		"editorOverviewRuler.warningForeground": "$code.warning.fg|$scheme.yellow",
+		"editorOverviewRuler.infoForeground": "$code.info.fg|$scheme.blue",
+		"editorOverviewRuler.currentContentForeground": "$file.created.fg|$scheme.green",
+		"editorOverviewRuler.incomingContentForeground": "$scheme.blue|$syntax.type.fg",
+
+		"editorGutter.background": "$editor.gutter|$editor.bg|$ui.bg",
+		"editorGutter.modifiedBackground": "$file.modified.fg|$scheme.yellow",
+		"editorGutter.addedBackground": "$file.created.fg|$scheme.green",
+		"editorGutter.deletedBackground": "$file.deleted.fg|$scheme.red",
+		"editorGutter.commentRangeForeground": "$ui.bg..v+5",
+		"editorGutter.commentGlyphForeground": "$syntax.comment.fg",
+		"editorGutter.foldingControlForeground": "$ui.text.muted",
+
+		"editorError.foreground": "$code.error.fg|$scheme.red",
+		"editorError.border": "$code.error.border|$scheme.red..00",
+		"editorError.background": "$code.error.bg|$scheme.red..00",
+		"editorWarning.foreground": "$code.warning.fg|$scheme.yellow",
+		"editorWarning.border": "$code.warning.border|$scheme.yellow..00",
+		"editorWarning.background": "$code.warning.bg|$scheme.yellow..00",
+		"editorInfo.foreground": "$code.info.fg|$scheme.blue",
+		"editorInfo.border": "$code.info.border|$scheme.blue..00",
+		"editorInfo.background": "$code.info.bg|$scheme.blue..00",
+		"problemsErrorIcon.foreground": "$code.error.fg|$scheme.red",
+		"problemsInfoIcon.foreground": "$code.info.fg|$scheme.blue",
+		"problemsWarningIcon.foreground": "$code.warning.fg|$scheme.yellow",
+
+		"editorStickyScrollHover.background": "$ui.bg..v+5",
+
+		"diffEditor.border": "$ui.border.primary",
+		"diffEditor.insertedTextBackground": "$file.created.bg|$scheme.green..20",
+		"diffEditor.removedTextBackground": "$file.deleted.bg|$scheme.red..30",
+		"diffEditor.insertedLineBackground": "$file.created.bg|$scheme.green..20",
+		"diffEditor.removedLineBackground": "$file.deleted.bg|$scheme.red..30",
+		"diffEditor.diagonalFill": "$ui.bg..v+5..99",
+		"diffEditorOverview.insertedForeground": "$file.created.fg|$scheme.green..C0",
+		"diffEditorOverview.removedForeground": "$file.deleted.fg|$scheme.red..C0",
+
+		"editor.stackFrameHighlightBackground": "$code.warning.bg|$scheme.yellow..26",
+		"editor.focusedStackFrameHighlightBackground": "$file.created.bg|$scheme.green..26",
+
+		"editorWidget.background": "$ui.popup|$ui.bg",
+		"editorWidget.foreground": "$ui.text.active",
+		"editorWidget.resizeBorder": "$ui.border.primary",
+
+		"editorSuggestWidget.background": "$ui.popup|$ui.bg",
+		"editorSuggestWidget.border": "$ui.border.primary",
+		"editorSuggestWidget.foreground": "$ui.text.active",
+		"editorSuggestWidget.highlightForeground": "$ui.text.accent|@primary|$ui.text.active",
+		"editorSuggestWidget.selectedBackground": "$ui.element.active|$ui.bg..v+5",
+		"editorSuggestWidget.selectedForeground": "$ui.text.active",
+
+		"editorHoverWidget.background": "$ui.popup|$ui.bg",
+		"editorHoverWidget.border": "$ui.border.primary",
+		"editorHoverWidget.foreground": "$ui.text.active",
+		"editorHoverWidget.statusBarBackground": "$ui.bars.bottom|$ui.bg",
+
+		"debugExceptionWidget.background": "$ui.popup|$ui.bg",
+		"debugExceptionWidget.border": "$ui.border.primary",
+
+		"editorMarkerNavigation.background": "$ui.popup|$ui.bg",
+		"editorMarkerNavigationError.background": "$code.error.bg|$ui.code_popup|$ui.popup|$scheme.red",
+		"editorMarkerNavigationWarning.background": "$code.warning.bg|$ui.code_popup|$ui.popup|$scheme.yellow",
+		"editorMarkerNavigationInfo.background": "$code.info.bg|$ui.code_popup|$ui.popup|$scheme.blue",
+
+		"peekView.border": "$ui.border.primary",
+		"peekViewEditor.background": "$editor.bg|$ui.bg",
+		"peekViewEditorGutter.background": "$ui.bg",
+		"peekViewEditor.matchHighlightBackground": "$editor.search.text",
+		"peekViewEditor.matchHighlightBorder": "$ui.border.primary",
+		"peekViewResult.background": "$ui.popup|$ui.bg",
+		"peekViewResult.fileForeground": "$ui.text.active",
+		"peekViewResult.lineForeground": "$ui.text.active",
+		"peekViewResult.matchHighlightBackground": "$editor.search.text",
+		"peekViewResult.matchHighlightBorder": "$ui.border.primary",
+		"peekViewResult.selectionBackground": "$ui.element.active|$ui.bg..v+5",
+		"peekViewResult.selectionForeground": "$ui.text.active",
+		"peekViewTitle.background": "$ui.popup|$ui.bg",
+		"peekViewTitleDescription.foreground": "$ui.text.muted",
+		"peekViewTitleLabel.foreground": "$ui.text.active",
+
+		"merge.currentHeaderBackground": "$file.created.bg|$scheme.green..90",
+		"merge.currentContentBackground": "$file.created.bg|$scheme.green..40",
+		"merge.incomingHeaderBackground": "$file.modified.bg|$scheme.blue..90",
+		"merge.incomingContentBackground": "$file.modified.bg|$scheme.blue..40",
+		"merge.commonContentBackground": "$ui.bg..v+5",
+		"merge.commonHeaderBackground": "$ui.bg..v+7",
+		"merge.border": "$ui.border.primary",
+
+		"panel.background": "$ui.panel|$ui.bg",
+		"panel.border": "$ui.border.primary",
+		"panel.dropBorder": "$ui.border.primary",
+		"panelTitle.activeBorder": "$ui.border.primary",
+		"panelTitle.activeForeground": "$ui.text.active",
+		"panelTitle.inactiveForeground": "$ui.text.muted",
+		"panelSection.border": "$ui.border.primary",
+		"panelSection.dropBackground": "$ui.file_drop|$ui.bg..(value+10, alpha=80)",
+
+		"statusBar.background": "$ui.bars.bottom|$ui.bg",
+		"statusBar.foreground": "$ui.text.active",
+		"statusBar.border": "$ui.border.primary..00",
+		"statusBar.debuggingBackground": "$code.error.bg|$ui.code_popup|$ui.popup|$scheme.red",
+		"statusBar.debuggingForeground": "$ui.text.active",
+		"statusBar.debuggingBorder": "$ui.border.primary..00",
+		"statusBar.noFolderBackground": "$ui.bars.bottom|$ui.bg",
+		"statusBar.noFolderForeground": "$ui.text.active",
+		"statusBar.noFolderBorder": "$ui.border.primary..00",
+		"statusBarItem.prominentBackground": "$code.error.bg|$ui.code_popup|$ui.popup|$scheme.red",
+		"statusBarItem.prominentHoverBackground": "$code.warning.bg|$ui.code_popup|$ui.popup|$scheme.yellow",
+		"statusBarItem.prominentForeground": "$ui.text.active",
+		"statusBarItem.remoteBackground": "$ui.bg",
+		"statusBarItem.remoteForeground": "$ui.text.active",
+		"statusBarItem.activeBackground": "$ui.bg..v+5..66",
+		"statusBarItem.hoverBackground": "$ui.bg..v+5..33",
+		"statusBarItem.errorBackground": "$code.error.bg|$ui.code_popup|$ui.popup|$scheme.red..00",
+		"statusBarItem.errorForeground": "$code.error.fg|$scheme.red",
+		"statusBarItem.warningBackground": "$code.warning.bg|$ui.code_popup|$ui.popup|$scheme.yellow..00",
+		"statusBarItem.warningForeground": "$code.warning.fg|$scheme.yellow",
+
+		"commandCenter.foreground": "$ui.text.muted",
+		"commandCenter.activeForeground": "$ui.text.active",
+		"commandCenter.inactiveForeground": "$ui.text.muted",
+		"commandCenter.background": "$ui.bg",
+		"commandCenter.activeBackground": "$ui.bg..v+5..33",
+		"commandCenter.border": "$ui.border.primary..00",
+		"commandCenter.inactiveBorder": "$ui.border.primary..00",
+		"commandCenter.activeBorder": "$ui.border.primary",
+
+		"titleBar.activeBackground": "$ui.bars.top|$ui.bars.title.active|$ui.bg",
+		"titleBar.activeForeground": "$ui.text.active",
+		"titleBar.inactiveBackground": "$ui.bars.title.inactive|$ui.bars.top|$ui.bg",
+		"titleBar.inactiveForeground": "$ui.text.muted",
+		"titleBar.border": "$ui.border.primary..00",
+
+		"notifications.background": "$ui.popup|$ui.bg",
+		"notifications.foreground": "$ui.text.active",
+		"notifications.border": "$ui.border.primary",
+		"notificationCenter.border": "$ui.border.primary",
+		"notificationCenterHeader.foreground": "$ui.text.active",
+		"notificationCenterHeader.background": "$ui.popup|$ui.bg",
+		"notificationToast.border": "$ui.border.primary",
+		"notificationLink.foreground": "$ui.link|$scheme.blue",
+		"notificationsErrorIcon.foreground": "$code.error.fg|$scheme.red",
+		"notificationsWarningIcon.foreground": "$code.warning.fg|$scheme.yellow",
+		"notificationsInfoIcon.foreground": "$code.info.fg|$scheme.blue",
+
+		"extensionButton.prominentForeground": "$ui.text.active",
+		"extensionButton.prominentBackground": "$ui.button.primary|$ui.bg",
+		"extensionButton.prominentHoverBackground": "$ui.button.hover|$ui.button.primary",
+		"extensionButton.separator": "$ui.border.primary",
+		"extensionBadge.remoteBackground": "$scheme.blue|$syntax.type.fg",
+		"extensionBadge.remoteForeground": "$ui.bg",
+		"extensionIcon.starForeground": "$scheme.yellow|$syntax.string.fg",
+		"extensionIcon.verifiedForeground": "$scheme.green|$syntax.func.fg",
+		"extensionIcon.preReleaseForeground": "$ui.bg..v+7",
+		"extensionIcon.sponsorForeground": "$scheme.pink_br|$syntax.keyword.fg..v+5",
+
+		"pickerGroup.border": "$ui.border.primary",
+		"pickerGroup.foreground": "$ui.text.accent|@primary|$ui.text.active",
+
+		"debugToolBar.background": "$ui.popup|$ui.bg",
+		"debugToolBar.border": "$ui.border.primary",
+		"debugIcon.breakpointForeground": "$code.error.fg|$scheme.red",
+		"debugIcon.breakpointDisabledForeground": "$code.error.fg|$scheme.red..99",
+		"debugIcon.breakpointUnverifiedForeground": "$code.error.fg|$scheme.red..70",
+		"debugIcon.breakpointCurrentStackframeForeground": "$ui.bg..v+7",
+		"debugIcon.breakpointStackframeForeground": "$ui.bg..v+7",
+		"debugIcon.startForeground": "$scheme.green|$syntax.func.fg",
+		"debugIcon.pauseForeground": "$scheme.blue|$syntax.type.fg",
+		"debugIcon.stopForeground": "$code.error.fg|$scheme.red",
+		"debugIcon.disconnectForeground": "$ui.bg..v+7",
+		"debugIcon.restartForeground": "$scheme.cyan|$syntax.special.fg",
+		"debugIcon.stepOverForeground": "$syntax.keyword.fg|$scheme.pink",
+		"debugIcon.stepIntoForeground": "$ui.text.active",
+		"debugIcon.stepOutForeground": "$ui.text.active",
+		"debugIcon.continueForeground": "$scheme.green|$syntax.func.fg",
+		"debugIcon.stepBackForeground": "$ui.bg..v+7",
+		"debugConsole.infoForeground": "$code.info.fg|$scheme.blue",
+		"debugConsole.warningForeground": "$code.warning.fg|$scheme.yellow",
+		"debugConsole.errorForeground": "$code.error.fg|$scheme.red",
+		"debugConsole.sourceForeground": "$ui.text.muted",
+		"debugConsoleInputIcon.foreground": "$ui.text.active",
+		"debugTokenExpression.number": "$scheme.yellow|$syntax.number.fg",
+		"debugTokenExpression.boolean": "$scheme.pink|$syntax.keyword.fg",
+		"debugTokenExpression.string": "$scheme.green|$syntax.string.fg",
+		"debugTokenExpression.error": "$scheme.red|$code.error.fg",
+
+		"editor.inlayHint.foreground": "$ui.bg..v+7",
+		"editor.inlayHint.background": "$ui.bg..BF",
+		"editor.inlayHint.typeForeground": "$ui.text.muted",
+		"editor.inlayHint.typeBackground": "$ui.bg..BF",
+		"editor.inlayHint.parameterForeground": "$ui.text.muted",
+		"editor.inlayHint.parameterBackground": "$ui.bg..BF",
+
+		"walkThrough.embeddedEditorBackground": "$ui.popup|$ui.bg",
+
+		"settings.headerForeground": "$ui.text.active",
+		"settings.modifiedItemIndicator": "$file.modified.fg|$scheme.yellow",
+		"settings.dropdownBackground": "$ui.popup|$ui.bg",
+		"settings.dropdownForeground": "$ui.text.active",
+		"settings.dropdownBorder": "$ui.border.primary",
+		"settings.dropdownListBorder": "$ui.border.primary..00",
+		"settings.checkboxBackground": "$ui.popup|$ui.bg",
+		"settings.checkboxForeground": "$ui.text.active",
+		"settings.checkboxBorder": "$ui.border.primary",
+		"settings.textInputBackground": "$ui.popup|$ui.bg",
+		"settings.textInputForeground": "$ui.text.active",
+		"settings.textInputBorder": "$ui.border.primary",
+		"settings.numberInputBackground": "$ui.popup|$ui.bg",
+		"settings.numberInputForeground": "$ui.text.active",
+		"settings.numberInputBorder": "$ui.border.primary",
+		"settings.focusedRowBackground": "$ui.bg..v+5..33",
+		"settings.rowHoverBackground": "$ui.element.hover|$ui.bg..v-5",
+
+		"breadcrumb.foreground": "$ui.text.muted",
+		"breadcrumb.background": "$ui.bg",
+		"breadcrumb.focusForeground": "$ui.text.active",
+		"breadcrumb.activeSelectionForeground": "$ui.text.active",
+		"breadcrumbPicker.background": "$ui.popup|$ui.bg",
+
+		"menu.background": "$ui.bg",
+		"menu.foreground": "$ui.text.active",
+		"menu.selectionBackground": "$ui.bg..v+7",
+		"menu.selectionForeground": "$ui.text.active",
+		"menu.selectionBorder": "$ui.border.primary..00",
+		"menu.separatorBackground": "$ui.border.primary",
+		"menu.border": "$ui.bg..80",
+		"menubar.selectionBackground": "$ui.bg..v+5",
+		"menubar.selectionForeground": "$ui.text.active",
+
+		"scrollbar.shadow": "$ui.bg..v-5",
+		"scrollbarSlider.activeBackground": "$ui.bg..v+5..66",
+		"scrollbarSlider.background": "$ui.bg..v+7..80",
+		"scrollbarSlider.hoverBackground": "$ui.bg..v+7",
+
+		"terminalCursor.foreground": "$ui.text.active",
+		"terminalCursor.background": "$ui.bg",
+		"terminal.border": "$ui.border.primary",
+		"terminal.dropBackground": "$ui.file_drop|$ui.bg..(value+10, alpha=80)",
+		"terminal.tab.activeBorder": "$ui.border.primary",
+		"terminal.selectionBackground": "$ui.bg..v+7",
+		"terminal.inactiveSelectionBackground": "$ui.bg..v+7..80",
+		"terminalCommandDecoration.defaultBackground": "$ui.bg..v+7",
+		"terminalCommandDecoration.successBackground": "$scheme.green|$syntax.func.fg",
+		"terminalCommandDecoration.errorBackground": "$scheme.red|$code.error.fg",
+
+		"gitDecoration.addedResourceForeground": "$file.created.fg|$scheme.green",
+		"gitDecoration.modifiedResourceForeground": "$file.modified.fg|$scheme.yellow",
+		"gitDecoration.deletedResourceForeground": "$file.deleted.fg|$scheme.red",
+		"gitDecoration.untrackedResourceForeground": "$file.created.fg|$scheme.green",
+		"gitDecoration.ignoredResourceForeground": "$file.ignored.fg|$ui.text.muted",
+		"gitDecoration.conflictingResourceForeground": "$file.conflict.fg|$scheme.red_br",
+		"gitDecoration.submoduleResourceForeground": "$syntax.constant.fg",
+		"gitDecoration.stageDeletedResourceForeground": "$file.deleted.fg|$scheme.red",
+		"gitDecoration.stageModifiedResourceForeground": "$file.modified.fg|$scheme.yellow",
+
+		"testing.iconErrored": "$code.error.fg|$scheme.red",
+		"testing.iconFailed": "$code.error.fg|$scheme.red",
+		"testing.iconPassed": "$scheme.green|$syntax.func.fg",
+		"testing.iconQueued": "$scheme.blue|$syntax.type.fg",
+		"testing.iconUnset": "$ui.text.active",
+		"testing.iconSkipped": "$ui.text.muted",
+		"testing.iconErrored.retired": "$code.error.fg|$scheme.red",
+		"testing.iconFailed.retired": "$code.error.fg|$scheme.red",
+		"testing.iconPassed.retired": "$scheme.green|$syntax.func.fg",
+		"testing.iconQueued.retired": "$scheme.blue|$syntax.type.fg",
+		"testing.iconUnset.retired": "$ui.text.active",
+		"testing.iconSkipped.retired": "$ui.text.muted",
+		"testing.peekBorder": "$ui.border.primary",
+		"testing.message.error.lineBackground": "$code.error.bg|$scheme.red..26",
+		"testing.message.info.decorationForeground": "$scheme.green|$syntax.func.fg..CC",
+		"testing.message.info.lineBackground": "$scheme.green|$syntax.func.fg..26",
+		"testing.coveredBackground": "$scheme.green|$syntax.func.fg..4D",
+		"testing.coveredBorder": "$ui.border.primary..00",
+		"testing.coveredGutterBackground": "$scheme.green|$syntax.func.fg..4D",
+		"testing.uncoveredBackground": "$scheme.red|$code.error.fg..33",
+		"testing.uncoveredBorder": "$ui.border.primary..00",
+		"testing.uncoveredGutterBackground": "$scheme.red|$code.error.fg..40",
+
+		"banner.background": "$ui.bg..v+5",
+		"banner.foreground": "$ui.text.active",
+		"banner.iconForeground": "$ui.text.active",
+
+		"charts.foreground": "$ui.text.active",
+		"charts.lines": "$ui.text.muted",
+		"charts.red": "$code.error.fg|$scheme.red",
+		"charts.blue": "$scheme.blue|$syntax.type.fg",
+		"charts.yellow": "$scheme.yellow|$syntax.string.fg",
+		"charts.orange": "$scheme.yellow_br|$syntax.string.escape.fg",
+		"charts.green": "$scheme.green|$syntax.func.fg",
+		"charts.purple": "$scheme.pink|$syntax.keyword.fg",
+
+		"issues.closed": "$scheme.pink|$syntax.keyword.fg",
+		"issues.newIssueDecoration": "$ui.text.muted",
+		"issues.open": "$scheme.green|$syntax.func.fg",
+		"pullRequests.closed": "$code.error.fg|$scheme.red",
+		"pullRequests.draft": "$ui.text.muted",
+		"pullRequests.merged": "$scheme.pink|$syntax.keyword.fg",
+		"pullRequests.notification": "$ui.text.active",
+		"pullRequests.open": "$scheme.green|$syntax.func.fg",
+
+		"inlineChat.background": "$ui.bg",
+		"inlineChat.border": "$ui.border.primary",
+		"inlineChat.shadow": "$ui.bg..v-5",
+		"inlineChat.regionHighlight": "$ui.bg..v+5",
+
+		"symbolIcon.textForeground": "$ui.text.active",
+		"symbolIcon.arrayForeground": "$scheme.yellow_br|$syntax.string.escape.fg",
+		"symbolIcon.booleanForeground": "$scheme.pink|$syntax.keyword.fg",
+		"symbolIcon.classForeground": "$scheme.yellow|$syntax.string.fg",
+		"symbolIcon.colorForeground": "$scheme.pink_br|$syntax.keyword.fg..v+5",
+		"symbolIcon.constantForeground": "$scheme.yellow_br|$syntax.string.escape.fg",
+		"symbolIcon.constructorForeground": "$scheme.blue_br|$syntax.type.fg..v+5",
+		"symbolIcon.enumeratorForeground": "$scheme.yellow|$syntax.string.fg",
+		"symbolIcon.enumeratorMemberForeground": "$scheme.yellow|$syntax.string.fg",
+		"symbolIcon.eventForeground": "$scheme.pink_br|$syntax.keyword.fg..v+5",
+		"symbolIcon.fieldForeground": "$ui.text.active",
+		"symbolIcon.fileForeground": "$scheme.pink|$syntax.keyword.fg",
+		"symbolIcon.folderForeground": "$scheme.pink|$syntax.keyword.fg",
+		"symbolIcon.functionForeground": "$scheme.blue|$syntax.type.fg",
+		"symbolIcon.interfaceForeground": "$scheme.yellow|$syntax.string.fg",
+		"symbolIcon.keyForeground": "$scheme.cyan|$syntax.type.fg",
+		"symbolIcon.keywordForeground": "$scheme.pink|$syntax.keyword.fg",
+		"symbolIcon.methodForeground": "$scheme.blue|$syntax.type.fg",
+		"symbolIcon.moduleForeground": "$ui.text.active",
+		"symbolIcon.namespaceForeground": "$scheme.yellow|$syntax.string.fg",
+		"symbolIcon.nullForeground": "$scheme.red_br|$code.error.fg..v+5",
+		"symbolIcon.numberForeground": "$scheme.yellow_br|$syntax.string.escape.fg",
+		"symbolIcon.objectForeground": "$scheme.yellow|$syntax.string.fg",
+		"symbolIcon.operatorForeground": "$scheme.cyan|$syntax.type.fg",
+		"symbolIcon.packageForeground": "$scheme.red_br|$code.error.fg..v+5",
+		"symbolIcon.propertyForeground": "$scheme.red_br|$code.error.fg..v+5",
+		"symbolIcon.referenceForeground": "$scheme.yellow|$syntax.string.fg",
+		"symbolIcon.snippetForeground": "$scheme.red_br|$code.error.fg..v+5",
+		"symbolIcon.stringForeground": "$scheme.green|$syntax.func.fg",
+		"symbolIcon.structForeground": "$scheme.cyan|$syntax.type.fg",
+		"symbolIcon.typeParameterForeground": "$scheme.red_br|$code.error.fg..v+5",
+		"symbolIcon.unitForeground": "$ui.text.active",
+		"symbolIcon.variableForeground": "$ui.text.active",
+
+		"keybindingLabel.background": "$ui.bg",
+		"keybindingLabel.foreground": "$ui.text.active",
+		"keybindingLabel.border": "$ui.border.primary",
+		"keybindingLabel.bottomBorder": "$ui.border.primary"
+	},
+	"tokenColors": [
+		{
+			"$::mode": "strict",
+			"scope": "exact|inner::includes|inner::exact"
+		},
+		{
+			"name": "Emphasis",
+			"scope": ["emphasis"],
+			"settings": {
+				"fontStyle": "$syntax.markup.italic.style|italic",
+				"foreground": "$syntax.markup.italic.fg",
+				"background": "$syntax.markup.italic.bg",
+				"fontWeight": "$syntax.markup.italic.weight"
+			}
+		},
+		{
+			"name": "Strong",
+			"scope": ["strong"],
+			"settings": {
+				"fontStyle": "$syntax.markup.bold.style|bold",
+				"foreground": "$syntax.markup.bold.fg",
+				"background": "$syntax.markup.bold.bg",
+				"fontWeight": "$syntax.markup.bold.weight|bold"
+			}
+		},
+		{
+			"name": "Headings",
+			"scope": ["markup.heading"],
+			"settings": {
+				"fontStyle": "$syntax.markup.heading.style|bold",
+				"foreground": "$syntax.markup.heading.fg",
+				"background": "$syntax.markup.heading.bg",
+				"fontWeight": "$syntax.markup.heading.weight|bold"
+			}
+		},
+		{
+			"name": "Links",
+			"scope": ["markup.underline.link"],
+			"settings": {
+				"foreground": "$syntax.markup.link.fg",
+				"fontStyle": "$syntax.markup.link.style",
+				"background": "$syntax.markup.link.bg",
+				"fontWeight": "$syntax.markup.link.weight",
+				"underline": "$syntax.markup.link.underline"
+			}
+		},
+		{
+			"name": "Comments",
+			"scope": ["comment", "punctuation.definition.comment"],
+			"settings": {
+				"foreground": "$syntax.comment.fg",
+				"fontStyle": "$syntax.comment.style",
+				"background": "$syntax.comment.bg",
+				"fontWeight": "$syntax.comment.weight"
+			}
+		},
+		{
+			"name": "Documentation Comments",
+			"scope": [
+				"comment.block.documentation",
+				"comment.block.documentation.*"
+			],
+			"settings": {
+				"foreground": "$syntax.comment.doc.fg|$syntax.comment.fg",
+				"fontStyle": "$syntax.comment.doc.style|$syntax.comment.style",
+				"background": "$syntax.comment.doc.bg|$syntax.comment.bg",
+				"fontWeight": "$syntax.comment.doc.weight|$syntax.comment.weight"
+			}
+		},
+		{
+			"name": "Docstrings",
+			"scope": [
+				"string.quoted.docstring.multi",
+				"string.quoted.docstring.multi.python punctuation.definition.string.begin",
+				"string.quoted.docstring.multi.python punctuation.definition.string.end",
+				"string.quoted.docstring.multi.python constant.character.escape"
+			],
+			"settings": {
+				"foreground": "$syntax.comment.doc.fg|$syntax.comment.fg",
+				"fontStyle": "$syntax.comment.doc.style|$syntax.comment.style",
+				"background": "$syntax.comment.doc.bg|$syntax.comment.bg",
+				"fontWeight": "$syntax.comment.doc.weight|$syntax.comment.weight"
+			}
+		},
+		{
+			"name": "JSDoc-style keywords",
+			"scope": [
+				"comment keyword.codetag.notation",
+				"comment.block.documentation keyword",
+				"comment.block.documentation storage.type.class",
+				"storage.type.class.jsdoc",
+				"comment.line.double-dash.documentation.lua storage.type.annotation.lua"
+			],
+			"settings": {
+				"foreground": "$syntax.keyword.fg",
+				"fontStyle": "$syntax.keyword.style"
+			}
+		},
+		{
+			"name": "JSDoc-style types",
+			"scope": [
+				"comment.block.documentation entity.name.type",
+				"comment.block.documentation variable.other"
+			],
+			"settings": {
+				"foreground": "$syntax.type.fg",
+				"fontStyle": "$syntax.type.style|italic"
+			}
+		},
+		{
+			"name": "JSDoc-style parameters",
+			"scope": [
+				"comment.block.documentation variable",
+				"variable.other.jsdoc"
+			],
+			"settings": {
+				"foreground": "$syntax.param.fg",
+				"fontStyle": "$syntax.param.style|italic"
+			}
+		},
+		{
+			"name": "Punctuation",
+			"scope": [
+				"punctuation.definition.string.begin",
+				"punctuation.definition.string.end",
+				"punctuation.separator",
+				"punctuation.terminator",
+				"punctuation.accessor"
+			],
+			"settings": {
+				"foreground": "$syntax.punc.fg",
+				"fontStyle": "$syntax.punc.style",
+				"background": "$syntax.punc.bg",
+				"fontWeight": "$syntax.punc.weight"
+			}
+		},
+		{
+			"name": "Brackets",
+			"scope": [
+				"punctuation.definition.bracket",
+				"punctuation.definition.block",
+				"punctuation.definition.parameters",
+				"punctuation.definition.arguments",
+				"meta.brace",
+				"meta.brackets"
+			],
+			"settings": {
+				"foreground": "$syntax.punc.bracket.fg|$syntax.punc.fg",
+				"fontStyle": "$syntax.punc.bracket.style|$syntax.punc.style",
+				"background": "$syntax.punc.bracket.bg|$syntax.punc.bg",
+				"fontWeight": "$syntax.punc.bracket.weight|$syntax.punc.weight"
+			}
+		},
+		{
+			"name": "Delimiters",
+			"scope": [
+				"punctuation.separator.delimiter",
+				"punctuation.separator.key-value",
+				"punctuation.separator.parameter"
+			],
+			"settings": {
+				"foreground": "$syntax.punc.delimiter.fg|$syntax.punc.fg",
+				"fontStyle": "$syntax.punc.delimiter.style|$syntax.punc.style",
+				"background": "$syntax.punc.delimiter.bg|$syntax.punc.bg",
+				"fontWeight": "$syntax.punc.delimiter.weight|$syntax.punc.weight"
+			}
+		},
+		{
+			"name": "Symbols",
+			"scope": ["punctuation.definition.symbol", "constant.other.symbol"],
+			"settings": {
+				"foreground": "$syntax.punc.symbol.fg|$syntax.punc.fg",
+				"fontStyle": "$syntax.punc.symbol.style|$syntax.punc.style",
+				"background": "$syntax.punc.symbol.bg|$syntax.punc.bg",
+				"fontWeight": "$syntax.punc.symbol.weight|$syntax.punc.weight"
+			}
+		},
+		{
+			"name": "Tags",
+			"scope": ["punctuation.definition.tag"],
+			"settings": {
+				"foreground": "$syntax.punc.tag.fg|$syntax.punc.bracket.fg|$syntax.punc.fg",
+				"fontStyle": "$syntax.punc.tag.style|$syntax.punc.bracket.style|$syntax.punc.style",
+				"background": "$syntax.punc.tag.bg|$syntax.punc.bracket.bg|$syntax.punc.bg",
+				"fontWeight": "$syntax.punc.tag.weight|$syntax.punc.bracket.weight|$syntax.punc.weight"
+			}
+		},
+		{
+			"name": "Constants",
+			"scope": ["constant", "variable.other.constant"],
+			"settings": {
+				"foreground": "$syntax.constant.fg",
+				"fontStyle": "$syntax.constant.style",
+				"background": "$syntax.constant.bg",
+				"fontWeight": "$syntax.constant.weight"
+			}
+		},
+		{
+			"name": "Builtin Constants",
+			"scope": ["constant.language", "support.constant"],
+			"settings": {
+				"foreground": "$syntax.constant.builtin.fg|$syntax.builtin.fg|$syntax.constant.fg",
+				"fontStyle": "$syntax.constant.builtin.style|$syntax.builtin.style|$syntax.constant.style",
+				"background": "$syntax.constant.builtin.bg|$syntax.builtin.bg|$syntax.constant.bg",
+				"fontWeight": "$syntax.constant.builtin.weight|$syntax.builtin.weight|$syntax.constant.weight"
+			}
+		},
+		{
+			"name": "Numbers",
+			"scope": ["constant.numeric"],
+			"settings": {
+				"foreground": "$syntax.number.fg",
+				"fontStyle": "$syntax.number.style",
+				"background": "$syntax.number.bg",
+				"fontWeight": "$syntax.number.weight"
+			}
+		},
+		{
+			"name": "Booleans",
+			"scope": ["constant.language.boolean"],
+			"settings": {
+				"foreground": "$syntax.boolean.fg",
+				"fontStyle": "$syntax.boolean.style",
+				"background": "$syntax.boolean.bg",
+				"fontWeight": "$syntax.boolean.weight"
+			}
+		},
+		{
+			"name": "Strings",
+			"scope": ["string"],
+			"settings": {
+				"foreground": "$syntax.string.fg",
+				"fontStyle": "$syntax.string.style",
+				"background": "$syntax.string.bg",
+				"fontWeight": "$syntax.string.weight"
+			}
+		},
+		{
+			"name": "String Quotes",
+			"scope": [
+				"punctuation.definition.string.begin",
+				"punctuation.definition.string.end"
+			],
+			"settings": {
+				"foreground": "$syntax.string.fg"
+			}
+		},
+		{
+			"name": "Escape Characters",
+			"scope": ["constant.character.escape"],
+			"settings": {
+				"foreground": "$syntax.string.escape.fg|$syntax.string.fg",
+				"fontStyle": "$syntax.string.escape.style|$syntax.string.style",
+				"background": "$syntax.string.escape.bg|$syntax.string.bg",
+				"fontWeight": "$syntax.string.escape.weight|$syntax.string.weight"
+			}
+		},
+		{
+			"name": "String Interpolation",
+			"scope": [
+				"meta.template.expression",
+				"punctuation.section.embedded",
+				"meta.embedded"
+			],
+			"settings": {
+				"foreground": "$syntax.string.inter.fg|$syntax.punc.fg",
+				"fontStyle": "$syntax.string.inter.style|$syntax.punc.style",
+				"background": "$syntax.string.inter.bg|$syntax.punc.bg",
+				"fontWeight": "$syntax.string.inter.weight|$syntax.punc.weight"
+			}
+		},
+		{
+			"name": "RegExp",
+			"scope": ["string.regexp"],
+			"settings": {
+				"foreground": "$syntax.string.regex.fg|$syntax.string.fg",
+				"fontStyle": "$syntax.string.regex.style|$syntax.string.style",
+				"background": "$syntax.string.regex.bg|$syntax.string.bg",
+				"fontWeight": "$syntax.string.regex.weight|$syntax.string.weight"
+			}
+		},
+		{
+			"name": "Special Strings",
+			"scope": ["string.unquoted.heredoc", "string.unquoted.nowdoc"],
+			"settings": {
+				"foreground": "$syntax.string.special.fg|$syntax.string.fg",
+				"fontStyle": "$syntax.string.special.style|$syntax.string.style",
+				"background": "$syntax.string.special.bg|$syntax.string.bg",
+				"fontWeight": "$syntax.string.special.weight|$syntax.string.weight"
+			}
+		},
+		{
+			"name": "Variables",
+			"scope": ["variable"],
+			"settings": {
+				"foreground": "$syntax.var.fg",
+				"fontStyle": "$syntax.var.style",
+				"background": "$syntax.var.bg",
+				"fontWeight": "$syntax.var.weight"
+			}
+		},
+		{
+			"name": "Language Variables (this, self, etc.)",
+			"scope": [
+				"variable.language",
+				"variable.language punctuation.definition.variable",
+				"variable.language.this",
+				"variable.language.special.self",
+				"variable.parameter.function.language.special"
+			],
+			"settings": {
+				"foreground": "$syntax.var.builtin.fg|$syntax.builtin.fg|$syntax.var.fg",
+				"fontStyle": "$syntax.var.builtin.style|$syntax.builtin.style|$syntax.var.style|italic",
+				"background": "$syntax.var.builtin.bg|$syntax.builtin.bg|$syntax.var.bg",
+				"fontWeight": "$syntax.var.builtin.weight|$syntax.builtin.weight|$syntax.var.weight"
+			}
+		},
+		{
+			"name": "Parameters",
+			"scope": ["variable.parameter"],
+			"settings": {
+				"foreground": "$syntax.param.fg|$syntax.var.fg",
+				"fontStyle": "$syntax.param.style|$syntax.var.style|italic",
+				"background": "$syntax.param.bg|$syntax.var.bg",
+				"fontWeight": "$syntax.param.weight|$syntax.var.weight"
+			}
+		},
+		{
+			"name": "Properties",
+			"scope": [
+				"variable.other.property",
+				"variable.other.object.property",
+				"meta.object-literal.key"
+			],
+			"settings": {
+				"foreground": "$syntax.property.fg|$syntax.var.fg",
+				"fontStyle": "$syntax.property.style",
+				"background": "$syntax.property.bg|$syntax.var.bg",
+				"fontWeight": "$syntax.property.weight|$syntax.var.weight"
+			}
+		},
+		{
+			"name": "JSON Keys",
+			"scope": ["support.type.property-name.json"],
+			"settings": {
+				"foreground": "$syntax.z.json_key.fg|$syntax.property.fg",
+				"fontStyle": "$syntax.z.json_key.style|$syntax.property.style",
+				"background": "$syntax.z.json_key.bg|$syntax.property.bg",
+				"fontWeight": "$syntax.z.json_key.weight|$syntax.property.weight"
+			}
+		},
+		{
+			"name": "Namespaces",
+			"scope": [
+				"entity.name.namespace",
+				"entity.name.module",
+				"entity.name.package"
+			],
+			"settings": {
+				"foreground": "$syntax.namespace.fg|$syntax.var.builtin.fg|$syntax.builtin.fg|$syntax.var.fg",
+				"fontStyle": "$syntax.namespace.style|$syntax.var.builtin.style|$syntax.builtin.style|$syntax.var.style",
+				"background": "$syntax.namespace.bg|$syntax.var.builtin.bg|$syntax.builtin.bg|$syntax.var.bg",
+				"fontWeight": "$syntax.namespace.weight|$syntax.var.builtin.weight|$syntax.builtin.weight|$syntax.var.weight"
+			}
+		},
+		{
+			"name": "Keywords",
+			"scope": ["keyword"],
+			"settings": {
+				"foreground": "$syntax.keyword.fg",
+				"fontStyle": "$syntax.keyword.style",
+				"background": "$syntax.keyword.bg",
+				"fontWeight": "$syntax.keyword.weight"
+			}
+		},
+		{
+			"name": "Storage",
+			"scope": ["storage"],
+			"settings": {
+				"foreground": "$syntax.keyword.fg",
+				"fontStyle": "$syntax.keyword.style",
+				"background": "$syntax.keyword.bg",
+				"fontWeight": "$syntax.keyword.weight"
+			}
+		},
+		{
+			"name": "Operators",
+			"scope": ["keyword.operator"],
+			"settings": {
+				"foreground": "$syntax.op.fg",
+				"fontStyle": "$syntax.op.style",
+				"background": "$syntax.op.bg",
+				"fontWeight": "$syntax.op.weight"
+			}
+		},
+		{
+			"name": "Logical operators",
+			"scope": ["keyword.operator.logical"],
+			"settings": {
+				"foreground": "$syntax.op.logical.fg|$syntax.op.fg",
+				"fontStyle": "$syntax.op.logical.style|$syntax.op.style",
+				"background": "$syntax.op.logical.bg|$syntax.op.bg",
+				"fontWeight": "$syntax.op.logical.weight|$syntax.op.weight"
+			}
+		},
+		{
+			"name": "Comparison operators",
+			"scope": ["keyword.operator.comparison"],
+			"settings": {
+				"foreground": "$syntax.op.compare.fg|$syntax.op.fg",
+				"fontStyle": "$syntax.op.compare.style|$syntax.op.style",
+				"background": "$syntax.op.compare.bg|$syntax.op.bg",
+				"fontWeight": "$syntax.op.compare.weight|$syntax.op.weight"
+			}
+		},
+		{
+			"name": "Assignment operators",
+			"scope": ["keyword.operator.assignment"],
+			"settings": {
+				"foreground": "$syntax.op.setter.fg|$syntax.op.fg",
+				"fontStyle": "$syntax.op.setter.style|$syntax.op.style",
+				"background": "$syntax.op.setter.bg|$syntax.op.bg",
+				"fontWeight": "$syntax.op.setter.weight|$syntax.op.weight"
+			}
+		},
+		{
+			"name": "Arithmetic operators",
+			"scope": ["keyword.operator.arithmetic"],
+			"settings": {
+				"foreground": "$syntax.op.math.fg|$syntax.op.fg",
+				"fontStyle": "$syntax.op.math.style|$syntax.op.style",
+				"background": "$syntax.op.math.bg|$syntax.op.bg",
+				"fontWeight": "$syntax.op.math.weight|$syntax.op.weight"
+			}
+		},
+		{
+			"name": "Bitwise operators",
+			"scope": ["keyword.operator.bitwise"],
+			"settings": {
+				"foreground": "$syntax.op.bitwise.fg|$syntax.op.fg",
+				"fontStyle": "$syntax.op.bitwise.style|$syntax.op.style",
+				"background": "$syntax.op.bitwise.bg|$syntax.op.bg",
+				"fontWeight": "$syntax.op.bitwise.weight|$syntax.op.weight"
+			}
+		},
+		{
+			"name": "Functions",
+			"scope": ["entity.name.function", "support.function"],
+			"settings": {
+				"foreground": "$syntax.func.fg",
+				"fontStyle": "$syntax.func.style",
+				"background": "$syntax.func.bg",
+				"fontWeight": "$syntax.func.weight"
+			}
+		},
+		{
+			"name": "Function declarations",
+			"scope": ["meta.definition.function entity.name.function"],
+			"settings": {
+				"foreground": "$syntax.func.def.fg|$syntax.func.fg",
+				"fontStyle": "$syntax.func.def.style|$syntax.func.style",
+				"background": "$syntax.func.def.bg|$syntax.func.bg",
+				"fontWeight": "$syntax.func.def.weight|$syntax.func.weight"
+			}
+		},
+		{
+			"name": "Method calls",
+			"scope": ["meta.method-call", "meta.function-call.method"],
+			"settings": {
+				"foreground": "$syntax.func.method.fg|$syntax.func.fg",
+				"fontStyle": "$syntax.func.method.style|$syntax.func.style",
+				"background": "$syntax.func.method.bg|$syntax.func.bg",
+				"fontWeight": "$syntax.func.method.weight|$syntax.func.weight"
+			}
+		},
+		{
+			"name": "Builtin functions",
+			"scope": ["support.function.builtin"],
+			"settings": {
+				"foreground": "$syntax.func.builtin.fg|$syntax.builtin.fg|$syntax.func.fg",
+				"fontStyle": "$syntax.func.builtin.style|$syntax.builtin.style|$syntax.func.style",
+				"background": "$syntax.func.builtin.bg|$syntax.builtin.bg|$syntax.func.bg",
+				"fontWeight": "$syntax.func.builtin.weight|$syntax.builtin.weight|$syntax.func.weight"
+			}
+		},
+		{
+			"name": "Function parameters",
+			"scope": [
+				"meta.function.parameters variable.parameter",
+				"meta.function-call.arguments"
+			],
+			"settings": {
+				"foreground": "$syntax.param.fg|$syntax.var.fg",
+				"fontStyle": "$syntax.param.style|$syntax.var.style|italic",
+				"background": "$syntax.param.bg|$syntax.var.bg",
+				"fontWeight": "$syntax.param.weight|$syntax.var.weight"
+			}
+		},
+		{
+			"name": "Types",
+			"scope": ["entity.name.type"],
+			"settings": {
+				"foreground": "$syntax.type.fg",
+				"fontStyle": "$syntax.type.style",
+				"background": "$syntax.type.bg",
+				"fontWeight": "$syntax.type.weight"
+			}
+		},
+		{
+			"name": "Classes",
+			"scope": ["entity.name.type.class", "support.class"],
+			"settings": {
+				"foreground": "$syntax.type.fg",
+				"fontStyle": "$syntax.type.style",
+				"background": "$syntax.type.bg",
+				"fontWeight": "$syntax.type.weight"
+			}
+		},
+		{
+			"name": "Builtin Types",
+			"scope": ["support.type.builtin", "support.type.primitive"],
+			"settings": {
+				"foreground": "$syntax.type.builtin.fg|$syntax.builtin.fg|$syntax.type.fg",
+				"fontStyle": "$syntax.type.builtin.style|$syntax.builtin.style|$syntax.type.style",
+				"background": "$syntax.type.builtin.bg|$syntax.builtin.bg|$syntax.type.bg",
+				"fontWeight": "$syntax.type.builtin.weight|$syntax.builtin.weight|$syntax.type.weight"
+			}
+		},
+		{
+			"name": "Type Primitives",
+			"scope": ["support.type.primitive"],
+			"settings": {
+				"foreground": "$syntax.type.primitive.fg|$syntax.type.builtin.fg|$syntax.builtin.fg|$syntax.type.fg",
+				"fontStyle": "$syntax.type.primitive.style|$syntax.type.builtin.style|$syntax.builtin.style|$syntax.type.style",
+				"background": "$syntax.type.primitive.bg|$syntax.type.builtin.bg|$syntax.builtin.bg|$syntax.type.bg",
+				"fontWeight": "$syntax.type.primitive.weight|$syntax.type.builtin.weight|$syntax.builtin.weight|$syntax.type.weight"
+			}
+		},
+		{
+			"name": "Enums",
+			"scope": ["entity.name.type.enum"],
+			"settings": {
+				"foreground": "$syntax.enum.fg|$syntax.type.fg",
+				"fontStyle": "$syntax.enum.style|$syntax.type.style",
+				"background": "$syntax.enum.bg|$syntax.type.bg",
+				"fontWeight": "$syntax.enum.weight|$syntax.type.weight"
+			}
+		},
+		{
+			"name": "HTML/XML Tags",
+			"scope": ["entity.name.tag"],
+			"settings": {
+				"foreground": "$syntax.z.html_tag.fg",
+				"fontStyle": "$syntax.z.html_tag.style",
+				"background": "$syntax.z.html_tag.bg",
+				"fontWeight": "$syntax.z.html_tag.weight"
+			}
+		},
+		{
+			"name": "HTML/XML Attributes",
+			"scope": ["entity.other.attribute-name"],
+			"settings": {
+				"foreground": "$syntax.z.html_attribute.fg",
+				"fontStyle": "$syntax.z.html_attribute.style",
+				"background": "$syntax.z.html_attribute.bg",
+				"fontWeight": "$syntax.z.html_attribute.weight"
+			}
+		},
+		{
+			"name": "Invalid",
+			"scope": ["invalid"],
+			"settings": {
+				"foreground": "$code.error.fg|$scheme.red",
+				"fontStyle": "$code.error.style",
+				"background": "$code.error.bg",
+				"fontWeight": "$code.error.weight"
+			}
+		},
+		{
+			"name": "Decorators/Annotations",
+			"scope": [
+				"meta.decorator",
+				"punctuation.decorator",
+				"meta.annotation",
+				"punctuation.definition.annotation",
+				"meta.function.decorator",
+				"entity.name.function.decorator"
+			],
+			"settings": {
+				"foreground": "$syntax.z.decorator.fg|$syntax.func.fg",
+				"fontStyle": "$syntax.z.decorator.style|$syntax.func.style|italic",
+				"background": "$syntax.z.decorator.bg|$syntax.func.bg",
+				"fontWeight": "$syntax.z.decorator.weight|$syntax.func.weight"
+			}
+		},
+		{
+			"name": "Rust Lifetimes",
+			"scope": [
+				"storage.modifier.lifetime.rust",
+				"entity.name.type.lifetime.rust",
+				"entity.name.type.lifetime"
+			],
+			"settings": {
+				"foreground": "$syntax.z.rs_lifetime.fg",
+				"fontStyle": "$syntax.z.rs_lifetime.style|italic",
+				"background": "$syntax.z.rs_lifetime.bg",
+				"fontWeight": "$syntax.z.rs_lifetime.weight"
+			}
+		},
+		{
+			"name": "Markdown Emphasis",
+			"scope": ["markup.italic"],
+			"settings": {
+				"fontStyle": "italic",
+				"foreground": "$syntax.markup.italic.fg"
+			}
+		},
+		{
+			"name": "Markdown Bold",
+			"scope": ["markup.bold"],
+			"settings": {
+				"fontStyle": "bold",
+				"foreground": "$syntax.markup.bold.fg"
+			}
+		},
+		{
+			"name": "Markdown Headers",
+			"scope": ["markup.heading"],
+			"settings": {
+				"fontStyle": "bold",
+				"foreground": "$syntax.markup.heading.fg"
+			}
+		},
+		{
+			"name": "Markdown Links",
+			"scope": ["markup.underline.link"],
+			"settings": {
+				"foreground": "$syntax.markup.link.fg|$ui.link|$scheme.blue",
+				"fontStyle": "$syntax.markup.link.style"
+			}
+		},
+		{
+			"name": "Markdown Code",
+			"scope": ["markup.raw", "markup.inline.raw", "markup.fenced_code"],
+			"settings": {
+				"foreground": "$syntax.string.fg|$scheme.green"
+			}
+		},
+		{
+			"name": "Markdown Lists",
+			"scope": ["markup.list"],
+			"settings": {
+				"foreground": "$syntax.punc.fg"
+			}
+		},
+		{
+			"name": "Markdown Quotes",
+			"scope": ["markup.quote"],
+			"settings": {
+				"foreground": "$syntax.comment.fg",
+				"fontStyle": "italic"
+			}
+		},
+		{
+			"name": "Diff Inserted",
+			"scope": ["markup.inserted"],
+			"settings": {
+				"foreground": "$file.created.fg|$scheme.green"
+			}
+		},
+		{
+			"name": "Diff Deleted",
+			"scope": ["markup.deleted"],
+			"settings": {
+				"foreground": "$file.deleted.fg|$scheme.red"
+			}
+		},
+		{
+			"name": "Diff Changed",
+			"scope": ["markup.changed"],
+			"settings": {
+				"foreground": "$file.modified.fg|$scheme.yellow"
+			}
+		}
+	]
+}

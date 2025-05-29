@@ -1,0 +1,249 @@
+# Reverse Generation Tool Version 3.0
+theme = "dark"
+name = "Rin2"
+
+# Theme Colors
+[color]
+aquamarine = "#72F8B5"
+black = "#161415"
+black10 = "#232121"
+black11 = "#142D14"
+black13 = "#211D1E"
+black14 = "#151314"
+black2 = "#251719"
+black3 = "#191718"
+black4 = "#1B191A"
+black5 = "#361B1C"
+black7 = "#211E1E"
+cadetblue = "#4C9697"
+darkgray = "#86A4AB"
+darkgray2 = "#A7A7A7"
+darkslategray3 = "#322D30"
+dimgray = "#6F6F6F"
+firebrick = "#C20000"
+gray = "#847878"
+indianred = "#E0474B"
+lightskyblue = "#69E0F5"
+lightskyblue2 = "#86DBFD"
+lightslategray = "#859395"
+maroon = "#501F1F"
+salmon = "#FC5773"
+sandybrown = "#EFA554"
+silver = "#BBBBBB"
+snow = "#FBFBFB"
+whitesmoke = "#F8F8F2"
+
+[code.error]
+bg = "@cadetblue"
+border = "#422121"
+fg = "@firebrick"
+style = "underline strikethrough"
+
+[code.info]
+border = "@black7"
+fg = "@darkgray"
+
+[code.warning]
+bg = "#21211F"
+border = "@black7"
+
+[editor]
+bg = "@black"
+gutter = "#0000"
+number = "@gray"
+text = "@whitesmoke"
+
+[editor.active]
+line = "@black3..76"
+line_border = "@black3..00"
+matches = "@darkslategray3..A9"
+number = "@cadetblue"
+
+[editor.bracket]
+color1 = "@whitesmoke"
+color2 = "@indianred"
+color3 = "@sandybrown"
+color4 = "@lightskyblue"
+color5 = "@indianred"
+color6 = "@lightskyblue2"
+unexpected = "@firebrick"
+
+[editor.guides.indent]
+active = "@black7"
+colors = "$editor.guides.indent.colors | []"
+inactive = "@black7"
+
+[editor.search]
+matches = "#225041A9"
+text = "@black5"
+
+[file.created]
+bg = "@black5"
+fg = "@black11"
+
+[file.deleted]
+bg = "#24242450"
+fg = "#242424"
+
+[file.ignored]
+fg = "@dimgray"
+
+[file.modified]
+fg = "@cadetblue"
+
+[player]
+cursor = "@cadetblue"
+highlight = "@maroon"
+
+[scheme]
+blue = "#9B6BDF"
+blue_br = "@sandybrown"
+cyan = "#42E66C"
+green = "#42E66C"
+pink = "#818181"
+pink_br = "@cadetblue"
+red = "#E356A7"
+yellow = "@sandybrown"
+yellow_br = "@lightskyblue2"
+
+[syntax.boolean]
+fg = "@lightslategray"
+
+[syntax.comment]
+fg = "#4C8484"
+style = "italic"
+
+[syntax.constant]
+fg = "@whitesmoke"
+
+[syntax.constant.builtin]
+fg = "@lightskyblue2"
+
+[syntax.func]
+fg = "@lightskyblue"
+
+[syntax.func.method]
+fg = "@lightskyblue"
+
+[syntax.keyword]
+fg = "#9B6BDF"
+
+[syntax.markup.bold]
+style = "bold"
+
+[syntax.markup.heading]
+fg = "@indianred"
+
+[syntax.markup.italic]
+style = "italic"
+
+[syntax.number]
+fg = "@lightskyblue2"
+
+[syntax.op]
+fg = "@salmon"
+
+[syntax.param]
+fg = "@aquamarine"
+
+[syntax.property]
+fg = "@whitesmoke"
+style = "bold"
+
+[syntax.punc.bracket]
+fg = "@whitesmoke"
+style = "bold"
+
+[syntax.string]
+fg = "@aquamarine"
+
+[syntax.string.inter]
+fg = "@salmon"
+
+[syntax.type]
+fg = "@indianred"
+
+[syntax.type.builtin]
+fg = "@indianred"
+style = "italic"
+
+[syntax.type.primitive]
+fg = "@indianred"
+style = "italic"
+
+[syntax.var.builtin]
+fg = "@lightslategray"
+
+[syntax.z.decorator]
+fg = "@lightskyblue"
+
+[syntax.z.html_attribute]
+fg = "@lightskyblue"
+style = "italic"
+
+[syntax.z.html_tag]
+fg = "@salmon"
+
+[syntax.z.json_key]
+fg = "@whitesmoke"
+style = "bold"
+
+[ui]
+bg = "@cadetblue"
+file_drop = "@darkslategray3..A9"
+panel = "@black"
+popup = "@black4"
+shadow = "#1111115A"
+
+[ui.bars]
+bottom = "@cadetblue"
+tool = "@black3"
+top = "@black4"
+
+[ui.bars.tab]
+active = "@black2"
+bg = "@black"
+inactive = "@black"
+
+[ui.bars.title]
+inactive = "@black4"
+
+[ui.border]
+primary = "@black7"
+secondary = "@black7"
+
+[ui.button]
+primary = "@black10"
+
+[ui.button.secondary]
+bg = "@black10..CC"
+
+[ui.debug.continue]
+fg = "@cadetblue"
+
+[ui.debug.expr]
+boolean = "@lightslategray"
+error = "@firebrick"
+number = "@lightskyblue2"
+string = "@aquamarine"
+
+[ui.debug.start]
+fg = "@cadetblue"
+
+[ui.debug.stop]
+fg = "@firebrick"
+
+[ui.element]
+active = "@maroon"
+hover = "#160E0FA9"
+
+[ui.text]
+accent = "@darkgray"
+active = "@silver"
+muted = "@darkgray"
+placeholder = "@darkgray"
+
+[deletions]
+keys = [
+"themes/0/style/accents",
+]

@@ -1,0 +1,204 @@
+# Reverse Generation Tool Version 3.0
+name = "Dracula"
+theme = "dark"
+
+# Theme Colors
+[color]
+black = "#191A21"
+darkslategray = "#282A36"
+darkslategray2 = "#343746"
+darkslategray3 = "#44475A"
+darkslategray4 = "#21222C"
+darkslategray5 = "#424450"
+hotpink = "#FF79C6"
+khaki = "#F1FA8C"
+lightgreen = "#50FA7B"
+lightskyblue = "#8BE9FD"
+plum = "#BD93F9"
+sandybrown = "#FFB86C"
+slategray = "#6272A4"
+tomato = "#FF5555"
+white2 = "#FFFFFF"
+whitesmoke = "#F8F8F2"
+
+[code.error]
+bg = "@tomato"
+border = "@tomato"
+fg = "@tomato"
+style = "underline italic"
+
+[code.info]
+border = "@hotpink"
+fg = "@lightskyblue..80"
+
+[code.warning]
+bg = "@sandybrown"
+border = "@sandybrown"
+fg = "@sandybrown..80"
+
+[editor]
+bg = "@darkslategray"
+invisible = "@white2..1A"
+number = "@slategray"
+text = "@whitesmoke"
+
+[editor.active]
+line = "@plum..15"
+line_border = "@darkslategray3"
+matches = "@lightskyblue..50"
+
+[editor.guides]
+wrap = "@white2..1A"
+
+[editor.guides.indent]
+active = "@white2..45"
+colors = [
+]
+inactive = "@white2..1A"
+
+[editor.search]
+line = "@darkslategray3..73"
+matches = "@white2..40"
+text = "@khaki..80"
+
+[file.conflict]
+fg = "@sandybrown"
+
+[file.created]
+bg = "@lightgreen..8F"
+fg = "@lightgreen..80"
+
+[file.deleted]
+bg = "@tomato..50"
+fg = "@tomato..80"
+
+[file.ignored]
+fg = "@slategray"
+
+[file.modified]
+bg = "@plum..8F"
+fg = "@sandybrown"
+
+[player]
+highlight = "@darkslategray3"
+
+[scheme]
+black = "@darkslategray4"
+black_br = "@slategray"
+blue = "@plum"
+blue_br = "#D6ACFF"
+cyan = "@lightskyblue"
+cyan_br = "#A4FFFF"
+green = "@lightgreen"
+green_br = "#69FF94"
+pink = "@hotpink"
+pink_br = "#FF92DF"
+red = "@tomato"
+red_br = "#FF6E6E"
+white = "@whitesmoke"
+white_br = "@white2"
+yellow = "@khaki"
+yellow_br = "#FFFFA5"
+
+[syntax.comment]
+fg = "@slategray"
+
+[syntax.constant]
+fg = "@plum"
+
+[syntax.func]
+fg = "@lightgreen"
+
+[syntax.keyword]
+fg = "@hotpink"
+style = "regular"
+
+[syntax.markup.bold]
+style = "bold"
+
+[syntax.markup.heading]
+fg = "@plum"
+style = "bold"
+
+[syntax.markup.italic]
+style = "italic"
+
+[syntax.markup.link]
+fg = "@lightskyblue"
+
+[syntax.param]
+fg = "@sandybrown"
+style = "italic"
+
+[syntax.punc]
+fg = "#E9F284"
+
+[syntax.string]
+fg = "@khaki"
+
+[syntax.string.escape]
+fg = "@hotpink"
+
+[syntax.string.regex]
+fg = "@khaki"
+
+[syntax.type]
+fg = "@lightskyblue"
+style = "italic"
+
+[syntax.type.class]
+fg = "@lightskyblue"
+style = "normal"
+
+[syntax.var]
+fg = "@whitesmoke"
+
+[syntax.z.html_attribute]
+fg = "@lightgreen"
+style = "italic"
+
+[syntax.z.html_tag]
+fg = "@hotpink"
+
+[ui]
+bg = "@darkslategray"
+file_drop = "@darkslategray3..6E"
+link = "@lightskyblue"
+panel = "@darkslategray4"
+popup = "@darkslategray4"
+terminal = "@darkslategray"
+
+[ui.bars]
+bottom = "@black"
+tool = "@darkslategray2"
+top = "@darkslategray4"
+
+[ui.bars.tab]
+active = "@darkslategray"
+bg = "@black"
+inactive = "@darkslategray4"
+
+[ui.bars.title]
+inactive = "@black"
+
+[ui.border]
+primary = "@black"
+secondary = "@plum"
+
+[ui.button]
+hover = "@lightgreen..5F"
+primary = "@lightgreen..8F"
+
+[ui.button.secondary]
+bg = "@darkslategray"
+hover = "@darkslategray2"
+
+[ui.element]
+active = "#4D5166"
+hover = "@darkslategray3..73"
+
+[ui.text]
+accent = "@lightskyblue"
+active = "@whitesmoke"
+muted = "@slategray"
+placeholder = "@slategray"

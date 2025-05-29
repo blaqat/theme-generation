@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scheme name="$name" version="142" parent_scheme="${theme == 'dark' ? 'Darcula' : 'Default'}">
+  <metaInfo>
+    <property name="created">$(date +%Y-%m-%dT%H:%M:%S)</property>
+    <property name="ide">idea</property>
+    <property name="ideVersion">2023.3.0.0</property>
+    <property name="modified">$(date +%Y-%m-%dT%H:%M:%S)</property>
+    <property name="originalScheme">$name</property>
+  </metaInfo>
+  <colors>
+    <option name="ADDED_LINES_COLOR" value="${$file.created.fg|$scheme.green}" />
+    <option name="ANNOTATIONS_COLOR" value="${$ui.text.active}" />
+    <option name="CARET_COLOR" value="${$ui.text.active}" />
+    <option name="CARET_ROW_COLOR" value="${$editor.active.line|$ui.bg..(value+10)}" />
+    <option name="CONSOLE_BACKGROUND_KEY" value="${$ui.bg}" />
+    <option name="DELETED_LINES_COLOR" value="${$file.deleted.fg|$scheme.red}" />
+    <option name="DIAGRAM_ANNOTATION_EDGE" value="${$scheme.yellow}" />
+    <option name="DIAGRAM_DEFAULT_EDGE" value="${$ui.text.active}" />
+    <option name="DIAGRAM_GENERALIZATION_EDGE" value="${$ui.text.accent|$scheme.blue}" />
+    <option name="DIAGRAM_INNER_EDGE" value="${$scheme.cyan}" />
+    <option name="DIAGRAM_NODE_BACKGROUND" value="${$ui.element.active|$ui.bg..v+5}" />
+    <option name="DIAGRAM_NODE_HEADER" value="${$ui.element.active|$ui.bg..v+5}" />
+    <option name="DIAGRAM_NOTE_BACKGROUND" value="${$ui.element.hover|$ui.bg..v-5}" />
+    <option name="DIAGRAM_NOTE_BORDER" value="${$ui.element.hover|$ui.bg..v-5}" />
+    <option name="DIAGRAM_REALIZATION_EDGE" value="${$scheme.green}" />
+    <option name="DIFF_SEPARATORS_BACKGROUND" value="${$ui.element.active|$ui.bg..v+5}" />
+    <option name="DOCUMENTATION_COLOR" value="${$ui.border.secondary}" />
+    <option name="ERROR_HINT" value="${$code.error.fg|$scheme.red}" />
+    <option name="FILESTATUS_ADDED" value="${$file.created.fg|$scheme.green}" />
+    <option name="FILESTATUS_COPIED" value="${$file.created.fg|$scheme.green}" />
+    <option name="FILESTATUS_DELETED" value="${$file.deleted.fg|$scheme.red}" />
+    <option name="FILESTATUS_IDEA_FILESTATUS_DELETED_FROM_FILE_SYSTEM" value="${$file.deleted.fg|$scheme.red}" />
+    <option name="FILESTATUS_IDEA_FILESTATUS_IGNORED" value="${$file.ignored.fg|$ui.text.muted}" />
+    <option name="FILESTATUS_IDEA_FILESTATUS_MERGED_WITH_CONFLICTS" value="${$file.conflict.fg|$scheme.red_br}" />
+    <option name="FILESTATUS_IDEA_FILESTATUS_MERGED_WITH_BOTH_CONFLICTS" value="${$file.conflict.fg|$scheme.red_br}" />
+    <option name="FILESTATUS_IDEA_FILESTATUS_MERGED_WITH_PROPERTY_CONFLICTS" value="${$file.conflict.fg|$scheme.red_br}" />
+    <option name="FILESTATUS_MERGED" value="${$file.incoming.fg|$scheme.blue}" />
+    <option name="FILESTATUS_MODIFIED" value="${$file.modified.fg|$scheme.yellow}" />
+    <option name="FILESTATUS_NOT_CHANGED_IMMEDIATE" value="${$ui.text.active}" />
+    <option name="FILESTATUS_NOT_CHANGED_RECURSIVE" value="${$ui.text.active}" />
+    <option name="FILESTATUS_RENAMED" value="${$file.renamed.fg|$scheme.purple}" />
+    <option name="FILESTATUS_UNKNOWN" value="${$file.conflict.fg|$scheme.red_br}" />
+    <option name="FILESTATUS_addedOutside" value="${$file.incoming.fg|$scheme.blue}" />
+    <option name="FOLDED_TEXT_BORDER_COLOR" value="${$ui.text.accent|$scheme.blue}" />
+    <option name="GUTTER_BACKGROUND" value="${$editor.gutter|$editor.bg|$ui.bg}" />
+    <option name="INDENT_GUIDE" value="${$editor.guides.indent.inactive|$editor.guides.indent.active|$editor.guides.indent}" />
+    <option name="INFORMATION_HINT" value="${$code.info.fg|$scheme.blue}" />
+    <option name="LINE_NUMBERS_COLOR" value="${$editor.number|$ui.text.active..50}" />
+    <option name="LINE_NUMBER_ON_CARET_ROW_COLOR" value="${$editor.active.number|$editor.number|$ui.text.active..50}" />
+    <option name="METHOD_SEPARATORS_COLOR" value="${$ui.text.muted}" />
+    <option name="MODIFIED_LINES_COLOR" value="${$file.modified.fg|$scheme.yellow}" />
+    <option name="NOTIFICATION_BACKGROUND" value="${$ui.popup|$ui.bg}" />
+    <option name="PROMOTION_PANE" value="${$ui.popup|$ui.bg}" />
+    <option name="QUESTION_HINT" value="${$code.warning.fg|$scheme.yellow}" />
+    <option name="READONLY_BACKGROUND" value="${$ui.element.disabled|$ui.bg}" />
+    <option name="READONLY_FRAGMENT_BACKGROUND" value="${$ui.element.disabled|$ui.bg}" />
+    <option name="RECENT_LOCATIONS_SELECTION" value="${$ui.element.active|$ui.bg..v+5}" />
+    <option name="RECURSIVE_CALL_ATTRIBUTES" value="${$ui.element.active|$ui.bg..v+5}" />
+    <option name="RIGHT_MARGIN_COLOR" value="${$editor.guides.wrap}" />
+    <option name="SELECTED_INDENT_GUIDE" value="${$editor.guides.indent.active|$editor.guides.indent.inactive|$editor.guides.indent}" />
+    <option name="SELECTED_TEARLINE_COLOR" value="${$ui.border.primary}" />
+    <option name="SELECTION_BACKGROUND" value="${$player.highlight|$editor.active.line}" />
+    <option name="SELECTION_FOREGROUND" value="${$ui.text.active}" />
+    <option name="SEPARATOR_BELOW_COLOR" value="${$ui.border.primary}" />
+    <option name="SOFT_WRAP_SIGN_COLOR" value="${$ui.text.muted}" />
+    <option name="ScrollBar.Mac.Transparent.hoverThumbColor" value="${$ui.element.active|$ui.bg..v+5}" />
+    <option name="ScrollBar.Mac.Transparent.hoverTrackColor" value="${$ui.bg}" />
+    <option name="ScrollBar.Mac.Transparent.thumbColor" value="${$ui.element.hover|$ui.bg..v-5}" />
+    <option name="ScrollBar.Mac.Transparent.trackColor" value="${$ui.bg}" />
+    <option name="ScrollBar.Mac.hoverThumbColor" value="${$ui.element.active|$ui.bg..v+5}" />
+    <option name="ScrollBar.Mac.hoverTrackColor" value="${$ui.bg}" />
+    <option name="ScrollBar.Mac.thumbColor" value="${$ui.element.hover|$ui.bg..v-5}" />
+    <option name="ScrollBar.Mac.trackColor" value="${$ui.bg}" />
+    <option name="ScrollBar.Transparent.hoverThumbColor" value="${$ui.element.active|$ui.bg..v+5}" />
+    <option name="ScrollBar.Transparent.hoverTrackColor" value="${$ui.bg}" />
+    <option name="ScrollBar.Transparent.thumbColor" value="${$ui.element.hover|$ui.bg..v-5}" />
+    <option name="ScrollBar.Transparent.trackColor" value="${$ui.bg}" />
+    <option name="ScrollBar.hoverThumbColor" value="${$ui.element.active|$ui.bg..v+5}" />
+    <option name="ScrollBar.hoverTrackColor" value="${$ui.bg}" />
+    <option name="ScrollBar.thumbColor" value="${$ui.element.hover|$ui.bg..v-5}" />
+    <option name="ScrollBar.trackColor" value="${$ui.bg}" />
+    <option name="TEARLINE_COLOR" value="${$ui.border.primary}" />
+    <option name="TOOLTIP" value="${$ui.popup|$ui.bg}" />
+    <option name="VISUAL_INDENT_GUIDE" value="${$editor.guides.indent.inactive|$editor.guides.indent}" />
+    <option name="WHITESPACES" value="${$editor.invisible|$editor.active.highlight|$player.highlight}" />
+    <option name="WHITESPACES_MODIFIED_LINES_COLOR" value="${$editor.invisible|$editor.active.highlight|$player.highlight}" />
+  </colors>
+  <attributes>
+    <option name="DEFAULT_ATTRIBUTE">
+      <value>
+        <option name="foreground" value="${$syntax.z.html_attribute.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_BLOCK_COMMENT">
+      <value>
+        <option name="foreground" value="${$syntax.comment.fg}" />
+        <option name="font_style" value="${$syntax.comment.style}" />
+      </value>
+    </option>
+    <option name="DEFAULT_BRACES">
+      <value>
+        <option name="foreground" value="${$syntax.punc.bracket.fg|$syntax.punc.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_BRACKETS">
+      <value>
+        <option name="foreground" value="${$syntax.punc.bracket.fg|$syntax.punc.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_CLASS_NAME">
+      <value>
+        <option name="foreground" value="${$syntax.type.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_CLASS_REFERENCE">
+      <value>
+        <option name="foreground" value="${$syntax.type.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_COMMA">
+      <value>
+        <option name="foreground" value="${$syntax.punc.delimiter.fg|$syntax.punc.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_CONSTANT">
+      <value>
+        <option name="foreground" value="${$syntax.constant.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_DOC_COMMENT">
+      <value>
+        <option name="foreground" value="${$syntax.comment.doc.fg|$syntax.doc.fg|$syntax.comment.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_DOC_COMMENT_TAG">
+      <value>
+        <option name="foreground" value="${$syntax.keyword.fg}" />
+        <option name="font_style" value="${${syntax.keyword.style contains 'italic' ? '' : 'italic'}}" />
+      </value>
+    </option>
+    <option name="DEFAULT_DOC_COMMENT_TAG_VALUE">
+      <value>
+        <option name="foreground" value="${$syntax.param.fg|$syntax.var.fg}" />
+        <option name="font_style" value="${${syntax.param.style contains 'italic' ? '' : 'italic'}}" />
+      </value>
+    </option>
+    <option name="DEFAULT_DOC_MARKUP">
+      <value>
+        <option name="foreground" value="${$syntax.comment.doc.fg|$syntax.doc.fg|$syntax.comment.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_DOT">
+      <value>
+        <option name="foreground" value="${$syntax.punc.delimiter.fg|$syntax.punc.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_ENTITY">
+      <value>
+        <option name="foreground" value="${$syntax.string.escape.fg|$syntax.string.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_FUNCTION_CALL">
+      <value>
+        <option name="foreground" value="${$syntax.func.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_FUNCTION_DECLARATION">
+      <value>
+        <option name="foreground" value="${$syntax.func.def.fg|$syntax.func.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_GLOBAL_VARIABLE">
+      <value>
+        <option name="foreground" value="${$syntax.var.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_IDENTIFIER">
+      <value>
+        <option name="foreground" value="${$syntax.var.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_INSTANCE_FIELD">
+      <value>
+        <option name="foreground" value="${$syntax.property.fg|$syntax.var.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_INSTANCE_METHOD">
+      <value>
+        <option name="foreground" value="${$syntax.func.method.fg|$syntax.func.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_INTERFACE_NAME">
+      <value>
+        <option name="foreground" value="${$syntax.type.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_INVALID_STRING_ESCAPE">
+      <value>
+        <option name="foreground" value="${$code.error.fg|$scheme.red}" />
+        <option name="effect_color" value="${$code.error.fg|$scheme.red}" />
+        <option name="effect_type" value="${2}" />
+      </value>
+    </option>
+    <option name="DEFAULT_KEYWORD">
+      <value>
+        <option name="foreground" value="${$syntax.keyword.fg}" />
+        <option name="font_style" value="${$syntax.keyword.style}" />
+      </value>
+    </option>
+    <option name="DEFAULT_LABEL">
+      <value>
+        <option name="foreground" value="${$syntax.property.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_LINE_COMMENT">
+      <value>
+        <option name="foreground" value="${$syntax.comment.fg}" />
+        <option name="font_style" value="${$syntax.comment.style}" />
+      </value>
+    </option>
+    <option name="DEFAULT_LOCAL_VARIABLE">
+      <value>
+        <option name="foreground" value="${$syntax.var.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_METADATA">
+      <value>
+        <option name="foreground" value="${$syntax.z.decorator.fg|$syntax.func.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_NUMBER">
+      <value>
+        <option name="foreground" value="${$syntax.number.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_OPERATION_SIGN">
+      <value>
+        <option name="foreground" value="${$syntax.op.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_PARAMETER">
+      <value>
+        <option name="foreground" value="${$syntax.param.fg|$syntax.var.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_PARENTHS">
+      <value>
+        <option name="foreground" value="${$syntax.punc.bracket.fg|$syntax.punc.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_PREDEFINED_SYMBOL">
+      <value>
+        <option name="foreground" value="${$syntax.constant.builtin.fg|$syntax.builtin.fg|$syntax.constant.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_REASSIGNED_LOCAL_VARIABLE">
+      <value>
+        <option name="foreground" value="${$syntax.var.fg}" />
+        <option name="effect_color" value="${$syntax.var.fg}" />
+        <option name="effect_type" value="${1}" />
+      </value>
+    </option>
+    <option name="DEFAULT_REASSIGNED_PARAMETER">
+      <value>
+        <option name="foreground" value="${$syntax.param.fg|$syntax.var.fg}" />
+        <option name="effect_color" value="${$syntax.param.fg|$syntax.var.fg}" />
+        <option name="effect_type" value="${1}" />
+      </value>
+    </option>
+    <option name="DEFAULT_SEMICOLON">
+      <value>
+        <option name="foreground" value="${$syntax.punc.delimiter.fg|$syntax.punc.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_STATIC_FIELD">
+      <value>
+        <option name="foreground" value="${$syntax.constant.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_STATIC_METHOD">
+      <value>
+        <option name="foreground" value="${$syntax.func.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_STRING">
+      <value>
+        <option name="foreground" value="${$syntax.string.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_TAG">
+      <value>
+        <option name="foreground" value="${$syntax.z.html_tag.fg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_TEMPLATE_LANGUAGE_COLOR">
+      <value>
+        <option name="background" value="${$ui.bg}" />
+      </value>
+    </option>
+    <option name="DEFAULT_VALID_STRING_ESCAPE">
+      <value>
+        <option name="foreground" value="${$syntax.string.escape.fg|$syntax.string.fg}" />
+      </value>
+    </option>
+    <option name="DELETED_TEXT_ATTRIBUTES">
+      <value>
+        <option name="foreground" value="${$file.deleted.fg|$scheme.red}" />
+        <option name="background" value="${$file.deleted.bg|$scheme.red..30}" />
+        <option name="effect_color" value="${$file.deleted.fg|$scheme.red}" />
+        <option name="effect_type" value="${3}" />
+      </value>
+    </option>
+    <option name="DEPRECATED_ATTRIBUTES">
+      <value>
+        <option name="effect_color" value="${$syntax.var.fg}" />
+        <option name="effect_type" value="${3}" />
+      </value>
+    </option>
+    <option name="DIFF_CONFLICT">
+      <value>
+        <option name="background" value="${$file.conflict.bg|$scheme.red_br..20}" />
+        <option name="error_stripe_color" value="${$file.conflict.fg|$scheme.red_br}" />
+      </value>
+    </option>
+    <option name="DIFF_DELETED">
+      <value>
+        <option name="background" value="${$file.deleted.bg|$scheme.red..30}" />
+        <option name="error_stripe_color" value="${$file.deleted.fg|$scheme.red}" />
+      </value>
+    </option>
+    <option name="DIFF_INSERTED">
+      <value>
+        <option name="background" value="${$file.created.bg|$scheme.green..20}" />
+        <option name="error_stripe_color" value="${$file.created.fg|$scheme.green}" />
+      </value>
+    </option>
+    <option name="DIFF_MODIFIED">
+      <value>
+        <option name="background" value="${$file.modified.bg|$scheme.yellow..20}" />
+        <option name="error_stripe_color" value="${$file.modified.fg|$scheme.yellow}" />
+      </value>
+    </option>
+    <option name="DUPLICATE_FROM_SERVER">
+      <value>
+        <option name="background" value="${$file.incoming.bg|$scheme.blue..20}" />
+        <option name="error_stripe_color" value="${$file.incoming.fg|$scheme.blue}" />
+      </value>
+    </option>
+    <option name="ERRORS_ATTRIBUTES">
+      <value>
+        <option name="effect_color" value="${$code.error.fg|$scheme.red}" />
+        <option name="error_stripe_color" value="${$code.error.fg|$scheme.red}" />
+        <option name="effect_type" value="${2}" />
+      </value>
+    </option>
+    <option name="EXECUTIONPOINT_ATTRIBUTES">
+      <value>
+        <option name="background" value="${$code.warning.bg|$scheme.yellow..26}" />
+        <option name="error_stripe_color" value="${$code.warning.fg|$scheme.yellow}" />
+      </value>
+    </option>
+    <option name="FOLLOWED_HYPERLINK_ATTRIBUTES">
+      <value>
+        <option name="foreground" value="${$ui.link|$scheme.blue}" />
+        <option name="effect_color" value="${$ui.link|$scheme.blue}" />
+        <option name="effect_type" value="${1}" />
+      </value>
+    </option>
+    <option name="GENERIC_SERVER_ERROR_OR_WARNING">
+      <value>
+        <option name="effect_color" value="${$code.warning.fg|$scheme.yellow}" />
+        <option name="error_stripe_color" value="${$code.warning.fg|$scheme.yellow}" />
+        <option name="effect_type" value="${2}" />
+      </value>
+    </option>
+    <option name="HTML_ATTRIBUTE_NAME">
+      <value>
+        <option name="foreground" value="${$syntax.z.html_attribute.fg}" />
+      </value>
+    </option>
+    <option name="HTML_ATTRIBUTE_VALUE">
+      <value>
+        <option name="foreground" value="${$syntax.string.fg}" />
+      </value>
+    </option>
+    <option name="HTML_CODE">
+      <value>
+        <option name="foreground" value="${$editor.text|$ui.text.active}" />
+        <option name="background" value="${$editor.bg|$ui.bg}" />
+        <option name="font_style" value="${}" />
+      </value>
+    </option>
+    <option name="HTML_ENTITY_REFERENCE">
+      <value>
+        <option name="foreground" value="${$syntax.string.escape.fg|$syntax.string.fg}" />
+      </value>
+    </option>
+    <option name="HTML_TAG">
+      <value>
+        <option name="foreground" value="${$syntax.z.html_tag.fg}" />
+      </value>
+    </option>
+    <option name="HTML_TAG_NAME">
+      <value>
+        <option name="foreground" value="${$syntax.z.html_tag.fg}" />
+      </value>
+    </option>
+    <option name="HYPERLINK_ATTRIBUTES">
+      <value>
+        <option name="foreground" value="${$ui.link|$scheme.blue}" />
+        <option name="effect_color" value="${$ui.link|$scheme.blue}" />
+        <option name="effect_type" value="${1}" />
+      </value>
+    </option>
+    <option name="IDENTIFIER_UNDER_CARET_ATTRIBUTES">
+      <value>
+        <option name="background" value="${$editor.active.matches}" />
+      </value>
+    </option>
+    <option name="INDENT_RAINBOW_COLOR_1">
+      <value>
+        <option name="background" value="${${editor.guides.indent.colors ? editor.guides.indent.colors[0] : editor.guides.indent.inactive}..10}" />
+      </value>
+    </option>
+    <option name="INDENT_RAINBOW_COLOR_2">
+      <value>
+        <option name="background" value="${${editor.guides.indent.colors ? editor.guides.indent.colors[1] : editor.guides.indent.inactive}..10}" />
+      </value>
+    </option>
+    <option name="INDENT_RAINBOW_COLOR_3">
+      <value>
+        <option name="background" value="${${editor.guides.indent.colors ? editor.guides.indent.colors[2] : editor.guides.indent.inactive}..10}" />
+      </value>
+    </option>
+    <option name="INDENT_RAINBOW_COLOR_4">
+      <value>
+        <option name="background" value="${${editor.guides.indent.colors ? editor.guides.indent.colors[3] : editor.guides.indent.inactive}..10}" />
+      </value>
+    </option>
+    <option name="INDENT_RAINBOW_COLOR_5">
+      <value>
+        <option name="background" value="${${editor.guides.indent.colors ? editor.guides.indent.colors[4] : editor.guides.indent.inactive}..10}" />
+      </value>
+    </option>
+    <option name="INDENT_RAINBOW_COLOR_6">
+      <value>
+        <option name="background" value="${${editor.guides.indent.colors ? editor.guides.indent.colors[5] : editor.guides.indent.inactive}..10}" />
+      </value>
+    </option>
+    <option name="INDENT_RAINBOW_ERROR">
+      <value>
+        <option name="background" value="${$code.error.fg|$scheme.red..10}" />
+      </value>
+    </option>
+    <option name="INFO_ATTRIBUTES">
+      <value>
+        <option name="effect_color" value="${$code.info.fg|$scheme.blue}" />
+        <option name="error_stripe_color" value="${$code.info.fg|$scheme.blue}" />
+        <option name="effect_type" value="${2}" />
+      </value>
+    </option>
+    <option name="INJECTED_LANGUAGE_FRAGMENT">
+      <value>
+        <option name="background" value="${$ui.bg}" />
+      </value>
+    </option>
+    <option name="INLINE_PARAMETER_HINT">
+      <value>
+        <option name="foreground" value="${$ui.text.muted}" />
+        <option name="background" value="${$ui.bg..BF}" />
+      </value>
+    </option>
+    <option name="INLINE_PARAMETER_HINT_CURRENT">
+      <value>
+        <option name="foreground" value="${$ui.text.active}" />
+        <option name="background" value="${$ui.bg..BF}" />
+      </value>
+    </option>
+    <option name="INLINE_PARAMETER_HINT_HIGHLIGHTED">
+      <value>
+        <option name="foreground" value="${$ui.text.active}" />
+        <option name="background" value="${$ui.bg..BF}" />
+      </value>
+    </option>
+    <option name="JS.DECORATOR">
+      <value>
+        <option name="foreground" value="${$syntax.z.decorator.fg|$syntax.func.fg}" />
+      </value>
+    </option>
+    <option name="JS.GLOBAL_FUNCTION">
+      <value>
+        <option name="foreground" value="${$syntax.func.fg}" />
+      </value>
+    </option>
+    <option name="JS.GLOBAL_VARIABLE">
+      <value>
+        <option name="foreground" value="${$syntax.var.fg}" />
+      </value>
+    </option>
+    <option name="JS.INSTANCE_MEMBER_FUNCTION">
+      <value>
+        <option name="foreground" value="${$syntax.func.method.fg|$syntax.func.fg}" />
+      </value>
+    </option>
+    <option name="JS.LOCAL_VARIABLE">
+      <value>
+        <option name="foreground" value="${$syntax.var.fg}" />
+      </value>
+    </option>
+    <option name="JS.PARAMETER">
+      <value>
+        <option name="foreground" value="${$syntax.param.fg|$syntax.var.fg}" />
+      </value>
+    </option>
+    <option name="JS.REGEXP">
+      <value>
+        <option name="foreground" value="${$syntax.string.regex.fg|$syntax.string.fg}" />
+      </value>
+    </option>
+    <option name="JSON.PROPERTY_KEY">
+      <value>
+        <option name="foreground" value="${$syntax.z.json_key.fg|$syntax.property.fg}" />
+      </value>
+    </option>
+    <option name="LOG_ERROR_OUTPUT">
+      <value>
+        <option name="foreground" value="${$code.error.fg|$scheme.red}" />
+      </value>
+    </option>
+    <option name="LOG_EXPIRED_ENTRY">
+      <value>
+        <option name="foreground" value="${$ui.text.muted}" />
+      </value>
+    </option>
+    <option name="LOG_WARNING_OUTPUT">
+      <value>
+        <option name="foreground" value="${$code.warning.fg|$scheme.yellow}" />
+      </value>
+    </option>
+    <option name="MARKED_FOR_REMOVAL_ATTRIBUTES">
+      <value>
+        <option name="effect_color" value="${$code.error.fg|$scheme.red}" />
+        <option name="effect_type" value="${3}" />
+      </value>
+    </option>
+    <option name="MATCHED_BRACE_ATTRIBUTES">
+      <value>
+        <option name="foreground" value="${$ui.text.active}" />
+        <option name="background" value="${$editor.active.matches}" />
+        <option name="font_style" value="${bold}" />
+      </value>
+    </option>
+    <option name="NOT_USED_ELEMENT_ATTRIBUTES">
+      <value>
+        <option name="foreground" value="${$ui.text.muted}" />
+        <option name="effect_color" value="${$ui.text.muted}" />
+        <option name="effect_type" value="${5}" />
+      </value>
+    </option>
+    <option name="SEARCH_RESULT_ATTRIBUTES">
+      <value>
+        <option name="background" value="${$editor.search.text}" />
+      </value>
+    </option>
+    <option name="TEXT">
+      <value>
+        <option name="foreground" value="${$editor.text|$ui.text.active}" />
+        <option name="background" value="${$editor.bg|$ui.bg}" />
+      </value>
+    </option>
+    <option name="TEXT_SEARCH_RESULT_ATTRIBUTES">
+      <value>
+        <option name="background" value="${$editor.search.text}" />
+      </value>
+    </option>
+    <option name="TODO_DEFAULT_ATTRIBUTES">
+      <value>
+        <option name="foreground" value="${$code.warning.fg|$scheme.yellow}" />
+        <option name="font_style" value="${bold}" />
+      </value>
+    </option>
+    <option name="TS.INTERFACE">
+      <value>
+        <option name="foreground" value="${$syntax.type.fg}" />
+      </value>
+    </option>
+    <option name="TS.MODULE_NAME">
+      <value>
+        <option name="foreground" value="${$syntax.namespace.fg|$syntax.var.builtin.fg|$syntax.builtin.fg|$syntax.var.fg}" />
+      </value>
+    </option>
+    <option name="TS.PRIMITIVE.TYPES">
+      <value>
+        <option name="foreground" value="${$syntax.type.primitive.fg|$syntax.type.builtin.fg|$syntax.builtin.fg|$syntax.type.fg}" />
+      </value>
+    </option>
+    <option name="TS.TYPE_PARAMETER">
+      <value>
+        <option name="foreground" value="${$syntax.type.fg}" />
+      </value>
+    </option>
+    <option name="TYPO">
+      <value>
+        <option name="effect_color" value="${$code.warning.fg|$scheme.yellow}" />
+        <option name="effect_type" value="${2}" />
+      </value>
+    </option>
+    <option name="UNMATCHED_BRACE_ATTRIBUTES">
+      <value>
+        <option name="foreground" value="${$code.error.fg|$scheme.red}" />
+      </value>
+    </option>
+    <option name="WARNING_ATTRIBUTES">
+      <value>
+        <option name="effect_color" value="${$code.warning.fg|$scheme.yellow}" />
+        <option name="error_stripe_color" value="${$code.warning.fg|$scheme.yellow}" />
+        <option name="effect_type" value="${2}" />
+      </value>
+    </option>
+    <option name="WRITE_IDENTIFIER_UNDER_CARET_ATTRIBUTES">
+      <value>
+        <option name="background" value="${$editor.search.captures|$editor.search.text|$editor.search}" />
+      </value>
+    </option>
+    <option name="WRITE_SEARCH_RESULT_ATTRIBUTES">
+      <value>
+        <option name="background" value="${$editor.search.text}" />
+      </value>
+    </option>
+    <option name="WRONG_REFERENCES_ATTRIBUTES">
+      <value>
+        <option name="effect_color" value="${$code.error.fg|$scheme.red}" />
+        <option name="error_stripe_color" value="${$code.error.fg|$scheme.red}" />
+        <option name="effect_type" value="${2}" />
+      </value>
+    </option>
+    <option name="XML_ATTRIBUTE_NAME">
+      <value>
+        <option name="foreground" value="${$syntax.z.html_attribute.fg}" />
+      </value>
+    </option>
+    <option name="XML_ENTITY_REFERENCE">
+      <value>
+        <option name="foreground" value="${$syntax.string.escape.fg|$syntax.string.fg}" />
+      </value>
+    </option>
+    <option name="XML_PROLOGUE">
+      <value>
+        <option name="foreground" value="${$editor.text|$ui.text.active}" />
+      </value>
+    </option>
+    <option name="XML_TAG">
+      <value>
+        <option name="foreground" value="${$syntax.z.html_tag.fg}" />
+      </value>
+    </option>
+    <option name="XML_TAG_NAME">
+      <value>
+        <option name="foreground" value="${$syntax.z.html_tag.fg}" />
+      </value>
+    </option>
+    <option name="YAML_ANCHOR">
+      <value>
+        <option name="foreground" value="${$syntax.constant.fg}" />
+      </value>
+    </option>
+  </attributes>
+</scheme>
