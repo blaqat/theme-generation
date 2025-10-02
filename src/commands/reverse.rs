@@ -49,8 +49,8 @@ impl ReverseFlags {
         flags.iter().map(|flag| Self::from_str(flag)).collect()
     }
 
-    fn parse(flags: &[String]) -> Flags {
-        let flags = Self::into_vec(flags).unwrap();
+    fn parse(flags: &[String]) -> Result<Flags, ProgramError> {
+        let flags = Self::into_vec(flags)?;
         let mut threshold = 3;
         let mut output_directory = PathBuf::from(".");
         let mut name = String::from("reversed-theme");
@@ -75,7 +75,7 @@ impl ReverseFlags {
             }
         }
 
-        Flags {
+        Ok(Flags {
             threshold,
             output_directory,
             name,
@@ -84,7 +84,7 @@ impl ReverseFlags {
             generate_additions,
             generate_colors,
             generate_manual,
-        }
+        })
     }
 }
 
@@ -109,10 +109,10 @@ impl FromStr for ReverseFlags {
                 let path = path.replace('~', std::env::var("HOME").unwrap().as_str());
                 let path = Path::new(&path);
                 if !path.exists() {
-                    return Err(ProgramError::InvalidFlag(
-                        "reverse".to_owned(),
-                        flag.to_owned(),
-                    ));
+                    return Err(ProgramError::Processing(format!(
+                        "Directory does not exist: {}",
+                        path.to_str().unwrap()
+                    )));
                 }
                 Ok(Self::OutputDirectory(path.to_path_buf()))
             }
@@ -142,6 +142,7 @@ mod steps {
     type ColorMap = HashMap<String, (String, Vec<Color>)>;
 
     #[allow(clippy::too_many_lines)]
+    /// Resolves variables from the variable differences and any overrides provided.
     pub fn resolve_variables(
         var_diff: &KeyDiffInfo,
         overrides: Set<ResolvedVariable>,
@@ -323,6 +324,7 @@ mod steps {
         (var_set, unvar_set)
     }
 
+    /// Computes the key differences between two JSON values, logging variables if specified.
     pub fn key_diff(data1: &Value, data2: &Value, prefix: String, log_vars: bool) -> KeyDiffInfo {
         let mut info = KeyDiffInfo {
             missing: Vec::new(),
@@ -423,6 +425,7 @@ mod steps {
         info
     }
 
+    /// Recursively retrieves all nested values from a JSON value.
     fn get_nested_values(j: &Value) -> Vec<Value> {
         match j {
             Value::Object(map) => map.values().flat_map(get_nested_values).collect(),
@@ -431,6 +434,7 @@ mod steps {
         }
     }
 
+    /// Creates a mapping from color hex codes to their variable names and occurrences.
     pub fn to_color_map(v: &VariableSet, o: &VariableSet) -> ColorMap {
         let mut color_map: ColorMap = HashMap::new();
         let get_num_matching_names =
@@ -487,6 +491,7 @@ mod steps {
         color_map
     }
 
+    /// Replaces colors in the parsed value with variable references based on the color map and threshold.
     pub fn replace_color(val: &ParsedValue, color_map: &ColorMap, threshold: usize) -> ParsedValue {
         let get_color = |c: &Color| {
             let hex = c.to_alphaless_hex();
@@ -559,6 +564,7 @@ mod steps {
         deletions: &Set<JSPath>,
         flags: &Flags,
     ) -> Result<String, ProgramError> {
+        // Helper to convert serde_json::Value to toml::Value
         macro_rules! t {
             ($var_name:ident=$from:expr) => {
                 let $var_name: toml::Value = {
@@ -587,6 +593,7 @@ mod steps {
             w!("{} = {}", k, v);
         }
 
+        // Colors
         if flags.generate_colors {
             w!("\n# Theme Colors");
             w!("[color]");
@@ -602,6 +609,7 @@ mod steps {
             }
         }
 
+        // Groups
         for (k, v) in data.iter().filter(|(k, _)| *k != "color") {
             if v.is_table() {
                 w!("\n[{}]", k);
@@ -624,6 +632,7 @@ mod steps {
             }
         }
 
+        // Overrides
         if flags.generate_additions {
             w!("\n# Overrides");
             w!("[overrides]");
@@ -638,6 +647,7 @@ mod steps {
             }
         }
 
+        // Deletions
         if flags.generate_deletions {
             w!("\n# Deletions");
             w!("[deletions]");
@@ -669,7 +679,7 @@ pub fn reverse(
     theme: &ValidatedFile,
     flags: &[String],
 ) -> Result<(), ProgramError> {
-    let flags = ReverseFlags::parse(flags);
+    let flags = ReverseFlags::parse(flags)?;
     let mut generated_files = Vec::new();
 
     // Step 1: Deserialize the template and theme files into Objects.
@@ -875,6 +885,7 @@ pub fn reverse(
         Ok(file_name)
     };
 
+    // Handle Single or Multiple Themes
     match (&theme, &template) {
         (Value::Object(_), Value::Object(_)) => {
             generated_files.push(reverse(

@@ -1,0 +1,296 @@
+# Reverse Generation Tool Version 3.0
+name = "Gruber Blutonium 🧿"
+theme = "dark"
+
+# Theme Colors
+[color]
+black = "#181818"
+black2 = "#151515"
+black3 = "#000000"
+cornflowerblue = "#5DAAFF"
+darkgray = "#A2A8AA"
+darkslategray2 = "#414141"
+gold2 = "#FDDB35"
+khaki = "#FEEC66"
+lightgray = "#D5D6DB"
+lightpink = "#FEA1B0"
+lightskyblue = "#99AAFE"
+mediumorchid = "#DB35FC"
+palegoldenrod = "#FEED9C"
+palegreen = "#B0FEA1"
+royalblue = "#3657FD"
+royalblue2 = "#1159D9"
+royalblue3 = "#3456FC"
+tomato2 = "#FC3556"
+violet = "#EEA1FD"
+
+[button]
+active = "@cornflowerblue..1F"
+
+[code.error]
+bg = "#FD365710"
+border = "#FD3657"
+fg = "@tomato2..C0"
+
+[code.hint]
+bg = "@black2"
+border = "@royalblue..9F"
+fg = "#7373738F"
+
+[code.info]
+bg = "@royalblue..10"
+border = "@royalblue"
+fg = "@royalblue3"
+
+[code.success]
+bg = "@black2"
+border = "@palegreen"
+fg = "@mediumorchid"
+
+[code.unreachable]
+bg = "@black2"
+
+[code.warning]
+bg = "#FAE04010"
+border = "#FAE040"
+fg = "@gold2"
+
+[editor]
+bg = "@black"
+gutter = "@black"
+invisible = "@lightgray..50"
+number = "@darkslategray2"
+text = "@lightgray"
+
+[editor.active]
+line = "@black2"
+matches = "#222B32"
+number = "@royalblue2"
+
+[editor.guides.indent]
+active = "@khaki..80"
+colors = [
+	"@royalblue3",
+	"@mediumorchid",
+	"#56FC35",
+	"null",
+	"@tomato2",
+	"@gold2",
+	"#35FCDB",
+	"#DFDFDF",
+	"@lightpink",
+	"@lightskyblue",
+	"@violet",
+	"@palegreen",
+	"null",
+	"@palegoldenrod"
+]
+inactive = "@darkslategray2"
+
+[editor.search]
+captures = "#5093C76E"
+line = "@cornflowerblue..1F"
+text = "@khaki..6E"
+
+[file.conflict]
+bg = "@lightpink"
+border = "@lightpink"
+fg = "@tomato2"
+
+[file.created]
+bg = "@palegreen"
+border = "@palegreen"
+
+[file.deleted]
+bg = "@lightpink..5F"
+border = "@lightpink"
+fg = "@tomato2..C0"
+
+[file.hidden]
+bg = "@black2"
+
+[file.ignored]
+fg = "#737373"
+
+[file.modified]
+bg = "@palegoldenrod"
+border = "@palegoldenrod"
+fg = "@gold2..C0"
+
+[file.renamed]
+bg = "@violet"
+border = "@violet"
+fg = "@mediumorchid"
+
+[player]
+cursor = "@royalblue2"
+highlight = "@cornflowerblue..1F"
+z = "#86694C40"
+
+[scheme]
+black = "@black3"
+black_br = "#373237"
+black_dim = "#373237"
+blue = "@royalblue3"
+blue_br = "@lightskyblue"
+blue_dim = "@lightskyblue"
+cyan = "#35FCDB"
+cyan_br = "#9FFEEE"
+cyan_dim = "#9FFEEE"
+green = "#56FC35"
+green_br = "@palegreen"
+green_dim = "@palegreen"
+pink = "@mediumorchid"
+pink_br = "@violet"
+pink_dim = "@violet"
+red = "@tomato2"
+red_br = "@lightpink"
+red_dim = "@lightpink"
+white = "#DFDFDF"
+white_br = "#FDFDFD"
+white_dim = "#FDFDFD"
+yellow = "@gold2"
+yellow_br = "@palegoldenrod"
+yellow_dim = "@palegoldenrod"
+
+[syntax.boolean]
+fg = "@darkgray"
+
+[syntax.comment]
+fg = "#6163DA"
+
+[syntax.comment.doc]
+fg = "#6163DA"
+
+[syntax.constant]
+fg = "@darkgray"
+
+[syntax.constant.builtin]
+fg = "@darkgray"
+
+[syntax.func]
+fg = "@cornflowerblue"
+
+[syntax.func.builtin]
+fg = "@darkgray"
+
+[syntax.func.def]
+fg = "@cornflowerblue"
+
+[syntax.func.method]
+fg = "@lightgray"
+
+[syntax.keyword]
+fg = "@royalblue2"
+weight = 800
+
+[syntax.namespace]
+fg = "@lightgray"
+
+[syntax.number]
+fg = "@darkgray"
+
+[syntax.op]
+fg = "@lightgray"
+
+[syntax.param]
+fg = "@lightgray"
+
+[syntax.property]
+fg = "@lightgray"
+
+[syntax.punc]
+fg = "@lightgray"
+
+[syntax.punc.bracket]
+fg = "@lightgray"
+
+[syntax.punc.delimiter]
+fg = "@darkgray"
+
+[syntax.punc.symbol]
+fg = "@lightgray"
+
+[syntax.string]
+fg = "@khaki"
+
+[syntax.string.escape]
+fg = "@khaki"
+
+[syntax.string.inter]
+fg = "@lightgray"
+
+[syntax.string.regex]
+fg = "@khaki"
+
+[syntax.string.special]
+fg = "@khaki"
+
+[syntax.type]
+fg = "@darkgray"
+
+[syntax.type.builtin]
+fg = "@darkgray"
+
+[syntax.var]
+fg = "@lightgray"
+
+[syntax.z.html_attribute]
+fg = "@lightgray"
+
+[syntax.z.html_tag]
+fg = "@cornflowerblue"
+
+[ui]
+bg = "@black"
+file_drop = "#333738"
+link = "@royalblue2"
+panel = "@black2"
+popup = "@black2"
+terminal = "@black"
+
+[ui.bars]
+bottom = "@black2"
+tool = "@black2"
+top = "@black2"
+
+[ui.bars.tab]
+active = "@royalblue2..1F"
+bg = "@black2"
+inactive = "@black"
+
+[ui.bars.title]
+inactive = "@black2"
+
+[ui.border]
+primary = "@black2"
+secondary = "@royalblue2..9F"
+
+[ui.button]
+disabled = "#5C6370"
+pressed = "#373735"
+primary = "#222221"
+
+[ui.element]
+active = "@royalblue2..40"
+bg = "@black3..00"
+disabled = "@cornflowerblue"
+hover = "@cornflowerblue..1F"
+pressed = "#282828"
+
+[ui.header]
+hover = "#7E753AC0"
+primary = "@black2"
+
+[ui.scrollbar]
+border = "@black3..00"
+highlight = "@black3..00"
+thumb = "@cornflowerblue..2E"
+track = "@black3..00"
+
+[ui.text]
+accent = "@khaki"
+active = "@lightgray"
+inactive = "@lightgray..C0"
+muted = "@darkslategray2"
+placeholder = "@khaki..9F"

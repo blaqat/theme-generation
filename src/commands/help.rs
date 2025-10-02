@@ -1,7 +1,22 @@
 use crate::{prelude::*, ValidCommands};
 
+/// Displays help information for the specified command.
 pub fn help(command: &ValidCommands) {
     let help_text = match command {
+        ValidCommands::New => "Description:
+    - This creates a new theme project with the given name.
+    - The theme project will be saved in the current directory.
+
+Usage:
+    substitutor new themeName [optional flags]
+
+Flags:
+    -o directory	Set output directory of generatedTheme
+    -t template: path	Set template file to use
+    -s style: str	Set style of template to use (dark or light)
+    -v variants: str[]	Set names of theme variants to auto fill
+    -d description: str	Set description of theme
+",
         ValidCommands::Check => "Description:
     - This checks line by line if the original file and the new file are the same.
     - Displays similarity metrics.
@@ -25,7 +40,7 @@ Flags:
     -c originalTheme	Run substitutor check on originalTheme and generatedTheme
     -o directory	Set output directory of generatedTheme
     -n name	Set name of output theme file
-        ",
+",
         ValidCommands::Reverse => "Description:
     - Template + OriginalTheme = Variables
     - This generates a variable file by substituting values in the original theme file with variables in the template file.
@@ -41,7 +56,7 @@ Flags:
     -t int	Threshold for how many same colors to exist before adding to [colors] subgroup
     -o directory	Set output directory of variable file
     -g[o|d]         Don't generate deletions or additions
-        ",
+",
         ValidCommands::Help => "Displays help information.",
         ValidCommands::Watch => "Description:
     - Watch changes to .toml files in a directory or a specific file and generate the theme file on each change.
@@ -63,7 +78,8 @@ Flags:
 Usage:
     substitutor edit themeFile templateFile [watch flags]
 
-Flags: (Same as watch flags)"
+Flags: (Same as watch flags)
+"
     };
 
     p!("{help_text}");

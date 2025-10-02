@@ -139,7 +139,16 @@ multi = [
 	"@purple..a/2",
 	"@teal..a/2",
 	"@yellow..a/2",
+	"#FF323280",
+	"rgb(255, 50, 50, 50)",
+	"hsl(0, 100, 60, 50)",
+	"hsv(0, 80, 100, 50)"
 ]
+
+# let rgb = "rgb(255, 50, 50, 50)";
+# let hex = "#FF323280";
+# let hsl = "hsl(0, 100, 60, 50)";
+# let hsv = "hsv(0, 80, 100, 50)";
 
 # [players.2]
 # background = "players.2.background"

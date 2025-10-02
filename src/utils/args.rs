@@ -18,7 +18,9 @@ pub struct ValidatedFile {
 
 impl Clone for ValidatedFile {
     fn clone(&self) -> Self {
-        let new_file = File::open(&self.name).unwrap();
+        let new_file = File::open(&self.name).unwrap_or_else(|_| {
+            panic!("Error opening file (File Moved or Deleted): {}", &self.name);
+        });
         Self {
             format: self.format.clone(),
             file: new_file,
@@ -30,11 +32,20 @@ impl Clone for ValidatedFile {
 
 impl ValidatedFile {
     fn from_str(file_path: &str) -> Result<Self, ProgramError> {
-        let format = Path::new(&file_path)
-            .extension()
-            .and_then(|e| e.to_str())
-            .ok_or_else(|| ProgramError::InvalidFile(String::from(file_path)))?
-            .to_owned();
+        let path = Path::new(&file_path);
+
+        let format = if path
+            .file_name()
+            .and_then(|f| f.to_str())
+            .is_some_and(|s| s.ends_with("template.json"))
+        {
+            String::from("template")
+        } else {
+            path.extension()
+                .and_then(|e| e.to_str())
+                .ok_or_else(|| ProgramError::InvalidFile(String::from(file_path)))?
+                .to_owned()
+        };
 
         let file_type = match format.as_str() {
             "json" => FileType::Theme,
@@ -56,6 +67,7 @@ impl ValidatedFile {
         })
     }
 
+    // Get all variable files in a directory
     fn all_variable_files(source_directory: &Path) -> Result<Vec<Self>, ProgramError> {
         // Variable files are toml files.
         let mut files = Vec::new();
@@ -91,6 +103,7 @@ pub enum ValidCommands {
     Help,
     Watch,
     Edit,
+    New,
 }
 
 #[derive(Debug, PartialEq, Eq)]
@@ -116,22 +129,25 @@ impl ValidCommands {
             "help" => Ok(Self::Help),
             "watch" => Ok(Self::Watch),
             "edit" => Ok(Self::Edit),
+            "new" => Ok(Self::New),
             _ => Err(ProgramError::InvalidCommand),
         }
     }
 
+    // List of all valid commands
     pub fn list_commands() -> Vec<&'static str> {
-        vec!["check", "gen", "rev", "help", "watch", "edit"]
+        vec!["check", "gen", "rev", "help", "watch", "edit", "new"]
     }
 }
 
+// Helper to get the template and variable files for generation and watch commands
 fn get_generation_files(
     flags: &[String],
     command_args: &[String],
     call_dir: PathBuf,
 ) -> Result<(PathBuf, ValidatedFile, Vec<ValidatedFile>), ProgramError> {
     let directory = if flags.iter().any(|flag| flag.starts_with("-i")) {
-        let flags = commands::generate::FlagTypes::parse(flags);
+        let flags = commands::generate::FlagTypes::parse(flags)?;
         flags.directory()
     } else {
         call_dir
@@ -196,6 +212,10 @@ pub fn run_command(args: Vec<String>) -> Result<(), ProgramError> {
                 .map_err(|_| ProgramError::HelpInvalidCommand)?;
             commands::help(&help_command);
             Ok(())
+        }
+        ValidCommands::New => {
+            let theme_name = &command_args[0];
+            commands::new(theme_name, &flags)
         }
         command if command_args.len() < 2 => Err(ProgramError::NotEnoughArguments(command)),
         ValidCommands::Check => {

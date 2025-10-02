@@ -18,7 +18,9 @@ const DNE: &str = "DNE";
 
 #[derive(Debug)]
 pub struct DiffInfo {
+    /// A vector of strings representing the paths to keys that differ.
     diffs: Vec<String>,
+    /// The total number of keys encountered during the comparison.
     total_keys: usize,
 }
 
@@ -31,6 +33,10 @@ impl DiffInfo {
     }
 }
 
+/// Performs a deep comparison of two JSON values and collects differences.
+///
+/// ### Returns
+/// A `DiffInfo` struct with the list of differing keys and total keys count.
 pub fn json_deep_diff(data1: &Value, data2: &Value, prefix: String, start_keys: usize) -> DiffInfo {
     let local_dne = json!(DNE);
     let mut keys = Vec::new();
@@ -122,6 +128,19 @@ pub fn json_deep_diff(data1: &Value, data2: &Value, prefix: String, start_keys: 
     }
 }
 
+/// Checks two validated files for similarity and prints the results.
+///
+/// This function parses the files as JSON, compares them deeply, and outputs
+/// similarity metrics including percentage and differing keys.
+///
+/// ### Arguments
+///
+/// * `file1` - The first validated file to check.
+/// * `file2` - The second validated file to check.
+///
+/// ### Returns
+///
+/// A `Result` indicating success or an error if formats don't match or parsing fails.
 pub fn check(file1: &ValidatedFile, file2: &ValidatedFile) -> Result<(), ProgramError> {
     if file1.format != file2.format {
         return Err(ProgramError::InvalidIOFormat(file2.format.clone()));

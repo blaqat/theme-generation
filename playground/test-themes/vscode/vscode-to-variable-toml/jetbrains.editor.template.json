@@ -1,0 +1,795 @@
+{
+	"scheme": {
+		"+@name": "$name",
+		"+@version": "142",
+		"+@parent_scheme": "$theme == 'dark' ? 'Darcula' : 'Default'",
+		"metaInfo": {
+			"property": [
+				{
+					"+content": "$(date +%Y-%m-%dT%H:%M:%S)",
+					"+@name": "created"
+				},
+				{
+					"+content": "idea",
+					"+@name": "ide"
+				},
+				{
+					"+content": "2023.3.0.0",
+					"+@name": "ideVersion"
+				},
+				{
+					"+content": "$(date +%Y-%m-%dT%H:%M:%S)",
+					"+@name": "modified"
+				},
+				{
+					"+content": "$name",
+					"+@name": "originalScheme"
+				}
+			]
+		},
+		"colors": {
+			"ADDED_LINES_COLOR": "$file.created.fg|$scheme.green",
+			"ANNOTATIONS_COLOR": "$ui.text.active",
+			"CARET_COLOR": "$ui.text.active",
+			"CARET_ROW_COLOR": "$editor.active.line|$ui.bg..(value+10)",
+			"CONSOLE_BACKGROUND_KEY": "$ui.bg",
+			"DELETED_LINES_COLOR": "$file.deleted.fg|$scheme.red",
+			"DIAGRAM_ANNOTATION_EDGE": "$scheme.yellow",
+			"DIAGRAM_DEFAULT_EDGE": "$ui.text.active",
+			"DIAGRAM_GENERALIZATION_EDGE": "$ui.text.accent|$scheme.blue",
+			"DIAGRAM_INNER_EDGE": "$scheme.cyan",
+			"DIAGRAM_NODE_BACKGROUND": "$ui.element.active|$ui.bg..v+5",
+			"DIAGRAM_NODE_HEADER": "$ui.element.active|$ui.bg..v+5",
+			"DIAGRAM_NOTE_BACKGROUND": "$ui.element.hover|$ui.bg..v-5",
+			"DIAGRAM_NOTE_BORDER": "$ui.element.hover|$ui.bg..v-5",
+			"DIAGRAM_REALIZATION_EDGE": "$scheme.green",
+			"DIFF_SEPARATORS_BACKGROUND": "$ui.element.active|$ui.bg..v+5",
+			"DOCUMENTATION_COLOR": "$ui.border.secondary",
+			"ERROR_HINT": "$code.error.fg|$scheme.red",
+			"FILESTATUS_ADDED": "$file.created.fg|$scheme.green",
+			"FILESTATUS_COPIED": "$file.created.fg|$scheme.green",
+			"FILESTATUS_DELETED": "$file.deleted.fg|$scheme.red",
+			"FILESTATUS_IDEA_FILESTATUS_DELETED_FROM_FILE_SYSTEM": "$file.deleted.fg|$scheme.red",
+			"FILESTATUS_IDEA_FILESTATUS_IGNORED": "$file.ignored.fg|$ui.text.muted",
+			"FILESTATUS_IDEA_FILESTATUS_MERGED_WITH_CONFLICTS": "$file.conflict.fg|$scheme.red_br",
+			"FILESTATUS_IDEA_FILESTATUS_MERGED_WITH_BOTH_CONFLICTS": "$file.conflict.fg|$scheme.red_br",
+			"FILESTATUS_IDEA_FILESTATUS_MERGED_WITH_PROPERTY_CONFLICTS": "$file.conflict.fg|$scheme.red_br",
+			"FILESTATUS_MERGED": "$file.incoming.fg|$scheme.blue",
+			"FILESTATUS_MODIFIED": "$file.modified.fg|$scheme.yellow",
+			"FILESTATUS_NOT_CHANGED_IMMEDIATE": "$ui.text.active",
+			"FILESTATUS_NOT_CHANGED_RECURSIVE": "$ui.text.active",
+			"FILESTATUS_RENAMED": "$file.renamed.fg|$scheme.purple",
+			"FILESTATUS_UNKNOWN": "$file.conflict.fg|$scheme.red_br",
+			"FILESTATUS_addedOutside": "$file.incoming.fg|$scheme.blue",
+			"FOLDED_TEXT_BORDER_COLOR": "$ui.text.accent|$scheme.blue",
+			"GUTTER_BACKGROUND": "$editor.gutter|$editor.bg|$ui.bg",
+			"INDENT_GUIDE": "$editor.guides.indent.inactive|$editor.guides.indent.active|$editor.guides.indent",
+			"INFORMATION_HINT": "$code.info.fg|$scheme.blue",
+			"LINE_NUMBERS_COLOR": "$editor.number|$ui.text.active..50",
+			"LINE_NUMBER_ON_CARET_ROW_COLOR": "$editor.active.number|$editor.number|$ui.text.active..50",
+			"METHOD_SEPARATORS_COLOR": "$ui.text.muted",
+			"MODIFIED_LINES_COLOR": "$file.modified.fg|$scheme.yellow",
+			"NOTIFICATION_BACKGROUND": "$ui.popup|$ui.bg",
+			"PROMOTION_PANE": "$ui.popup|$ui.bg",
+			"QUESTION_HINT": "$code.warning.fg|$scheme.yellow",
+			"READONLY_BACKGROUND": "$ui.element.disabled|$ui.bg",
+			"READONLY_FRAGMENT_BACKGROUND": "$ui.element.disabled|$ui.bg",
+			"RECENT_LOCATIONS_SELECTION": "$ui.element.active|$ui.bg..v+5",
+			"RECURSIVE_CALL_ATTRIBUTES": "$ui.element.active|$ui.bg..v+5",
+			"RIGHT_MARGIN_COLOR": "$editor.guides.wrap",
+			"SELECTED_INDENT_GUIDE": "$editor.guides.indent.active|$editor.guides.indent.inactive|$editor.guides.indent",
+			"SELECTED_TEARLINE_COLOR": "$ui.border.primary",
+			"SELECTION_BACKGROUND": "$player.highlight|$editor.active.line",
+			"SELECTION_FOREGROUND": "$ui.text.active",
+			"SEPARATOR_BELOW_COLOR": "$ui.border.primary",
+			"SOFT_WRAP_SIGN_COLOR": "$ui.text.muted",
+			"ScrollBar.Mac.Transparent.hoverThumbColor": "$ui.element.active|$ui.bg..v+5",
+			"ScrollBar.Mac.Transparent.hoverTrackColor": "$ui.bg",
+			"ScrollBar.Mac.Transparent.thumbColor": "$ui.element.hover|$ui.bg..v-5",
+			"ScrollBar.Mac.Transparent.trackColor": "$ui.bg",
+			"ScrollBar.Mac.hoverThumbColor": "$ui.element.active|$ui.bg..v+5",
+			"ScrollBar.Mac.hoverTrackColor": "$ui.bg",
+			"ScrollBar.Mac.thumbColor": "$ui.element.hover|$ui.bg..v-5",
+			"ScrollBar.Mac.trackColor": "$ui.bg",
+			"ScrollBar.Transparent.hoverThumbColor": "$ui.element.active|$ui.bg..v+5",
+			"ScrollBar.Transparent.hoverTrackColor": "$ui.bg",
+			"ScrollBar.Transparent.thumbColor": "$ui.element.hover|$ui.bg..v-5",
+			"ScrollBar.Transparent.trackColor": "$ui.bg",
+			"ScrollBar.hoverThumbColor": "$ui.element.active|$ui.bg..v+5",
+			"ScrollBar.hoverTrackColor": "$ui.bg",
+			"ScrollBar.thumbColor": "$ui.element.hover|$ui.bg..v-5",
+			"ScrollBar.trackColor": "$ui.bg",
+			"TEARLINE_COLOR": "$ui.border.primary",
+			"TOOLTIP": "$ui.popup|$ui.bg",
+			"VISUAL_INDENT_GUIDE": "$editor.guides.indent.inactive|$editor.guides.indent",
+			"WHITESPACES": "$editor.invisible|$editor.active.highlight|$player.highlight",
+			"WHITESPACES_MODIFIED_LINES_COLOR": "$editor.invisible|$editor.active.highlight|$player.highlight"
+		},
+		"attributes": [
+			{
+				"+@name": "DEFAULT_ATTRIBUTE",
+				"attributes": {
+					"foreground": "$syntax.z.html_attribute.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_BLOCK_COMMENT",
+				"attributes": {
+					"foreground": "$syntax.comment.fg",
+					"font_style": "$syntax.comment.style"
+				}
+			},
+			{
+				"+@name": "DEFAULT_BRACES",
+				"attributes": {
+					"foreground": "$syntax.punc.bracket.fg|$syntax.punc.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_BRACKETS",
+				"attributes": {
+					"foreground": "$syntax.punc.bracket.fg|$syntax.punc.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_CLASS_NAME",
+				"attributes": {
+					"foreground": "$syntax.type.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_CLASS_REFERENCE",
+				"attributes": {
+					"foreground": "$syntax.type.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_COMMA",
+				"attributes": {
+					"foreground": "$syntax.punc.delimiter.fg|$syntax.punc.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_CONSTANT",
+				"attributes": {
+					"foreground": "$syntax.constant.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_DOC_COMMENT",
+				"attributes": {
+					"foreground": "$syntax.comment.doc.fg|$syntax.doc.fg|$syntax.comment.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_DOC_COMMENT_TAG",
+				"attributes": {
+					"foreground": "$syntax.keyword.fg",
+					"font_style": "${syntax.keyword.style contains 'italic' ? '' : 'italic'}"
+				}
+			},
+			{
+				"+@name": "DEFAULT_DOC_COMMENT_TAG_VALUE",
+				"attributes": {
+					"foreground": "$syntax.param.fg|$syntax.var.fg",
+					"font_style": "${syntax.param.style contains 'italic' ? '' : 'italic'}"
+				}
+			},
+			{
+				"+@name": "DEFAULT_DOC_MARKUP",
+				"attributes": {
+					"foreground": "$syntax.comment.doc.fg|$syntax.doc.fg|$syntax.comment.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_DOT",
+				"attributes": {
+					"foreground": "$syntax.punc.delimiter.fg|$syntax.punc.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_ENTITY",
+				"attributes": {
+					"foreground": "$syntax.string.escape.fg|$syntax.string.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_FUNCTION_CALL",
+				"attributes": {
+					"foreground": "$syntax.func.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_FUNCTION_DECLARATION",
+				"attributes": {
+					"foreground": "$syntax.func.def.fg|$syntax.func.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_GLOBAL_VARIABLE",
+				"attributes": {
+					"foreground": "$syntax.var.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_IDENTIFIER",
+				"attributes": {
+					"foreground": "$syntax.var.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_INSTANCE_FIELD",
+				"attributes": {
+					"foreground": "$syntax.property.fg|$syntax.var.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_INSTANCE_METHOD",
+				"attributes": {
+					"foreground": "$syntax.func.method.fg|$syntax.func.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_INTERFACE_NAME",
+				"attributes": {
+					"foreground": "$syntax.type.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_INVALID_STRING_ESCAPE",
+				"attributes": {
+					"foreground": "$code.error.fg|$scheme.red",
+					"effect_color": "$code.error.fg|$scheme.red",
+					"effect_type": "2"
+				}
+			},
+			{
+				"+@name": "DEFAULT_KEYWORD",
+				"attributes": {
+					"foreground": "$syntax.keyword.fg",
+					"font_style": "$syntax.keyword.style"
+				}
+			},
+			{
+				"+@name": "DEFAULT_LABEL",
+				"attributes": {
+					"foreground": "$syntax.property.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_LINE_COMMENT",
+				"attributes": {
+					"foreground": "$syntax.comment.fg",
+					"font_style": "$syntax.comment.style"
+				}
+			},
+			{
+				"+@name": "DEFAULT_LOCAL_VARIABLE",
+				"attributes": {
+					"foreground": "$syntax.var.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_METADATA",
+				"attributes": {
+					"foreground": "$syntax.z.decorator.fg|$syntax.func.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_NUMBER",
+				"attributes": {
+					"foreground": "$syntax.number.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_OPERATION_SIGN",
+				"attributes": {
+					"foreground": "$syntax.op.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_PARAMETER",
+				"attributes": {
+					"foreground": "$syntax.param.fg|$syntax.var.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_PARENTHS",
+				"attributes": {
+					"foreground": "$syntax.punc.bracket.fg|$syntax.punc.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_PREDEFINED_SYMBOL",
+				"attributes": {
+					"foreground": "$syntax.constant.builtin.fg|$syntax.builtin.fg|$syntax.constant.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_REASSIGNED_LOCAL_VARIABLE",
+				"attributes": {
+					"foreground": "$syntax.var.fg",
+					"effect_color": "$syntax.var.fg",
+					"effect_type": "1"
+				}
+			},
+			{
+				"+@name": "DEFAULT_REASSIGNED_PARAMETER",
+				"attributes": {
+					"foreground": "$syntax.param.fg|$syntax.var.fg",
+					"effect_color": "$syntax.param.fg|$syntax.var.fg",
+					"effect_type": "1"
+				}
+			},
+			{
+				"+@name": "DEFAULT_SEMICOLON",
+				"attributes": {
+					"foreground": "$syntax.punc.delimiter.fg|$syntax.punc.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_STATIC_FIELD",
+				"attributes": {
+					"foreground": "$syntax.constant.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_STATIC_METHOD",
+				"attributes": {
+					"foreground": "$syntax.func.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_STRING",
+				"attributes": {
+					"foreground": "$syntax.string.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_TAG",
+				"attributes": {
+					"foreground": "$syntax.z.html_tag.fg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_TEMPLATE_LANGUAGE_COLOR",
+				"attributes": {
+					"background": "$ui.bg"
+				}
+			},
+			{
+				"+@name": "DEFAULT_VALID_STRING_ESCAPE",
+				"attributes": {
+					"foreground": "$syntax.string.escape.fg|$syntax.string.fg"
+				}
+			},
+			{
+				"+@name": "DELETED_TEXT_ATTRIBUTES",
+				"attributes": {
+					"foreground": "$file.deleted.fg|$scheme.red",
+					"background": "$file.deleted.bg|$scheme.red..30",
+					"effect_color": "$file.deleted.fg|$scheme.red",
+					"effect_type": "3"
+				}
+			},
+			{
+				"+@name": "DEPRECATED_ATTRIBUTES",
+				"attributes": {
+					"effect_color": "$syntax.var.fg",
+					"effect_type": "3"
+				}
+			},
+			{
+				"+@name": "DIFF_CONFLICT",
+				"attributes": {
+					"background": "$file.conflict.bg|$scheme.red_br..20",
+					"error_stripe_color": "$file.conflict.fg|$scheme.red_br"
+				}
+			},
+			{
+				"+@name": "DIFF_DELETED",
+				"attributes": {
+					"background": "$file.deleted.bg|$scheme.red..30",
+					"error_stripe_color": "$file.deleted.fg|$scheme.red"
+				}
+			},
+			{
+				"+@name": "DIFF_INSERTED",
+				"attributes": {
+					"background": "$file.created.bg|$scheme.green..20",
+					"error_stripe_color": "$file.created.fg|$scheme.green"
+				}
+			},
+			{
+				"+@name": "DIFF_MODIFIED",
+				"attributes": {
+					"background": "$file.modified.bg|$scheme.yellow..20",
+					"error_stripe_color": "$file.modified.fg|$scheme.yellow"
+				}
+			},
+			{
+				"+@name": "DUPLICATE_FROM_SERVER",
+				"attributes": {
+					"background": "$file.incoming.bg|$scheme.blue..20",
+					"error_stripe_color": "$file.incoming.fg|$scheme.blue"
+				}
+			},
+			{
+				"+@name": "ERRORS_ATTRIBUTES",
+				"attributes": {
+					"effect_color": "$code.error.fg|$scheme.red",
+					"error_stripe_color": "$code.error.fg|$scheme.red",
+					"effect_type": "2"
+				}
+			},
+			{
+				"+@name": "EXECUTIONPOINT_ATTRIBUTES",
+				"attributes": {
+					"background": "$code.warning.bg|$scheme.yellow..26",
+					"error_stripe_color": "$code.warning.fg|$scheme.yellow"
+				}
+			},
+			{
+				"+@name": "FOLLOWED_HYPERLINK_ATTRIBUTES",
+				"attributes": {
+					"foreground": "$ui.link|$scheme.blue",
+					"effect_color": "$ui.link|$scheme.blue",
+					"effect_type": "1"
+				}
+			},
+			{
+				"+@name": "GENERIC_SERVER_ERROR_OR_WARNING",
+				"attributes": {
+					"effect_color": "$code.warning.fg|$scheme.yellow",
+					"error_stripe_color": "$code.warning.fg|$scheme.yellow",
+					"effect_type": "2"
+				}
+			},
+			{
+				"+@name": "HTML_ATTRIBUTE_NAME",
+				"attributes": {
+					"foreground": "$syntax.z.html_attribute.fg"
+				}
+			},
+			{
+				"+@name": "HTML_ATTRIBUTE_VALUE",
+				"attributes": {
+					"foreground": "$syntax.string.fg"
+				}
+			},
+			{
+				"+@name": "HTML_CODE",
+				"attributes": {
+					"foreground": "$editor.text|$ui.text.active",
+					"background": "$editor.bg|$ui.bg",
+					"font_style": ""
+				}
+			},
+			{
+				"+@name": "HTML_ENTITY_REFERENCE",
+				"attributes": {
+					"foreground": "$syntax.string.escape.fg|$syntax.string.fg"
+				}
+			},
+			{
+				"+@name": "HTML_TAG",
+				"attributes": {
+					"foreground": "$syntax.z.html_tag.fg"
+				}
+			},
+			{
+				"+@name": "HTML_TAG_NAME",
+				"attributes": {
+					"foreground": "$syntax.z.html_tag.fg"
+				}
+			},
+			{
+				"+@name": "HYPERLINK_ATTRIBUTES",
+				"attributes": {
+					"foreground": "$ui.link|$scheme.blue",
+					"effect_color": "$ui.link|$scheme.blue",
+					"effect_type": "1"
+				}
+			},
+			{
+				"+@name": "IDENTIFIER_UNDER_CARET_ATTRIBUTES",
+				"attributes": {
+					"background": "$editor.active.matches"
+				}
+			},
+			{
+				"+@name": "INDENT_RAINBOW_COLOR_1",
+				"attributes": {
+					"background": "${editor.guides.indent.colors ? editor.guides.indent.colors[0] : editor.guides.indent.inactive}..10"
+				}
+			},
+			{
+				"+@name": "INDENT_RAINBOW_COLOR_2",
+				"attributes": {
+					"background": "${editor.guides.indent.colors ? editor.guides.indent.colors[1] : editor.guides.indent.inactive}..10"
+				}
+			},
+			{
+				"+@name": "INDENT_RAINBOW_COLOR_3",
+				"attributes": {
+					"background": "${editor.guides.indent.colors ? editor.guides.indent.colors[2] : editor.guides.indent.inactive}..10"
+				}
+			},
+			{
+				"+@name": "INDENT_RAINBOW_COLOR_4",
+				"attributes": {
+					"background": "${editor.guides.indent.colors ? editor.guides.indent.colors[3] : editor.guides.indent.inactive}..10"
+				}
+			},
+			{
+				"+@name": "INDENT_RAINBOW_COLOR_5",
+				"attributes": {
+					"background": "${editor.guides.indent.colors ? editor.guides.indent.colors[4] : editor.guides.indent.inactive}..10"
+				}
+			},
+			{
+				"+@name": "INDENT_RAINBOW_COLOR_6",
+				"attributes": {
+					"background": "${editor.guides.indent.colors ? editor.guides.indent.colors[5] : editor.guides.indent.inactive}..10"
+				}
+			},
+			{
+				"+@name": "INDENT_RAINBOW_ERROR",
+				"attributes": {
+					"background": "$code.error.fg|$scheme.red..10"
+				}
+			},
+			{
+				"+@name": "INFO_ATTRIBUTES",
+				"attributes": {
+					"effect_color": "$code.info.fg|$scheme.blue",
+					"error_stripe_color": "$code.info.fg|$scheme.blue",
+					"effect_type": "2"
+				}
+			},
+			{
+				"+@name": "INJECTED_LANGUAGE_FRAGMENT",
+				"attributes": {
+					"background": "$ui.bg"
+				}
+			},
+			{
+				"+@name": "INLINE_PARAMETER_HINT",
+				"attributes": {
+					"foreground": "$ui.text.muted",
+					"background": "$ui.bg..BF"
+				}
+			},
+			{
+				"+@name": "INLINE_PARAMETER_HINT_CURRENT",
+				"attributes": {
+					"foreground": "$ui.text.active",
+					"background": "$ui.bg..BF"
+				}
+			},
+			{
+				"+@name": "INLINE_PARAMETER_HINT_HIGHLIGHTED",
+				"attributes": {
+					"foreground": "$ui.text.active",
+					"background": "$ui.bg..BF"
+				}
+			},
+			{
+				"+@name": "JS.DECORATOR",
+				"attributes": {
+					"foreground": "$syntax.z.decorator.fg|$syntax.func.fg"
+				}
+			},
+			{
+				"+@name": "JS.GLOBAL_FUNCTION",
+				"attributes": {
+					"foreground": "$syntax.func.fg"
+				}
+			},
+			{
+				"+@name": "JS.GLOBAL_VARIABLE",
+				"attributes": {
+					"foreground": "$syntax.var.fg"
+				}
+			},
+			{
+				"+@name": "JS.INSTANCE_MEMBER_FUNCTION",
+				"attributes": {
+					"foreground": "$syntax.func.method.fg|$syntax.func.fg"
+				}
+			},
+			{
+				"+@name": "JS.LOCAL_VARIABLE",
+				"attributes": {
+					"foreground": "$syntax.var.fg"
+				}
+			},
+			{
+				"+@name": "JS.PARAMETER",
+				"attributes": {
+					"foreground": "$syntax.param.fg|$syntax.var.fg"
+				}
+			},
+			{
+				"+@name": "JS.REGEXP",
+				"attributes": {
+					"foreground": "$syntax.string.regex.fg|$syntax.string.fg"
+				}
+			},
+			{
+				"+@name": "JSON.PROPERTY_KEY",
+				"attributes": {
+					"foreground": "$syntax.z.json_key.fg|$syntax.property.fg"
+				}
+			},
+			{
+				"+@name": "LOG_ERROR_OUTPUT",
+				"attributes": {
+					"foreground": "$code.error.fg|$scheme.red"
+				}
+			},
+			{
+				"+@name": "LOG_EXPIRED_ENTRY",
+				"attributes": {
+					"foreground": "$ui.text.muted"
+				}
+			},
+			{
+				"+@name": "LOG_WARNING_OUTPUT",
+				"attributes": {
+					"foreground": "$code.warning.fg|$scheme.yellow"
+				}
+			},
+			{
+				"+@name": "MARKED_FOR_REMOVAL_ATTRIBUTES",
+				"attributes": {
+					"effect_color": "$code.error.fg|$scheme.red",
+					"effect_type": "3"
+				}
+			},
+			{
+				"+@name": "MATCHED_BRACE_ATTRIBUTES",
+				"attributes": {
+					"foreground": "$ui.text.active",
+					"background": "$editor.active.matches",
+					"font_style": "bold"
+				}
+			},
+			{
+				"+@name": "NOT_USED_ELEMENT_ATTRIBUTES",
+				"attributes": {
+					"foreground": "$ui.text.muted",
+					"effect_color": "$ui.text.muted",
+					"effect_type": "5"
+				}
+			},
+			{
+				"+@name": "SEARCH_RESULT_ATTRIBUTES",
+				"attributes": {
+					"background": "$editor.search.text"
+				}
+			},
+			{
+				"+@name": "TEXT",
+				"attributes": {
+					"foreground": "$editor.text|$ui.text.active",
+					"background": "$editor.bg|$ui.bg"
+				}
+			},
+			{
+				"+@name": "TEXT_SEARCH_RESULT_ATTRIBUTES",
+				"attributes": {
+					"background": "$editor.search.text"
+				}
+			},
+			{
+				"+@name": "TODO_DEFAULT_ATTRIBUTES",
+				"attributes": {
+					"foreground": "$code.warning.fg|$scheme.yellow",
+					"font_style": "bold"
+				}
+			},
+			{
+				"+@name": "TS.INTERFACE",
+				"attributes": {
+					"foreground": "$syntax.type.fg"
+				}
+			},
+			{
+				"+@name": "TS.MODULE_NAME",
+				"attributes": {
+					"foreground": "$syntax.namespace.fg|$syntax.var.builtin.fg|$syntax.builtin.fg|$syntax.var.fg"
+				}
+			},
+			{
+				"+@name": "TS.PRIMITIVE.TYPES",
+				"attributes": {
+					"foreground": "$syntax.type.primitive.fg|$syntax.type.builtin.fg|$syntax.builtin.fg|$syntax.type.fg"
+				}
+			},
+			{
+				"+@name": "TS.TYPE_PARAMETER",
+				"attributes": {
+					"foreground": "$syntax.type.fg"
+				}
+			},
+			{
+				"+@name": "TYPO",
+				"attributes": {
+					"effect_color": "$code.warning.fg|$scheme.yellow",
+					"effect_type": "2"
+				}
+			},
+			{
+				"+@name": "UNMATCHED_BRACE_ATTRIBUTES",
+				"attributes": {
+					"foreground": "$code.error.fg|$scheme.red"
+				}
+			},
+			{
+				"+@name": "WARNING_ATTRIBUTES",
+				"attributes": {
+					"effect_color": "$code.warning.fg|$scheme.yellow",
+					"error_stripe_color": "$code.warning.fg|$scheme.yellow",
+					"effect_type": "2"
+				}
+			},
+			{
+				"+@name": "WRITE_IDENTIFIER_UNDER_CARET_ATTRIBUTES",
+				"attributes": {
+					"background": "$editor.search.captures|$editor.search.text|$editor.search"
+				}
+			},
+			{
+				"+@name": "WRITE_SEARCH_RESULT_ATTRIBUTES",
+				"attributes": {
+					"background": "$editor.search.text"
+				}
+			},
+			{
+				"+@name": "WRONG_REFERENCES_ATTRIBUTES",
+				"attributes": {
+					"effect_color": "$code.error.fg|$scheme.red",
+					"error_stripe_color": "$code.error.fg|$scheme.red",
+					"effect_type": "2"
+				}
+			},
+			{
+				"+@name": "XML_ATTRIBUTE_NAME",
+				"attributes": {
+					"foreground": "$syntax.z.html_attribute.fg"
+				}
+			},
+			{
+				"+@name": "XML_ENTITY_REFERENCE",
+				"attributes": {
+					"foreground": "$syntax.string.escape.fg|$syntax.string.fg"
+				}
+			},
+			{
+				"+@name": "XML_PROLOGUE",
+				"attributes": {
+					"foreground": "$editor.text|$ui.text.active"
+				}
+			},
+			{
+				"+@name": "XML_TAG",
+				"attributes": {
+					"foreground": "$syntax.z.html_tag.fg"
+				}
+			},
+			{
+				"+@name": "XML_TAG_NAME",
+				"attributes": {
+					"foreground": "$syntax.z.html_tag.fg"
+				}
+			},
+			{
+				"+@name": "YAML_ANCHOR",
+				"attributes": {
+					"foreground": "$syntax.constant.fg"
+				}
+			}
+		]
+	}
+}

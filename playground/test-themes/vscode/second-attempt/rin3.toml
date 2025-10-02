@@ -1,0 +1,176 @@
+# Reverse Generation Tool Version 3.0
+theme = "dark"
+name = "Rin3"
+
+# Theme Colors
+[color]
+aquamarine = "#72F8B5"
+black = "#191718"
+black10 = "#211D1E"
+black13 = "#151314"
+black2 = "#161415"
+black3 = "#142D14"
+black4 = "#211E1E"
+black5 = "#232121"
+black6 = "#251719"
+black8 = "#1B191A"
+black9 = "#361B1C"
+cadetblue = "#4C9697"
+darkgray = "#86A4AB"
+darkgray2 = "#A7A7A7"
+darkslategray2 = "#322D30"
+dimgray = "#6F6F6F"
+firebrick = "#C20000"
+gray = "#847878"
+gray2 = "#818181"
+indianred = "#E0474B"
+lightskyblue = "#69E0F5"
+lightskyblue2 = "#86DBFD"
+lightslategray = "#859395"
+maroon2 = "#501F1F"
+mediumpurple = "#9B6BDF"
+mediumseagreen = "#42E66C"
+sandybrown = "#EFA554"
+silver = "#BBBBBB"
+snow = "#FBFBFB"
+whitesmoke = "#F8F8F2"
+
+[code.error]
+bg = "@cadetblue"
+fg = "@firebrick"
+style = "underline strikethrough"
+
+[editor]
+bg = "@black2"
+number = "@gray"
+text = "@whitesmoke"
+
+[editor.active]
+line = "#682828"
+line_border = "#302D2E"
+matches = "@darkslategray2..A9"
+
+[editor.guides.indent]
+active = "@black4"
+colors = [
+]
+inactive = "@black4"
+
+[editor.search]
+matches = "#225041A9"
+text = "@black9"
+
+[file.created]
+bg = "@black3..50"
+fg = "@black3"
+
+[file.deleted]
+bg = "#24242450"
+fg = "#242424"
+
+[file.ignored]
+fg = "@dimgray"
+
+[file.modified]
+fg = "@cadetblue"
+
+[player]
+cursor = "@cadetblue"
+highlight = "@maroon2"
+
+[scheme]
+blue = "@mediumpurple"
+cyan = "#75D7EC"
+green = "@mediumseagreen"
+pink = "#E64747"
+red = "#E356A7"
+yellow = "@sandybrown"
+
+[syntax.comment]
+fg = "#4C8484"
+style = "italic"
+
+[syntax.constant]
+fg = "@whitesmoke"
+
+[syntax.func]
+fg = "@lightskyblue"
+
+[syntax.keyword]
+fg = "@lightslategray"
+
+[syntax.markup.bold]
+style = "bold"
+
+[syntax.markup.heading]
+fg = "@indianred"
+
+[syntax.markup.italic]
+style = "italic"
+
+[syntax.op]
+fg = "#FC5773"
+
+[syntax.param]
+fg = "@aquamarine"
+
+[syntax.string]
+fg = "@aquamarine"
+
+[syntax.type]
+fg = "@indianred"
+
+[syntax.type.class]
+fg = "@sandybrown"
+
+[syntax.z.html_attribute]
+fg = "@lightskyblue"
+style = "italic"
+
+[syntax.z.html_tag]
+fg = "#FC5773"
+
+[ui]
+bg = "@cadetblue"
+file_drop = "@darkslategray2..A9"
+panel = "@black2"
+popup = "@black8"
+shadow = "#1111115A"
+
+[ui.bars]
+bottom = "@cadetblue"
+tool = "@black"
+top = "@black8"
+
+[ui.bars.tab]
+active = "@black6"
+bg = "@black2"
+inactive = "@black2"
+
+[ui.bars.title]
+inactive = "@black8"
+
+[ui.border]
+primary = "@black4"
+secondary = "@black4"
+
+[ui.button]
+primary = "@black5"
+
+[ui.button.secondary]
+bg = "@black5..CC"
+
+[ui.element]
+active = "@maroon2"
+hover = "#42191978"
+
+[ui.text]
+accent = "@cadetblue"
+active = "@silver"
+muted = "@gray"
+placeholder = "@darkgray"
+
+[deletions]
+keys = [
+"themes/0/style/accents",
+]

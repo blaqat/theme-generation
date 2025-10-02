@@ -4,6 +4,7 @@ pub mod serde_value {
     use super::{ProgramError, Value};
     use toml::Value as t_Value;
 
+    /// Converts a serde_json::Value to a String representation.
     pub fn value_to_string(val: &Value) -> String {
         match val {
             Value::String(s) => s.to_owned(),
@@ -11,6 +12,7 @@ pub mod serde_value {
         }
     }
 
+    /// Converts a serde_json::Value to a toml::Value.
     pub fn into_toml(val: Value) -> Result<t_Value, ProgramError> {
         match val {
             Value::Null => Ok(t_Value::String(crate::commands::TOML_NULL.to_string())),
@@ -45,14 +47,18 @@ pub mod serde_value {
         )
     }
 
+    /// Checks if a serde_json::Value is an Object or Array.
     pub const fn has_keys(a: &Value) -> bool {
         matches!(a, Value::Object(_) | Value::Array(_))
     }
 
+    /// Checks if a string potentially represents a variable (starts with '$' or '@').
     pub const fn potential_var(a: &str) -> bool {
         matches!(a.as_bytes(), [b'$' | b'@', ..])
     }
 
+    #[allow(clippy::missing_const_for_fn)]
+    /// Checks if two serde_json::Value instances could be considered a potential match. e.g variable,value
     pub fn potential_set(a: &Value, b: &Value) -> bool {
         match (a, b) {
             (Value::String(a), b) | (b, Value::String(a)) => match (potential_var(a), b) {
@@ -126,6 +132,7 @@ impl JSPath {
         Self(Vec::new())
     }
 
+    /// Checks if the path contains any numeric indices.
     pub fn has_num_in_path(&self) -> bool {
         let re = regex::Regex::new(r"/(\d+)(/|$)").unwrap();
         re.captures(self.to_string().as_str())
@@ -133,6 +140,7 @@ impl JSPath {
             .is_some()
     }
 
+    /// Joins the path segments into a single string representation.
     pub fn join(&self) -> String {
         self.0
             .iter()
@@ -141,11 +149,13 @@ impl JSPath {
             .unwrap_or_default()
     }
 
+    /// Traverses the JSON object following the path and returns a reference to the value at that path.
     pub fn traverse<'a>(&self, json: &'a Value) -> Result<&'a Value, ProgramError> {
         json.pointer(&format!("{self}"))
             .map_or_else(|| ahh!("Invalid path: {}", self.to_string()), Ok)
     }
 
+    /// Traverses the JSON object following the path and returns a mutable reference to the value at that path.
     pub fn remove(&self, json: &mut Value) -> Result<(), ProgramError> {
         let (last, rest) = self.0.split_last().unwrap();
         let path = Self(rest.to_vec());
@@ -177,6 +187,7 @@ impl JSPath {
         }
     }
 
+    /// Traverses the JSON object following the path and sets the value at that path, creating intermediate structures as needed.
     pub fn pave(&self, json: &mut Value, val: Value) -> Result<(), ProgramError> {
         let mut current_value = json;
         let len = self.0.len();

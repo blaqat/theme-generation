@@ -1,0 +1,206 @@
+# Reverse Generation Tool Version 3.0
+name = "Everforesting"
+theme = "dark"
+
+# Theme Colors
+[color]
+black = "#1B2024"
+burlywood = "#DBBC7F"
+cadetblue = "#5A93A2"
+darksalmon = "#E69875"
+darkseagreen = "#A7C080"
+darkseagreen2 = "#83C092"
+darkseagreen4 = "#98C379"
+darkslategray = "#2E383C"
+darkslategray10 = "#333C43"
+darkslategray11 = "#293136"
+darkslategray12 = "#3A464C"
+darkslategray16 = "#2D353B"
+darkslategray17 = "#343F44"
+darkslategray18 = "#3D484D"
+darkslategray2 = "#272E33"
+darkslategray22 = "#232A2E"
+darkslategray4 = "#21272B"
+darkslategray7 = "#374145"
+darkslategray9 = "#495156"
+dimgray2 = "#4D5960"
+dimgray5 = "#555F66"
+dimgray6 = "#4F585E"
+gray = "#7F897D"
+gray2 = "#859289"
+gray3 = "#7A8478"
+indianred = "#DA6362"
+lightcoral = "#E67E80"
+lightgray = "#E0D8C9"
+lightpink = "#EAA6A8"
+lightsteelblue = "#9FC9C3"
+mediumaquamarine = "#7FBBB3"
+plum = "#D699B6"
+silver = "#D3C6AA"
+silver2 = "#A5CEAE"
+silver3 = "#BDCEA1"
+thistle = "#E0BACC"
+wheat = "#E2CDA5"
+
+[code.error]
+bg = "#4C3743"
+fg = "@indianred"
+
+[code.hint]
+fg = "@gray..9F"
+
+[code.info]
+bg = "@cadetblue..1F"
+fg = "@cadetblue"
+
+[code.unreachable]
+bg = "@darkslategray"
+
+[code.warning]
+bg = "#4D4C43"
+border = "@burlywood"
+fg = "@burlywood"
+
+[editor]
+auto_complete = "@gray"
+bg = "@darkslategray2"
+gutter = "@darkslategray2"
+number = "@gray..9F"
+text = "@silver"
+
+[editor.active]
+line = "@darkslategray7..8F"
+number = "@silver"
+
+[editor.guides]
+wrap = "@black"
+
+[editor.search]
+captures = "@burlywood..50"
+line = "@darkslategray7..8F"
+text = "@burlywood..50"
+
+[file.conflict]
+border = "@lightpink"
+fg = "@plum"
+
+[file.created]
+fg = "#99B56E"
+
+[file.deleted]
+fg = "@indianred..9F"
+
+[file.hidden]
+fg = "@gray"
+
+[file.ignored]
+fg = "@darkslategray9"
+
+[file.modified]
+fg = "@cadetblue"
+
+[player]
+cursor = "@silver"
+highlight = "#414B50"
+z = "#414B50"
+
+[scheme]
+black = "@darkslategray"
+black_br = "@gray2"
+blue = "@mediumaquamarine"
+blue_br = "@lightsteelblue"
+cyan = "@darkseagreen"
+cyan_br = "@silver3"
+green = "@darkseagreen2"
+green_br = "@silver2"
+pink = "@plum"
+pink_br = "@thistle"
+red = "@lightcoral"
+red_br = "@lightpink"
+white = "@silver"
+white_br = "@lightgray"
+yellow = "@burlywood"
+yellow_br = "@wheat"
+
+[syntax.comment]
+fg = "@gray2"
+style = "italic"
+
+[syntax.constant]
+fg = "@plum"
+
+[syntax.func]
+fg = "@darkseagreen"
+
+[syntax.keyword]
+fg = "@lightcoral"
+style = "italic"
+
+[syntax.number]
+fg = "@plum"
+
+[syntax.op]
+fg = "@darksalmon"
+
+[syntax.property]
+fg = "@darkseagreen2"
+
+[syntax.punc.bracket]
+fg = "@plum"
+
+[syntax.string]
+fg = "@burlywood"
+
+[syntax.string.escape]
+fg = "@darkseagreen4"
+
+[syntax.type]
+fg = "@mediumaquamarine"
+style = "italic"
+
+[syntax.z.html_attribute]
+fg = "@burlywood"
+
+[ui]
+bg = "@darkslategray2"
+file_drop = "@darkslategray"
+link = "@darkseagreen..C0"
+panel = "@darkslategray4"
+popup = "@darkslategray"
+terminal = "@darkslategray2"
+
+[ui.bars]
+bottom = "@darkslategray4"
+tool = "@darkslategray2"
+top = "@darkslategray4"
+
+[ui.bars.tab]
+active = "@darkslategray2"
+bg = "@darkslategray4"
+inactive = "@darkslategray4"
+
+[ui.border]
+active = "@black"
+secondary = "@black"
+
+[ui.button]
+active = "@darkslategray7"
+pressed = "#505E5950"
+primary = "#475450"
+
+[ui.element]
+active = "@darkslategray7..80"
+hover = "@darkslategray2..00"
+
+[ui.header]
+hover = "@darkslategray2"
+
+[ui.scrollbar]
+border = "@darkslategray2..00"
+highlight = "@darkslategray9..80"
+track = "@darkslategray2"
+
+[ui.text]
+accent = "@darkseagreen"
+active = "#9AA79D"
+inactive = "@gray"

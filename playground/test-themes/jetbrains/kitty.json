@@ -1,0 +1,6250 @@
+{
+	"scheme": {
+		"+@name": "Catppuccin Mocha copy",
+		"+@version": "142",
+		"+@parent_scheme": "Darcula",
+		"metaInfo": {
+			"property": [
+				{
+					"+content": "Python",
+					"+@name": "ide"
+				},
+				{
+					"+content": "2025.1.1.1.0.0",
+					"+@name": "ideVersion"
+				},
+				{
+					"+content": "Catppuccin Mocha copy",
+					"+@name": "originalScheme"
+				}
+			]
+		},
+		"colors": {
+			"option": [
+				{
+					"+@name": "ADDED_LINES_COLOR",
+					"+@value": "#A6E3A1"
+				},
+				{
+					"+@name": "ANNOTATIONS_COLOR",
+					"+@value": "#CDD6F4"
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_BLOCK_BACKGROUND_END",
+					"+@value": "#181825"
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_BLOCK_BACKGROUND_START",
+					"+@value": "#181825"
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_DEFAULT_BACKGROUND",
+					"+@value": "#1E1E2E"
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_DEFAULT_FOREGROUND",
+					"+@value": "#CDD6F4"
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_ERROR_BLOCK_STROKE_COLOR",
+					"+@value": "#F38BA8"
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_INACTIVE_SELECTED_BLOCK_BACKGROUND",
+					"+@value": "#45475A"
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_INACTIVE_SELECTED_BLOCK_STROKE_COLOR",
+					"+@value": "#6C7086"
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_PROMPT_SEPARATOR_COLOR",
+					"+@value": "#45475A"
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_SELECTED_BLOCK_BACKGROUND",
+					"+@value": "#313244"
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_SELECTED_BLOCK_STROKE_COLOR",
+					"+@value": "#89B4FA"
+				},
+				{
+					"+@name": "CARET_COLOR",
+					"+@value": "#F5E0DC"
+				},
+				{
+					"+@name": "CARET_ROW_COLOR",
+					"+@value": "#262637"
+				},
+				{
+					"+@name": "CONSOLE_BACKGROUND_KEY",
+					"+@value": "#1E1E2E"
+				},
+				{
+					"+@name": "DELETED_LINES_COLOR",
+					"+@value": "#EBA0AC"
+				},
+				{
+					"+@name": "DIFF_SEPARATORS_BACKGROUND",
+					"+@value": "#6C7086"
+				},
+				{
+					"+@name": "DOCUMENTATION_COLOR",
+					"+@value": "#181825"
+				},
+				{
+					"+@name": "DOC_COMMENT_LINK",
+					"+@value": "#89B4FA"
+				},
+				{
+					"+@name": "ERROR_HINT",
+					"+@value": "#781732"
+				},
+				{
+					"+@name": "FILESTATUS_ADDED",
+					"+@value": "#A6E3A1"
+				},
+				{
+					"+@name": "FILESTATUS_COPIED",
+					"+@value": "#A6E3A1"
+				},
+				{
+					"+@name": "FILESTATUS_DELETED",
+					"+@value": "#585B70"
+				},
+				{
+					"+@name": "FILESTATUS_HIJACKED",
+					"+@value": "#F9E2AF"
+				},
+				{
+					"+@name": "FILESTATUS_IDEA_FILESTATUS_DELETED_FROM_FILE_SYSTEM",
+					"+@value": "#585B70"
+				},
+				{
+					"+@name": "FILESTATUS_IDEA_FILESTATUS_IGNORED",
+					"+@value": "#6C7086"
+				},
+				{
+					"+@name": "FILESTATUS_IDEA_FILESTATUS_MERGED_WITH_BOTH_CONFLICTS",
+					"+@value": "#FAB387"
+				},
+				{
+					"+@name": "FILESTATUS_IDEA_FILESTATUS_MERGED_WITH_CONFLICTS",
+					"+@value": "#FAB387"
+				},
+				{
+					"+@name": "FILESTATUS_IDEA_FILESTATUS_MERGED_WITH_PROPERTY_CONFLICTS",
+					"+@value": "#FAB387"
+				},
+				{
+					"+@name": "FILESTATUS_IDEA_SVN_FILESTATUS_EXTERNAL",
+					"+@value": "#A6E3A1"
+				},
+				{
+					"+@name": "FILESTATUS_IGNORE.PROJECT_VIEW.IGNORED",
+					"+@value": "#6C7086"
+				},
+				{
+					"+@name": "FILESTATUS_MERGED",
+					"+@value": "#CBA6F7"
+				},
+				{
+					"+@name": "FILESTATUS_MODIFIED",
+					"+@value": "#89B4FA"
+				},
+				{
+					"+@name": "FILESTATUS_NOT_CHANGED_IMMEDIATE",
+					"+@value": "#89B4FA"
+				},
+				{
+					"+@name": "FILESTATUS_NOT_CHANGED_RECURSIVE",
+					"+@value": "#89B4FA"
+				},
+				{
+					"+@name": "FILESTATUS_SUPPRESSED",
+					"+@value": "#6C7086"
+				},
+				{
+					"+@name": "FILESTATUS_SWITCHED",
+					"+@value": "#B4BEFE"
+				},
+				{
+					"+@name": "FILESTATUS_UNKNOWN",
+					"+@value": "#E4A47E"
+				},
+				{
+					"+@name": "FILESTATUS_addedOutside",
+					"+@value": "#A6E3A1"
+				},
+				{
+					"+@name": "FILESTATUS_changelistConflict",
+					"+@value": "#DE809C"
+				},
+				{
+					"+@name": "FILESTATUS_modifiedOutside",
+					"+@value": "#89B4FA"
+				},
+				{
+					"+@name": "FOLDED_TEXT_BORDER_COLOR",
+					"+@value": ""
+				},
+				{
+					"+@name": "GUTTER_BACKGROUND",
+					"+@value": "#1E1E2E"
+				},
+				{
+					"+@name": "HTML_TAG_TREE_LEVEL0",
+					"+@value": "#F38BA8"
+				},
+				{
+					"+@name": "HTML_TAG_TREE_LEVEL1",
+					"+@value": "#F9E2AF"
+				},
+				{
+					"+@name": "HTML_TAG_TREE_LEVEL2",
+					"+@value": "#A6E3A1"
+				},
+				{
+					"+@name": "HTML_TAG_TREE_LEVEL3",
+					"+@value": "#89B4FA"
+				},
+				{
+					"+@name": "HTML_TAG_TREE_LEVEL4",
+					"+@value": "#89DCEB"
+				},
+				{
+					"+@name": "HTML_TAG_TREE_LEVEL5",
+					"+@value": "#CBA6F7"
+				},
+				{
+					"+@name": "INDENT_GUIDE",
+					"+@value": "#313244"
+				},
+				{
+					"+@name": "INFORMATION_HINT",
+					"+@value": "#313244"
+				},
+				{
+					"+@name": "INLINE_REFACTORING_SETTINGS_DEFAULT",
+					"+@value": "#37394B"
+				},
+				{
+					"+@name": "INLINE_REFACTORING_SETTINGS_FOCUSED",
+					"+@value": "#3E4052"
+				},
+				{
+					"+@name": "INLINE_REFACTORING_SETTINGS_HOVERED",
+					"+@value": "#3E4052"
+				},
+				{
+					"+@name": "LINE_NUMBERS_COLOR",
+					"+@value": "#6C7086"
+				},
+				{
+					"+@name": "LINE_NUMBER_ON_CARET_ROW_COLOR",
+					"+@value": "#7F849C"
+				},
+				{
+					"+@name": "LOOKUP_COLOR",
+					"+@value": "#313244"
+				},
+				{
+					"+@name": "METHOD_SEPARATORS_COLOR",
+					"+@value": "#313244"
+				},
+				{
+					"+@name": "MODIFIED_LINES_COLOR",
+					"+@value": "#FAB387"
+				},
+				{
+					"+@name": "MODIFIED_TAB_ICON",
+					"+@value": "#89B4FA"
+				},
+				{
+					"+@name": "NOTIFICATION_BACKGROUND",
+					"+@value": "#181825"
+				},
+				{
+					"+@name": "PROMOTION_PANE",
+					"+@value": "#313244"
+				},
+				{
+					"+@name": "QUESTION_HINT",
+					"+@value": "#313244"
+				},
+				{
+					"+@name": "RECENT_LOCATIONS_SELECTION",
+					"+@value": "#313244"
+				},
+				{
+					"+@name": "RIGHT_MARGIN_COLOR",
+					"+@value": "#313244"
+				},
+				{
+					"+@name": "SELECTED_INDENT_GUIDE",
+					"+@value": "#45475A"
+				},
+				{
+					"+@name": "SELECTED_TEARLINE_COLOR",
+					"+@value": "#45475A"
+				},
+				{
+					"+@name": "SELECTION_BACKGROUND",
+					"+@value": "#414356"
+				},
+				{
+					"+@name": "ScrollBar.Mac.hoverThumbBorderColor",
+					"+@value": "#45475A"
+				},
+				{
+					"+@name": "ScrollBar.Mac.hoverThumbColor",
+					"+@value": "#45475A"
+				},
+				{
+					"+@name": "ScrollBar.Mac.thumbBorderColor",
+					"+@value": "#313244"
+				},
+				{
+					"+@name": "ScrollBar.Mac.thumbColor",
+					"+@value": "#313244"
+				},
+				{
+					"+@name": "ScrollBar.hoverThumbBorderColor",
+					"+@value": "#45475A"
+				},
+				{
+					"+@name": "ScrollBar.hoverThumbColor",
+					"+@value": "#45475A"
+				},
+				{
+					"+@name": "ScrollBar.thumbBorderColor",
+					"+@value": "#313244"
+				},
+				{
+					"+@name": "ScrollBar.thumbColor",
+					"+@value": "#313244"
+				},
+				{
+					"+@name": "TAB_UNDERLINE",
+					"+@value": "#CBA6F7"
+				},
+				{
+					"+@name": "TAB_UNDERLINE_INACTIVE",
+					"+@value": "#CDD6F4"
+				},
+				{
+					"+@name": "TEARLINE_COLOR",
+					"+@value": "#313244"
+				},
+				{
+					"+@name": "VCS_ANNOTATIONS_COLOR_1",
+					"+@value": "#8670A7"
+				},
+				{
+					"+@name": "VCS_ANNOTATIONS_COLOR_2",
+					"+@value": "#734A5F"
+				},
+				{
+					"+@name": "VCS_ANNOTATIONS_COLOR_3",
+					"+@value": "#7DA87E"
+				},
+				{
+					"+@name": "VCS_ANNOTATIONS_COLOR_4",
+					"+@value": "#385167"
+				},
+				{
+					"+@name": "VCS_ANNOTATIONS_COLOR_5",
+					"+@value": "#5E78A8"
+				},
+				{
+					"+@name": "VISUAL_INDENT_GUIDE",
+					"+@value": "#313244"
+				},
+				{
+					"+@name": "WHITESPACES",
+					"+@value": "#9399B2"
+				},
+				{
+					"+@name": "WHITESPACES_MODIFIED_LINES_COLOR",
+					"+@value": "#585B70"
+				}
+			]
+		},
+		"attributes": {
+			"option": [
+				{
+					"+@name": "ABSTRACT_METHOD_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "ANGLE_BRACKETS_RAINBOW_COLOR0",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f38ba8"
+						}
+					}
+				},
+				{
+					"+@name": "ANGLE_BRACKETS_RAINBOW_COLOR1",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "ANGLE_BRACKETS_RAINBOW_COLOR2",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "ANGLE_BRACKETS_RAINBOW_COLOR3",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "ANGLE_BRACKETS_RAINBOW_COLOR4",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#74c7ec"
+						}
+					}
+				},
+				{
+					"+@name": "ANNOTATION_ATTRIBUTE_NAME_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#eba0ac"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "ANNOTATION_NAME_ATTRIBUTES",
+					"+@baseAttributes": ""
+				},
+				{
+					"+@name": "APACHE_CONFIG.IDENTIFIER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "BAD_CHARACTER",
+					"value": {
+						"option": [
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BASH.BINARY_DATA",
+					"value": null
+				},
+				{
+					"+@name": "BASH.CONDITIONAL",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "BASH.EXTERNAL_COMMAND",
+					"+@baseAttributes": "DEFAULT_IDENTIFIER"
+				},
+				{
+					"+@name": "BASH.FUNCTION_CALL",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "BASH.HERE_DOC_END",
+					"+@baseAttributes": "DEFAULT_KEYWORD"
+				},
+				{
+					"+@name": "BASH.HERE_DOC_START",
+					"+@baseAttributes": "DEFAULT_KEYWORD"
+				},
+				{
+					"+@name": "BASH.SHEBANG",
+					"+@baseAttributes": "BASH.LINE_COMMENT"
+				},
+				{
+					"+@name": "BLADE_DIRECTIVE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_BLACK",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#45475a"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#45475a"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_BLACK_BRIGHT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#585b70"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#585b70"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_BLUE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#89b4fa"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_BLUE_BRIGHT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#89b4fa"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_COMMAND",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_CURRENT_SEARCH_ENTRY",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#5e3f53"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_CYAN",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#94e2d5"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#94e2d5"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_CYAN_BRIGHT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#94e2d5"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#94e2d5"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_GREEN",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#a6e3a1"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#a6e3a1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_GREEN_BRIGHT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#a6e3a1"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#a6e3a1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_MAGENTA",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f5c2e7"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#f5c2e7"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_MAGENTA_BRIGHT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f5c2e7"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#f5c2e7"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_RED",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#f38ba8"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_RED_BRIGHT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#f38ba8"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_SEARCH_ENTRY",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#3e4b6b"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_WHITE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#bac2de"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#bac2de"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_WHITE_BRIGHT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#a6adc8"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#a6adc8"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_YELLOW",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f9e2af"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#f9e2af"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BLOCK_TERMINAL_YELLOW_BRIGHT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f9e2af"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#f9e2af"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BOOKMARKS_ATTRIBUTES",
+					"value": null
+				},
+				{
+					"+@name": "BREADCRUMBS_CURRENT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#313244"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BREADCRUMBS_DEFAULT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "BREADCRUMBS_HOVERED",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#585b70"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "BREADCRUMBS_INACTIVE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "BREAKPOINT_ATTRIBUTES",
+					"value": null
+				},
+				{
+					"+@name": "BUILDOUT.KEY",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "BUILDOUT.KEY_VALUE_SEPARATOR",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "BUILDOUT.SECTION_NAME",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "BUILDOUT.VALUE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "CLASS_REFERENCE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "CODE_LENS_BORDER_COLOR",
+					"value": {
+						"option": [
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#313244"
+							},
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#b4befe"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "COFFEESCRIPT.CLASS_NAME",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "CONDITIONALLY_NOT_COMPILED",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#585b70"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "CONSOLE_BLACK_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#45475a"
+						}
+					}
+				},
+				{
+					"+@name": "CONSOLE_BLUE_BRIGHT_OUTPUT",
+					"+@baseAttributes": "CONSOLE_BLUE_OUTPUT"
+				},
+				{
+					"+@name": "CONSOLE_BLUE_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "CONSOLE_CYAN_BRIGHT_OUTPUT",
+					"+@baseAttributes": "CONSOLE_CYAN_OUTPUT"
+				},
+				{
+					"+@name": "CONSOLE_CYAN_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "CONSOLE_DARKGRAY_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#585b70"
+						}
+					}
+				},
+				{
+					"+@name": "CONSOLE_ERROR_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "CONSOLE_GRAY_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#bac2de"
+						}
+					}
+				},
+				{
+					"+@name": "CONSOLE_GREEN_BRIGHT_OUTPUT",
+					"+@baseAttributes": "CONSOLE_GREEN_OUTPUT"
+				},
+				{
+					"+@name": "CONSOLE_GREEN_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "CONSOLE_MAGENTA_BRIGHT_OUTPUT",
+					"+@baseAttributes": "CONSOLE_MAGENTA_OUTPUT"
+				},
+				{
+					"+@name": "CONSOLE_MAGENTA_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f5c2e7"
+						}
+					}
+				},
+				{
+					"+@name": "CONSOLE_NORMAL_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "CONSOLE_RANGE_TO_EXECUTE",
+					"value": {
+						"option": {
+							"+@name": "EFFECT_COLOR",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "CONSOLE_RED_BRIGHT_OUTPUT",
+					"+@baseAttributes": "CONSOLE_RED_OUTPUT"
+				},
+				{
+					"+@name": "CONSOLE_RED_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f38ba8"
+						}
+					}
+				},
+				{
+					"+@name": "CONSOLE_SYSTEM_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f5e0dc"
+						}
+					}
+				},
+				{
+					"+@name": "CONSOLE_USER_INPUT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#a6e3a1"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "CONSOLE_WHITE_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "CONSOLE_YELLOW_BRIGHT_OUTPUT",
+					"+@baseAttributes": "CONSOLE_YELLOW_OUTPUT"
+				},
+				{
+					"+@name": "CONSOLE_YELLOW_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "CONSTRUCTOR_CALL_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "CONSTRUCTOR_DECLARATION_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "CSS.BRACKETS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "CSS.CLASS_NAME",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "CSS.COLOR",
+					"+@baseAttributes": "CSS.IDENT"
+				},
+				{
+					"+@name": "CSS.FUNCTION",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89dceb"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "CSS.HASH",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "CSS.IMPORTANT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#b4befe"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "CSS.KEYWORD",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "CSS.OPERATORS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "CSS.PROPERTY_NAME",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "CSS.PROPERTY_VALUE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "CSS.PSEUDO",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "CSS.TAG_NAME",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "CSS.URL",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#a6e3a1"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "CSV_PLUGIN_COLUMN_COLORING_ATTRIBUTE_1",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f38ba8"
+						}
+					}
+				},
+				{
+					"+@name": "CSV_PLUGIN_COLUMN_COLORING_ATTRIBUTE_2",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "CSV_PLUGIN_COLUMN_COLORING_ATTRIBUTE_3",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "CSV_PLUGIN_COLUMN_COLORING_ATTRIBUTE_4",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "CSV_PLUGIN_COLUMN_COLORING_ATTRIBUTE_5",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "CSV_PLUGIN_COLUMN_COLORING_ATTRIBUTE_6",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "CSV_PLUGIN_COLUMN_COLORING_ATTRIBUTE_7",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "CSV_PLUGIN_COLUMN_COLORING_ATTRIBUTE_8",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "CSV_PLUGIN_COLUMN_COLORING_ATTRIBUTE_9",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "CTRL_CLICKABLE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "CUSTOM_KEYWORD1_ATTRIBUTES",
+					"+@baseAttributes": "DEFAULT_KEYWORD"
+				},
+				{
+					"+@name": "CUSTOM_KEYWORD2_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "CUSTOM_KEYWORD3_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f9e2af"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "CUSTOM_KEYWORD4_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89dceb"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "CUSTOM_STRING_ATTRIBUTES",
+					"+@baseAttributes": "DEFAULT_STRING"
+				},
+				{
+					"+@name": "CUSTOM_VALID_STRING_ESCAPE_ATTRIBUTES",
+					"+@baseAttributes": "DEFAULT_VALID_STRING_ESCAPE"
+				},
+				{
+					"+@name": "Class",
+					"+@baseAttributes": ""
+				},
+				{
+					"+@name": "Clojure Atom",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "Clojure Character",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "Clojure Keyword",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "Clojure Literal",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "Clojure Numbers",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "Clojure Strings",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "CodeWithMe.USER_1_MARKER",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#f38ba8"
+						}
+					}
+				},
+				{
+					"+@name": "CodeWithMe.USER_1_SELECTION",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#493446"
+						}
+					}
+				},
+				{
+					"+@name": "CodeWithMe.USER_2_MARKER",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "CodeWithMe.USER_2_SELECTION",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#765a52"
+						}
+					}
+				},
+				{
+					"+@name": "CodeWithMe.USER_3_MARKER",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "CodeWithMe.USER_3_SELECTION",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#766c62"
+						}
+					}
+				},
+				{
+					"+@name": "CodeWithMe.USER_4_MARKER",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "CodeWithMe.USER_4_SELECTION",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#546d5c"
+						}
+					}
+				},
+				{
+					"+@name": "CodeWithMe.USER_5_MARKER",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#74c7ec"
+						}
+					}
+				},
+				{
+					"+@name": "CodeWithMe.USER_5_SELECTION",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#40627a"
+						}
+					}
+				},
+				{
+					"+@name": "CodeWithMe.USER_6_MARKER",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "CodeWithMe.USER_6_SELECTION",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#63547e"
+						}
+					}
+				},
+				{
+					"+@name": "DART_COLON",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "DART_CONSTRUCTOR",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#eba0ac"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DART_ENUM_CONSTANT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "DART_FAT_ARROW",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "DART_FUNCTION_TYPE_ALIAS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "DART_LOCAL_FUNCTION_DECLARATION",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "DART_LOCAL_FUNCTION_REFERENCE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "DART_TOP_LEVEL_GETTER_DECLARATION",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#eba0ac"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DART_TYPE_NAME_DYNAMIC",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#b4befe"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DART_TYPE_PARAMETER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#b4befe"
+						}
+					}
+				},
+				{
+					"+@name": "DART_UNRESOLVED_INSTANCE_MEMBER_REFERENCE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#585b70"
+						}
+					}
+				},
+				{
+					"+@name": "DEBUGGER_INLINED_VALUES",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#585b70"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEBUGGER_INLINED_VALUES_EXECUTION_LINE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#585b70"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEBUGGER_INLINED_VALUES_MODIFIED",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEBUGGER_SMART_STEP_INTO_SELECTION",
+					"+@baseAttributes": "LIVE_TEMPLATE_ATTRIBUTES"
+				},
+				{
+					"+@name": "DEBUGGER_SMART_STEP_INTO_TARGET",
+					"+@baseAttributes": "SEARCH_RESULT_ATTRIBUTES"
+				},
+				{
+					"+@name": "DEFAULT_ATTRIBUTE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_BLOCK_COMMENT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#6c7086"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEFAULT_BRACES",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#9399b2"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_BRACKETS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#9399b2"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_CLASS_NAME",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f9e2af"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEFAULT_CLASS_REFERENCE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_COMMA",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#9399b2"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_CONSTANT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_DOC_COMMENT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#6c7086"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEFAULT_DOC_COMMENT_TAG",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEFAULT_DOC_COMMENT_TAG_VALUE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_DOC_MARKUP",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#585b70"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEFAULT_DOT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#9399b2"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_ENTITY",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_FUNCTION_CALL",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEFAULT_FUNCTION_DECLARATION",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEFAULT_GLOBAL_VARIABLE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#eba0ac"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEFAULT_IDENTIFIER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_INSTANCE_FIELD",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_INTERFACE_NAME",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f9e2af"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEFAULT_INVALID_STRING_ESCAPE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#a6e3a1"
+							},
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEFAULT_KEYWORD",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_LABEL",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_LINE_COMMENT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#6c7086"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEFAULT_LOCAL_VARIABLE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_METADATA",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f9e2af"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEFAULT_NUMBER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_OPERATION_SIGN",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_PARAMETER",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#eba0ac"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEFAULT_PARENTHS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#9399b2"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_PREDEFINED_SYMBOL",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#b4befe"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEFAULT_REASSIGNED_LOCAL_VARIABLE",
+					"+@baseAttributes": "DEFAULT_LOCAL_VARIABLE"
+				},
+				{
+					"+@name": "DEFAULT_REASSIGNED_PARAMETER",
+					"+@baseAttributes": "DEFAULT_PARAMETER"
+				},
+				{
+					"+@name": "DEFAULT_SEMICOLON",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#9399b2"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_STATIC_FIELD",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_STATIC_METHOD",
+					"+@baseAttributes": "DEFAULT_FUNCTION_DECLARATION"
+				},
+				{
+					"+@name": "DEFAULT_STRING",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_TAG",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_TEMPLATE_LANGUAGE_COLOR",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f2cdcd"
+						}
+					}
+				},
+				{
+					"+@name": "DEFAULT_VALID_STRING_ESCAPE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f5c2e7"
+						}
+					}
+				},
+				{
+					"+@name": "DELETED_TEXT_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#f38ba8"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DEPRECATED_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "3"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DIFF_CONFLICT",
+					"value": {
+						"option": [
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#53394d"
+							},
+							{
+								"+@name": "ERROR_STRIPE_COLOR",
+								"+@value": "#493446"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DIFF_DELETED",
+					"value": {
+						"option": [
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#53394d"
+							},
+							{
+								"+@name": "ERROR_STRIPE_COLOR",
+								"+@value": "#493446"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DIFF_INSERTED",
+					"value": {
+						"option": [
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#404f4b"
+							},
+							{
+								"+@name": "ERROR_STRIPE_COLOR",
+								"+@value": "#394545"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DIFF_MODIFIED",
+					"value": {
+						"option": [
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#394461"
+							},
+							{
+								"+@name": "ERROR_STRIPE_COLOR",
+								"+@value": "#333c57"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DJANGO_STRING_LITERAL",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#a6e3a1"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DJANGO_TAG_NAME",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "DUPLICATE_FROM_SERVER",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#313244"
+						}
+					}
+				},
+				{
+					"+@name": "EJS_OPEN",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "EJS_OPEN_EQ",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "EJS_OPEN_EQ_EQ",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "EJS_OPEN_EQ_GENERATOR",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "EJS_OPEN_FILTER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "EL.BOUNDS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "ENUM_CONST",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "ERRORS_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "ERROR_STRIPE_COLOR",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "EVALUATED_EXPRESSION_ATTRIBUTES",
+					"value": null
+				},
+				{
+					"+@name": "EVALUATED_EXPRESSION_EXECUTION_LINE_ATTRIBUTES",
+					"value": null
+				},
+				{
+					"+@name": "EXECUTIONPOINT_ATTRIBUTES",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#3f3b41"
+						}
+					}
+				},
+				{
+					"+@name": "FIRST SYMBOL IN LIST",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "FOLDED_TEXT_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#6c7086"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#313244"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "FOLLOWED_HYPERLINK_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#b4befe"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							},
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#b4befe"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "First symbol in list",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "GENERIC_SERVER_ERROR_OR_WARNING",
+					"value": {
+						"option": [
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "ERROR_STRIPE_COLOR",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "GHERKIN_KEYWORD",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f38ba8"
+						}
+					}
+				},
+				{
+					"+@name": "GHERKIN_OUTLINE_PARAMETER_SUBSTITUTION",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "GHERKIN_PYSTRING",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "GHERKIN_REGEXP_PARAMETER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "GHERKIN_TABLE_HEADER_CELL",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "GHERKIN_TABLE_PIPE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cba6f7"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "GHERKIN_TAG",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f38ba8"
+						}
+					}
+				},
+				{
+					"+@name": "GO_BUILTIN_TYPE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "GO_LOCAL_CONSTANT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "GO_PACKAGE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "GO_PACKAGE_LOCAL_CONSTANT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "GO_SHADOWING_VARIABLE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#bac2de"
+							},
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#bac2de"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "GO_TEMPLATE_BACKGROUND",
+					"value": null
+				},
+				{
+					"+@name": "GO_TYPE_REFERENCE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "HAML_CLASS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "HAML_COMMENT",
+					"+@baseAttributes": ""
+				},
+				{
+					"+@name": "HAML_FILTER",
+					"+@baseAttributes": ""
+				},
+				{
+					"+@name": "HAML_FILTER_CONTENT",
+					"+@baseAttributes": ""
+				},
+				{
+					"+@name": "HAML_ID",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "HAML_PARENTHS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "HAML_RUBY_CODE",
+					"+@baseAttributes": ""
+				},
+				{
+					"+@name": "HAML_RUBY_START",
+					"+@baseAttributes": ""
+				},
+				{
+					"+@name": "HAML_STRING",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "HAML_STRING_INTERPOLATED",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "HAML_TAG",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "HAML_TAG_NAME",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "HAML_TEXT",
+					"+@baseAttributes": ""
+				},
+				{
+					"+@name": "HAML_WS_REMOVAL",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "HAML_XHTML",
+					"+@baseAttributes": ""
+				},
+				{
+					"+@name": "HTML_ATTRIBUTE_NAME",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "HTML_ATTRIBUTE_VALUE",
+					"+@baseAttributes": "DEFAULT_STRING"
+				},
+				{
+					"+@name": "HTML_CUSTOM_TAG_NAME",
+					"+@baseAttributes": "HTML_TAG_NAME"
+				},
+				{
+					"+@name": "HTML_ENTITY_REFERENCE",
+					"+@baseAttributes": "DEFAULT_ENTITY"
+				},
+				{
+					"+@name": "HTML_TAG",
+					"+@baseAttributes": "DEFAULT_TAG"
+				},
+				{
+					"+@name": "HTML_TAG_NAME",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "HTTP_REQUEST_INPUT_FILE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "HTTP_REQUEST_MESSAGE_BODY",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "HTTP_REQUEST_PARAMETER_NAME",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "HTTP_REQUEST_PARAMETER_VALUE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "HTTP_REQUEST_VARIABLE_BRACES",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "HYPERLINK_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							},
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "IDENTIFIER_UNDER_CARET_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#585b70"
+							},
+							{
+								"+@name": "ERROR_STRIPE_COLOR",
+								"+@value": "#94e2d5"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "IMPLICIT_ANONYMOUS_CLASS_PARAMETER_ATTRIBUTES",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "INACTIVE_HYPERLINK_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "INDENT_GUIDES_RAINBOW_COLOR0",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f38ba8"
+						}
+					}
+				},
+				{
+					"+@name": "INDENT_GUIDES_RAINBOW_COLOR1",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "INDENT_GUIDES_RAINBOW_COLOR2",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "INDENT_GUIDES_RAINBOW_COLOR3",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "INDENT_GUIDES_RAINBOW_COLOR4",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#74c7ec"
+						}
+					}
+				},
+				{
+					"+@name": "INFO_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#f9e2af"
+							},
+							{
+								"+@name": "ERROR_STRIPE_COLOR",
+								"+@value": "#f9e2af"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "INI.SECTION",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "INJECTED_LANGUAGE_FRAGMENT",
+					"value": null
+				},
+				{
+					"+@name": "INLAY_DEFAULT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#7f849c"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#1e1e2e"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "INLAY_TEXT_WITHOUT_BACKGROUND",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#585b70"
+						}
+					}
+				},
+				{
+					"+@name": "INLINE_PARAMETER_HINT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#313244"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "INLINE_PARAMETER_HINT_CURRENT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#11111b"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "INLINE_PARAMETER_HINT_HIGHLIGHTED",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#585b70"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "INLINE_STACK_FRAMES",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#45475a"
+						}
+					}
+				},
+				{
+					"+@name": "IVAR",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "JADE_FILE_PATH",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "JADE_FILTER_NAME",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "JADE_JS_BLOCK",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#b4befe"
+						}
+					}
+				},
+				{
+					"+@name": "JADE_STATEMENTS",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cba6f7"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "JADE_TAG_CLASS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "JADE_TAG_ID",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "JS.DECORATOR",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "JS.GLOBAL_FUNCTION",
+					"+@baseAttributes": "DEFAULT_FUNCTION_DECLARATION"
+				},
+				{
+					"+@name": "JS.GLOBAL_VARIABLE",
+					"+@baseAttributes": "DEFAULT_GLOBAL_VARIABLE"
+				},
+				{
+					"+@name": "JS.INSTANCE_MEMBER_FUNCTION",
+					"+@baseAttributes": "DEFAULT_INSTANCE_METHOD"
+				},
+				{
+					"+@name": "JS.LOCAL_VARIABLE",
+					"+@baseAttributes": "DEFAULT_LOCAL_VARIABLE"
+				},
+				{
+					"+@name": "JS.REGEXP",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f5c2e7"
+						}
+					}
+				},
+				{
+					"+@name": "JSON.PROPERTY_KEY",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "JSP_DIRECTIVE_NAME",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "JUPYTER_SELECTED_CELL",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89dceb"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#1e1e2e"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "JavaScript:INJECTED_LANGUAGE_FRAGMENT",
+					"+@baseAttributes": "INJECTED_LANGUAGE_FRAGMENT"
+				},
+				{
+					"+@name": "KOTLIN_BACKING_FIELD_VARIABLE",
+					"value": null
+				},
+				{
+					"+@name": "KOTLIN_CLOSURE_DEFAULT_PARAMETER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "KOTLIN_CONSTRUCTOR",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "KOTLIN_DYNAMIC_FUNCTION_CALL",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89dceb"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "KOTLIN_DYNAMIC_PROPERTY_CALL",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#eba0ac"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "KOTLIN_ENUM_ENTRY",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "KOTLIN_EXCLEXCL",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "KOTLIN_FUNCTION_LITERAL_BRACES_AND_ARROW",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f38ba8"
+						}
+					}
+				},
+				{
+					"+@name": "KOTLIN_MUTABLE_VARIABLE",
+					"value": {
+						"option": {
+							"+@name": "FONT_TYPE",
+							"+@value": "2"
+						}
+					}
+				},
+				{
+					"+@name": "KOTLIN_NAMED_ARGUMENT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "KOTLIN_QUEST",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "KOTLIN_SMART_CAST_RECEIVER",
+					"value": null
+				},
+				{
+					"+@name": "KOTLIN_SMART_CAST_VALUE",
+					"value": null
+				},
+				{
+					"+@name": "KOTLIN_SMART_CONSTANT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "KOTLIN_VARIABLE_AS_FUNCTION",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "KOTLIN_VARIABLE_AS_FUNCTION_LIKE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "LABEL",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "LESS_VARIABLE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#eba0ac"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "LINE_FULL_COVERAGE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "LINE_NONE_COVERAGE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f38ba8"
+						}
+					}
+				},
+				{
+					"+@name": "LINE_PARTIAL_COVERAGE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "LIVE_TEMPLATE_ATTRIBUTES",
+					"value": {
+						"option": {
+							"+@name": "EFFECT_COLOR",
+							"+@value": "#b4befe"
+						}
+					}
+				},
+				{
+					"+@name": "LIVE_TEMPLATE_INACTIVE_SEGMENT",
+					"value": {
+						"option": {
+							"+@name": "EFFECT_COLOR",
+							"+@value": "#45475a"
+						}
+					}
+				},
+				{
+					"+@name": "LOCALE.MSGCTXT_KEYWORD",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "LOCALE.MSGID_KEYWORD",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "LOCALE.MSGID_PLURAL_KEYWORD",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "LOCALE.MSGSTR_KEYWORD",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "LOCALE.MSGSTR_PLURAL_KEYWORD",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "LOGCAT_ASSERT_OUTPUT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#eba0ac"
+							},
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#eba0ac"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "LOGCAT_DEBUG_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "LOGCAT_FILTER_KEY",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "LOGCAT_FILTER_KVALUE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "LOGCAT_FILTER_REGEX_KVALUE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f5c2e7"
+						}
+					}
+				},
+				{
+					"+@name": "LOGCAT_FILTER_STRING_KVALUE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "LOGCAT_INFO_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "LOGCAT_VERBOSE_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "LOGCAT_WARNING_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "LOG_DEBUG_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "LOG_ERROR_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "LOG_EXPIRED_ENTRY",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#45475a"
+						}
+					}
+				},
+				{
+					"+@name": "LOG_INFO_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "LOG_VERBOSE_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "LOG_WARNING_OUTPUT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "LUA_REGION_DESC",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "LUA_STD_API",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cba6f7"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "LUA_UP_VALUE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "3"
+							},
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#f9e2af"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "List/map to object conversion",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "MACRONAME",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89dceb"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "MAGIC_MEMBER_ACCESS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "MAKO.TAG",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "MARKDOWN_BLOCK_QUOTE_MARKER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "MARKDOWN_BOLD",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "MARKDOWN_BOLD_MARKER",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#9399b2"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "MARKDOWN_CODE_FENCE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "MARKDOWN_CODE_SPAN",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#a6e3a1"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "MARKDOWN_CODE_SPAN_MARKER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "MARKDOWN_HEADER_LEVEL_1",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f38ba8"
+						}
+					}
+				},
+				{
+					"+@name": "MARKDOWN_HEADER_LEVEL_2",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "MARKDOWN_HEADER_LEVEL_3",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "MARKDOWN_HEADER_LEVEL_4",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "MARKDOWN_HEADER_LEVEL_5",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#74c7ec"
+						}
+					}
+				},
+				{
+					"+@name": "MARKDOWN_HEADER_LEVEL_6",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#b4befe"
+						}
+					}
+				},
+				{
+					"+@name": "MARKDOWN_HRULE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#94e2d5"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "MARKDOWN_HTML_BLOCK",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "MARKDOWN_ITALIC",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "MARKDOWN_ITALIC_MARKER",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#9399b2"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "MARKDOWN_LINK_DESTINATION",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "MARKDOWN_LINK_LABEL",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#b4befe"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "MARKDOWN_LINK_TEXT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#b4befe"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "MARKDOWN_LINK_TITLE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#a6e3a1"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "MARKDOWN_LIST_ITEM",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "MARKDOWN_LIST_MARKER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "MARKDOWN_ORDERED_LIST",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "MARKDOWN_TABLE_SEPARATOR",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#585b70"
+						}
+					}
+				},
+				{
+					"+@name": "MARKDOWN_UNORDERED_LIST",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "MARKED_FOR_REMOVAL_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "3"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "MATCHED_BRACE_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "1"
+							},
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#6c7086"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "MESSAGE_ARGUMENT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "NG.BANANA_BINDING_ATTR_NAME",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "NG.EVENT_BINDING_ATTR_NAME",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "NG.PROPERTY_BINDING_ATTR_NAME",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "NG.TEMPLATE_BINDINGS_ATTR_NAME",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "NIX_BUILTIN",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "NIX_IDENTIFIER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "NOT_TOP_FRAME_ATTRIBUTES",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#313244"
+						}
+					}
+				},
+				{
+					"+@name": "NOT_USED_ELEMENT_ATTRIBUTES",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#9399b2"
+						}
+					}
+				},
+				{
+					"+@name": "OC.CLASS_REFERENCE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "OC.CONDITIONALLY_NOT_COMPILED",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#585b70"
+						}
+					}
+				},
+				{
+					"+@name": "OC.CPP_KEYWORD",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "OC.ENUM_CONST",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "OC.MACRONAME",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "OC.MACRO_PARAMETER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "OC.MESSAGE_ARGUMENT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89dceb"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "OC.METHOD_DECLARATION",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89dceb"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "OC.OVERLOADED_OPERATOR",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "OC.PROPERTY",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#eba0ac"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "OC.PROPERTY_ATTRIBUTE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "OC.PROTOCOL_REFERENCE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "OC.STRUCT_FIELD",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "OC.STRUCT_LIKE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f9e2af"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "OC.TYPEDEF",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f9e2af"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "OC_FORMAT_TOKEN",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "PHP_HEREDOC_CONTENT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#a6e3a1"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "PHP_IDENTIFIER",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "PHP_INSTANCE_FIELD",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f2cdcd"
+						}
+					}
+				},
+				{
+					"+@name": "PHP_INTERFACE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f9e2af"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "PHP_NAMED_ARGUMENT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "PHP_THIS_VAR",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f9e2af"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "PROPERTIES.INVALID_STRING_ESCAPE",
+					"+@baseAttributes": "DEFAULT_INVALID_STRING_ESCAPE"
+				},
+				{
+					"+@name": "PROPERTIES.KEY",
+					"+@baseAttributes": "DEFAULT_KEYWORD"
+				},
+				{
+					"+@name": "PROPERTIES.KEY_VALUE_SEPARATOR",
+					"+@baseAttributes": "DEFAULT_OPERATION_SIGN"
+				},
+				{
+					"+@name": "PROPERTIES.VALID_STRING_ESCAPE",
+					"+@baseAttributes": "DEFAULT_VALID_STRING_ESCAPE"
+				},
+				{
+					"+@name": "PROTOCOL_REFERENCE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_BAD_CHARACTER",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_BRACES",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_BRACKETS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_CLASS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_COMMA",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_DOT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_ESCAPE_SEQUENCE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_HEREDOC_TAGS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_KEYWORD",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cba6f7"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "PUPPET_NUMBER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_OPERATION_SIGN",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_PARENTH",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_REGEX",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_SEMICOLON",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_SQ_STRING",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_STRING",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_VARIABLE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "PUPPET_VARIABLE_INTERPOLATION",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "PY.ANNOTATION",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "PY.BUILTIN_NAME",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "PY.DECORATOR",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "PY.DOC_COMMENT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "PY.KEYWORD_ARGUMENT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#eba0ac"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "PY.PREDEFINED_DEFINITION",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#74c7ec"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "PY.PREDEFINED_USAGE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#94e2d5"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "PY.SELF_PARAMETER",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "PY.STRING",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "PY.STRING.B",
+					"+@baseAttributes": "DEFAULT_STRING"
+				},
+				{
+					"+@name": "RAINBOW_COLOR0",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#dcb8d6"
+						}
+					}
+				},
+				{
+					"+@name": "RAINBOW_COLOR1",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#dfdbd8"
+						}
+					}
+				},
+				{
+					"+@name": "RAINBOW_COLOR2",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#bddbd3"
+						}
+					}
+				},
+				{
+					"+@name": "RAINBOW_COLOR3",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#b2c8f6"
+						}
+					}
+				},
+				{
+					"+@name": "RAINBOW_COLOR4",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#ccc3f5"
+						}
+					}
+				},
+				{
+					"+@name": "RDOC_DIRECTIVE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "RDOC_EMAIL",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "RDOC_HEADINGS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "RDOC_IDENTIFIER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "RDOC_KEYWORD",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "RDOC_URL",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "REGEXP.BRACES",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "REGEXP.BRACKETS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "REGEXP.CHARACTER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "REGEXP.CHAR_CLASS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "REGEXP.ESC_CHARACTER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "REGEXP.META",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "REGEXP.PARENTHS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "REGEXP.QUANTIFIER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "REGEXP.QUOTE_CHARACTER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "REGEXP.REDUNDANT_ESCAPE",
+					"+@baseAttributes": "DEFAULT_VALID_STRING_ESCAPE"
+				},
+				{
+					"+@name": "REST.BOLD",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "REST.EXPLICIT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cba6f7"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "REST.FIELD",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cba6f7"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "REST.FIXED",
+					"+@baseAttributes": "DEFAULT_IDENTIFIER"
+				},
+				{
+					"+@name": "REST.INLINE",
+					"+@baseAttributes": "DEFAULT_IDENTIFIER"
+				},
+				{
+					"+@name": "REST.INTERPRETED",
+					"+@baseAttributes": "DEFAULT_IDENTIFIER"
+				},
+				{
+					"+@name": "REST.ITALIC",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "REST.REF.NAME",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#a6e3a1"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "RHTML_EXPRESSION_END_ID",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "RHTML_EXPRESSION_START_ID",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "RHTML_OMIT_NEW_LINE_ID",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "RHTML_SCRIPTING_BACKGROUND_ID",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "RHTML_SCRIPTLET_END_ID",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "RHTML_SCRIPTLET_START_ID",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "RMARKDOWN_CHUNK",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#181825"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "ROUND_BRACKETS_RAINBOW_COLOR0",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f38ba8"
+						}
+					}
+				},
+				{
+					"+@name": "ROUND_BRACKETS_RAINBOW_COLOR1",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "ROUND_BRACKETS_RAINBOW_COLOR2",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "ROUND_BRACKETS_RAINBOW_COLOR3",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "ROUND_BRACKETS_RAINBOW_COLOR4",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#74c7ec"
+						}
+					}
+				},
+				{
+					"+@name": "RUNTIME_ERROR",
+					"value": {
+						"option": [
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "ERROR_STRIPE_COLOR",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "5"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "R_NAMED_ARGUMENT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "ReShaper.ENUM_IDENTIFIER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "ReSharper.ASP_NET_MVC_ACTION",
+					"value": null
+				},
+				{
+					"+@name": "ReSharper.ASP_NET_MVC_AREA",
+					"value": null
+				},
+				{
+					"+@name": "ReSharper.ASP_NET_MVC_CONTROLLER",
+					"value": null
+				},
+				{
+					"+@name": "ReSharper.ASP_NET_MVC_VIEW",
+					"value": null
+				},
+				{
+					"+@name": "ReSharper.ASP_NET_MVC_VIEW_COMPONENT",
+					"value": null
+				},
+				{
+					"+@name": "ReSharper.ASP_NET_RUN_AT_ATTRIBUTE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "ReSharper.BRACE_OUTLINE",
+					"value": {
+						"option": {
+							"+@name": "EFFECT_COLOR",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "ReSharper.FORMAT_STRING_ITEM",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "ReSharper.FORMAT_STRING_ITEM_2",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "ReSharper.HINT",
+					"value": {
+						"option": [
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#89dceb"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "5"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "ReSharper.IL_INSTRUCTION",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "ReSharper.IL_TARGET_CODE_LABEL",
+					"value": {
+						"option": {
+							"+@name": "FONT_TYPE",
+							"+@value": "2"
+						}
+					}
+				},
+				{
+					"+@name": "ReSharper.IL_VIEWER_SYNCHRONIZATION",
+					"value": null
+				},
+				{
+					"+@name": "ReSharper.MATCHED_FORMAT_STRING_ITEM",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "ReSharper.OUTLINED_ENTITY",
+					"value": {
+						"option": {
+							"+@name": "EFFECT_COLOR",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "ReSharper.STRING_ESCAPE_CHARACTER_2",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "ReSharper.XAML_CLASS",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "ReSharper.XAML_NAMESPACE_ALIAS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "ReSharper.XAML_PROPERTY_IDENTIFIER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "SASS_COMMENT",
+					"+@baseAttributes": "CSS.COMMENT"
+				},
+				{
+					"+@name": "SASS_MIXIN",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f2cdcd"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "SASS_VARIABLE",
+					"+@baseAttributes": "DEFAULT_INSTANCE_FIELD"
+				},
+				{
+					"+@name": "SEARCH_RESULT_ATTRIBUTES",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#3e4b6b"
+						}
+					}
+				},
+				{
+					"+@name": "SLIM_BAD_CHARACTER",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#f5c2e7"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "SLIM_CLASS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "SLIM_DOCTYPE_KWD",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "SLIM_FILTER",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#94e2d5"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "SLIM_ID",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "SLIM_INTERPOLATION",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "SLIM_PARENTHS",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#94e2d5"
+						}
+					}
+				},
+				{
+					"+@name": "SLIM_STRING_INTERPOLATED",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "SLIM_TAG",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "SLIM_TAG_ATTR_KEY",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "SLIM_TAG_START",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "SPY-JS.EXCEPTION",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "SPY-JS.FUNCTION_SCOPE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "SPY-JS.PATH_LEVEL_ONE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "SPY-JS.PATH_LEVEL_TWO",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "SPY-JS.PROGRAM_SCOPE",
+					"value": {
+						"option": [
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#1e1e2e"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "SPY-JS.VALUE_HINT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#b4befe"
+						}
+					}
+				},
+				{
+					"+@name": "SQUARE_BRACKETS_RAINBOW_COLOR0",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f38ba8"
+						}
+					}
+				},
+				{
+					"+@name": "SQUARE_BRACKETS_RAINBOW_COLOR1",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "SQUARE_BRACKETS_RAINBOW_COLOR2",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "SQUARE_BRACKETS_RAINBOW_COLOR3",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "SQUARE_BRACKETS_RAINBOW_COLOR4",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#74c7ec"
+						}
+					}
+				},
+				{
+					"+@name": "SQUIGGLY_BRACKETS_RAINBOW_COLOR0",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f38ba8"
+						}
+					}
+				},
+				{
+					"+@name": "SQUIGGLY_BRACKETS_RAINBOW_COLOR1",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "SQUIGGLY_BRACKETS_RAINBOW_COLOR2",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "SQUIGGLY_BRACKETS_RAINBOW_COLOR3",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "SQUIGGLY_BRACKETS_RAINBOW_COLOR4",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#74c7ec"
+						}
+					}
+				},
+				{
+					"+@name": "STATIC_METHOD_ATTRIBUTES",
+					"+@baseAttributes": ""
+				},
+				{
+					"+@name": "STYLUS_VARIABLE",
+					"value": null
+				},
+				{
+					"+@name": "SUGGESTION",
+					"value": {
+						"option": [
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#89dceb"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "SWIFT_ATTRIBUTE_ARGUMENT",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "SWIFT_EXTERNAL_PARAMETER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "Scala Predefined types",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "Scala Type Alias",
+					"+@baseAttributes": ""
+				},
+				{
+					"+@name": "Scala Type parameter",
+					"+@baseAttributes": ""
+				},
+				{
+					"+@name": "Static method access",
+					"+@baseAttributes": ""
+				},
+				{
+					"+@name": "Static property reference ID",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "TAB_SELECTED",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cba6f7"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#313244"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "TAB_SELECTED_INACTIVE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cba6f7"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#313244"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "TAG_ATTR_KEY",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "TEMPLATE_VARIABLE_ATTRIBUTES",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "TERMINAL_COMMAND_TO_RUN_USING_IDE",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#45475a"
+						}
+					}
+				},
+				{
+					"+@name": "TEXT",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#1e1e2e"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "TEXT_SEARCH_RESULT_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cdd6f4"
+							},
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#3e4b6b"
+							},
+							{
+								"+@name": "ERROR_STRIPE_COLOR",
+								"+@value": "#89b4fa"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "TODO_DEFAULT_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f9e2af"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							},
+							{
+								"+@name": "ERROR_STRIPE_COLOR",
+								"+@value": "#fab387"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "TS.MODULE_NAME",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "TS.TYPE_GUARD",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f2cdcd"
+						}
+					}
+				},
+				{
+					"+@name": "TS.TYPE_PARAMETER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "TYPEDEF",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "TYPE_PARAMETER_NAME_ATTRIBUTES",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#f9e2af"
+						}
+					}
+				},
+				{
+					"+@name": "TYPO",
+					"value": {
+						"option": [
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#a6e3a1"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "UNMATCHED_BRACE_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "BACKGROUND",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "Unresolved reference access",
+					"value": {
+						"option": [
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "VELOCITY_DIRECTIVE",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f9e2af"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "1"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "VELOCITY_KEYWORD",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cba6f7"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "VELOCITY_REFERENCE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "VELOCITY_SCRIPTING_BACKGROUND",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#1e1e2e"
+						}
+					}
+				},
+				{
+					"+@name": "WARNING_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "ERROR_STRIPE_COLOR",
+								"+@value": "#fab387"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "WRITE_IDENTIFIER_UNDER_CARET_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#585b70"
+							},
+							{
+								"+@name": "ERROR_STRIPE_COLOR",
+								"+@value": "#94e2d5"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "WRITE_SEARCH_RESULT_ATTRIBUTES",
+					"value": {
+						"option": {
+							"+@name": "BACKGROUND",
+							"+@value": "#1e1e2e"
+						}
+					}
+				},
+				{
+					"+@name": "WRONG_REFERENCES_ATTRIBUTES",
+					"value": {
+						"option": [
+							{
+								"+@name": "EFFECT_COLOR",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "ERROR_STRIPE_COLOR",
+								"+@value": "#f38ba8"
+							},
+							{
+								"+@name": "EFFECT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "XML_ATTRIBUTE_NAME",
+					"+@baseAttributes": "DEFAULT_ATTRIBUTE"
+				},
+				{
+					"+@name": "XML_CUSTOM_TAG_NAME",
+					"+@baseAttributes": "XML_TAG_NAME"
+				},
+				{
+					"+@name": "XML_ENTITY_REFERENCE",
+					"+@baseAttributes": "DEFAULT_ENTITY"
+				},
+				{
+					"+@name": "XML_NS_PREFIX",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#fab387"
+						}
+					}
+				},
+				{
+					"+@name": "XML_TAG",
+					"+@baseAttributes": "DEFAULT_TAG"
+				},
+				{
+					"+@name": "XML_TAG_DATA",
+					"+@baseAttributes": "TEXT"
+				},
+				{
+					"+@name": "XML_TAG_NAME",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "XPATH.KEYWORD",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#cba6f7"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "XPATH.XPATH_NAME",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "XPATH.XPATH_VARIABLE",
+					"+@baseAttributes": ""
+				},
+				{
+					"+@name": "YAML_ANCHOR",
+					"+@baseAttributes": "DEFAULT_IDENTIFIER"
+				},
+				{
+					"+@name": "YAML_SCALAR_KEY",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "YAML_SCALAR_LIST",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "YAML_SCALAR_VALUE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6e3a1"
+						}
+					}
+				},
+				{
+					"+@name": "com.plan9.IDENTIFIER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "com.plan9.INSTRUCTION",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "com.plan9.KEYWORD",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cba6f7"
+						}
+					}
+				},
+				{
+					"+@name": "com.plan9.LABEL",
+					"value": {
+						"option": {
+							"+@name": "FONT_TYPE",
+							"+@value": "2"
+						}
+					}
+				},
+				{
+					"+@name": "com.plan9.PSEUDO_INSTRUCTION",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "com.plan9.REGISTER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "io.github.intellij.dlanguage.sdlang.TAG_IDENTIFIER",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "org.rust.CFG_DISABLED_CODE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#a6adc8"
+						}
+					}
+				},
+				{
+					"+@name": "org.rust.DOC_LINK",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "org.rust.LIFETIME",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#89b4fa"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "org.rust.MACRO",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89dceb"
+						}
+					}
+				},
+				{
+					"+@name": "org.rust.Q_OPERATOR",
+					"value": null
+				},
+				{
+					"+@name": "org.rust.TYPE_ALIAS",
+					"value": {
+						"option": [
+							{
+								"+@name": "FOREGROUND",
+								"+@value": "#f9e2af"
+							},
+							{
+								"+@name": "FONT_TYPE",
+								"+@value": "2"
+							}
+						]
+					}
+				},
+				{
+					"+@name": "org.rust.UNSAFE_CODE",
+					"value": null
+				},
+				{
+					"+@name": "org.rust.VARIABLE",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#cdd6f4"
+						}
+					}
+				},
+				{
+					"+@name": "org.toml.KEY",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#89b4fa"
+						}
+					}
+				},
+				{
+					"+@name": "osmorc.attributeName",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				},
+				{
+					"+@name": "osmorc.directiveName",
+					"value": {
+						"option": {
+							"+@name": "FOREGROUND",
+							"+@value": "#eba0ac"
+						}
+					}
+				}
+			]
+		}
+	}
+}

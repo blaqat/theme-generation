@@ -1,0 +1,226 @@
+# Reverse Generation Tool Version 3.0
+theme = "dark"
+name = "Rin"
+
+# Theme Colors
+[color]
+aquamarine = "#72F8B5"
+black = "#211E1E"
+black10 = "#251719"
+black12 = "#361B1C"
+black14 = "#151314"
+black15 = "#211D1E"
+black2 = "#161415"
+black3 = "#191718"
+black6 = "#1B191A"
+black8 = "#232121"
+black9 = "#142D14"
+cadetblue = "#4C9697"
+darkgray = "#86A4AB"
+darkgray2 = "#A7A7A7"
+darkslategray2 = "#322D30"
+dimgray = "#6F6F6F"
+firebrick = "#C20000"
+gray2 = "#847878"
+indianred = "#E0474B"
+lightskyblue = "#86DBFD"
+lightskyblue2 = "#69E0F5"
+lightslategray = "#859395"
+maroon = "#501F1F"
+mediumseagreen = "#42E66C"
+salmon = "#FC5773"
+sandybrown = "#EFA554"
+silver = "#BBBBBB"
+snow = "#FBFBFB"
+whitesmoke = "#F8F8F2"
+
+[code.error]
+bg = "@cadetblue"
+border = "#422121"
+fg = "@firebrick"
+style = "underline strikethrough"
+
+[code.info]
+border = "@black"
+fg = "@darkgray"
+
+[code.warning]
+bg = "#21211F"
+border = "@black"
+
+[editor]
+bg = "@black2"
+gutter = "#0000"
+number = "@gray2"
+text = "@whitesmoke"
+
+[editor.active]
+line = "@black3..76"
+line_border = "@black3..00"
+matches = "@darkslategray2..A9"
+number = "@cadetblue"
+
+[editor.guides.indent]
+active = "@black"
+colors = "$editor.guides.indent.colors | []"
+inactive = "@black"
+
+[editor.search]
+matches = "#225041A9"
+text = "@black12"
+
+[file.created]
+bg = "@black9"
+fg = "@black9"
+
+[file.deleted]
+bg = "#24242450"
+fg = "#242424"
+
+[file.ignored]
+fg = "@dimgray"
+
+[file.modified]
+fg = "@cadetblue"
+
+[player]
+cursor = "@cadetblue"
+highlight = "@maroon"
+
+[scheme]
+blue = "#9B6BDF"
+blue_br = "@sandybrown"
+cyan = "#75D7EC"
+green = "@cadetblue"
+pink = "#818181"
+pink_br = "@cadetblue"
+red = "#E356A7"
+yellow = "@lightskyblue"
+yellow_br = "@lightskyblue"
+
+[syntax.boolean]
+fg = "@lightslategray"
+
+[syntax.comment]
+fg = "#4C8484"
+style = "italic"
+
+[syntax.constant]
+fg = "@whitesmoke"
+
+[syntax.constant.builtin]
+fg = "@lightskyblue"
+
+[syntax.func]
+fg = "@lightskyblue2"
+
+[syntax.func.method]
+fg = "@lightskyblue2"
+
+[syntax.keyword]
+fg = "#9B6BDF"
+
+[syntax.markup.bold]
+style = "bold"
+
+[syntax.markup.heading]
+fg = "@indianred"
+
+[syntax.markup.italic]
+style = "italic"
+
+[syntax.number]
+fg = "@lightskyblue"
+
+[syntax.op]
+fg = "@salmon"
+
+[syntax.param]
+fg = "@aquamarine"
+
+[syntax.property]
+fg = "@whitesmoke"
+style = "bold"
+
+[syntax.punc.bracket]
+fg = "@whitesmoke"
+style = "bold"
+
+[syntax.string]
+fg = "@aquamarine"
+
+[syntax.string.inter]
+fg = "@salmon"
+
+[syntax.type]
+fg = "@sandybrown"
+
+[syntax.type.builtin]
+fg = "@indianred"
+style = "italic"
+
+[syntax.type.primitive]
+fg = "@indianred"
+style = "italic"
+
+[syntax.var.builtin]
+fg = "@lightslategray"
+
+[syntax.z.decorator]
+fg = "@lightskyblue2"
+
+[syntax.z.html_attribute]
+fg = "@lightskyblue2"
+style = "italic"
+
+[syntax.z.html_tag]
+fg = "@salmon"
+
+[syntax.z.json_key]
+fg = "@whitesmoke"
+style = "bold"
+
+[ui]
+bg = "@cadetblue"
+file_drop = "@darkslategray2..A9"
+panel = "@black2"
+popup = "@black6"
+shadow = "#1111115A"
+
+[ui.bars]
+bottom = "@cadetblue"
+tool = "@black3"
+top = "@black6"
+
+[ui.bars.tab]
+active = "@black10"
+bg = "@black2"
+inactive = "@black2"
+
+[ui.bars.title]
+inactive = "@black6"
+
+[ui.border]
+primary = "@black"
+secondary = "@black"
+
+[ui.button]
+primary = "@black8"
+
+[ui.button.secondary]
+bg = "@black8..CC"
+
+[ui.element]
+active = "@maroon"
+hover = "#160E0FA9"
+
+[ui.text]
+accent = "@darkgray"
+active = "@silver"
+muted = "@lightskyblue2"
+placeholder = "@darkgray"
+
+[deletions]
+keys = [
+"themes/0/style/accents",
+]

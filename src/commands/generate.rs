@@ -20,7 +20,7 @@ use std::{io::Read, path::PathBuf};
 
 pub const VALID_FLAGS: [&str; 5] = ["-o", "-i", "-p", "-n", "-r"];
 
-#[derive(PartialEq, Eq, Debug)]
+#[derive(Debug)]
 pub enum FlagTypes {
     OutputDirectory(PathBuf),
     InputDirectory(PathBuf),
@@ -29,7 +29,7 @@ pub enum FlagTypes {
     ReplaceName,
 }
 
-#[derive(PartialEq, Eq, Debug)]
+#[derive(Debug)]
 pub struct Flags {
     replace_name: bool,
     output_directory: PathBuf, // Default to current directory
@@ -49,8 +49,9 @@ impl FlagTypes {
         flags.iter().map(|flag| Self::from_str(flag)).collect()
     }
 
-    pub fn parse(flags: &[String]) -> Flags {
-        let flags = Self::into_vec(flags).unwrap();
+    /// Parses a list of flag strings into a `Flags` struct.
+    pub fn parse(flags: &[String]) -> Result<Flags, ProgramError> {
+        let flags = Self::into_vec(flags)?;
         let mut output_directory = PathBuf::from(".");
         let mut input_directory = PathBuf::from(".");
         let mut name = String::from("generated-theme");
@@ -67,28 +68,29 @@ impl FlagTypes {
             }
         }
 
-        Flags {
+        Ok(Flags {
             replace_name,
             output_directory,
             input_directory,
             name,
             path,
-        }
+        })
     }
 }
 
 impl FromStr for FlagTypes {
     type Err = ProgramError;
 
+    /// Parses a flag string into a `FlagTypes` enum variant.
     fn from_str(flag: &str) -> Result<Self, ProgramError> {
         let get_directory = |path: &str| -> Result<PathBuf, ProgramError> {
             let path = path.replace('~', std::env::var("HOME").unwrap().as_str());
             let path = Path::new(&path);
             if !path.exists() {
-                return Err(ProgramError::InvalidFlag(
-                    "generate".to_owned(),
-                    path.to_str().unwrap().to_owned(),
-                ));
+                return Err(ProgramError::Processing(format!(
+                    "Directory does not exist: {}",
+                    path.to_str().unwrap()
+                )));
             }
             Ok(path.to_path_buf())
         };
@@ -128,6 +130,7 @@ mod steps {
     type Value = serde_json::Value;
     const MAX_RECURSION_DEPTH: usize = 8;
 
+    /// Recursively compares two JSON values and returns a `DiffInfo` containing differing keys and total keys compared.
     pub fn resolve_self_variables(source: &Value, key: &Vec<&str>, max_depth: usize) -> Value {
         if max_depth == 0 {
             return Value::Null;
@@ -159,6 +162,7 @@ mod steps {
         }
     }
 
+    /// Recursively resolves variables in a JSON value using a source JSON and a list of operations.
     pub fn resolve_variables(
         resolving: &Value,
         source: &Value,
@@ -217,6 +221,7 @@ mod steps {
         resolved
     }
 
+    /// Handles a parsed value, resolving variables and applying operations as needed.
     fn handle_value(parsed: ParsedValue, variables: &Value) -> Value {
         match parsed {
             ParsedValue::Variables(ref variable)
@@ -244,6 +249,7 @@ mod steps {
         }
     }
 
+    /// Recursively compares two JSON values and returns a `DiffInfo` containing differing keys and total keys compared.
     pub fn match_variables(template: &Value, variables: &Value) -> Value {
         let mut new_data = template.clone();
 
@@ -278,6 +284,7 @@ mod steps {
         new_data
     }
 
+    /// Recursively replaces values in a JSON structure based on regex patterns defined in a key map.
     pub fn replace_regex(key_map: &Map<String, Value>, data: &mut Value, start_path: &str) {
         match data {
             Value::Object(m) => {
@@ -304,6 +311,7 @@ mod steps {
         }
     }
 
+    /// Main function to generate a new JSON value by applying variable substitutions and operations to a template.
     pub fn gen(
         mut template: serde_json::Value,
         variables: &serde_json::Value,
@@ -354,6 +362,7 @@ mod steps {
     }
 }
 
+/// Writes the generated JSON value to a file, handling naming and potential overwrites.
 fn write_to_file(
     matches: &serde_json::Value,
     generate_names: bool,
@@ -396,12 +405,13 @@ fn write_to_file(
     Ok(file_name)
 }
 
+/// Generates a new theme file by applying variable substitutions to a template.
 pub fn generate(
     template: &ValidatedFile,
     mut variables: Vec<ValidatedFile>,
     flags: &[String],
 ) -> Result<(), ProgramError> {
-    let flags = FlagTypes::parse(flags);
+    let flags = FlagTypes::parse(flags)?;
 
     let base: serde_json::Value = serde_json::from_reader(&template.file).map_err(|json_err| {
         ProgramError::Processing(format!("Invalid template json: {json_err}"))

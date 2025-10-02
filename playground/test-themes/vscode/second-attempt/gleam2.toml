@@ -1,0 +1,211 @@
+# Reverse Generation Tool Version 3.0
+name = "Gleam 3"
+theme = "dark"
+
+# Theme Colors
+[color]
+black = "#000000"
+black2 = "#101010"
+darkgray3 = "#B4B3B3"
+darkslategray = "#222533"
+darkslategray2 = "#252938"
+darkslategray3 = "#32374D"
+darkslategray5 = "#292D3E"
+darkslategray7 = "#31354A"
+darkslategray8 = "#393F57"
+dimgray = "#6E6E6E"
+gainsboro2 = "#DEDEDE"
+hotpink = "#FE7AB2"
+lavenderblush = "#FFDDFA"
+lightslategray = "#717AAB"
+mediumpurple = "#B181EC"
+navajowhite = "#FFD596"
+oldlace = "#FFFBE8"
+palegoldenrod = "#C8FFA7"
+palegoldenrod2 = "#FDFFAB"
+paleturquoise = "#9CE7FF"
+plum = "#FFAFF3"
+red = "#FF0000"
+silver = "#C4C4C4"
+silver3 = "#BFBCAE"
+thistle = "#D9BAFF"
+white2 = "#FFFFFF"
+
+[code.error]
+bg = "@darkslategray"
+border = "@red..00"
+fg = "#E21515"
+
+[code.info]
+border = "@red..00"
+fg = "@oldlace"
+
+[code.warning]
+border = "@red..00"
+fg = "#FFC501"
+
+[editor]
+bg = "@darkslategray5"
+gutter = "@red..00"
+number = "#747478"
+text = "@white2..D7"
+
+[editor.active]
+line = "#2F3347"
+matches = "@dimgray..80"
+number = "@white2..D7"
+
+[editor.guides]
+wrap = "@oldlace"
+
+[editor.guides.indent]
+colors = "$editor.guides.indent.colors | []"
+
+[editor.search]
+text = "@dimgray..80"
+
+[file.created]
+fg = "#4DBF57"
+
+[file.deleted]
+fg = "#E21515"
+
+[file.modified]
+fg = "@oldlace"
+
+[player]
+highlight = "#4A527080"
+
+[scheme]
+black = "@black"
+black_br = "@silver"
+blue = "#6796E6"
+blue_br = "@paleturquoise"
+cyan = "@mediumpurple"
+cyan_br = "@thistle"
+green = "#AADD8B"
+green_br = "@palegoldenrod"
+pink = "@hotpink"
+pink_br = "@plum"
+red = "#F44747"
+red_br = "#FF4A4A"
+white = "#F7F7F7"
+white_br = "@white2"
+yellow = "@navajowhite"
+yellow_br = "@palegoldenrod2"
+
+[syntax.comment]
+fg = "@silver"
+
+[syntax.constant]
+fg = "@palegoldenrod2"
+
+[syntax.constant.builtin]
+fg = "@hotpink"
+
+[syntax.func]
+fg = "@paleturquoise"
+
+[syntax.keyword]
+fg = "@hotpink"
+
+[syntax.markup.bold]
+fg = "@lavenderblush"
+
+[syntax.markup.heading]
+fg = "@lavenderblush"
+style = ""
+
+[syntax.markup.italic]
+fg = "@thistle"
+
+[syntax.number]
+fg = "@palegoldenrod2"
+
+[syntax.op]
+fg = "@plum..D9"
+
+[syntax.op.math]
+fg = "@plum"
+
+[syntax.op.setter]
+fg = "@plum..D9"
+
+[syntax.param]
+fg = "@white2..D9"
+
+[syntax.property]
+fg = "@mediumpurple"
+
+[syntax.punc.bracket]
+fg = "@white2..D9"
+
+[syntax.punc.delimiter]
+fg = "@hotpink"
+
+[syntax.punc.tag]
+fg = "@hotpink"
+
+[syntax.string]
+fg = "@palegoldenrod"
+
+[syntax.string.inter]
+fg = "@palegoldenrod"
+
+[syntax.type]
+fg = "@lavenderblush"
+
+[syntax.var.builtin]
+fg = "@hotpink"
+
+[syntax.z.html_attribute]
+fg = "@mediumpurple"
+
+[syntax.z.html_tag]
+fg = "@hotpink"
+
+[ui]
+bg = "@oldlace"
+file_drop = "#545C7F"
+link = "@oldlace"
+panel = "@darkslategray3"
+popup = "@darkslategray5"
+shadow = "@black..80"
+
+[ui.bars]
+bottom = "@darkslategray3"
+tool = "@darkslategray3"
+top = "@darkslategray"
+
+[ui.bars.tab]
+active = "@darkslategray3"
+bg = "@darkslategray5"
+inactive = "@darkslategray5"
+
+[ui.bars.title]
+inactive = "@darkslategray"
+
+[ui.border]
+primary = "@oldlace"
+secondary = "@oldlace"
+
+[ui.button]
+hover = "#E6E2D1"
+primary = "@oldlace"
+
+[ui.button.secondary]
+bg = "@oldlace"
+hover = "#E6E2D1"
+
+[ui.element]
+active = "#262A3A"
+hover = "@darkslategray2"
+
+[ui.text]
+active = "@black"
+muted = "#C2C0C0"
+
+[deletions]
+keys = [
+"themes/0/style/accents",
+]
