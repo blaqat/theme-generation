@@ -5,6 +5,7 @@ type VarNames = Vec<String>;
 const UNRESOLVED_POINTER_CONST: usize = 2497;
 
 #[derive(Debug, Clone, PartialEq, Hash, Eq)]
+/// Represents a parsed value which can be a Color, a set of variable names, a raw JSON value, a string, or null.
 pub enum ParsedValue {
     Color(Color),
     Variables(VarNames),
@@ -55,6 +56,7 @@ impl FromStr for ParsedValue {
 }
 
 impl ParsedValue {
+    /// Converts the ParsedValue into a serde_json::Value.
     pub fn into_value(self) -> Value {
         match self {
             Self::Color(color) => Value::String(color.to_string()),
@@ -65,6 +67,7 @@ impl ParsedValue {
         }
     }
 
+    /// Creates a ParsedValue from a serde_json::Value.
     pub fn from_value(v: &Value) -> Result<Self, ProgramError> {
         match v {
             Value::Null => Ok(Self::Null),
@@ -73,6 +76,7 @@ impl ParsedValue {
         }
     }
 
+    /// Applies identity color operations to the ParsedValue based on the provided operations.
     fn identity_ops(&self, ops: &[&Operations]) -> Self {
         let iden_ops = Operation::identity_ops(ops);
         match self {
@@ -166,6 +170,7 @@ pub struct ResolvedVariable {
 }
 
 impl ResolvedVariable {
+    /// Initializes a ResolvedVariable with a single variable name and a value.
     pub fn init(name: &str, value: ParsedValue) -> Self {
         let variable = ParsedVariable {
             name: name.to_string(),
@@ -181,6 +186,7 @@ impl ResolvedVariable {
         }
     }
 
+    /// Initializes a ResolvedVariable with a path and a value, without any associated variables.
     pub fn init_override(path: &str, value: &Value) -> Self {
         let path = JSPath::from_str(path).unwrap();
         let value = ParsedValue::from_value(value).unwrap();
@@ -193,6 +199,7 @@ impl ResolvedVariable {
         }
     }
 
+    /// Creates a ResolvedVariable that acts as a pointer to unresolved variable paths.
     fn new_pointer(var_name: &str, unresolved_paths: &[String]) -> Self {
         Self {
             path: JSPath::from_str(var_name).unwrap(),
@@ -203,6 +210,7 @@ impl ResolvedVariable {
         }
     }
 
+    /// Creates a ResolvedVariable from a SourcedVariable, filtering out unresolved variables.
     pub fn from_src(src: &SourcedVariable) -> Self {
         let variables = src
             .variables
@@ -223,6 +231,7 @@ impl ResolvedVariable {
         }
     }
 
+    /// Creates a ResolvedVariable from a JSON path and a JSON value, initializing with no variables.
     pub fn from_path(path: &str, json: &Value) -> Self {
         let path: JSPath = path.parse().unwrap();
 
@@ -239,23 +248,28 @@ impl ResolvedVariable {
         }
     }
 
+    /// Checks if the ResolvedVariable has been successfully resolved to a variable in the set.
     pub fn is_resolvable(&self) -> bool {
         self.resolved_id
             .map_or_else(|| false, |i| i < self.variables.len())
     }
 
+    /// Checks if the ResolvedVariable could potentially be resolved (has variables but not yet resolved).
     pub fn could_resolve(&self) -> bool {
         self.resolved_id.is_none() && !self.variables.is_empty()
     }
 
+    /// Returns a reference to the currently resolved ParsedVariable, if any.
     fn resolved(&self) -> Option<&ParsedVariable> {
         self.resolved_id.and_then(|id| self.variables.get(id))
     }
 
+    /// Checks if the ResolvedVariable is a pointer to unresolved variable paths.
     pub fn is_pointer(&self) -> bool {
         self.resolved_id.unwrap_or_default() == UNRESOLVED_POINTER_CONST
     }
 
+    /// Gets the name of the currently resolved variable or a representation of the unresolved state.
     pub fn name(&self) -> String {
         if self.is_resolvable() {
             self.resolved().unwrap().name.clone()
@@ -266,10 +280,12 @@ impl ResolvedVariable {
         }
     }
 
+    /// Marks the ResolvedVariable as unresolved.
     fn unresolve(&mut self) {
         self.resolved_id = None;
     }
 
+    /// Advances to the next variable in the list and returns a reference to it, if any.
     pub fn next(&mut self) -> Option<&ParsedVariable> {
         let i = self.resolved_id.map_or(0, |i| i + 1);
 
@@ -282,11 +298,13 @@ impl ResolvedVariable {
         }
     }
 
+    /// Converts value of Variable to its identity form by applying its operations.
     pub fn identity(&self) -> ParsedValue {
         let ops: Vec<_> = self.variables.iter().map(|v| &v.operations).collect();
         self.value.identity_ops(&ops)
     }
 
+    /// Checks if the ResolvedVariable's value results from applying its variable operations to a given ParsedValue.
     pub fn results_from(&self, identity: &ParsedValue) -> bool {
         match (&self.value, identity) {
             (ParsedValue::Color(a), ParsedValue::Color(b)) => {
@@ -332,6 +350,7 @@ impl std::fmt::Display for SourcedVariable {
 }
 
 impl SourcedVariable {
+    /// Creates a new SourcedVariable from a path, variable string, and value.
     pub fn new(path: String, var: &str, value: &Value) -> Self {
         let value = ParsedValue::from_value(value).unwrap();
         let variables = var
@@ -388,6 +407,7 @@ impl std::fmt::Display for KeyDiffInfo {
 }
 
 impl KeyDiffInfo {
+    /// Merges another KeyDiffInfo into this one, combining missing keys, collisions, and parsed variables.
     pub fn extend(&mut self, other: Self) {
         self.missing.extend(other.missing);
         self.collisions.extend(other.collisions);
@@ -401,16 +421,19 @@ pub struct VariableSet {
 }
 
 impl VariableSet {
+    /// Creates a new, empty VariableSet.
     pub fn new() -> Self {
         Self {
             variables: RefCell::new(HashMap::new()),
         }
     }
 
+    /// Checks if a variable with the given name exists in the set.
     pub fn has_variable(&self, name: &str) -> bool {
         self.variables.borrow().contains_key(name)
     }
 
+    /// Checks if the variable with the given name is explicitly set to null, considering sibling variables.
     pub fn is_null(&self, name: &str) -> bool {
         self.variables
             .borrow()
@@ -425,10 +448,12 @@ impl VariableSet {
             .is_none_or(|v| v.value == ParsedValue::Null)
     }
 
+    /// Inserts a new ResolvedVariable into the set, replacing any existing variable with the same name.
     pub fn insert(&self, name: &str, var: ResolvedVariable) {
         self.variables.borrow_mut().insert(name.to_string(), var);
     }
 
+    /// Inserts a sibling ResolvedVariable to an existing variable with the same name.
     pub fn insert_sibling(&self, name: &str, var: ResolvedVariable) {
         let mut vars = self.variables.borrow_mut();
         if let Some(og) = vars.get_mut(name) {
@@ -436,6 +461,7 @@ impl VariableSet {
         }
     }
 
+    /// Inserts a ResolvedVariable, appending a numeric suffix if a variable with the same name already exists.
     pub fn inc_insert(&self, name: &str, var: ResolvedVariable) {
         if self.has_variable(name) {
             let mut vars = self.variables.borrow_mut();
@@ -454,6 +480,7 @@ impl VariableSet {
         }
     }
 
+    /// Inserts a ResolvedVariable only if it doesn't already exist, or as a sibling if it is identical to an existing variable.
     pub fn safe_insert(&self, name: &str, mut var: ResolvedVariable) {
         if !self.has_variable(name) {
             self.insert(name, var);
@@ -489,14 +516,17 @@ impl VariableSet {
         }
     }
 
+    /// Converts the VariableSet into a vector of ResolvedVariables.
     pub fn to_vec(&self) -> Vec<ResolvedVariable> {
         self.variables.borrow().values().cloned().collect()
     }
 
+    /// Converts the VariableSet into a HashMap of variable names to ResolvedVariables.
     pub fn to_map(&self) -> HashMap<String, ResolvedVariable> {
         self.variables.borrow().clone()
     }
 
+    /// Retrieves a list of ResolvedVariables that are not yet resolvable.
     pub fn get_unresolved(&self) -> Vec<ResolvedVariable> {
         self.variables
             .borrow()
@@ -506,6 +536,7 @@ impl VariableSet {
             .collect()
     }
 
+    /// Resolves the VariableSet by retaining only variables that are resolvable.
     pub fn resolve(&self) {
         let mut vars = self.variables.borrow_mut();
 
@@ -548,6 +579,7 @@ pub mod special_array {
     }
 
     impl MatchMode {
+        /// Checks if the given value matches another value based on the MatchMode.
         fn matches(&self, checking: &Value, other_val: &Value) -> bool {
             let check_str = value_to_string(checking);
             match (self, other_val) {
@@ -625,6 +657,7 @@ pub mod special_array {
     pub struct SpecialKey(pub String, Vec<SpecialMode>);
 
     impl SpecialKey {
+        /// Checks if any of the SpecialModes match the given values.
         pub fn matches(&self, val1: &Value, other_val: &Value) -> bool {
             self.1.iter().any(|mode| match mode {
                 SpecialMode::Single(match_mode) => match_mode.matches(val1, other_val),
@@ -641,6 +674,7 @@ pub mod special_array {
 
     const SPECIAL_ARRAY_KEY: &str = "$::mode";
 
+    /// Parses special keys from a JSON array, identifying if it is a special array and extracting match modes and keys.
     pub fn parse_special_keys(vec: &[Value]) -> (bool, bool, Vec<SpecialKey>) {
         let special = vec.first().and_then(|val1| match val1 {
             Value::Object(spobj) if spobj.contains_key(SPECIAL_ARRAY_KEY) => {

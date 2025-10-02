@@ -142,6 +142,7 @@ mod steps {
     type ColorMap = HashMap<String, (String, Vec<Color>)>;
 
     #[allow(clippy::too_many_lines)]
+    /// Resolves variables from the variable differences and any overrides provided.
     pub fn resolve_variables(
         var_diff: &KeyDiffInfo,
         overrides: Set<ResolvedVariable>,
@@ -323,6 +324,7 @@ mod steps {
         (var_set, unvar_set)
     }
 
+    /// Computes the key differences between two JSON values, logging variables if specified.
     pub fn key_diff(data1: &Value, data2: &Value, prefix: String, log_vars: bool) -> KeyDiffInfo {
         let mut info = KeyDiffInfo {
             missing: Vec::new(),
@@ -423,6 +425,7 @@ mod steps {
         info
     }
 
+    /// Recursively retrieves all nested values from a JSON value.
     fn get_nested_values(j: &Value) -> Vec<Value> {
         match j {
             Value::Object(map) => map.values().flat_map(get_nested_values).collect(),
@@ -431,6 +434,7 @@ mod steps {
         }
     }
 
+    /// Creates a mapping from color hex codes to their variable names and occurrences.
     pub fn to_color_map(v: &VariableSet, o: &VariableSet) -> ColorMap {
         let mut color_map: ColorMap = HashMap::new();
         let get_num_matching_names =
@@ -487,6 +491,7 @@ mod steps {
         color_map
     }
 
+    /// Replaces colors in the parsed value with variable references based on the color map and threshold.
     pub fn replace_color(val: &ParsedValue, color_map: &ColorMap, threshold: usize) -> ParsedValue {
         let get_color = |c: &Color| {
             let hex = c.to_alphaless_hex();
@@ -559,6 +564,7 @@ mod steps {
         deletions: &Set<JSPath>,
         flags: &Flags,
     ) -> Result<String, ProgramError> {
+        // Helper to convert serde_json::Value to toml::Value
         macro_rules! t {
             ($var_name:ident=$from:expr) => {
                 let $var_name: toml::Value = {
@@ -587,6 +593,7 @@ mod steps {
             w!("{} = {}", k, v);
         }
 
+        // Colors
         if flags.generate_colors {
             w!("\n# Theme Colors");
             w!("[color]");
@@ -602,6 +609,7 @@ mod steps {
             }
         }
 
+        // Groups
         for (k, v) in data.iter().filter(|(k, _)| *k != "color") {
             if v.is_table() {
                 w!("\n[{}]", k);
@@ -624,6 +632,7 @@ mod steps {
             }
         }
 
+        // Overrides
         if flags.generate_additions {
             w!("\n# Overrides");
             w!("[overrides]");
@@ -638,6 +647,7 @@ mod steps {
             }
         }
 
+        // Deletions
         if flags.generate_deletions {
             w!("\n# Deletions");
             w!("[deletions]");
@@ -875,6 +885,7 @@ pub fn reverse(
         Ok(file_name)
     };
 
+    // Handle Single or Multiple Themes
     match (&theme, &template) {
         (Value::Object(_), Value::Object(_)) => {
             generated_files.push(reverse(

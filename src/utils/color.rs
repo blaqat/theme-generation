@@ -37,6 +37,7 @@ pub enum Error {
     InvalidColorString,
 }
 
+/// A single component of a color that can be changed
 #[derive(Debug, PartialEq, Clone, Hash, Eq)]
 pub enum Component {
     Hue(i16),
@@ -51,6 +52,7 @@ pub enum Component {
     Hex(String),
 }
 
+/// Implements arithmetic operations for Color and Component
 macro_rules! impl_color_components_op {
     ($trait: ident, $func_name: ident, $op: tt) => {
         impl $trait<Component> for &Color {
@@ -96,6 +98,7 @@ impl BitAnd<Component> for &Color {
 }
 
 impl Component {
+    /// Validates and clamps the component value to its valid range.
     fn validate_change(&mut self) {
         match self {
             Self::Hue(hue) => {
@@ -140,6 +143,7 @@ pub struct Operation(pub Component, pub String);
 // let applied_changes = vec![color_change!(Alpha "/", 3)];
 // let applied_changes = color_change!(Alpha "/", 3;)
 #[macro_export]
+/// Macro to create color changes easily
 macro_rules! operation {
     ($setting: ident . $val: expr) => {
         Operation(Component::$setting($val), String::from("."))
@@ -165,6 +169,7 @@ macro_rules! operation {
 }
 
 impl Operation {
+    /// Applies the operation to the given color and returns the resulting component.
     fn apply(self, color: &Color) -> Result<Component, Error> {
         let new_change = match self.1.as_str() {
             "+" => color + self.0,
@@ -179,6 +184,7 @@ impl Operation {
         Ok(new_change)
     }
 
+    /// Returns an identity operation that leaves the color unchanged.
     pub fn identity(c: Self) -> Self {
         match (&c.0, c.1.as_str()) {
             (Component::Alpha(_), "=") | (Component::Hex(_), ".") => operation!(Alpha = 100),
@@ -186,6 +192,7 @@ impl Operation {
         }
     }
 
+    /// Returns the inverse of a list of operations.
     pub fn inverse(changes: &Operations) -> Operations {
         changes
             .iter()
@@ -202,14 +209,17 @@ impl Operation {
             .collect()
     }
 
+    /// Returns the inverses of a list of operation lists.
     pub fn inverse_ops(changes: &[&Operations]) -> Vec<Operations> {
         changes.iter().map(|c| Self::inverse(c)).collect()
     }
 
+    /// Returns an identity operation list that leaves the color unchanged.
     pub fn identity_op(changes: &Operations) -> Operations {
         changes.iter().map(|c| Self::identity(c.clone())).collect()
     }
 
+    /// Returns identity operation lists that leave the color unchanged.
     pub fn identity_ops(changes: &[&Operations]) -> Vec<Operations> {
         changes
             .iter()
@@ -218,6 +228,7 @@ impl Operation {
     }
 }
 
+/// Helper to get the operator string from a character
 const fn get_operator(op: Option<char>) -> Result<&'static str, Error> {
     match op {
         Some(c) => match c {
@@ -288,11 +299,13 @@ pub struct Color {
     pub hex: String,
 }
 
+/// Helper to check if two values are within a certain range
 const fn in_range(x: i16, a: i16, b: i16) -> bool {
     (x - a).abs() <= b
 }
 
 impl PartialEq for Color {
+    /// Equal if hsv or rgb are within 1 unit and alpha is the same
     fn eq(&self, other: &Self) -> bool {
         let max_distance = 1;
         ((in_range(self.hue, other.hue, max_distance)
@@ -350,12 +363,14 @@ impl FromStr for Color {
 
 #[allow(clippy::cast_sign_loss, clippy::cast_possible_truncation)]
 impl Color {
+    /// Creates a new Color from a hex string and applies a list of operations to it.
     pub fn from_change(col_str: &str, ops: &[Operation]) -> Result<Self, Error> {
         let mut color = col_str.parse::<Self>()?;
         color.update(ops.to_vec())?;
         Ok(color)
     }
 
+    /// Checks if a hex string is valid.
     fn is_valid_hex(hex: &str) -> bool {
         let hex = hex.to_uppercase();
         hex.starts_with('#')
@@ -363,6 +378,7 @@ impl Color {
             && matches!(hex.len(), 4 | 5 | 7 | 9)
     }
 
+    /// Normalizes a hex string to the full form (#RRGGBB or #RRGGBBAA).
     pub fn norm_hex(hex: &str) -> String {
         let hex = hex.to_uppercase();
         if hex.len() == 4 || hex.len() == 5 {
@@ -378,15 +394,18 @@ impl Color {
         }
     }
 
+    /// Returns the alpha component as a two-digit hexadecimal string.
     pub fn get_alpha(&self) -> String {
         let alpha = f32::from(self.alpha) * 2.55;
         format!("{:02X}", alpha.ceil() as u8)
     }
 
+    /// Returns true if the color has an alpha component less than 100.
     pub const fn has_alpha(&self) -> bool {
         self.alpha != 100
     }
 
+    /// Returns the hex string without the alpha component.
     pub fn to_alphaless_hex(&self) -> String {
         if self.has_alpha() {
             format!("#{:02X}{:02X}{:02X}", self.red, self.green, self.blue)
@@ -395,11 +414,13 @@ impl Color {
         }
     }
 
+    /// Returns a human-readable name for the color.
     pub fn get_name(&self) -> String {
         let rgb: [u8; 3] = [self.red as u8, self.green as u8, self.blue as u8];
         format!("color.{}", ColorName::similar(rgb).to_lowercase())
     }
 
+    /// Creates a Color from a hex string.
     pub fn from_hex(hex: &str) -> Result<Self, Error> {
         if !Self::is_valid_hex(hex) {
             return Err(Error::Hex(hex.to_owned()));
@@ -433,6 +454,7 @@ impl Color {
         Ok(color)
     }
 
+    /// Updates the saturation based on the current value and lightness.
     fn update_saturation(&mut self) {
         let x = f32::from((200 - self.saturation) * self.value) / 100.0;
         let saturation = if x == 0.0 || x as i32 == 200 {
@@ -451,6 +473,7 @@ impl Color {
         self.saturation = saturation as i16;
     }
 
+    /// Updates the value based on the current lightness and saturation.
     fn update_value(&mut self) {
         let hs_light = Hsl::new(
             f32::from(self.hue),
@@ -463,6 +486,7 @@ impl Color {
         self.value = (hs_val.value * 100.0) as i16;
     }
 
+    /// Updates the lightness based on the current value and saturation.
     fn update_lightness(&mut self) {
         let hs_val = Hsv::new(
             f32::from(self.hue),
@@ -474,6 +498,7 @@ impl Color {
         self.lightness = (hs_light.lightness * 100.0) as i16;
     }
 
+    /// Updates the HSV and HSL values based on the current RGB values.
     fn update_hsvl(&mut self) {
         let rgb = Srgb::new(
             f32::from(self.red) / 255.0,
@@ -490,6 +515,7 @@ impl Color {
         self.lightness = (hs_light.lightness * 100.0) as i16;
     }
 
+    /// Updates the RGB values based on the current HSV values.
     fn update_rgb(&mut self) {
         let hsv = Hsv::new(
             f32::from(self.hue),
@@ -503,6 +529,7 @@ impl Color {
         self.blue = (rgb.blue * 255.0) as i16;
     }
 
+    /// Updates the hex string based on the current RGB and alpha values.
     fn update_hex(&mut self) {
         let r = format!("{:02X}", self.red);
         let g = format!("{:02X}", self.green);
@@ -538,6 +565,7 @@ impl Color {
         }
     }
 
+    /// Applies a list of operations to the color.
     pub fn update_ops(&mut self, changes: &[Operations]) -> Result<(), Error> {
         changes
             .iter()
@@ -546,6 +574,7 @@ impl Color {
         Ok(())
     }
 
+    /// Applies a list of operations to the color.
     pub fn update(&mut self, mut changes: Operations) -> Result<(), Error> {
         if changes
             .iter()

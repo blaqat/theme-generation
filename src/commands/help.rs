@@ -1,5 +1,6 @@
 use crate::{prelude::*, ValidCommands};
 
+/// Displays help information for the specified command.
 pub fn help(command: &ValidCommands) {
     let help_text = match command {
         ValidCommands::New => "Description:

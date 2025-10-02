@@ -25,6 +25,7 @@ pub fn watch(
 
     let watcher = debouncer.watcher();
 
+    // Watch the directory for changes to .toml files
     for file in variable_files {
         let mut path = directory.to_path_buf();
         path.push(&file.name);
@@ -35,6 +36,7 @@ pub fn watch(
     }
 
     loop {
+        // On each change event, regenerate the themes
         match rx.try_recv() {
             Ok(ref event) if let Ok(_) = event => {
                 let variable_files = variable_files.to_vec();

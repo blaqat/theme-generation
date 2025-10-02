@@ -249,6 +249,7 @@ mod steps {
     };
     use tera::{Context, Tera};
 
+    /// Creates a new project directory by copying the project template to the specified path.
     pub fn create_project_directory(
         path: &Path,
         templates_path: &Path,
@@ -293,6 +294,7 @@ mod steps {
         Ok(())
     }
 
+    /// Generates a preview string for the README by rendering each variant using a Tera template.
     fn generate_preview_str(variants: &[Variant]) -> String {
         static README_PREVIEW_TEMPLATE: &str = r#"
 ### {{title}}
@@ -314,6 +316,7 @@ mod steps {
             .join("\n")
     }
 
+    /// Updates the README.md file with the theme name, description, variants, and previews.
     pub fn update_readme(
         path: &Path,
         names: &ThemeNames,
@@ -348,6 +351,7 @@ mod steps {
         Ok(())
     }
 
+    /// Updates the extension.toml file with the theme name and description.
     pub fn update_extensions_toml(
         path: &Path,
         names: &ThemeNames,
@@ -375,6 +379,7 @@ mod steps {
         Ok(())
     }
 
+    /// Generates the JSON strings for each theme variant by rendering the appropriate theme file with Tera.
     fn generate_variants_json(
         theme_files: &[ThemeFile],
         variants: &[Variant],
@@ -412,6 +417,7 @@ mod steps {
             .join(",\n\t\t"))
     }
 
+    /// Updates the themes/theme.json file with the new theme name and generates a new theme file.
     pub fn update_theme_json(
         path: &Path,
         theme_files: &[ThemeFile],
@@ -440,6 +446,7 @@ mod steps {
     }
 }
 
+/// Creates a new theme project with the given name and optional flags.
 pub fn new(name: &str, flags: &[String]) -> Result<(), ProgramError> {
     let mut flags = FlagTypes::parse(flags)?;
     let theme_name: ThemeNames = name.parse()?;

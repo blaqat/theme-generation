@@ -67,6 +67,7 @@ impl ValidatedFile {
         })
     }
 
+    // Get all variable files in a directory
     fn all_variable_files(source_directory: &Path) -> Result<Vec<Self>, ProgramError> {
         // Variable files are toml files.
         let mut files = Vec::new();
@@ -133,11 +134,13 @@ impl ValidCommands {
         }
     }
 
+    // List of all valid commands
     pub fn list_commands() -> Vec<&'static str> {
         vec!["check", "gen", "rev", "help", "watch", "edit", "new"]
     }
 }
 
+// Helper to get the template and variable files for generation and watch commands
 fn get_generation_files(
     flags: &[String],
     command_args: &[String],

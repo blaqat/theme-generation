@@ -1,7 +1,7 @@
 {
 	"$schema": "vscode://schemas/color-theme",
 	"name": "$name",
-	"author": "Theme Generator",
+	"author": "$author",
 	"$::theme": "$theme",
 	"$::editor.guides.indent.colors": "[]",
 	"semanticHighlighting": true,
@@ -430,10 +430,10 @@
 		"menubar.selectionBackground": "$ui.bg..v+5",
 		"menubar.selectionForeground": "$ui.text.active",
 
-		"scrollbar.shadow": "$ui.bg..v-5",
-		"scrollbarSlider.activeBackground": "$ui.bg..v+5..66",
-		"scrollbarSlider.background": "$ui.bg..v+7..80",
-		"scrollbarSlider.hoverBackground": "$ui.bg..v+7",
+		"scrollbar.shadow": "$ui.scrollbar.border",
+		"scrollbarSlider.activeBackground": "$ui.scrollbar.highlight",
+		"scrollbarSlider.background": "$ui.scrollbar.thumb|$ui.bg..v+5",
+		"scrollbarSlider.hoverBackground": "$ui.scrollbar.highlight|$ui.bg..v+5",
 
 		"terminalCursor.foreground": "$ui.text.active",
 		"terminalCursor.background": "$ui.bg",
